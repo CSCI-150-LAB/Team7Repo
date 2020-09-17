@@ -14,7 +14,7 @@ class Application {
 		$this->parseServerVars();
 
 		$this->di = DI::getDefault();
-		$this->di->addScoped(DI::class, $this->di);
+		$this->di->addScoped('DI', $this->di);
 		$this->di->addScoped(Application::class, $this);
 	}
 
@@ -106,7 +106,7 @@ class Application {
 		$request = new $requestClass($this->requestUri, $_GET, $_POST);
 
 		do {
-			$this->di->addScoped(Request::class, $request);
+			$this->di->addScoped('Request', $request);
 			$response = $this->dispatch($request);
 		}
 		while (
