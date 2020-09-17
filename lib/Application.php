@@ -50,12 +50,11 @@ class Application {
 	}
 
 	public function setRequestClass($class) {
-		if ($class === 'Request' || is_subclass_of($class, 'Request')) {
-			$this->requestClass = $class;
+		if (!is_subclass_of($class, 'IRequest')) {
+			throw new Exception("{$class} does not implement IRequest");
 		}
-		else {
-			throw new Exception("{$class} is not a subclass of Request");
-		}
+
+		$this->requestClass = $class;
 
 		return $this;
 	}

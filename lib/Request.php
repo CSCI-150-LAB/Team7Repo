@@ -1,6 +1,6 @@
 <?php
 
-class Request {
+class Request implements IRequest {
 	private $controllerName;
 	private $actionName;
 	private $routeParams;
