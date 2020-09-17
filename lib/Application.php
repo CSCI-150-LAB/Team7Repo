@@ -88,8 +88,19 @@ class Application {
 		return $this->di;
 	}
 
+	private function configureErrorReporting() {
+		$level = E_ALL ^ E_NOTICE;
+
+		if (!IS_LOCAL) {
+			$level = $level ^ E_WARNING ^ E_STRICT;
+		}
+
+		error_reporting($level);
+	}
+
 	public function start() {
 		$this->configureServices();
+		$this->configureErrorReporting();
 
 		$requestClass = $this->requestClass;
 		$request = new $requestClass($this->requestUri, $_GET, $_POST);
