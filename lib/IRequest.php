@@ -7,4 +7,5 @@ interface IRequest {
     function getPostVar($name);
     function getRequestVar($name);
     function getRouteParams();
+    function isActive($path, $exact = false);
 }

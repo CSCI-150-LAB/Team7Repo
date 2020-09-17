@@ -107,5 +107,8 @@ class ViewHelpers {
 
         return DI::getDefault()->get('ViewRenderer')->render($views);
     }
+
+    public function isRouteActive($path, $exact = false) {
+        return DI::getDefault()->get('Request')->isActive($path, $exact);
     }
 }

@@ -61,4 +61,25 @@ class Request implements IRequest {
 	public function getRouteParams() {
 		return $this->routeParams;
 	}
+
+	public function isActive($path, $exact = false) {
+		$path = trim($path, '/');
+		if ($path === '') {
+			$path = 'Index/Index';
+		}
+
+		if (strpos($path . '/', "{$this->controllerName}/{$this->actionName}/") !== 0) {
+			return false;
+		}
+
+		if ($exact) {
+			$routeParams = array_slice(explode('/', $path), 2);
+
+			if ($routeParams != $this->routeParams) {
+				return false;
+			}
+		}
+
+		return true;
+	}
 }
