@@ -8,6 +8,7 @@ class Application {
 
 	private $requestClass = 'Request';
 	private $viewHelpersClass = 'ViewHelpers';
+	private $viewRendererClass = 'ViewRenderer';
 
 	public function __construct() {
 		$this->parseServerVars();
@@ -38,6 +39,7 @@ class Application {
 	}
 
 	private function configureServices() {
+		$this->di->addTransient('ViewRenderer', $this->viewRendererClass);
 		$this->di->addScoped('ViewHelpers', $this->viewHelpersClass);
 	}
 
@@ -64,6 +66,16 @@ class Application {
 		}
 
 		$this->viewHelpersClass = $class;
+
+		return $this;
+	}
+
+	public function setViewRendererClass($class) {
+		if (!is_subclass_of($class, 'IViewRenderer')) {
+			throw new Exception("{$class} does not implement IViewRenderer");
+		}
+
+		$this->viewRendererClass = $class;
 
 		return $this;
 	}

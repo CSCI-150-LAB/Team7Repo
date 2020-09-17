@@ -99,7 +99,13 @@ class ViewHelpers {
     }
 
     public function partial($view, $payload = []) {
-        $renderer = new Response_View($view, false, $payload);
-        return $renderer->getContents();
+        $viewFile = APP_ROOT . '/app/views/' . DI::getDefault()->get('Request')->getControllerName() . '/' . $view . '.php';
+        
+        $views = [
+            $viewFile => $payload
+        ];
+
+        return DI::getDefault()->get('ViewRenderer')->render($views);
+    }
     }
 }
