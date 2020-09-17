@@ -1,0 +1,58 @@
+.navbar-toggler {
+	cursor: pointer;
+	border-radius: 0;
+	border: 0;
+	padding: size(16) size(9);
+	right: 0;
+    transition: background-color 250ms;
+    background-color: $dark;
+    
+	&:hover {
+		background-color: darken($dark, 10);
+    }
+    
+	&[aria-expanded="true"] {
+		.icon-bar {
+			opacity: 0;
+        }
+        
+		.icon-bar-x {
+			opacity: 1;
+			transform: rotate(45deg);	
+			transition: transform 250ms 150ms;
+        }
+        
+		.icon-bar-sneaky {
+			transform: rotate(-45deg);
+		}
+    }
+    
+	.icon-bar {
+		position: relative;
+		background-color: $light;
+		width: 32px;
+		height: 3px;
+		opacity: 1;
+		transform: rotate(0deg);
+		transition: transform 250ms;
+		top: 0;
+		display: block;
+        margin-top: 4px;
+        
+		&:first-child {
+			margin-top: 0;
+        }
+        
+		&.icon-bar-sneaky {
+			margin-top: -3px;
+        }
+        
+		&:nth-child(4) {
+			margin-bottom: 1px;
+		}
+	}
+}
+
+.navbar {
+	padding: 0;
+}

@@ -1,0 +1,12 @@
+$dark: #404040;
+$light: #fff;
+$blue: #2F578D;
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;
+$collapse: $lg;
+
+@function size($num) {
+    @return ($num / 16) * 1rem;
+}

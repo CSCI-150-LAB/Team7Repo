@@ -1,0 +1,121 @@
+body.dev:after {
+    position: fixed;
+    padding: .5rem;
+    bottom: 0;
+    left: 0;
+    z-index: 99999;
+    font-size: size(14);
+    line-height: 1;
+    color: white;
+    background-color: black;
+    content: "XS";
+
+    @media(min-width: $sm) {
+      content: "SM";
+    }
+
+    @media(min-width: $md) {
+      content: "MD";
+    }
+
+    @media(min-width: $lg) {
+      content: "LG";
+    }
+
+    @media(min-width: $xl) {
+      content: "XL";
+    }
+  }
+
+body{
+	// font-family: $font;
+	color: $dark;
+	font-size: size(16);
+	line-height: 1.7;
+	max-width: 1920px;
+    margin: auto;
+    
+	@media(min-width: $md){	
+		font-size: size(18);
+	}
+}
+
+a {
+	color: $blue;
+    transition: color 250ms;
+    
+	&:visited,
+	&:focus,
+	&:hover {
+		color: darken($blue, 10);
+	}
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-weight: 700;
+	line-height: 1.2;
+	margin-bottom: size(30)
+}
+
+p {
+	margin-bottom: size(30);
+}
+
+h1 {
+	@media(min-width: $md){
+		font-size: size(40);
+	}
+	@media(min-width: $lg){
+		font-size: size(50);
+	}
+	@media(min-width: $xl){
+		font-size: size(60);
+	}
+}
+
+h2 {
+	@media(min-width: $md){
+		font-size: size(35);
+	}
+	@media(min-width: $lg){
+		font-size: size(40);
+	}
+	@media(min-width: $xl){
+		font-size: size(50);
+	}
+}
+
+h3 {
+	@media(min-width: $md){
+		font-size: size(30);
+	}
+	@media(min-width: $lg){
+		font-size: size(35);
+	}
+	@media(min-width: $xl){
+		font-size: size(40);
+	}
+}
+
+h4 {
+	@media(min-width: $md){
+		font-size: size(20);
+	}
+	@media(min-width: $lg){
+		font-size: size(25);
+	}
+	@media(min-width: $xl){
+		font-size: size(30);
+	}
+}
+
+h5 {
+	font-size: size(18);
+	@media(min-width: $xl){
+		font-size: size(20);
+	}
+}
+
+h6 {
+	font-size: size(15);
+}
