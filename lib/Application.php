@@ -129,8 +129,27 @@ class Application {
 			return $this->handle404($request);
 		}
 
+		// beforeActionHook
 		$controllerInst = $this->di->constructClass($controllerClass);
-		return $controllerInst->$actionMethod(...$request->getRouteParams());
+		if ($controllerInst instanceof IControllerHooks) {
+			$response = $controllerInst->beforeActionHook();
+			if ($response instanceof IResponse) {
+				return $response;
+			}
+		}
+
+		// Call Controller Action
+		$response = $controllerInst->$actionMethod(...$request->getRouteParams());
+
+		// AfterActionHook
+		if ($controllerInst instanceof IControllerHooks) {
+			$newResponse = $controllerInst->afterActionHook($response);
+			if ($newResponse instanceof IResponse) {
+				return $newResponse;
+			}
+		}
+
+		return $response;
 	}
 
 	private function handle404(Request $request) {
