@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Minimal MVC - By Daniel Flynn</title>
+        <title><?php echo $this->pageTitle('Minimal MVC', true) ?></title>
         <?php
             $this->styleEnqueue('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css');
             $this->styleEnqueue('style', $this->publicUrl('css/style.min.css'), ['bootstrap']);

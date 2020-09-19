@@ -5,6 +5,8 @@ class ViewHelpers {
     private $elementClasses = [];
     private $scripts;
     private $styles;
+    private $pageTitleParts = [];
+    private $pageTitleSeparator = ' - ';
 
     public function __construct(Application $app) {
         $this->app = $app;
@@ -110,5 +112,22 @@ class ViewHelpers {
 
     public function isRouteActive($path, $exact = false) {
         return DI::getDefault()->get('Request')->isActive($path, $exact);
+    }
+
+    public function pageTitle($titlePart = '', $prepend = false) {
+        if ($titlePart !== '') {
+            if ($prepend) {
+                array_unshift($this->pageTitleParts, $titlePart);
+            }
+            else {
+                $this->pageTitleSeparator[] = $titlePart;
+            }
+        }
+
+        return implode($this->pageTitleSeparator, $this->pageTitleParts);
+    }
+
+    public function setPageTitleSeparator(string $separator) {
+        $this->pageTitleSeparator = $separator;
     }
 }
