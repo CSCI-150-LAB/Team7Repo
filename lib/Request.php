@@ -82,4 +82,16 @@ class Request implements IRequest {
 
 		return true;
 	}
+
+	public function getRequestType() {
+		return strtoupper($_SERVER['REQUEST_METHOD']);
+	}
+
+	public function isPost() {
+		return $this->getRequestType() === 'POST';
+	}
+
+	public function isGet() {
+		return $this->getRequestType() === 'GET';
+	}
 }
