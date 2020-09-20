@@ -29,7 +29,7 @@ Autoloader::init([
 		$di = DI::getDefault();
 		
 		$di->addScoped('Db', function() {
-			return new Db($_ENV['dbhost'], $_ENV['dbuser'], $_ENV['dbpass']);
+			return new Db($_ENV['dbhost'], $_ENV['dbuser'], $_ENV['dbpass'], $_ENV['dbname']);
 		});
 	})
 	->start();
