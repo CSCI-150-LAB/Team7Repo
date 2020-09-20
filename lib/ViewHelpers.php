@@ -1,6 +1,6 @@
 <?php
 
-class ViewHelpers {
+class ViewHelpers implements IViewHelpers {
     private $app;
     private $elementClasses = [];
     private $scripts;

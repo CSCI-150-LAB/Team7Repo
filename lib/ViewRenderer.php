@@ -20,7 +20,7 @@ class ViewRenderer implements IViewRenderer {
     }
 
     public function __call($fn, $args) {
-        $viewHelpers = DI::getDefault()->get('ViewHelpers');
+        $viewHelpers = DI::getDefault()->get('IViewHelpers');
 
         if (method_exists($viewHelpers, $fn)) {
             return $viewHelpers->$fn(...$args);

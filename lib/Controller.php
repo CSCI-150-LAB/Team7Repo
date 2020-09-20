@@ -1,11 +1,16 @@
 <?php
 
+/**
+ * @property mixed $viewHelpers
+ */
 class Controller {
     protected $layout = 'default';
-    private $request;
+    protected $viewHelpers;
+    protected $request;
     
-    public function __construct(Request $request) {
+    public function __construct(Request $request, IViewHelpers $viewHelpers) {
         $this->request = $request;
+        $this->viewHelpers = $viewHelpers;
     }
 
     public function get($name) {

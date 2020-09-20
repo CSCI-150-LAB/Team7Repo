@@ -8,12 +8,14 @@ class EnvLoader {
 
         $filePath = APP_ROOT . '/' . $file . '.env';
         if (!file_exists($filePath)) {
-            throw new Exception("{$file}.env could not be found");
+            file_put_contents($filePath, '');
         }
         
         $data = parse_ini_file($filePath, true, INI_SCANNER_TYPED);
-        foreach ($data as $key => $val) {
-            $_ENV[$key] = $val;
+        if ($data) {
+            foreach ($data as $key => $val) {
+                $_ENV[$key] = $val;
+            }
         }
     }
 }

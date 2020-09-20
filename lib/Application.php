@@ -40,7 +40,7 @@ class Application {
 
 	private function configureServices() {
 		$this->di->addTransient('ViewRenderer', $this->viewRendererClass);
-		$this->di->addScoped('ViewHelpers', $this->viewHelpersClass);
+		$this->di->addScoped('IViewHelpers', $this->viewHelpersClass);
 	}
 
 	public function bootstrap(callable $callable) : Application {
@@ -60,8 +60,8 @@ class Application {
 	}
 
 	public function setViewHelpersClass($class) {
-		if (!class_exists($class)) {
-			throw new Exception("{$class} does not exist");
+		if (!is_subclass_of($class, 'IViewHelpers')) {
+			throw new Exception("{$class} does not implement IViewHelpers");
 		}
 
 		$this->viewHelpersClass = $class;
