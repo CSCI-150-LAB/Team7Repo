@@ -34,7 +34,12 @@ class Db {
             return $this->conn->insert_id;
         }
         elseif ($result instanceof mysqli_result) {
-            return $result->fetch_assoc();
+            $rows = [];
+            while ($row = $result->fetch_assoc()) {
+                $rows[] = $row;
+            }
+
+            return $rows;
         }
         else {
             return false;
