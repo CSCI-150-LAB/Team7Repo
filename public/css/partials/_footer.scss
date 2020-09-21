@@ -1,0 +1,12 @@
+.footer {
+	text-align: center;
+	font-size: size(14);
+	margin-bottom: size(15);
+
+	a {
+		color: $dark;
+		&:hover {
+			color: $dark;
+		}
+	}
+}
