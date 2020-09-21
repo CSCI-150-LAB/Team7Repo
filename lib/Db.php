@@ -28,8 +28,6 @@ class Db {
             return $this->conn->real_escape_string($v);
         }, $args);
 
-        die(vsprintf($sql, $args));
-
         $result = $this->conn->query(vsprintf($sql, $args));
 
         if ($result === true) {
