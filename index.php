@@ -20,6 +20,7 @@ Autoloader::init([
 
 (new Application())
 	->bootstrap(function($app) {
+		session_start();
 		EnvLoader::load();
 
 		// Provide overrides
