@@ -150,7 +150,11 @@ class Model extends AnnotatedClass {
 				else {
 					$this->_exists = true;
 				}
+
+				return true;
 			}
+
+			return false;
 		}
 	}
 
@@ -175,6 +179,8 @@ class Model extends AnnotatedClass {
 					$this->_exists = false;
 				}
 			}
+
+			return $result === true;
 		}
 	}
 
