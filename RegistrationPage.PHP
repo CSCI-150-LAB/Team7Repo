@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <title>FeedbackLoop Registration</title>
     <style>
-                                                                                                                                <!--Insert padding on the left hand margin -->
+                                                                                                                                /* Insert padding on the left hand margin */
         form {
             padding-left: 50px;
         }
@@ -166,10 +166,10 @@
         <input type="submit" name="submit" value="Submit">                                                                      <!--Create a submit button to complete the form-->
     </form>                                                                                                                     <!--End form-->
     <?php
-    $serverName = "localhost";                                                                                                  // Variable for server name to pass to functions
-    $serverUser = "root";                                                                                                       // Variable for username on server to pass to function
-    $serverPass = "";                                                                                                           // Variable for password for server to pass to function
-    $dbName = "FeedbackLoop";                                                                                                   // Variable for database name to pass to function
+    $serverName = "fsu.dandi.dev";                                                                                              // Variable for server name to pass to functions
+    $serverUser = "fluser2020";                                                                                                 // Variable for username on server to pass to function
+    $serverPass = "Qd7Qbb2LgQ";                                                                                                 // Variable for password for server to pass to function
+    $dbName = "feedbackloop";                                                                                                   // Variable for database name to pass to function
 
     if ($firstError == "" && $lastError == "" && $emailError == "" && $passError == "" && $idError == "" && $roleError == "") { // Check that there are no errors
     $connect = new mysqli($serverName, $serverUser, $serverPass, $dbName);                                                      // Begin connection to Database server
