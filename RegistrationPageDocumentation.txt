@@ -1,0 +1,32 @@
+Documentation
+
+Registration Page:
+
+This page applies to all new users, Admin, Instructors, and Students alike. It will prompt the users for information
+and will then store the responses in the central database for future logins.
+
+The form asks for the following information from the users: 
+
+	- First Name
+	- Last Name
+	- Email (school/work email, e.g., example[at]mail.fresnostate.edu)
+	- Password
+	- ID Number
+	- Role at Institution (i.e., Admin, Instructor, Student)
+
+All of these fields are required to be filled out.
+
+Each of these (except for the Role at Institution) have extra entry requirements. For the first and last name, only letters
+and whitespace are allowed. Any special characters or numbers in these fields will prompt an error message to re-enter their
+information. The email must be entered in the proper format with the domain being either 'csufresno.edu' or 
+'mail.fresnostate.edu' to ensure only school/work emails are being used. If this is not the case with the user's input, an 
+error message will pop up to correct the entry. The requirements for the password are that it must be: between 8 - 16 characters 
+long, contain at least one uppercase letter, at least one lowercase letter, at least one number, and at least one special 
+character. The ID Number entered must only consist of numbers. If any letter or special character is found in the entry, an
+error message will display. Once the data is entered without error, the database will store each attribute in the table housing
+the user login information. 
+
+For specific descriptions on what each part of the program is doing, refer to the comments in RegistrationPage.PHP .
+
+NOTE: For security, '$_POST' is used over '$_GET' and any entered data is converted to HTML characters to avoid 
+attacks (e.g., malicious text insertions). 
