@@ -17,19 +17,12 @@
     </head>
     <body class="<?php echo $this->bodyClass(IS_LOCAL ? 'dev' : '') ?>">
         <header class="header">
-			<!-- TODO: Don't load user like this -->
-			<?php
-			$currentUser = null;
-			if (isset($_SESSION['logged_in_user'])) {
-				$currentUser = User::getByKey($_SESSION['logged_in_user']);
-			}
-			?>
-			<?php if ($currentUser) : ?>
-				<div class="user-bar">Hello, <a href="<?php echo $this->baseUrl("/User/Profile/{$currentUser->id}") ?>"><?php echo $currentUser->firstName ?></a>!</div>
+			<?php if ($currentUser = User::getCurrentUser()) : ?>
+				<div class="user-bar">Not <?php echo $currentUser->firstName ?>? <a href="<?php echo $this->baseUrl("/User/Logout") ?>">logout</a></div>
 			<?php endif; ?>
             <nav class="navbar navbar-expand-lg" role="navigation">
                 <div class="container">
-                    <a class="navbar-brand" href="<?php echo $this->baseUrl(); ?>">
+                    <a class="navbar-brand" href="<?php echo $this->baseUrl($currentUser ? "/User/Profile/{$currentUser->id}" : ""); ?>">
                         <img src="<?php echo $this->publicUrl('images/logo.png') ?>" class="img-fluid" alt="Minimal MVC">
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">

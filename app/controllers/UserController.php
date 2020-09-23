@@ -8,6 +8,11 @@ class UserController extends Controller {
 	}
 
 	public function RegisterAction() {
+		$currentUser = User::getCurrentUser();
+		if ($currentUser) {
+			return $this->redirect($this->viewHelpers->baseUrl("/User/Profile/{$currentUser->id}"));
+		}
+		
 		$errors = [];
 
 		if ($this->request->isPost()) {
@@ -34,8 +39,8 @@ class UserController extends Controller {
 				$user = User::fromArray($userData);
 
 				if ($user->save()) {
-					// TODO: refactor $_SESSION
-					$_SESSION['logged_in_user'] = $user->id;
+					User::loginUser($user);
+
 					return $this->redirect($this->viewHelpers->baseUrl("/User/Profile/{$user->id}"));
 				}
 				else {
@@ -54,7 +59,7 @@ class UserController extends Controller {
 	}
 
 	public function LogoutAction() {
-		unset($_SESSION['logged_in_user']);
+		User::loggoutUser();
 		return $this->redirect($this->viewHelpers->baseUrl('/User/Login'));
 	}
 }
