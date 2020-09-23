@@ -184,6 +184,10 @@ class Model extends AnnotatedClass {
 		}
 	}
 
+	public function doesExist() {
+		return $this->_exists;
+	}
+
 	protected static function Table(&$tableMeta, $tableName) {
 		$tableMeta['name'] = $tableName;
 	}
