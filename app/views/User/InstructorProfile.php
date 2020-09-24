@@ -6,7 +6,7 @@ if($user->preferred_title != NULL) {
 echo "$user->firstName $user->lastName's profile!</h1><br>";
 //Makes heading of professor's profile, with title if chosen
 if(($user->id == 2)) {
-    echo $this->partial('InstructorProfileEdit', ['user' => $user]);
+    echo "<button type = 'button' onclick = echo $this->partial('InstructorProfileEdit', ['user' => $user]);>Edit Profile</button>";
 }
 echo $this->baseUrl("/");
 echo    "<h3 class = 'iprofile'>$user->email</h3><br>
