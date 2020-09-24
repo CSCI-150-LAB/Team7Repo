@@ -1,14 +1,14 @@
 <?php
-/*if($user->department == NULL) {
-    return $this->redirect($this->viewHelpers->baseUrl("/User/InstructorProfileEdit/{$currentUser->id}"));
-}*/
 echo "<h1 class = 'iprofile'>Welcome to ";
 if($user->preferred_title != NULL) {
     echo $user->preferred_title." ";
 }
 echo "$user->firstName $user->lastName's profile!</h1><br>";
 //Makes heading of professor's profile, with title if chosen
-//if($user->id == )
+if(($user->id == 2)) {
+    echo $this->partial('InstructorProfileEdit', ['user' => $user]);
+}
+echo $this->baseUrl("/");
 echo    "<h3 class = 'iprofile'>$user->email</h3><br>
         <h3 class = 'iprofile'>$user->department</h3><br>";
 echo    "<h3 class = 'iprofile'>Teaching Styles</h3><br>
