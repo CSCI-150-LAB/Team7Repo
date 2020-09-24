@@ -3,6 +3,7 @@
 	echo '<pre>';
 	var_dump($user);
 	if($user->type == 'professor') {
+		$edit = False;
 		if($user->department == NULL) {
     		$edit = True;
 		}
