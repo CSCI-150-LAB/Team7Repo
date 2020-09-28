@@ -102,12 +102,24 @@ class Application {
 		$this->di->addScoped('IViewHelpers', $this->viewHelpersClass);
 	}
 
+	/**
+	 * Provides a location for developers to initialize helpers and register things with the dependency injection service
+	 *
+	 * @param callable $callable
+	 * @return Application
+	 */
 	public function bootstrap(callable $callable) : Application {
 		$callable($this);
 
 		return $this;
 	}
 
+	/**
+	 * Accepts a class that implements IRequest to replace default
+	 *
+	 * @param string $class
+	 * @return void
+	 */
 	public function setRequestClass($class) {
 		if (!is_subclass_of($class, 'IRequest')) {
 			throw new Exception("{$class} does not implement IRequest");
@@ -118,6 +130,12 @@ class Application {
 		return $this;
 	}
 
+	/**
+	 * Accepts a class that implements IViewHelpers to replace default
+	 *
+	 * @param string $class
+	 * @return void
+	 */
 	public function setViewHelpersClass($class) {
 		if (!is_subclass_of($class, 'IViewHelpers')) {
 			throw new Exception("{$class} does not implement IViewHelpers");
@@ -128,6 +146,12 @@ class Application {
 		return $this;
 	}
 
+	/**
+	 * Accepts a class that implements IViewRenderer to replace default
+	 *
+	 * @param string $class
+	 * @return void
+	 */
 	public function setViewRendererClass($class) {
 		if (!is_subclass_of($class, 'IViewRenderer')) {
 			throw new Exception("{$class} does not implement IViewRenderer");
@@ -147,6 +171,11 @@ class Application {
 		return $this->di;
 	}
 
+	/**
+	 * Sets up environment based error reporting levels
+	 *
+	 * @return void
+	 */
 	private function configureErrorReporting() {
 		$level = E_ALL ^ E_NOTICE;
 
@@ -157,6 +186,11 @@ class Application {
 		error_reporting($level);
 	}
 
+	/**
+	 * The entry point of the application
+	 *
+	 * @return void
+	 */
 	public function start() {
 		$this->configureServices();
 		$this->configureErrorReporting();
@@ -176,6 +210,12 @@ class Application {
 		$response->output();
 	}
 
+	/**
+	 * Handles the execution of routes
+	 *
+	 * @param Request $request
+	 * @return IResponse
+	 */
 	private function dispatch(Request $request) : IResponse {
 		$controllerClass = $request->getControllerName() . 'Controller';
 
@@ -211,6 +251,12 @@ class Application {
 		return $response;
 	}
 
+	/**
+	 * Handles the dispatching of 404ing routes
+	 *
+	 * @param Request $request
+	 * @return void
+	 */
 	private function handle404(Request $request) {
 		if ($request->getActionName() !== 'NotFound') {
 			return new Response_Forwarding($request->getControllerName() . '/NotFound');

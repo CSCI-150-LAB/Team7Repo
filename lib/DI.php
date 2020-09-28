@@ -5,6 +5,11 @@ class DI {
 	private $typeDict = [];
 	private $stackLevelExtra = 0;
 
+	/**
+	 * Returns a static instance
+	 *
+	 * @return DI
+	 */
 	public static function getDefault() {
 		if (is_null(self::$defaultInstance)) {
 			self::$defaultInstance = new self();
@@ -13,6 +18,13 @@ class DI {
 		return self::$defaultInstance;
 	}
 
+	/**
+	 * Registers a factory that must be called every time to generate the resource
+	 *
+	 * @param string $class
+	 * @param mixed $factory
+	 * @return void
+	 */
 	public function addTransient($class, $factory) {
 		if (!is_callable($factory) && !class_exists($factory)) {
 			throw new Exception('Factory provided is not a function or class name');
@@ -25,6 +37,13 @@ class DI {
 			};
 	}
 
+	/**
+	 * Registers a factory that will be called at most once to generate the resource
+	 *
+	 * @param string $class
+	 * @param mixed $factory
+	 * @return void
+	 */
 	public function addScoped($class, $factory) {
 		$cached = null;
 
@@ -45,12 +64,24 @@ class DI {
 		};
 	}
 
+	/**
+	 * Given a resource name, fetch or generate the service
+	 *
+	 * @param string $name
+	 * @return mixed
+	 */
 	public function get($name) {
 		return isset($this->typeDict[$name])
 			? $this->typeDict[$name]()
 			: null;
 	}
 
+	/**
+	 * Constructs a specified class, filling in the constructor parameters using the injection service
+	 *
+	 * @param string $class
+	 * @return mixed
+	 */
 	public function constructClass($class) {
 		try {
 			$this->stackLevelExtra = 1;
@@ -61,6 +92,13 @@ class DI {
 		}
 	}
 
+	/**
+	 * Calls a class method, filling in the method parameters using the injection service
+	 *
+	 * @param mixed $classOrInst
+	 * @param string $method
+	 * @return mixed
+	 */
 	public function callMethod($classOrInst, $method = '__construct') {
 		$refClass = new ReflectionClass($classOrInst);
 

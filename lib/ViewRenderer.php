@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class used to encapsulate of view files
+ */
 class ViewRenderer implements IViewRenderer {
     private $__output = '';
 

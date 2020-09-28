@@ -16,6 +16,12 @@ class Request implements IRequest {
 				? explode('/', $requestUri)
 				: []
 		);
+		foreach (range(0, 1) as $ndx) {
+			$routeParts[$ndx] = ucfirst(preg_replace_callback('/[^a-zA-Z0-9]+(\\w)/', function($matches) {
+				return strtoupper($matches[1]);
+			}, $routeParts[$ndx]));
+		}
+
 		list($this->controllerName, $this->actionName) = $routeParts;
 
 		$this->routeParams = array_map(function($p) {

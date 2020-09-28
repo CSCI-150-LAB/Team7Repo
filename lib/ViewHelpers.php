@@ -129,5 +129,14 @@ class ViewHelpers implements IViewHelpers {
 
     public function setPageTitleSeparator(string $separator) {
         $this->pageTitleSeparator = $separator;
-    }
+	}
+	
+	public function getCanonical() {
+		$request = DI::getDefault()->get('Request');
+		$etc = $request->getRouteParams()
+			? '/' . implode('/', $request->getRouteParams())
+			: '';
+
+		return $this->baseUrl("{$request->getControllerName()}/{$request->getActionName()}{$etc}");
+	}
 }

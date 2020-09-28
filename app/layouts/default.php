@@ -14,6 +14,7 @@
             $this->outputStyles();
             $this->outputScripts();
         ?>
+		<link rel="canonical" href="<?php echo $this->getCanonical() ?>" />
     </head>
     <body class="<?php echo $this->bodyClass(IS_LOCAL ? 'dev' : '') ?>">
         <header class="header">
