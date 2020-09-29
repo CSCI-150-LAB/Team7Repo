@@ -26,7 +26,10 @@ class User extends Model {
 
 	public $password;
 
-	public $activation;
+	/**
+	 * @Column('activation')
+	 */
+	public $key;
 
 	public $type;
 

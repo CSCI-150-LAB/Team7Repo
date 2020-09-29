@@ -62,4 +62,83 @@ class UserController extends Controller {
 		User::loggoutUser();
 		return $this->redirect($this->viewHelpers->baseUrl('/User/Login'));
 	}
+
+	public function ForgotPasswordAction() {
+		$emailed = false;
+		$errors = [];
+
+		if ($this->request->isPost()) {
+			$user = User::findOne('email = :0:', $_POST['email']);
+			if ($user) {
+				$user->key = hash('sha256', time());
+
+				if ($user->save()) {
+					//TODO: send email to the user
+				
+					$emailed = true;
+				}
+				else {
+					$errors[] = 'Unable to process your request at this time';
+				}
+			}
+			else {
+				$errors[] = 'Email not found';
+			}
+		}
+
+		return $this->view(compact('emailed', 'errors'));
+	}
+
+	public function ResetPasswordAction() {
+		$email = empty($_GET['email']) ? '' : $_GET['email'];
+		$key = empty($_GET['key']) ? '' : $_GET['key'];
+		$errors = [];
+
+		if ($email && $key) {
+			$user = User::findOne('email = :0: AND key = :1:', $email, $key);
+
+			if ($user) {
+				if ($this->request->isPost()) {
+					$fields = [
+						'pass',
+						'confirm-pass'
+					];
+		
+					$userData = [];
+					foreach ($fields as $prop) {
+						if (empty($_POST[$prop])) {
+							$errors[] = "{$prop} is required";
+						}
+						else {
+							$userData[$prop] = $_POST[$prop];
+						}
+					}
+					
+					if ($userData['pass'] !== $userData['confirm-pass']) {
+						$errors[] = 'Passwords must match';
+					}
+
+					if (!count($errors)) {
+						$user->password = hash('sha256', $userData['password']);
+						$user->key = null;
+						
+						if ($user->save()) {
+							return $this->redirect($this->viewHelpers->baseUrl('/User/Login'));
+						}
+						else {
+							$errors[] = 'Unable to update user password';
+						}
+					}
+				}
+			}
+			else {
+				$errors[] = 'User reset password request not found';
+			}
+
+			return $this->view(compact('errors'));
+		}
+		else {
+			return $this->redirect($this->viewHelpers->baseUrl('/User/Login'));
+		}
+	}
 }
