@@ -1,5 +1,4 @@
 <?php
-$profile = $user;
 echo "<h1 class = 'iprofile'>Welcome to ";
 if($profile->preferred_title != NULL) {
     echo $profile->preferred_title." ";
