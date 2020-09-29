@@ -2,7 +2,7 @@
 
 class InstructorController extends Controller {
 
-	public function EditProfileAction() {
+	public function InstructorProfileEditAction() {
         $currentUser = User::getCurrentUser();
 
 		if($this->request->isPost()) {
@@ -21,15 +21,15 @@ class InstructorController extends Controller {
 					$errors[] = "{$postField} is required";
 				}
 				else {
-					$userData[$prop] = $_POST[$postField];
+					$instructorUserData[$prop] = $_POST[$postField];
 				}
 			}
 
-			if (!count($errors)) {
-				$userprofile = InstructorUser::fromArray($userData);
-                $userData['instructorid'] = $currentUser;
-				if ($userprofile->save()) {
-					return $this->redirect($this->viewHelpers->baseUrl("/User/Profile/{$userprofile->instructorid}"));
+			if(!count($errors)) {
+                $instructorUserData['instructorid'] = $currentUser;
+				$instructorUserprofile = InstructorUser::fromArray($instructorUserData);
+				if($instructorUserprofile->save()) {
+					return $this->redirect($this->viewHelpers->baseUrl("/User/Profile/{$instructorUserprofile->instructorid}"));
 				}
 				else {
 					$errors[] = 'Failed to save the profile';
@@ -38,11 +38,5 @@ class InstructorController extends Controller {
 		}
 
 		return $this->view(['errors' => $errors]);
-	}
-
-	public function ProfileAction($userId = 0) {
-		$user = User::getByKey($userId);
-
-		return $this->view(['user' => $user]);
 	}
 }
