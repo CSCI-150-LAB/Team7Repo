@@ -48,4 +48,13 @@ class InstructorController extends Controller {
 
 		return $this->view(['errors' => $errors, 'edit' => True]);
 	} //If errors, return to edit profile page with errors
+
+	public function ViewProfileAction() {
+		$user = User::getCurrentUser();
+		return $this->redirect($this->viewHelpers->baseUrl("/Instructor/Profile/{$user->id}"));
+	}
+
+	public function EditProfileAction() {
+		return $this->redirect($this->viewHelpers->baseUrl('/Instructor/ProfileEdit'));
+	}
 }
