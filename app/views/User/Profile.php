@@ -6,7 +6,7 @@
 	if($user->type == 'professor') {
 		//If current user is an instructor, takes to instructor's profile page and passes all user data
 		$profile = InstructorUser::getByKey($user->id);
-		if($profile->department == NULL) {
+		if(($profile->department == NULL)) {
 			//If no profile set up, set edit to true to send to edit page
     		$edit = True;
 		}
