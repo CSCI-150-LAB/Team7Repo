@@ -35,8 +35,8 @@ class Model extends AnnotatedClass {
 		$queryArgs = [];
 		$key = reset($keys);
 		foreach ($tableMeta['keys'] as $keyProp) {
-			$query[] = "{$keyProp} = :{$keyProp}:";
-			$queryArgs[$keyProp] = $key;
+			$query[] = "{$keyProp} = :" . count($queryArgs) . ":";
+			$queryArgs[] = $key;
 			$key = next($keys);
 		}
 
