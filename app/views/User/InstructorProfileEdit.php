@@ -1,5 +1,5 @@
 <?php
-    echo    "<form method = 'POST'>
+    echo    "<form method = 'POST' action = '".$this->baseUrl('/Instructor/InstructorProfileEdit')."'>
             Department:
             <input type = 'text' name = 'department' value =".$user->department."><br>
 	        <br>

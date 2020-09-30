@@ -15,7 +15,8 @@ class InstructorController extends Controller {
                 'kines' => 'kines'
 			];
 
-			$userData = [];
+            $instructorUserData = [];
+            $errors = [];
 			foreach($fields as $prop => $postField) {
 				if(empty($_POST[$postField])) {
 					$errors[] = "{$postField} is required";
@@ -24,12 +25,14 @@ class InstructorController extends Controller {
 					$instructorUserData[$prop] = $_POST[$postField];
 				}
 			}
-
 			if(!count($errors)) {
-                $instructorUserData['instructorid'] = $currentUser;
-				$instructorUserprofile = InstructorUser::fromArray($instructorUserData);
+                $instructorUserData['instructorid'] = $currentUser->id;
+                $instructorUserprofile = InstructorUser::fromArray($instructorUserData);
+                //echo "<pre>";
+                //var_dump($instructorUserprofile);
+                //exit();
 				if($instructorUserprofile->save()) {
-					return $this->redirect($this->viewHelpers->baseUrl("/User/Profile/{$instructorUserprofile->instructorid}"));
+					return $this->redirect($this->viewHelpers->baseUrl("/User/Profile/{$currentUser->id}"));
 				}
 				else {
 					$errors[] = 'Failed to save the profile';

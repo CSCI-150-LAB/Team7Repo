@@ -6,6 +6,7 @@
 class InstructorUser extends Model {
 
 	/**
+	 * @Key
 	 * @Column('id')
 	 */
 	public $instructorid;
