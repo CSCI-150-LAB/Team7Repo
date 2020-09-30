@@ -26,18 +26,18 @@ class InstructorController extends Controller {
 				}
 			}
 			if(!count($errors)) {
-				$instructorUserprofile = InstructorUser::getByKey($currentUser->id);
-				if (!$instructorUserprofile) {
-					$instructorUserprofile = new InstructorUser();
-					$instructorUserprofile->instructorid = $currentUser->id;
+				$instructorUserProfile = InstructorUser::getByKey($currentUser->id);
+				if (!$instructorUserProfile) {
+					$instructorUserProfile = new InstructorUser();
+					$instructorUserProfile->instructorid = $currentUser->id;
 				}
 
 				foreach ($instructorUserData as $key => $val) {
-					$instructorUserprofile->$key = $val;
+					$instructorUserProfile->$key = $val;
 				}
 
-				if($instructorUserprofile->save()) {
-					return $this->redirect($this->viewHelpers->baseUrl("/User/Profile/{$currentUser->id}"));
+				if($instructorUserProfile->save()) {
+					return $this->redirect($this->viewHelpers->baseUrl("/User/Profile"));
 				}
 				else {
 					$errors[] = 'Failed to save the profile';
@@ -45,6 +45,6 @@ class InstructorController extends Controller {
 			}
 		}
 
-		return $this->view(['errors' => $errors]);
+		return $this->view(['errors' => $errors, 'edit' => True]);
 	}
 }
