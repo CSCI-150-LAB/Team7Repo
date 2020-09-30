@@ -339,7 +339,10 @@ class Model extends AnnotatedClass {
 		if ($exists) {
 			foreach ($tableMeta['keys'] as $keyProp) {
 				if (!isset($data[$keyProp])) {
-					throw new Exception("Required key {$keyProp} missing on existing record");
+					$keyProp = $tableMeta['columns'][$keyProp]['name'];
+					if (!isset($data[$keyProp])) {
+						throw new Exception("Required key {$keyProp} missing on existing record");
+					}
 				}
 			}
 		}
