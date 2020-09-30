@@ -1,5 +1,5 @@
 <?php
-    echo    "<form method = 'POST' action = '".$this->baseUrl('/Instructor/InstructorProfileEdit')."'>";
+    echo    "<form method = 'POST' action = '".$this->baseUrl('/Instructor/ProfileEdit')."'>";
             //Once submitted, save to database by sending to controller
     echo    "Department:
             <input type = 'text' name = 'department' value =".$profile->department.">";

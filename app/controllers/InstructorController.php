@@ -2,8 +2,8 @@
 
 class InstructorController extends Controller {
 
-	public function InstructorProfileEditAction() {
-        $currentUser = User::getCurrentUser();
+	public function ProfileEditAction() {
+		$currentUser = User::getCurrentUser();
 
 		if($this->request->isPost()) {
 			//If the page was directed by a POST form
@@ -49,12 +49,9 @@ class InstructorController extends Controller {
 		return $this->view(['errors' => $errors, 'edit' => True]);
 	} //If errors, return to edit profile page with errors
 
-	public function ViewProfileAction() {
-		$user = User::getCurrentUser();
-		return $this->redirect($this->viewHelpers->baseUrl("/Instructor/Profile/{$user->id}"));
-	}
+	public function ProfileAction($userId = 0) {
+		$user = User::getByKey($userId);
 
-	public function EditProfileAction() {
-		return $this->redirect($this->viewHelpers->baseUrl('/Instructor/ProfileEdit'));
+		return $this->view(['user' => $user]);
 	}
 }
