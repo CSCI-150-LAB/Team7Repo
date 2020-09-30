@@ -1,10 +1,12 @@
 <?php
-    echo    "<form method = 'POST' action = '".$this->baseUrl('/Instructor/InstructorProfileEdit')."'>
-            Department:
-            <input type = 'text' name = 'department' value =".$profile->department."><br>
-	        <br>
-            Preferred Title:
+    echo    "<form method = 'POST' action = '".$this->baseUrl('/Instructor/InstructorProfileEdit')."'>";
+            //Once submitted, save to database by sending to controller
+    echo    "Department:
+            <input type = 'text' name = 'department' value =".$profile->department.">";
+            //Input for user's department
+    echo    "Preferred Title:
             <input type = 'radio' name = 'name' value = 'Dr.'> Dr.  ";
+            //Selection of user's preferred title, autoselects if previously chosen
             if($profile->name == 'Dr.') {
                 echo "checked = 'checked'";
             }
@@ -27,6 +29,7 @@
     echo    "<br>
 	        Visual Style Usage:
             <input type = 'radio' name = 'visual' value = 'Primarily'> Primarily  ";
+            //Selection of user's visual style usage, autoselects if previously chosen
             if($profile->visual == 'primarily') {
                 echo "checked = 'checked'";
             }
@@ -45,6 +48,7 @@
     echo    "<br>
 	        Auditory Style Usage:
             <input type = 'radio' name = 'auditory' value = 'Primarily'> Primarily  ";
+            //Selection of user's auditory style usage, autoselects if previously chosen
             if($profile->auditory == 'primarily') {
                 echo "checked = 'checked'";
             }
@@ -63,6 +67,7 @@
     echo    "<br>
 	        Reading and Writing Style Usage:
             <input type = 'radio' name = 'readwrite' value = 'Primarily'> Primarily  ";
+            //Selection of user's reading/writing style usage, autoselects if previously chosen
             if($profile->read_write == 'primarily') {
                 echo "checked = 'checked'";
             }
@@ -81,6 +86,7 @@
     echo    "<br>
 	        Kinesthetic Style Usage:
             <input type = 'radio' name = 'kines' value = 'Primarily'> Primarily  ";
+            //Selection of user's kinesthetic style usage, autoselects if previously chosen
             if($profile->kines == 'primarily') {
                 echo "checked = 'checked'";
             }
@@ -98,5 +104,5 @@
             }
 	echo    "<br>
 	        <input type = 'submit' name = 'save changes' value = 'Save Changes'>
-        </form>";
+            </form>"; //Submit button
 ?>
