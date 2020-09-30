@@ -37,7 +37,7 @@ class InstructorUser extends Model {
     public $readwrite;
 
     /**
-	 * @Column('visual_style')
+	 * @Column('kinesthetic_style')
 	 */
 	public $kines;
 
