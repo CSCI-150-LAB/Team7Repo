@@ -38,7 +38,7 @@ class InstructorController extends Controller {
 				} //Sets profile values for user
 
 				if($instructorUserProfile->save()) {
-					return $this->redirect($this->viewHelpers->baseUrl("/User/Profile"));
+					return $this->redirect($this->viewHelpers->baseUrl("/Instructor/Profile/{$currentUser->id}"));
 				} //Redirects user to profile page
 				else {
 					$errors[] = 'Failed to save the profile';
@@ -46,12 +46,19 @@ class InstructorController extends Controller {
 			}
 		}
 
-		return $this->view(['errors' => $errors, 'edit' => True]);
+		return $this->redirect($this->viewHelpers->baseUrl("/Instructor/EditProfile/{$currentUser->id}"));
 	} //If errors, return to edit profile page with errors
 
 	public function ProfileAction($userId = 0) {
 		$user = User::getByKey($userId);
 
 		return $this->view(['user' => $user]);
+	} //Send to profile page of userId
+
+	public function EditProfileAction() {
+		$currentUser = User::getCurrentUser();
+		$userProfile = InstructorUser::getByKey($currentUser->id);
+
+		return $this->view(['profile' => $userProfile]);
 	}
 }
