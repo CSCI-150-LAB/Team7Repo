@@ -1,35 +1,20 @@
 <?php
-session_start();
- //Student information needs to be passed after registration and login page 
- //Not sure if this is correct 
-   $profileFirstName = $_POST['first'];
-   $profileLastName = $_POST['last'];
-   $profileID = $_POST['id'];
+    $profile = studentModel::getByKey($user->id);
+    if($profile->studentid == NULL) {
+        studentController::studentProfileEditAction();
+    }
+    echo "<h1 class = 'sprofile'>Welcome ";
+    if($profile->name != NULL) {
+        echo $profile->name." ";
+    }
 
+    echo $user->firstName." ".$user->lastName."'s profile!</h1><br>";
+    //Makes heading of professor's profile, with title if chosen
+    if($profile->studentid == $user->id) {
+        echo "<button type = 'button' onclick = '".studentController::EditProfileAction()."'>Edit Profile</button>";
+    } //Allows user to edit profile if current profile is the user's profile
+    echo    "<h3 class = 'sprofile'>$user->email</h3><br>
+            <h3 class = 'sprofile'>$profile->major</h3><br>";
+    echo    "<h3 class = 'sprofile'>Learning Styles</h3><br>
+            <table class = 'sprofile' id = 'learnstyles'>";
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Student Page </title>
-</head>
-<body>
-    <h1>You are in the student profile</h1>
-    <?php echo 'Hello' + $profileFirstName + $profileLastName?>; <!--Output Student first and last name -->
-
-    <br>
-    <h2>Preferred Learning Styles</h2>
-    <input type="radio" name="style" value="visual">
-    <label for="visual">Visual</label>
-    <input type="radio" name="style" value="audio">
-    <label for="audio">Audio</label>
-    <input type="radio" name="style" value="kinesthetic">
-    <label for="kinesthetic">Kinesthetic</label>
-    <input type="radio" name="style" value="reading/writing">
-    <label for="reading/writing">Reading/Writing</label>
-
-
-</body>
-</html>
