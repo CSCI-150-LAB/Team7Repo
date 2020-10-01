@@ -23,7 +23,7 @@ class UserController extends Controller {
 	public function RegisterAction() {
 		$currentUser = User::getCurrentUser();
 		if ($currentUser) {
-			return $this->redirect($this->viewHelpers->baseUrl("/User/Profile/{$currentUser->id}"));
+			return $this->redirect($currentUser->getProfileUrl());
 		}
 		
 		$errors = [];
@@ -54,7 +54,7 @@ class UserController extends Controller {
 				if ($user->save()) {
 					User::loginUser($user);
 
-					return $this->redirect($this->viewHelpers->baseUrl("/Student/Profile/{$user->id}")); 
+					return $this->redirect($user->getProfileUrl()); 
 				}
 				else {
 					$errors[] = 'Failed to save the profile';
