@@ -43,6 +43,29 @@ class User extends Model {
 	 */
 	public $createdAt;
 
+	/**
+	 * Returns the absolute url to this user's profile page
+	 *
+	 * @return string
+	 */
+	public function getProfileUrl() {
+		$suffix = '';
+		switch ($this->type) {
+			case 'student':
+				$suffix = "/Student/Profile/{$this->id}";
+				break;
+			case 'instructor':
+				$suffix = "/Instructor/Profile/{$this->id}";
+				break;
+			case 'admin':
+				$suffix = "/Admin/Profile/{$this->id}";
+				break;
+		}
+
+		$viewHelpers = DI::getDefault()->get('IViewHelpers');
+		return $viewHelpers->baseUrl($suffix);
+	}
+
 	public static function getCurrentUser() {
 		if (self::$currentUser === false) { 
 			if (isset($_SESSION['current_user'])) { //If a user is in session? 
