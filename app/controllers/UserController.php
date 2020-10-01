@@ -10,7 +10,7 @@ class UserController extends Controller {
 
 			if ($user) { //Logs in user 
 				User::loginUser($user);
-				return $this->redirect($this->viewHelpers->baseUrl('/Student/Profile/' . $user->id));
+				return $this->redirect($user->getProfileUrl());
 			}
 			else { //User was not found or email/password was mistyped
 				$errors[] = 'Email or password invalid';
