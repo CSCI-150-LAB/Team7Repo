@@ -1,13 +1,56 @@
 <?php
 
+/**
+ * The heart of the framework
+ */
 class Application {
+	/**
+	 * The relative path from the document root to this site root
+	 *
+	 * @var string $appDir
+	 */
 	private $appDir;
+
+	/**
+	 * The absolute path to this site
+	 *
+	 * @var string $baseUrl
+	 */
 	private $baseUrl;
+
+	/**
+	 * The server's original, cleaned $_SERVER['REQUEST_URI']
+	 *
+	 * @var string $requestUri
+	 */
 	private $requestUri;
+
+	/**
+	 * The application's dependency injector
+	 *
+	 * @var DI $di
+	 */
 	private $di;
 
+	/**
+	 * The class to be used for handling route requests
+	 *
+	 * @var string $requestClass
+	 */
 	private $requestClass = 'Request';
+
+	/**
+	 * The class to be attached to controllers and views for granting access to helpers
+	 *
+	 * @var string $viewHelpersClass
+	 */
 	private $viewHelpersClass = 'ViewHelpers';
+
+	/**
+	 * The class to be used for rendering of all views
+	 *
+	 * @var string $viewRendererClass
+	 */
 	private $viewRendererClass = 'ViewRenderer';
 
 	public function __construct() {
@@ -18,10 +61,21 @@ class Application {
 		$this->di->addScoped(Application::class, $this);
 	}
 
+	/**
+	 * Fetches the root url for the current detected site path
+	 *
+	 * @return string
+	 */
 	public function getBaseUrl() {
 		return $this->baseUrl;
 	}
 
+	/**
+	 * Processes the data in $_SERVER
+	 * Assigns $appDir, $baseUrl, $requestUri
+	 *
+	 * @return void
+	 */
 	private function parseServerVars() {
 		$this->appDir = substr(APP_ROOT, strlen($_SERVER['DOCUMENT_ROOT'])) . '/';
 		$this->appDir = str_replace('\\', '/', $this->appDir);
@@ -38,17 +92,34 @@ class Application {
 		$this->requestUri = urldecode($this->requestUri);
 	}
 
+	/**
+	 * Registers ViewRenderer and IViewHelper
+	 *
+	 * @return void
+	 */
 	private function configureServices() {
 		$this->di->addTransient('ViewRenderer', $this->viewRendererClass);
 		$this->di->addScoped('IViewHelpers', $this->viewHelpersClass);
 	}
 
+	/**
+	 * Provides a location for developers to initialize helpers and register things with the dependency injection service
+	 *
+	 * @param callable $callable
+	 * @return Application
+	 */
 	public function bootstrap(callable $callable) : Application {
 		$callable($this);
 
 		return $this;
 	}
 
+	/**
+	 * Accepts a class that implements IRequest to replace default
+	 *
+	 * @param string $class
+	 * @return void
+	 */
 	public function setRequestClass($class) {
 		if (!is_subclass_of($class, 'IRequest')) {
 			throw new Exception("{$class} does not implement IRequest");
@@ -59,6 +130,12 @@ class Application {
 		return $this;
 	}
 
+	/**
+	 * Accepts a class that implements IViewHelpers to replace default
+	 *
+	 * @param string $class
+	 * @return void
+	 */
 	public function setViewHelpersClass($class) {
 		if (!is_subclass_of($class, 'IViewHelpers')) {
 			throw new Exception("{$class} does not implement IViewHelpers");
@@ -69,6 +146,12 @@ class Application {
 		return $this;
 	}
 
+	/**
+	 * Accepts a class that implements IViewRenderer to replace default
+	 *
+	 * @param string $class
+	 * @return void
+	 */
 	public function setViewRendererClass($class) {
 		if (!is_subclass_of($class, 'IViewRenderer')) {
 			throw new Exception("{$class} does not implement IViewRenderer");
@@ -88,6 +171,11 @@ class Application {
 		return $this->di;
 	}
 
+	/**
+	 * Sets up environment based error reporting levels
+	 *
+	 * @return void
+	 */
 	private function configureErrorReporting() {
 		$level = E_ALL ^ E_NOTICE;
 
@@ -98,6 +186,11 @@ class Application {
 		error_reporting($level);
 	}
 
+	/**
+	 * The entry point of the application
+	 *
+	 * @return void
+	 */
 	public function start() {
 		$this->configureServices();
 		$this->configureErrorReporting();
@@ -117,6 +210,12 @@ class Application {
 		$response->output();
 	}
 
+	/**
+	 * Handles the execution of routes
+	 *
+	 * @param Request $request
+	 * @return IResponse
+	 */
 	private function dispatch(Request $request) : IResponse {
 		$controllerClass = $request->getControllerName() . 'Controller';
 
@@ -152,6 +251,12 @@ class Application {
 		return $response;
 	}
 
+	/**
+	 * Handles the dispatching of 404ing routes
+	 *
+	 * @param Request $request
+	 * @return void
+	 */
 	private function handle404(Request $request) {
 		if ($request->getActionName() !== 'NotFound') {
 			return new Response_Forwarding($request->getControllerName() . '/NotFound');

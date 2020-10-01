@@ -3,28 +3,35 @@
 // Naive ORM
 // Works well for simple cases
 
-/**
- *	/**
- *	 * @Table('users')
- *	 *\
- *	class User extends Model {
- *		/**
- *		 * @Key('Id')
- *		 * @AutoIncrement
- *		 *\
- *		public $id;
- *
- * 		/**
- *		 * @Column('created_at')
- *		 *\
- *		public $createdAt;
- *	}
- */
+// /**
+//  * @Table('users')
+//  *\
+// class User extends Model {
+// 	/**
+// 	 * @Key('Id')
+// 	 * @AutoIncrement
+// 	 *\
+// 	public $id;
+//
+// 	/**
+// 	 * @Column('created_at')
+// 	 *\
+// 	public $createdAt;
+// }
 
+/**
+ * A base class to be used for modeling database tables
+ */
 class Model extends AnnotatedClass {
 	protected static $tableMeta = [];
 	protected $_exists;
 
+	/**
+	 * Returns a single record by providing values for it's keys
+	 *
+	 * @param mixed ...$keys
+	 * @return static
+	 */
 	public static function getByKey(...$keys) {
 		$tableMeta = static::getTableMeta();
 		if (count($keys) != count($tableMeta['keys'])) {
@@ -43,6 +50,13 @@ class Model extends AnnotatedClass {
 		return static::findOne(implode(' AND ', $query), $queryArgs);
 	}
 
+	/**
+	 * Returns an array of matching records
+	 *
+	 * @param string $query
+	 * @param mixed ...$args
+	 * @return static[]
+	 */
 	public static function find($query, ...$args) {
 		if (count($args) == 1 && is_array($args[0])) {
 			$args = $args[0];
@@ -62,6 +76,13 @@ class Model extends AnnotatedClass {
 		return false;
 	}
 
+	/**
+	 * Fetches a single record from the provided query
+	 *
+	 * @param string $query
+	 * @param mixed ...$args
+	 * @return static
+	 */
 	public static function findOne($query, ...$args) {
 		if (count($args) == 1 && is_array($args[0])) {
 			$args = $args[0];
@@ -91,6 +112,11 @@ class Model extends AnnotatedClass {
 		}, $query);
 	}
 
+	/**
+	 * Saves the current model properties to the database
+	 *
+	 * @return void
+	 */
 	public function save() {
 		$tableMeta = static::getTableMeta();
 		$queryArgs = [];
@@ -158,6 +184,11 @@ class Model extends AnnotatedClass {
 		}
 	}
 
+	/**
+	 * Deletes the model from the database
+	 *
+	 * @return void
+	 */
 	public function delete() {
 		if ($this->_exists) {
 			$query = [];
@@ -184,6 +215,11 @@ class Model extends AnnotatedClass {
 		}
 	}
 
+	/**
+	 * Returns whether or not this model is mirrored in the database
+	 *
+	 * @return boolean
+	 */
 	public function doesExist() {
 		return $this->_exists;
 	}
@@ -228,6 +264,11 @@ class Model extends AnnotatedClass {
 		$columnMeta['databaseGenerated'] = true;
 	}
 
+	/**
+	 * Returns the observed properties about the model's table structure
+	 *
+	 * @return array
+	 */
 	public static function getTableMeta() {
 		if (!isset(self::$tableMeta[static::class])) {
 			$meta = [
@@ -286,6 +327,13 @@ class Model extends AnnotatedClass {
 		return self::$tableMeta[static::class];
 	}
 
+	/**
+	 * Creates a new instance of the model and fills it's properties from the given data
+	 *
+	 * @param array $data
+	 * @param boolean $exists
+	 * @return static
+	 */
 	public static function fromArray(array $data, $exists = false) {
 		$tableMeta = static::getTableMeta();
 		if ($exists) {

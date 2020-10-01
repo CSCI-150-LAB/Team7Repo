@@ -20,6 +20,13 @@ class Db {
         $this->conn->close();
     }
 
+	/**
+	 * Executes a MySQL query returning the result
+	 *
+	 * @param string $sql
+	 * @param mixed ...$args
+	 * @return mixed
+	 */
     public function query($sql, ...$args) {
 		if (count($args) == 1 && is_array($args[0])) {
 			$args = $args[0];
@@ -61,15 +68,30 @@ class Db {
         }
     }
 
+	/**
+	 * Gets the last error from the MySQL connection
+	 *
+	 * @return string
+	 */
     public function getLastError() {
         return $this->conn->error;
 	}
 	
+	/**
+	 * Begins a transaction on the MySQL connection
+	 *
+	 * @return void
+	 */
 	public function startTransaction() {
 		$this->conn->autocommit(false);
 		$this->trackingModels = true;
 	}
 
+	/**
+	 * Aborts the transaction and rollsback the database changes
+	 *
+	 * @return void
+	 */
 	public function abortTransaction() {
 		$this->conn->rollback();
 		$this->conn->autocommit(true);
@@ -77,6 +99,11 @@ class Db {
 		$this->trackingModels = false;
 	}
 
+	/**
+	 * Commits all the database changes to the MySQL server
+	 *
+	 * @return void
+	 */
 	public function commitTransaction() {
 		$this->conn->commit();
 		$this->conn->autocommit(true);
@@ -87,10 +114,22 @@ class Db {
 		$this->trackingModels = false;
 	}
 
+	/**
+	 * Returns whether or not the database is in transaction mode
+	 *
+	 * @return boolean
+	 */
 	public function isTrackingModels() {
 		return $this->trackingModels;
 	}
 
+	/**
+	 * Allows the database to update a model's "exist" flag when a transaction is committed
+	 *
+	 * @param boolean $exist
+	 * @param boolean $futureValue
+	 * @return void
+	 */
 	public function trackModel(&$exist, $futureValue) {
 		if ($this->trackingModels) {
 			$this->trackedModelsExistences[] = [&$exist, $futureValue];

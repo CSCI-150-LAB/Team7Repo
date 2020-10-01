@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class to load environment variables from local .env files
+ */
 class EnvLoader {
     static function load() {
         $file = IS_LOCAL

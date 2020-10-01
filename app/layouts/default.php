@@ -14,6 +14,7 @@
             $this->outputStyles();
             $this->outputScripts();
         ?>
+		<link rel="canonical" href="<?php echo $this->getCanonical() ?>" />
     </head>
     <body class="<?php echo $this->bodyClass(IS_LOCAL ? 'dev' : '') ?>">
         <header class="header">
@@ -22,7 +23,7 @@
 			<?php endif; ?>
             <nav class="navbar navbar-expand-lg" role="navigation">
                 <div class="container">
-                    <a class="navbar-brand" href="<?php echo $this->baseUrl($currentUser ? "/User/Profile/{$currentUser->id}" : ""); ?>">
+                    <a class="navbar-brand" href="<?php echo ($currentUser ? $currentUser->getProfileUrl() : $this->baseUrl()) ?>">
                         <img src="<?php echo $this->publicUrl('images/logo.png') ?>" class="img-fluid" alt="Minimal MVC">
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">

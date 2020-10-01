@@ -1,9 +1,17 @@
 <?php
 
+/**
+ * A base class that provides a basic framework for processing annotation comments
+ */
 class AnnotatedClass {
 	private static $annotationsMap = [];
 
-	public static function getAnnotations() {
+	/**
+	 * Analyzes the child class and returns the properties and any annotations found
+	 *
+	 * @return array
+	 */
+	protected static function getAnnotations() {
 		if (!isset(self::$annotationsMap[static::class])) {
 			self::$annotationsMap[static::class] = static::processClass();
 		}
@@ -11,6 +19,11 @@ class AnnotatedClass {
 		return self::$annotationsMap[static::class];
 	}
 
+	/**
+	 * Performs the actual analysis on the child class
+	 *
+	 * @return array
+	 */
     private static function processClass() {
         $reflector = new ReflectionClass(static::class);
 		$annotations = [
@@ -157,6 +170,13 @@ class AnnotatedClass {
         return $annotations;
     }
 
+	/**
+	 * Converts value strings to their real primitive value
+	 * Supports booleans and numbers
+	 *
+	 * @param string $input
+	 * @return mixed
+	 */
     private static function getDocBlockVar($input) {
 		if (strcasecmp($input, 'true') === 0) {
 			return true;
