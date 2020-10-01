@@ -2,7 +2,7 @@
 
 class studentController extends Controller {
 
-	public function studentProfileEditAction() {
+	public function ProfileEditAction() {
         $currentUser = User::getCurrentUser();
 
 		//If the page was directed by a POST form
@@ -48,12 +48,9 @@ class studentController extends Controller {
 		return $this->view(['errors' => $errors, 'edit' => True]);
 	} //If errors, return to edit profile page with errors
 
-	public function viewStudentProfileAction() {
-		$user = User::getCurrentUser();
-		return $this->redirect($this->viewHelpers->baseUrl("/User/studentPage/{$user->id}"));
-	}
+	public function ProfileAction($userId = 0) {
+		$user = User::getByKey($userId);
 
-	public function EditProfileAction() {
-		return $this->redirect($this->viewHelpers->baseUrl('/User/studentEdit'));
+		return $this->view(['user' => $user]);
 	}
 }
