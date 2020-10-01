@@ -2,9 +2,22 @@
 
 class UserController extends Controller {
 	public function LoginAction() {
-		// Process result from queries
+		$errors = [];
+		
+		if ($this->request->isPost()) {
+			//Searches for user email and password from database 
+			$user = User::findOne('email = :0: AND password = :1:', $_POST['email'], $_POST['password']);
 
-		return $this->view(['result' => 42]);
+			if ($user) { //Logs in user 
+				User::loginUser($user);
+				return $this->redirect($this->viewHelpers->baseUrl('/User/Profile/' . $user->id));
+			}
+			else { //User was not found or email/password was mistyped
+				$errors[] = 'Email or password invalid';
+			}
+		}
+
+		return $this->view(['errors' => $errors]);
 	}
 
 	public function RegisterAction() {
@@ -27,10 +40,10 @@ class UserController extends Controller {
 			$userData = [];
 			foreach ($fields as $prop => $postField) {
 				if (empty($_POST[$postField])) {
-					$errors[] = "{$postField} is required";
+					$errors[] = "{$postField} is required"; //if user left a input blank
 				}
 				else {
-					$userData[$prop] = $_POST[$postField];
+					$userData[$prop] = $_POST[$postField]; //Assign the credentials submitted by the user to that user
 				}
 			}
 
@@ -41,7 +54,7 @@ class UserController extends Controller {
 				if ($user->save()) {
 					User::loginUser($user);
 
-					return $this->redirect($this->viewHelpers->baseUrl("/User/Profile/{$user->id}"));
+					return $this->redirect($this->viewHelpers->baseUrl("/User/Profile/{$user->id}")); 
 				}
 				else {
 					$errors[] = 'Failed to save the profile';
@@ -58,8 +71,11 @@ class UserController extends Controller {
 		return $this->view(['user' => $user]);
 	}
 
+	
+
+
 	public function LogoutAction() {
 		User::loggoutUser();
-		return $this->redirect($this->viewHelpers->baseUrl('/User/Login'));
+		return $this->redirect($this->viewHelpers->baseUrl('/User/Login')); //Going back to log in page after logout 
 	}
 }

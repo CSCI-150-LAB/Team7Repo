@@ -41,12 +41,12 @@ class User extends Model {
 	public $createdAt;
 
 	public static function getCurrentUser() {
-		if (self::$currentUser === false) {
-			if (isset($_SESSION['current_user'])) {
-				self::$currentUser = User::getByKey($_SESSION['current_user']);
+		if (self::$currentUser === false) { 
+			if (isset($_SESSION['current_user'])) { //If a user is in session? 
+				self::$currentUser = User::getByKey($_SESSION['current_user']); //Then assign user to current user? 
 			}
 			else {
-				self::$currentUser = null;
+				self::$currentUser = null; //There is no current user 
 			}
 		}
 
@@ -59,7 +59,7 @@ class User extends Model {
 		}
 
 		self::$currentUser = $userModel;
-		$_SESSION['current_user'] = $userModel->id;
+		$_SESSION['current_user'] = $userModel->id; 
 	}
 
 	public static function loggoutUser() {
