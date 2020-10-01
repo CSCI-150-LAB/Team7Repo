@@ -66,6 +66,15 @@ class User extends Model {
 		return $viewHelpers->baseUrl($suffix);
 	}
 
+	/**
+	 * Returns whether the user is the logged in user
+	 *
+	 * @return boolean
+	 */
+	public function isLoggedIn() {
+		return isset($_SESSION['current_user']) && $this->doesExist() && $this->id == $_SESSION['current_user'];
+	}
+
 	public static function getCurrentUser() {
 		if (self::$currentUser === false) { 
 			if (isset($_SESSION['current_user'])) { //If a user is in session? 
