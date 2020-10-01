@@ -46,19 +46,23 @@ class InstructorController extends Controller {
 			}
 		}
 
-		return $this->redirect($this->viewHelpers->baseUrl("/Instructor/EditProfile/{$currentUser->id}"));
+		return $this->redirect($this->viewHelpers->baseUrl("/Instructor/EditProfile"));
 	} //If errors, return to edit profile page with errors
 
 	public function ProfileAction($userId = 0) {
 		$user = User::getByKey($userId);
-
+		$currentUser = User::getCurrentUser();
+		$profile = InstructorUser::getByKey($currentUser->id);
+		if($profile == NULL) {
+			return $this->redirect($this->viewHelpers->baseUrl("/Instructor/EditProfile"));
+		}
 		return $this->view(['user' => $user]);
 	} //Send to profile page of userId
 
 	public function EditProfileAction() {
 		$currentUser = User::getCurrentUser();
-		$userProfile = InstructorUser::getByKey($currentUser->id);
+		$profile = InstructorUser::getByKey($currentUser->id);
 
-		return $this->view(['profile' => $userProfile]);
+		return $this->view(['profile' => $profile]);
 	}
 }

@@ -68,19 +68,19 @@
 	        Reading and Writing Style Usage:
             <input type = 'radio' name = 'readwrite' value = 'Primarily'> Primarily  ";
             //Selection of user's reading/writing style usage, autoselects if previously chosen
-            if($profile->read_write == 'primarily') {
+            if($profile->readwrite == 'primarily') {
                 echo "checked = 'checked'";
             }
     echo    "<input type = 'radio' name = 'readwrite' value = 'Somewhat'> Somewhat  ";
-            if($profile->read_write == 'somewhat') {
+            if($profile->readwrite == 'somewhat') {
                 echo "checked = 'checked'";
             }
     echo    "<input type = 'radio' name = 'readwrite' value = 'Minimal'> Minimal  ";
-            if($profile->read_write == 'minimal') {
+            if($profile->readwrite == 'minimal') {
                 echo "checked = 'checked'";
             }
     echo    "<input type = 'radio' name = 'readwrite' value = 'Not at all'> Not at all";
-            if($profile->read_write == 'not at all') {
+            if($profile->readwrite == 'not at all') {
                 echo "checked = 'checked'";
             }
     echo    "<br>

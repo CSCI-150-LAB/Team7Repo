@@ -1,9 +1,6 @@
 <?php
 $currentUser = User::getCurrentUser();
 $profile = InstructorUser::getByKey($user->id);
-if($profile->instructorid == NULL) {
-    $this->baseUrl('/Instructor/EditProfile');
-}
 echo "<h1 class = 'iprofile'>Welcome to ";
 if($profile->name != NULL) {
     echo $profile->name." ";
@@ -11,7 +8,7 @@ if($profile->name != NULL) {
 echo $user->firstName." ".$user->lastName."'s profile!</h1><br>";
 //Makes heading of professor's profile, with title if chosen
 if($profile->instructorid == $currentUser->id) {
-    echo "<button type = 'button' onclick = '".$this->baseUrl('/Instructor/EditProfile')."'>Edit Profile</button>";
+    echo "<a href = '".$this->baseUrl('/Instructor/EditProfile')."'>Edit Profile</a>";
 } //Allows user to edit profile if current profile is the user's profile
 echo    "<h3 class = 'iprofile'>$user->email</h3><br>
         <h3 class = 'iprofile'>$profile->department</h3><br>"; //Display's other instructor's information
