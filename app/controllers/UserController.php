@@ -70,10 +70,27 @@ class UserController extends Controller {
 		if ($this->request->isPost()) {
 			$user = User::findOne('email = :0:', $_POST['email']);
 			if ($user) {
-				$user->key = hash('sha256', time());
+				$user->key = hash('sha1', time());
 
 				if ($user->save()) {
-					//TODO: send email to the user
+					// Render email template
+					$viewRenderer = $this->get('ViewRenderer');
+					$emailTemplate = $viewRenderer->render([
+						APP_ROOT . '/app/emails/ForgotPassword.php' => [
+							'user' => $user,
+							'resetUrl' => $this->viewHelpers->baseUrl("/User/ResetPassword/{$user->email}/$user->key")
+						]
+					]);
+
+					mail(
+						$user->email,
+						'FeedbackLoop - Reset Password',
+						$emailTemplate,
+						[
+							'From' => 'noreply@dandi.dev',
+							'Content-type' => 'text/html;charset=UTF-8'
+						]
+					);
 				
 					$emailed = true;
 				}
@@ -89,10 +106,9 @@ class UserController extends Controller {
 		return $this->view(compact('emailed', 'errors'));
 	}
 
-	public function ResetPasswordAction() {
-		$email = empty($_GET['email']) ? '' : $_GET['email'];
-		$key = empty($_GET['key']) ? '' : $_GET['key'];
+	public function ResetPasswordAction($email = '', $key = '') {
 		$errors = [];
+		$reset = false;
 
 		if ($email && $key) {
 			$user = User::findOne('email = :0: AND key = :1:', $email, $key);
@@ -123,7 +139,7 @@ class UserController extends Controller {
 						$user->key = null;
 						
 						if ($user->save()) {
-							return $this->redirect($this->viewHelpers->baseUrl('/User/Login'));
+							$reset = true;
 						}
 						else {
 							$errors[] = 'Unable to update user password';
@@ -135,7 +151,7 @@ class UserController extends Controller {
 				$errors[] = 'User reset password request not found';
 			}
 
-			return $this->view(compact('errors'));
+			return $this->view(compact('errors', 'reset'));
 		}
 		else {
 			return $this->redirect($this->viewHelpers->baseUrl('/User/Login'));

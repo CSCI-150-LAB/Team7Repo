@@ -5,7 +5,7 @@
 
 				<?php if ($emailed) : ?>
 
-					We have emailed you are link needed to reset your password
+					We have emailed you the link needed to reset your password
 
 				<?php else : ?>
 
