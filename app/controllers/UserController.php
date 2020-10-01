@@ -53,8 +53,7 @@ class UserController extends Controller {
 
 				if ($user->save()) {
 					User::loginUser($user);
-
-					return $this->redirect($user->getProfileUrl()); 
+					return $this->redirect($user->getProfileUrl());
 				}
 				else {
 					$errors[] = 'Failed to save the profile';
