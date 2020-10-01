@@ -10,7 +10,7 @@ class UserController extends Controller {
 
 			if ($user) { //Logs in user 
 				User::loginUser($user);
-				return $this->redirect($this->viewHelpers->baseUrl('/User/Profile/' . $user->id));
+				return $this->redirect($this->viewHelpers->baseUrl('/Student/Profile/' . $user->id));
 			}
 			else { //User was not found or email/password was mistyped
 				$errors[] = 'Email or password invalid';
@@ -54,7 +54,7 @@ class UserController extends Controller {
 				if ($user->save()) {
 					User::loginUser($user);
 
-					return $this->redirect($this->viewHelpers->baseUrl("/User/Profile/{$user->id}")); 
+					return $this->redirect($this->viewHelpers->baseUrl("/Student/Profile/{$user->id}")); 
 				}
 				else {
 					$errors[] = 'Failed to save the profile';
