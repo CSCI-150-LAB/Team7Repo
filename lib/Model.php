@@ -218,7 +218,7 @@ class Model extends AnnotatedClass {
 	/**
 	 * Returns whether or not this model is mirrored in the database
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function doesExist() {
 		return $this->_exists;

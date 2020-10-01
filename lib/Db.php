@@ -126,8 +126,8 @@ class Db {
 	/**
 	 * Allows the database to update a model's "exist" flag when a transaction is committed
 	 *
-	 * @param bool $exist
-	 * @param bool $futureValue
+	 * @param boolean $exist
+	 * @param boolean $futureValue
 	 * @return void
 	 */
 	public function trackModel(&$exist, $futureValue) {

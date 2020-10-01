@@ -75,6 +75,11 @@ class User extends Model {
 		return isset($_SESSION['current_user']) && $this->doesExist() && $this->id == $_SESSION['current_user'];
 	}
 
+	/**
+	 * Fetches the current logged in user
+	 *
+	 * @return User|null
+	 */
 	public static function getCurrentUser() {
 		if (self::$currentUser === false) { 
 			if (isset($_SESSION['current_user'])) { //If a user is in session? 
@@ -88,6 +93,12 @@ class User extends Model {
 		return self::$currentUser;
 	}
 
+	/**
+	 * Logs in the given user
+	 *
+	 * @param User $userModel
+	 * @return void
+	 */
 	public static function loginUser(User $userModel) {
 		if (!$userModel->doesExist()) {
 			throw new Exception('User model has not been saved yet');
@@ -97,6 +108,11 @@ class User extends Model {
 		$_SESSION['current_user'] = $userModel->id; 
 	}
 
+	/**
+	 * Logs out the current user
+	 *
+	 * @return void
+	 */
 	public static function loggoutUser() {
 		self::$currentUser = null;
 		unset($_SESSION['current_user']);
