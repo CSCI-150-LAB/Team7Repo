@@ -62,4 +62,99 @@ class UserController extends Controller {
 		User::loggoutUser();
 		return $this->redirect($this->viewHelpers->baseUrl('/User/Login'));
 	}
+
+	public function ForgotPasswordAction() {
+		$emailed = false;
+		$errors = [];
+
+		if ($this->request->isPost()) {
+			$user = User::findOne('email = :0:', $_POST['email']);
+			if ($user) {
+				$user->key = hash('sha1', time());
+
+				if ($user->save()) {
+					// Render email template
+					$viewRenderer = $this->get('ViewRenderer');
+					$emailTemplate = $viewRenderer->render([
+						APP_ROOT . '/app/emails/ForgotPassword.php' => [
+							'user' => $user,
+							'resetUrl' => $this->viewHelpers->baseUrl("/User/ResetPassword/{$user->email}/$user->key")
+						]
+					]);
+
+					mail(
+						$user->email,
+						'FeedbackLoop - Reset Password',
+						$emailTemplate,
+						[
+							'From' => 'noreply@dandi.dev',
+							'Content-type' => 'text/html;charset=UTF-8'
+						]
+					);
+				
+					$emailed = true;
+				}
+				else {
+					$errors[] = 'Unable to process your request at this time';
+				}
+			}
+			else {
+				$errors[] = 'Email not found';
+			}
+		}
+
+		return $this->view(compact('emailed', 'errors'));
+	}
+
+	public function ResetPasswordAction($email = '', $key = '') {
+		$errors = [];
+		$reset = false;
+
+		if ($email && $key) {
+			$user = User::findOne('email = :0: AND key = :1:', $email, $key);
+
+			if ($user) {
+				if ($this->request->isPost()) {
+					$fields = [
+						'pass',
+						'confirm-pass'
+					];
+		
+					$userData = [];
+					foreach ($fields as $prop) {
+						if (empty($_POST[$prop])) {
+							$errors[] = "{$prop} is required";
+						}
+						else {
+							$userData[$prop] = $_POST[$prop];
+						}
+					}
+					
+					if ($userData['pass'] !== $userData['confirm-pass']) {
+						$errors[] = 'Passwords must match';
+					}
+
+					if (!count($errors)) {
+						$user->password = hash('sha256', $userData['password']);
+						$user->key = null;
+						
+						if ($user->save()) {
+							$reset = true;
+						}
+						else {
+							$errors[] = 'Unable to update user password';
+						}
+					}
+				}
+			}
+			else {
+				$errors[] = 'User reset password request not found';
+			}
+
+			return $this->view(compact('errors', 'reset'));
+		}
+		else {
+			return $this->redirect($this->viewHelpers->baseUrl('/User/Login'));
+		}
+	}
 }
