@@ -1,0 +1,27 @@
+{
+  "name": "feedbackloop",
+  "version": "1.0.0",
+  "description": "FeedbackLoop is a progressive web application that enables feedback communication between professors and students in order to enhance the learning experience in the classroom",
+  "main": "gulpfile.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CSCI-150-LAB/Team7Repo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CSCI-150-LAB/Team7Repo/issues"
+  },
+  "homepage": "https://github.com/CSCI-150-LAB/Team7Repo#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-sass": "^4.1.0"
+  }
+}
