@@ -10,6 +10,10 @@ Install gulp and node_modules by running these commands from the git repo root d
 npm i -g gulp-cli
 npm i
 ```
+Begin the SASS watcher for styling by running the following command from the root directory:
+```
+gulp watch
+```
 
 **Admin User**
 ``` 
