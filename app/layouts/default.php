@@ -3,7 +3,7 @@
         <title><?php echo $this->pageTitle('Minimal MVC', true) ?></title>
         <?php
             $this->styleEnqueue('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css');
-            $this->styleEnqueue('style', $this->publicUrl('css/style.min.css'), ['bootstrap']);
+	$this->styleEnqueue('style', $this->publicUrl('css/style.css'), ['bootstrap']);
             
             $this->scriptRegister('jquery-cdn', 'https://code.jquery.com/jquery-3.5.1.min.js');
             $this->scriptRegister('jquery', 'window.jQuery || document.write(\'<script src="' . $this->publicUrl('js/jquery-3.5.1.min.js') . '"><\/script>\')', ['jquery-cdn']);
