@@ -1,106 +1,128 @@
-<form method = 'POST' action = '<?php $this->baseUrl('/Instructor/ProfileEdit') ?>'>
+<form method = 'POST' action = <?php $this->baseUrl('/Instructor/ProfileEdit') ?>>
     <!--Once submitted, save to database by sending to controller-->
     Department:
-    <input type = 'text' name = 'department' value =".$profile->department.">
+    <input type = 'text' name = 'department' value = <?php $profile->department ?>>
+    <br>
     <!--Input for user's department-->
     Preferred Title:
-    <input type = 'radio' name = 'name' value = 'Dr.'> Dr.
     <!--Selection of user's preferred title, autoselects if previously chosen-->
+    <input type = 'radio' name = 'name' value = 'Dr.'
     <?php   if($profile->name == 'Dr.') {
                 echo "checked = 'checked'";
             } ?>
-    <input type = 'radio' name = 'name' value = 'Professor'> Professor
+    > Dr.
+    <input type = 'radio' name = 'name' value = 'Professor'
     <?php   if($profile->name == 'Professor') {
                 echo "checked = 'checked'";
             } ?>
-    <input type = 'radio' name = 'name' value = 'Mr.'> Mr.
+    > Professor
+    <input type = 'radio' name = 'name' value = 'Mr.'
     <?php   if($profile->name == 'Mr.') {
                 echo "checked = 'checked'";
             } ?>
-    <input type = 'radio' name = 'name' value = 'Mrs.'> Mrs.
+    > Mr.
+    <input type = 'radio' name = 'name' value = 'Mrs.'
     <?php   if($profile->name == 'Mrs.') {
                 echo "checked = 'checked'";
             } ?>
-    <input type = 'radio' name = 'name' value = 'Ms.'> Ms.
+    > Mrs.
+    <input type = 'radio' name = 'name' value = 'Ms.'
     <?php   if($profile->name == 'Ms.') {
                 echo "checked = 'checked'";
             } ?>
+    > Ms.
     <br>
 	Visual Style Usage:
-    <input type = 'radio' name = 'visual' value = 'Primarily'> Primarily
     <!--Selection of user's visual style usage, autoselects if previously chosen-->
+    <input type = 'radio' name = 'visual' value = 'Primarily'
     <?php   if($profile->visual == 'primarily') {
                 echo "checked = 'checked'";
             } ?>
-    <input type = 'radio' name = 'visual' value = 'Somewhat'> Somewhat
+    > Primarily
+    <input type = 'radio' name = 'visual' value = 'Somewhat'
     <?php   if($profile->visual == 'somewhat') {
                 echo "checked = 'checked'";
             } ?>
-    <input type = 'radio' name = 'visual' value = 'Minimal'> Minimal
+    > Somewhat
+    <input type = 'radio' name = 'visual' value = 'Minimal'
     <?php   if($profile->visual == 'minimal') {
                 echo "checked = 'checked'";
             } ?>
-    <input type = 'radio' name = 'visual' value = 'Not at all'> Not at all
+    > Minimal
+    <input type = 'radio' name = 'visual' value = 'Not at all'
     <?php   if($profile->visual == 'not at all') {
                 echo "checked = 'checked'";
             } ?>
+    > Not at all
     <br>
 	Auditory Style Usage:
-    <input type = 'radio' name = 'auditory' value = 'Primarily'> Primarily
     <!--Selection of user's auditory style usage, autoselects if previously chosen-->
+    <input type = 'radio' name = 'auditory' value = 'Primarily'
     <?php   if($profile->auditory == 'primarily') {
                 echo "checked = 'checked'";
             } ?>
-    <input type = 'radio' name = 'auditory' value = 'Somewhat'> Somewhat
+    > Primarily
+    <input type = 'radio' name = 'auditory' value = 'Somewhat'
     <?php   if($profile->auditory == 'somewhat') {
                 echo "checked = 'checked'";
             } ?>
-    <input type = 'radio' name = 'auditory' value = 'Minimal'> Minimal
+    > Somewhat
+    <input type = 'radio' name = 'auditory' value = 'Minimal'
     <?php   if($profile->visual == 'minimal') {
                 echo "checked = 'checked'";
             } ?>
-    <input type = 'radio' name = 'auditory' value = 'Not at all'> Not at all
+    > Minimal
+    <input type = 'radio' name = 'auditory' value = 'Not at all'
     <?php   if($profile->auditory == 'not at all') {
                 echo "checked = 'checked'";
             } ?>
+    > Not at all
     <br>
 	Reading and Writing Style Usage:
-    <input type = 'radio' name = 'readwrite' value = 'Primarily'> Primarily
     <!--Selection of user's reading/writing style usage, autoselects if previously chosen-->
+    <input type = 'radio' name = 'readwrite' value = 'Primarily'
     <?php   if($profile->readwrite == 'primarily') {
                 echo "checked = 'checked'";
             } ?>
-    <input type = 'radio' name = 'readwrite' value = 'Somewhat'> Somewhat
+    > Primarily
+    <input type = 'radio' name = 'readwrite' value = 'Somewhat'
     <?php   if($profile->readwrite == 'somewhat') {
                 echo "checked = 'checked'";
             } ?>
-    <input type = 'radio' name = 'readwrite' value = 'Minimal'> Minimal
+    > Somewhat
+    <input type = 'radio' name = 'readwrite' value = 'Minimal'
     <?php   if($profile->readwrite == 'minimal') {
                 echo "checked = 'checked'";
             } ?>
-    <input type = 'radio' name = 'readwrite' value = 'Not at all'> Not at all
+    > Minimal
+    <input type = 'radio' name = 'readwrite' value = 'Not at all'
     <?php   if($profile->readwrite == 'not at all') {
                 echo "checked = 'checked'";
             } ?>
+    > Not at all
     <br>
-	Kinesthetic Style Usage:
-    <input type = 'radio' name = 'kines' value = 'Primarily'> Primarily  ";
+    Kinesthetic Style Usage:
     <!--Selection of user's kinesthetic style usage, autoselects if previously chosen-->
+    <input type = 'radio' name = 'kines' value = 'Primarily'
     <?php   if($profile->kines == 'primarily') {
                 echo "checked = 'checked'";
             } ?>
-    <input type = 'radio' name = 'kines' value = 'Somewhat'> Somewhat
+    > Primarily
+    <input type = 'radio' name = 'kines' value = 'Somewhat'
     <?php   if($profile->kines == 'somewhat') {
                 echo "checked = 'checked'";
             } ?>
-    <input type = 'radio' name = 'kines' value = 'Minimal'> Minimal
+    > Somewhat
+    <input type = 'radio' name = 'kines' value = 'Minimal'
     <?php   if($profile->kines == 'minimal') {
                 echo "checked = 'checked'";
             } ?>
-    <input type = 'radio' name = 'kines' value = 'Not at all'> Not at all
+    > Minimal
+    <input type = 'radio' name = 'kines' value = 'Not at all'
     <?php   if($profile->kines == 'not at all') {
                 echo "checked = 'checked'";
             } ?>
+    > Not at all
 	<br>
 	<input type = 'submit' name = 'save changes' value = 'Save Changes'>
 </form> <!--Submit button-->
