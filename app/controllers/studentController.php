@@ -26,9 +26,9 @@ class studentController extends Controller {
             
 			if(!count($errors)) {
 				//Will get user after login
-				$studentProfile = studentModel::getByKey($currentUser->id);
+				$studentProfile = StudentModel::getByKey($currentUser->id);
 				if (!$studentProfile) {
-					$studentProfile = new studentModel();
+					$studentProfile = new StudentModel();
 					$studentProfile->studentid = $currentUser->id;
 				} //Checks for if there is a profile for this student. If not creates new student
 
