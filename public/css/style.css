@@ -39,7 +39,6 @@ body {
   color: #404040;
   font-size: 1rem;
   line-height: 1.7;
-  max-width: 1920px;
   margin: auto;
 }
 
@@ -154,8 +153,21 @@ h6 {
   font-size: 0.9375rem;
 }
 
-.header .user-bar {
-  text-align: right;
+.header {
+  background-color: #505050;
+}
+
+.header .navbar {
+  max-width: 1920px;
+  margin: auto;
+}
+
+.header .user-login-logout .nav-link {
+  color: #fff;
+}
+
+.header .user-login-logout .nav-link a {
+  color: #fff;
 }
 
 .navbar-toggler {
@@ -216,9 +228,14 @@ h6 {
 }
 
 .footer {
+  background-color: #fff;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   text-align: center;
   font-size: 0.875rem;
-  margin-bottom: 0.9375rem;
+  padding: 10px 0 10px 0;
 }
 
 .footer a {

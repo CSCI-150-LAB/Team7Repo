@@ -1,10 +1,18 @@
 <?php
 
-class InstructorController extends Controller {
+class InstructorController extends PermsController {
 
-	public function EditProfileAction() {
-		$currentUser = User::getCurrentUser();
-		$profile = InstructorModel::getByKey($currentUser->id);
+	/**
+	 * @IsInstructorUser
+	 * @MustBeLoggedIn
+	 * @IsCurrentUser
+	 */
+	public function EditProfileAction($userId = 0) {
+		$editUser = User::getByKey($userId);
+		/**
+		 * @var InstructorModel
+		 */
+		$profile = $editUser->getProfileModel();
 
 		if($this->request->isPost()) {
 			//If the page was directed by a POST form
@@ -28,18 +36,12 @@ class InstructorController extends Controller {
 				}
 			} //Check that all values are filled
 			if(!count($errors)) {
-				$instructorUserProfile = InstructorModel::getByKey($currentUser->id);
-				if (!$instructorUserProfile) {
-					$instructorUserProfile = new InstructorModel();
-					$instructorUserProfile->instructorid = $currentUser->id;
-				} //Checks for if there is already a profile for this user, if not creates new user
-
 				foreach ($instructorUserData as $key => $val) {
-					$instructorUserProfile->$key = $val;
+					$profile->$key = $val;
 				} //Sets profile values for user
 
-				if($instructorUserProfile->save()) {
-					return $this->redirect($this->viewHelpers->baseUrl("/Instructor/Profile/{$currentUser->id}"));
+				if($profile->save()) {
+					return $this->redirect($this->viewHelpers->baseUrl("/Instructor/Profile/{$profile->instructorid}"));
 				} //Redirects user to profile page
 				else {
 					$errors[] = 'Failed to save the profile';

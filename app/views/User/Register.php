@@ -40,8 +40,8 @@
 	<!--Input for role is a radio option stored as 'role'-->
 	<input type="radio" name="role" value="student">Student
 	<!--The first option is to set the role value to 'student'-->
-	<input type="radio" name="role" value="professor">Professor
-	<!--The second option is to set the role value to 'professor'-->
+	<input type="radio" name="role" value="instructor">Instructor
+	<!--The second option is to set the role value to 'instructor'-->
 	<input type="radio" name="role" value="admin">Admin
 	<!--The last option is to set the role value to 'admin'-->
 	<span style="color:red">* <?php echo $roleError; ?> </span>
