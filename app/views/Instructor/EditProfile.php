@@ -1,4 +1,4 @@
-<form method = 'POST' action = <?php $this->baseUrl('/Instructor/ProfileEdit') ?>>
+<form method = 'POST'>
     <!--Once submitted, save to database by sending to controller-->
     Department:
     <input type = 'text' name = 'department' value = <?php $profile->department ?>>
