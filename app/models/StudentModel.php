@@ -21,5 +21,7 @@ class StudentModel extends Model {
 	 */
 	public $learningStyle;
 
-
+	public function setUserId($userId) {
+		$this->studentid = $userId;
+	}
 }

@@ -4,7 +4,7 @@ class InstructorController extends Controller {
 
 	public function EditProfileAction() {
 		$currentUser = User::getCurrentUser();
-		$profile = InstructorUser::getByKey($currentUser->id);
+		$profile = InstructorModel::getByKey($currentUser->id);
 
 		if($this->request->isPost()) {
 			//If the page was directed by a POST form
@@ -28,9 +28,9 @@ class InstructorController extends Controller {
 				}
 			} //Check that all values are filled
 			if(!count($errors)) {
-				$instructorUserProfile = InstructorUser::getByKey($currentUser->id);
+				$instructorUserProfile = InstructorModel::getByKey($currentUser->id);
 				if (!$instructorUserProfile) {
-					$instructorUserProfile = new InstructorUser();
+					$instructorUserProfile = new InstructorModel();
 					$instructorUserProfile->instructorid = $currentUser->id;
 				} //Checks for if there is already a profile for this user, if not creates new user
 
@@ -53,7 +53,7 @@ class InstructorController extends Controller {
 	public function ProfileAction($userId = 0) {
 		$user = User::getByKey($userId);
 		$currentUser = User::getCurrentUser();
-		$profile = InstructorUser::getByKey($currentUser->id);
+		$profile = InstructorModel::getByKey($currentUser->id);
 		if($profile == NULL) {
 			return $this->redirect($this->viewHelpers->baseUrl("/Instructor/EditProfile"));
 		}

@@ -1,6 +1,6 @@
 <?php
 $currentUser = User::getCurrentUser();
-$profile = InstructorUser::getByKey($user->id);
+$profile = InstructorModel::getByKey($user->id);
 echo "<h1 class = 'iprofile'>Welcome to ";
 if($profile->name != NULL) {
     echo $profile->name." ";
