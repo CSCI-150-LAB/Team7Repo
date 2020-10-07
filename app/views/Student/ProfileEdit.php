@@ -6,5 +6,5 @@
     <input type="text" name="learningStyle">
     <label for="studentMajor">Enter your preferred learning style</label>
     <br>
-    <input type="submit" id="submit" value="Submit">
+	<button type="submit" class="btn btn-primary">Save Changes</button>
 </form>

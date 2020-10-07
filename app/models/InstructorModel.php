@@ -3,7 +3,7 @@
 /**
  * @Table('instructorprofile')
  */
-class InstructorUser extends Model {
+class InstructorModel extends Model {
 
 	/**
 	 * @Key
@@ -45,4 +45,8 @@ class InstructorUser extends Model {
 	 * @Column('rating')
 	 */
 	public $rating;
+
+	public function setUserId($userId) {
+		$this->instructorid = $userId;
+	}
 }

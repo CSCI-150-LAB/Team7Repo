@@ -13,7 +13,8 @@ require __DIR__ . '/lib/Autoloader.php';
 Autoloader::init([
 	__DIR__ . DIRECTORY_SEPARATOR . 'lib',
 	__DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'controllers',
-	__DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'models'
+	__DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'models',
+	__DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'lib'
 ]);
 
 /* Application Start */
@@ -32,5 +33,7 @@ Autoloader::init([
 		$di->addScoped('Db', function() {
 			return new Db($_ENV['dbhost'], $_ENV['dbuser'], $_ENV['dbpass'], $_ENV['dbname']);
 		});
+
+		define('HASH_PASSWORDS', false);
 	})
 	->start();

@@ -1,10 +1,10 @@
 <?php
 
-/**
- * @property mixed $viewHelpers
- */
-class Controller {
-    protected $layout = 'default';
+class Controller extends AnnotatedClass {
+	protected $layout = 'default';
+	/**
+	 * @var mixed
+	 */
     protected $viewHelpers;
     protected $request;
     

@@ -1,5 +1,5 @@
 <?php
-    $profile = studentModel::getByKey($user->id);
+    $profile = StudentModel::getByKey($user->id);
     echo "<h1 class = 'sprofile'>Welcome to ";
     if($profile->name != NULL) {
         echo $profile->name." ";

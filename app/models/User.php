@@ -44,6 +44,24 @@ class User extends Model {
 	public $createdAt;
 
 	/**
+	 * Retrieves the profile db model for the user type
+	 *
+	 * @return InstructorModel|StudentModel
+	 */
+	public function getProfileModel() {
+		$class = ucfirst($this->type) . 'Model';
+
+		$model = $class::getByKey($this->id);
+		if (!$model) {
+			$model = new $class();
+			$model->setUserId($this->id);
+			$model->save();
+		}
+
+		return $model;
+	}
+
+	/**
 	 * Returns the absolute url to this user's profile page
 	 *
 	 * @return string
