@@ -15,7 +15,7 @@
                 endforeach;
                 foreach($students as $student):?>
             <tr>
-                <td><?php echo $student->firstName." ".$student->lastName ?></td>
+                <td><a href = '<?php echo $this->baseUrl("/Student/Profile/{$student->id}") ?>'><?php echo $student->firstName." ".$student->lastName ?></a></td>
                 <td><?php echo $student->email ?></td>
             </tr>
         <?php endforeach; ?>

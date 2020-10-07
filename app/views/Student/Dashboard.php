@@ -34,7 +34,7 @@
 		            <th scope="row"> <?php echo $details[$i]->class ?> </th>
 		            <td> <?php echo $details[$i]->description ?> </td>
 		            <td> <?php echo $details[$i]->getClassTimeString()?> </td>
-		            <td> <?php echo $instructors[$i]->name . " " . $instructorsNames[$i]->firstName . " " . $instructorsNames[$i]->lastName ?> </td>
+		            <td> <a href = '<?php echo $this->baseUrl("/Instructor/Profile/{$details[$i]->instructorid}") ?>'><?php echo $instructors[$i]->name . " " . $instructorsNames[$i]->firstName . " " . $instructorsNames[$i]->lastName ?></a> </td>
 		            </tr>
 
                 <?php
