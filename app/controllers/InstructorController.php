@@ -57,7 +57,7 @@ class InstructorController extends PermsController {
 		$currentUser = User::getCurrentUser();
 		$profile = InstructorModel::getByKey($user->id);
 		if($profile == NULL) {
-			if($user == $currentUser) {
+			if($user->id == $currentUser->id) {
 				return $this->redirect($this->viewHelpers->baseUrl("/Instructor/EditProfile"));
 			}
 			else {
@@ -120,6 +120,44 @@ class InstructorController extends PermsController {
 		$class = InstructorClasses::getByKey($classid);
 		return $this->view(['class' => $class]);
 	} //Send to class page of given class id
+
+	public function AddStudentAction($classid = 0) {
+		if($classid == 0) {
+			return $this->redirect($this->viewHelpers->baseUrl());
+		}
+		if($this->request->isPost()) {
+			//If the page was directed by a POST form
+			$fields = [
+				'email' => 'email'
+			]; //Add student's email
+
+            $errors = [];
+			foreach($fields as $prop => $postField) {
+				if(empty($_POST[$postField])) {
+					$errors[] = "{$postField} is required";
+				}
+				else {
+					$student = User::find("email =:0:", $_POST['email']);
+					$user = User::getByKey($student[0]->id);
+				}
+			} //Check that all values are filled
+			if(!count($errors)) {
+				$studentClass = new studentClasses();
+				$studentClass->classId = $classid;
+				$studentClass->studentId = $user->id;
+				//Add new student to the class
+
+				if($studentClass->save()) {
+					return $this->redirect($this->viewHelpers->baseUrl("/Instructor/ViewClass/{$classid}"));
+				} //Redirects user to main page
+				else {
+					$errors[] = 'Failed to save the profile';
+				} //If errors, save error
+			}
+			
+		}
+		return $this->view(['errors' => $errors, 'classid' => $classid, 'student' =>$studentClass->studentId]);
+	}
 
 	public function DashboardAction() {
 		$user = User::getCurrentUser();
