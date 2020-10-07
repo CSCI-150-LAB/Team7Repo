@@ -133,4 +133,10 @@ class InstructorController extends Controller {
 		}
 		return $this->view(['errors' => $errors]);
 	}
+
+	public function ViewClassesAction() {
+		$currentUser = User::getCurrentUser();
+		$classes = InstructorClasses::getByKey($currentUser->id);
+		return $this->view->partial(['classes' => $classes]);
+	} //Show the list of classes instructor has
 }

@@ -21,3 +21,6 @@ echo    "<h3 class = 'iprofile'>Teaching Styles</h3><br>
                 <th>$profile->visual</th><th>$profile->auditory</th><th>$profile->readwrite</th><th>$profile->kines</th>
             </tr><br>"; //Display's instructor's preferred learning styles
 echo "<h3 class = 'iprofile'>Classes</h3><br>"; //Displays instructor's current classes
+if($profile->instructorid == $currentUser->id) {
+    echo "<a href = '".$this->baseUrl('/Instructor/AddClass')."'>Add Class</a>";
+} //Allows user to add a class if current profile is the user's profile
