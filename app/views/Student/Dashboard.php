@@ -2,8 +2,11 @@
     $user = User::getCurrentUser();
 ?>
 
-<h1 class="mb-3" style="background-image: url('images/mainbanner2.png'); width:100%; padding:60px; z-index:-1; color: #002e7d ">
+<h1 class="mb-3" style= "background-color: #13284c; padding:60px; color: #ffffff;">
 	Student Dashboard</h1>
+
+<h2 style="padding-left:60px; padding-top:25px;"> Enrolled Classes </h2> <br>
+
 
 <?php $classes = studentClasses::find("student_id = :0:", $user->id); ?>
 
