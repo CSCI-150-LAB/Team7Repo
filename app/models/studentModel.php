@@ -12,16 +12,6 @@ class studentModel extends Model {
 	public $studentid;
 
 	/**
-	 * @Column('first_name')
-	 */
-	public $studentFirstName;
-
-	/**
-	 * @Column('last_name')
-	 */
-	public $studentLastName;
-
-	/**
 	 * @Column('major')
 	 */
 	public $studentMajor;

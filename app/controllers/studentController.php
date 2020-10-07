@@ -8,11 +8,8 @@ class studentController extends Controller {
 		//If the page was directed by a POST form
 		if($this->request->isPost()) {
 			$fields = [
-				'studentid' => 'id',
-				'studentFirstName' => 'first', 
-				'studentLastName' => 'last',
                 'studentMajor' => 'major',
-				'learningstyle' => 'learningStyle'
+				'learningStyle' => 'learningStyle'
 			]; //Create an array of student information
 
             $studentData = [];
