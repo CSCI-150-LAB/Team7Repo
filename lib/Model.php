@@ -355,7 +355,9 @@ class Model extends AnnotatedClass {
 				$prop = $tableMeta['props'][$prop];
 			}
 
-			$record->$prop = $val;
+			if (property_exists($record, $prop)) {
+				$record->$prop = $val;
+			}
 		}
 
 		$record->_exists = $exists;
