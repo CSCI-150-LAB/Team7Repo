@@ -20,6 +20,7 @@ body.dev:after {
   content: "XS";
 }
 
+
 @media (min-width: 576px) {
   body.dev:after {
     content: "SM";
@@ -262,25 +263,4 @@ h6 {
 
 .footer a:hover {
   color: #404040;
-}
-
-.navbar2 {
-  padding: 24px;
-}
-
-.bg-light {
-  background-color: #c41230 !important;
-}
-
-.btn-secondary {
-  background-color: #13284c !important;
-  border-color: #13284c !important;
-}
-
-.navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show > .nav-lin {
-  color: #ffffff;
-}
-
-.border-dark {
-  border-color: #dee2e6 !important;
 }

@@ -100,7 +100,7 @@ class InstructorController extends PermsController {
 				} //Sets class values for class
 
 				if($instructorClass->save()) {
-					return $this->redirect($this->viewHelpers->baseUrl());
+					return $this->redirect($this->viewHelpers->baseUrl('/Instructor/Dashboard'));
 				} //Redirects user to main page
 				else {
 					$errors[] = 'Failed to save the profile';
@@ -111,8 +111,77 @@ class InstructorController extends PermsController {
 		return $this->view(['errors' => $errors]);
 	}
 
+	public function ViewClassAction($classid = 0) {
+		$class = InstructorClasses::getByKey($classid);
+		return $this->view(['class' => $class]);
+	} //Send to class page of given class id
+
 	public function DashboardAction() {
 		$user = User::getCurrentUser();
 		return $this->view(['user' => $user]);
+	}
+
+	public function SearchAction($search = '', $page = 1) {
+		if (isset($_GET['search'])) {
+			$search = $_GET['search'];
+		}
+		if (isset($_GET['page'])) {
+			$page = $_GET['page'];
+		}
+		if (!is_numeric($page)) {
+			$page = 1;
+		}
+		
+		$results = [];
+
+		if ($search !== '') {
+			/** @var Db */
+			$db = $this->get('Db');
+			$searchQuery = str_replace('%', '%%', $search);
+
+			$results = $db->query(
+				"
+				SELECT
+				(
+					IF(u.email LIKE :0:, 1, 0) + 
+					IF(u.first_name LIKE :0:, 1, 0) + 
+					IF(u.last_name LIKE :0:, 1, 0) + 
+					IF(CONCAT(u.first_name, ' ', u.last_name) LIKE :0:, 1, 0) +
+					IF(ip.department LIKE :0:, 0.2, 0) + 
+					IF(
+						(
+							SELECT
+								COUNT(*)
+							FROM
+								instructorclasses as ic
+							WHERE
+								ic.instructor_id = u.id AND
+								ic.class_title LIKE :0:
+						) > 0,
+						1,
+						0
+					)
+				) as score,
+				u.*
+				FROM
+					users as u
+				LEFT JOIN instructorprofile as ip ON
+					ip.id = u.id
+				WHERE
+					u.type = 'instructor'
+				HAVING
+					score > 0
+				ORDER BY
+					score DESC
+				LIMIT :1:, 10
+				",
+				"%{$searchQuery}%",
+				max(0, ($page - 1)) * 10
+			);
+
+			$results = array_map(['User', 'fromArray'], $results);
+		}
+
+		return $this->view(compact('search', 'results'));
 	}
 }

@@ -8,9 +8,8 @@
 
 	$this->scriptRegister('jquery-cdn', 'https://code.jquery.com/jquery-3.5.1.min.js');
 	$this->scriptRegister('jquery', 'window.jQuery || document.write(\'<script src="' . $this->publicUrl('js/jquery-3.5.1.min.js') . '"><\/script>\')', ['jquery-cdn']);
-	$this->scriptEnqueue('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js', ['jquery'], false);
-
-	// $this->scriptEnqueue('bootstrap');
+	$this->scriptRegister('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js', ['jquery']);
+	$this->scriptEnqueue('main', $this->publicUrl('js/main.js'), ['bootstrap'], false);
 
 	$this->outputStyles();
     $this->outputScripts();
@@ -21,7 +20,7 @@
 </head>
 
 <body class="<?php echo $this->bodyClass(IS_LOCAL ? 'dev' : '') ?>">
-    <nav class="navbar2 navbar navbar-expand-lg navbar-light bg-red">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-red">
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +30,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li>
-                <img src="<?php echo $this->publicUrl('images/fl.png') ?>" width="40" height="40">
+                <img src="<?php echo $this->publicUrl('images/fl.png')?>" width="40" height="40">
             </li>
             <?php if ($currentUser) : ?>
             <li class="nav-item active">
@@ -45,7 +44,7 @@
             </li>
             <?php endif; ?>
             <li class="nav-item active">
-                <a class="nav-link" href="#"> Search Instructors</a>
+                <a class="nav-link" href="<?php echo $this->baseUrl('/Instructor/Search') ?>"> Search Instructors</a>
             </li>
 
         </ul>

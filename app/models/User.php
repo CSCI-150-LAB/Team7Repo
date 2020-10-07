@@ -44,6 +44,15 @@ class User extends Model {
 	public $createdAt;
 
 	/**
+	 * Concatenates the full name
+	 *
+	 * @return string
+	 */
+	public function getFullName() {
+		return trim($this->firstName . ' ' . $this->lastName);
+	}
+
+	/**
 	 * Retrieves the profile db model for the user type
 	 *
 	 * @return InstructorModel|StudentModel
