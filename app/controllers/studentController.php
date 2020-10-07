@@ -8,9 +8,11 @@ class studentController extends Controller {
 		//If the page was directed by a POST form
 		if($this->request->isPost()) {
 			$fields = [
-                'major' => 'major',
-				'name' => 'name',
-				'learningstyle' => 'learningstyle'
+				'studentid' => 'id',
+				'studentFirstName' => 'first', 
+				'studentLastName' => 'last',
+                'studentMajor' => 'major',
+				'learningstyle' => 'learningStyle'
 			]; //Create an array of student information
 
             $studentData = [];
@@ -37,7 +39,7 @@ class studentController extends Controller {
 				} //Sets profile values for student
 
 				if($studentProfile->save()) {
-					return $this->redirect($this->viewHelpers->baseUrl("/User/studentPage"));
+					return $this->redirect($this->viewHelpers->baseUrl("/Student/Profile/{$currentUser->id}"));
 				} //Redirects student to profile page
 				else {
 					$errors[] = 'Failed to save the profile';
@@ -50,7 +52,6 @@ class studentController extends Controller {
 
 	public function ProfileAction($userId = 0) {
 		$user = User::getByKey($userId);
-
 		return $this->view(['user' => $user]);
 	}
 }
