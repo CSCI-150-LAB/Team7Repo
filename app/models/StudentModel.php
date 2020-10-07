@@ -3,7 +3,7 @@
 /**
  * @Table('studentprofile')
  */
-class studentModel extends Model {
+class StudentModel extends Model {
 
 	/**
 	 * @Key
@@ -21,5 +21,7 @@ class studentModel extends Model {
 	 */
 	public $learningStyle;
 
-
+	public function setUserId($userId) {
+		$this->studentid = $userId;
+	}
 }

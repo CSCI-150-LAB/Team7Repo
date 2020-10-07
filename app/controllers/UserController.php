@@ -1,12 +1,19 @@
 <?php
 
-class UserController extends Controller {
+class UserController extends PermsController {
+	/**
+	 * @MustNotBeLoggedIn
+	 */
 	public function LoginAction() {
 		$errors = [];
 		
 		if ($this->request->isPost()) {
 			//Searches for user email and password from database 
-			$user = User::findOne('email = :0: AND password = :1:', $_POST['email'], $_POST['password']);
+			$password = $_POST['password'];
+			if (HASH_PASSWORDS) {
+				$password = hash('sha256', $password);
+			}
+			$user = User::findOne('email = :0: AND password = :1:', $_POST['email'], $password);
 
 			if ($user) { //Logs in user 
 				User::loginUser($user);
@@ -20,6 +27,9 @@ class UserController extends Controller {
 		return $this->view(['errors' => $errors]);
 	}
 
+	/**
+	 * @MustNotBeLoggedIn
+	 */
 	public function RegisterAction() {
 		$currentUser = User::getCurrentUser();
 		if ($currentUser) {
@@ -49,6 +59,9 @@ class UserController extends Controller {
 
 			if (!count($errors)) {
 				$userData['createdAt'] = date('Y-m-d H:i:s');
+				if (HASH_PASSWORDS) {
+					$userData['password'] = hash('sha256', $userData['password']);
+				}
 				$user = User::fromArray($userData);
 
 				if ($user->save()) {
@@ -64,14 +77,14 @@ class UserController extends Controller {
 		return $this->view(['errors' => $errors]);
 	}
 
+	/**
+	 * @UserMustExist
+	 */
 	public function ProfileAction($userId = 0) {
 		$user = User::getByKey($userId);
 
-		return $this->view(['user' => $user]);
+		return $this->redirect($user->getProfileUrl());
 	}
-
-	
-
 
 	public function LogoutAction() {
 		User::loggoutUser();
@@ -150,7 +163,10 @@ class UserController extends Controller {
 					}
 
 					if (!count($errors)) {
-						$user->password = hash('sha256', $userData['password']);
+						if (HASH_PASSWORDS) {
+							$userData['password'] = hash('sha256', $userData['password']);
+						}
+						$user->password = $userData['password'];
 						$user->key = null;
 						
 						if ($user->save()) {

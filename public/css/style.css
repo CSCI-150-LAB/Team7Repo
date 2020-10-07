@@ -1,0 +1,286 @@
+.btn-secondary {
+  background-color: #13284c !important;
+  border-color: #13284c !important;
+}
+
+.bg-red {
+  background-color: #c41230;
+}
+
+body.dev:after {
+  position: fixed;
+  padding: .5rem;
+  bottom: 0;
+  left: 0;
+  z-index: 99999;
+  font-size: 0.875rem;
+  line-height: 1;
+  color: white;
+  background-color: black;
+  content: "XS";
+}
+
+@media (min-width: 576px) {
+  body.dev:after {
+    content: "SM";
+  }
+}
+
+@media (min-width: 768px) {
+  body.dev:after {
+    content: "MD";
+  }
+}
+
+@media (min-width: 992px) {
+  body.dev:after {
+    content: "LG";
+  }
+}
+
+@media (min-width: 1200px) {
+  body.dev:after {
+    content: "XL";
+  }
+}
+
+body {
+  color: #404040;
+  font-size: 1rem;
+  line-height: 1.7;
+  margin: auto;
+}
+
+@media (min-width: 768px) {
+  body {
+    font-size: 1.125rem;
+  }
+}
+
+a {
+  color: #2F578D;
+  transition: color 250ms;
+}
+
+a:visited, a:focus, a:hover {
+  color: #223f67;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1.875rem;
+}
+
+p {
+  margin-bottom: 1.875rem;
+}
+
+@media (min-width: 768px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 992px) {
+  h1 {
+    font-size: 3.125rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  h1 {
+    font-size: 3.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  h2 {
+    font-size: 2.1875rem;
+  }
+}
+
+@media (min-width: 992px) {
+  h2 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  h2 {
+    font-size: 3.125rem;
+  }
+}
+
+@media (min-width: 768px) {
+  h3 {
+    font-size: 1.875rem;
+  }
+}
+
+@media (min-width: 992px) {
+  h3 {
+    font-size: 2.1875rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  h3 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  h4 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 992px) {
+  h4 {
+    font-size: 1.5625rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  h4 {
+    font-size: 1.875rem;
+  }
+}
+
+h5 {
+  font-size: 1.125rem;
+}
+
+@media (min-width: 1200px) {
+  h5 {
+    font-size: 1.25rem;
+  }
+}
+
+h6 {
+  font-size: 0.9375rem;
+}
+
+/* .header {
+	background-color: rgb(80, 80, 80);
+
+	.navbar {
+		max-width: 1920px;
+		margin: auto;
+	}
+
+	.user-login-logout {
+		.nav-link {
+			color: #fff;
+
+			a {
+				color: #fff;
+			}
+		}
+	}
+} */
+.navbar {
+  padding: 24px;
+}
+
+.user-login-logout .nav-link {
+  color: #fff !important;
+}
+
+.navbar-toggler {
+  cursor: pointer;
+  border-radius: 0;
+  border: 0;
+  padding: 1rem 0.5625rem;
+  right: 0;
+  transition: background-color 250ms;
+  background-color: #404040;
+}
+
+.navbar-toggler:hover {
+  background-color: #272727;
+}
+
+.navbar-toggler[aria-expanded="true"] .icon-bar {
+  opacity: 0;
+}
+
+.navbar-toggler[aria-expanded="true"] .icon-bar-x {
+  opacity: 1;
+  transform: rotate(45deg);
+  transition: transform 250ms 150ms;
+}
+
+.navbar-toggler[aria-expanded="true"] .icon-bar-sneaky {
+  transform: rotate(-45deg);
+}
+
+.navbar-toggler .icon-bar {
+  position: relative;
+  background-color: #fff;
+  width: 32px;
+  height: 3px;
+  opacity: 1;
+  transform: rotate(0deg);
+  transition: transform 250ms;
+  top: 0;
+  display: block;
+  margin-top: 4px;
+}
+
+.navbar-toggler .icon-bar:first-child {
+  margin-top: 0;
+}
+
+.navbar-toggler .icon-bar.icon-bar-sneaky {
+  margin-top: -3px;
+}
+
+.navbar-toggler .icon-bar:nth-child(4) {
+  margin-bottom: 1px;
+}
+
+.navbar {
+  padding: 0;
+}
+
+.footer {
+  background-color: #fff;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.875rem;
+  padding: 10px 0 10px 0;
+}
+
+.footer a {
+  color: #404040;
+}
+
+.footer a:hover {
+  color: #404040;
+}
+
+.navbar2 {
+  padding: 24px;
+}
+
+.bg-light {
+  background-color: #c41230 !important;
+}
+
+.btn-secondary {
+  background-color: #13284c !important;
+  border-color: #13284c !important;
+}
+
+.navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show > .nav-lin {
+  color: #ffffff;
+}
+
+.border-dark {
+  border-color: #dee2e6 !important;
+}

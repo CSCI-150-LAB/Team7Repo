@@ -1,5 +1,28 @@
-.header {
-	.user-bar {
-		text-align: right;
+/* .header {
+	background-color: rgb(80, 80, 80);
+
+	.navbar {
+		max-width: 1920px;
+		margin: auto;
+	}
+
+	.user-login-logout {
+		.nav-link {
+			color: #fff;
+
+			a {
+				color: #fff;
+			}
+		}
+	}
+} */
+
+.navbar{
+	padding:24px;
+}
+
+.user-login-logout {
+	.nav-link {
+		color: #fff !important;
 	}
 }
