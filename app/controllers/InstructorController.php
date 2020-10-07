@@ -61,4 +61,8 @@ class InstructorController extends PermsController {
 		}
 		return $this->view(['user' => $user]);
 	} //Send to profile page of userId
+
+	public function DashboardAction() {
+		return $this->view();
+	}
 }

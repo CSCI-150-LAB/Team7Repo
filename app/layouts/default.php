@@ -8,92 +8,71 @@
 
 	$this->scriptRegister('jquery-cdn', 'https://code.jquery.com/jquery-3.5.1.min.js');
 	$this->scriptRegister('jquery', 'window.jQuery || document.write(\'<script src="' . $this->publicUrl('js/jquery-3.5.1.min.js') . '"><\/script>\')', ['jquery-cdn']);
-	$this->scriptRegister('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js', ['jquery']);
+	$this->scriptEnqueue('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js', ['jquery'], false);
 
-	$this->scriptEnqueue('bootstrap');
+	// $this->scriptEnqueue('bootstrap');
 
 	$this->outputStyles();
-	$this->outputScripts();
+    $this->outputScripts();
+    
+    $currentUser = User::getCurrentUser();
 	?>
 	<link rel="canonical" href="<?php echo $this->getCanonical() ?>" />
 </head>
 
 <body class="<?php echo $this->bodyClass(IS_LOCAL ? 'dev' : '') ?>">
-	<header class="header">
-		<?php
-			$currentUser = User::getCurrentUser();
-		?>
-		<nav class="navbar navbar-expand-lg navbar-dark">
-			<a class="navbar-brand" href="#">FeedbackLoop</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
+    <nav class="navbar2 navbar navbar-expand-lg navbar-light bg-red">
 
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav mr-auto">
-					<?php if ($currentUser) : ?>
-						<?php if ($currentUser->type == 'student') : ?>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Students
-							</a>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<a class="dropdown-item" href="#">Action</a>
-								<a class="dropdown-item" href="#">Another action</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#">Something else here</a>
-							</div>
-						</li>
-						<?php endif; ?>
-						<?php if ($currentUser->type == 'instructor') : ?>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Instructors
-							</a>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<a class="dropdown-item" href="#">Action</a>
-								<a class="dropdown-item" href="#">Another action</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#">Something else here</a>
-							</div>
-						</li>
-						<?php endif; ?>
-					<?php endif; ?>
-				</ul>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
 
-				<?php if ($currentUser) : ?>
-					<form class="form-inline my-2 my-lg-0">
-						<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-					</form>
-				<?php endif; ?>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li>
+                <img src="<?php echo $this->publicUrl('images/fl.png') ?>" width="40" height="40">
+            </li>
+            <?php if ($currentUser) : ?>
+            <li class="nav-item active">
+                <a class="nav-link" href="#"> My Dashboard </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#"> My Ratings </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#"> Resources </a>
+            </li>
+            <?php endif; ?>
+            <li class="nav-item active">
+                <a class="nav-link" href="#"> Search Instructors</a>
+            </li>
 
-				<ul class="navbar-nav ml-3 user-login-logout">
-					<?php if ($currentUser) : ?>
-					<li class="nav-item">
-						<span class="nav-link">Not <?php echo $currentUser->firstName ?>? <a href="<?php echo $this->baseUrl("/User/Logout") ?>">logout</a></span>
-					</li>
-					
-					<?php else : ?>
-					<li class="nav-item">
-						<a class="nav-link" href="<?php echo $this->baseUrl('/User/Login') ?>">Login / Register</a>
-					</li>
-					<?php endif; ?>
-				</ul>
-			</div>
-		</nav>
-	</header>
+        </ul>
+        <?php if ($currentUser) : ?>
+        <div class="dropdown form-inline my-2 my-lg-0">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <?php echo $currentUser->firstName ?>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="<?php echo $currentUser->getProfileUrl() ?>">View Profile</a>
+                <a class="dropdown-item" href="<?php echo $this->baseUrl('/User/Logout') ?>">Log Out</a>
+            </div>
+        </div>
+        <?php else : ?>
+            <ul class="navbar-nav ml-3 user-login-logout">
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo $this->baseUrl('/User/Login') ?>">Login / Register</a>
+                </li>
+            </ul>
+        <?php endif; ?>
+    </nav>
 
-	<div class="container my-5">
-		<?php echo $this->getContents() ?>
-	</div>
+    <div class="container">
+        <?php echo $this->getContents() ?>
+    </div>
 
-	<footer class="footer text-light bg-dark">
-		<div class="container">
-			<div class="copyright">This is where a copyright could go Team7.</div>
-		</div>
-	</footer>
-	<?php $this->outputScripts('footer') ?>
+	<?php $this->outputScripts(false) ?>
 </body>
 
 </html>

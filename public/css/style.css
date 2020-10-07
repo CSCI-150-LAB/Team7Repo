@@ -1,3 +1,12 @@
+.btn-secondary {
+  background-color: #13284c !important;
+  border-color: #13284c !important;
+}
+
+.bg-red {
+  background-color: #c41230;
+}
+
 body.dev:after {
   position: fixed;
   padding: .5rem;
@@ -153,21 +162,30 @@ h6 {
   font-size: 0.9375rem;
 }
 
-.header {
-  background-color: #505050;
+/* .header {
+	background-color: rgb(80, 80, 80);
+
+	.navbar {
+		max-width: 1920px;
+		margin: auto;
+	}
+
+	.user-login-logout {
+		.nav-link {
+			color: #fff;
+
+			a {
+				color: #fff;
+			}
+		}
+	}
+} */
+.navbar {
+  padding: 24px;
 }
 
-.header .navbar {
-  max-width: 1920px;
-  margin: auto;
-}
-
-.header .user-login-logout .nav-link {
-  color: #fff;
-}
-
-.header .user-login-logout .nav-link a {
-  color: #fff;
+.user-login-logout .nav-link {
+  color: #fff !important;
 }
 
 .navbar-toggler {
@@ -244,4 +262,25 @@ h6 {
 
 .footer a:hover {
   color: #404040;
+}
+
+.navbar2 {
+  padding: 24px;
+}
+
+.bg-light {
+  background-color: #c41230 !important;
+}
+
+.btn-secondary {
+  background-color: #13284c !important;
+  border-color: #13284c !important;
+}
+
+.navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show > .nav-lin {
+  color: #ffffff;
+}
+
+.border-dark {
+  border-color: #dee2e6 !important;
 }
