@@ -1,7 +1,7 @@
 <form method = 'POST' action = <?php $this->baseUrl('/Instructor/ProfileEdit') ?>>
     <!--Once submitted, save to database by sending to controller-->
     Department:
-    <input type = 'text' name = 'department' value = <?php $profile->department ?>>
+    <input type = 'text' name = 'department' <?php echo "value = '".$profile->department."'"; ?> >
     <br>
     <!--Input for user's department-->
     Preferred Title:

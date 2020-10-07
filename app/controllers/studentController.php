@@ -1,15 +1,23 @@
 <?php
 
-class studentController extends Controller {
+class studentController extends PermsController {
 
-	public function ProfileEditAction() {
-        $currentUser = User::getCurrentUser();
+	/**
+	 * @IsStudentUser
+	 * @MustBeLoggedIn
+	 * @IsCurrentUser
+	 */
+	public function ProfileEditAction($userId) {
+        $editUser = User::getByKey($userId);
+		/**
+		 * @var StudentModel
+		 */
+		$profile = $editUser->getProfileModel();
 
 		//If the page was directed by a POST form
 		if($this->request->isPost()) {
 			$fields = [
                 'major' => 'major',
-				'name' => 'name',
 				'learningstyle' => 'learningstyle'
 			]; //Create an array of student information
 
@@ -25,19 +33,12 @@ class studentController extends Controller {
             } //Check that all values are filled
             
 			if(!count($errors)) {
-				//Will get user after login
-				$studentProfile = studentModel::getByKey($currentUser->id);
-				if (!$studentProfile) {
-					$studentProfile = new studentModel();
-					$studentProfile->studentid = $currentUser->id;
-				} //Checks for if there is a profile for this student. If not creates new student
-
 				foreach ($studentData as $key => $val) {
-					$studentProfile->$key = $val;
+					$profile->$key = $val;
 				} //Sets profile values for student
 
-				if($studentProfile->save()) {
-					return $this->redirect($this->viewHelpers->baseUrl("/User/studentPage"));
+				if($profile->save()) {
+					return $this->redirect($editUser->getProfileUrl());
 				} //Redirects student to profile page
 				else {
 					$errors[] = 'Failed to save the profile';
@@ -45,7 +46,7 @@ class studentController extends Controller {
 			}
 		}
 
-		return $this->view(['errors' => $errors, 'edit' => True]);
+		return $this->view(['profile' => $profile, 'errors' => $errors, 'edit' => True]);
 	} //If errors, return to edit profile page with errors
 
 	public function ProfileAction($userId = 0) {
