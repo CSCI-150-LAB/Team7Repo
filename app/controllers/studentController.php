@@ -1,6 +1,6 @@
 <?php
 
-class StudentController extends Controller {
+class studentController extends Controller {
 
 	public function ProfileEditAction() {
         $currentUser = User::getCurrentUser();
@@ -25,9 +25,9 @@ class StudentController extends Controller {
             
 			if(!count($errors)) {
 				//Will get user after login
-				$studentProfile = StudentModel::getByKey($currentUser->id); 
+				$studentProfile = studentModel::getByKey($currentUser->id); 
 				if (!$studentProfile) {
-					$studentProfile = new StudentModel();
+					$studentProfile = new studentModel();
 					$studentProfile->studentid = $currentUser->id;
 				} //Checks for if there is a profile for this student. If not creates new student
 
