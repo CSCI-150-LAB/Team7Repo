@@ -17,8 +17,8 @@ class studentController extends PermsController {
 		//If the page was directed by a POST form
 		if($this->request->isPost()) {
 			$fields = [
-                'major' => 'major',
-				'learningstyle' => 'learningstyle'
+                'studentMajor' => 'major',
+				'learningStyle' => 'learningStyle'
 			]; //Create an array of student information
 
             $studentData = [];
@@ -51,7 +51,6 @@ class studentController extends PermsController {
 
 	public function ProfileAction($userId = 0) {
 		$user = User::getByKey($userId);
-
 		return $this->view(['user' => $user]);
 	}
 
