@@ -66,31 +66,11 @@ class InstructorController extends PermsController {
 		$currentUser = User::getCurrentUser();
 		if($this->request->isPost()) {
 			//If the page was directed by a POST form
-			$starthour = $_POST['starthour'];
-			$finhour = $_POST['finhour'];
-			$starttime = '';
-			$endtime = '';
-			if($_POST['start'] == 'AM') {
-				$starttime = $_POST['starthour'].':'.$_POST['startminute'].':00';
-			}
-			elseif($_POST['start'] == 'PM') {
-				$starttime = strval(intval($starthour)+12).':'.$_POST['startminute'].':00';
-			}
-			else {
-				$starttime = NULL;
-			}
-			if($_POST['fin'] == 'AM') {
-				$endtime = $_POST['finhour'].':'.$_POST['finminute'].':00';
-			}
-			elseif($_POST['fin'] == 'PM') {
-				$endtime = strval(intval($finhour)+12).':'.$_POST['finminute'].':00';
-			}
-			else {
-				$endtime = NULL;
-			}
 			$fields = [
 				'class' => 'class',
-				'description' => 'description'
+				'description' => 'description',
+				'starttime' => 'starttime',
+				'endtime' => 'endtime'
 			]; //Create an array of class information
 
             $classData = [];
@@ -103,14 +83,9 @@ class InstructorController extends PermsController {
 					$classData[$prop] = $_POST[$postField];
 				}
 			} //Check that all values are filled
-			if(empty($_POST['starthour']) || empty($_POST['startminute']) || empty($_POST['start']) || empty($_POST['finhour']) || empty($_POST['finminute']) || empty($_POST['fin'])) {
-				$errors[] = "start/end time is required";
-			} //Checks that class times are filled
 			if(!count($errors)) {
 				$instructorClass = new InstructorClasses();
 				$instructorClass->instructorid = $currentUser->id;
-				$instructorClass->starttime = $starttime;
-				$instructorClass->endtime = $endtime;
 				$instructorClass->Mon = $_POST['Mon'];
 				$instructorClass->Tue = $_POST['Tue'];
 				$instructorClass->Wed = $_POST['Wed'];
@@ -136,13 +111,8 @@ class InstructorController extends PermsController {
 		return $this->view(['errors' => $errors]);
 	}
 
-	public function ViewClassesAction() {
-		$currentUser = User::getCurrentUser();
-		$classes = InstructorClasses::getByKey($currentUser->id);
-		return $this->view->partial(['classes' => $classes]);
-	} //Show the list of classes instructor has
-	
 	public function DashboardAction() {
-		return $this->view();
+		$user = User::getCurrentUser();
+		return $this->view(['user' => $user]);
 	}
 }

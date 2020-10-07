@@ -5,6 +5,16 @@
  */
 class InstructorClasses extends Model {
 
+	const dayMap = [
+		'Mon' => 'M',
+		'Tue' => 'Tu',
+		'Wed' => 'W',
+		'Thur' => 'Th',
+		'Fri' => 'F',
+		'Sat' => 'Sa',
+		'Sun' => 'Su'
+	];
+
 	/**
 	 * @Key
 	 * @Column('class_id')
@@ -70,4 +80,19 @@ class InstructorClasses extends Model {
 	 * @Column('sunday')
 	 */
 	public $Sun;
+
+	public function getClassTimeString() {
+		$classTime = '';
+		foreach(self::dayMap as $prop => $day) {
+			if($this->$prop) {
+				$classTime .= $day;
+			}
+		}
+		$classTime .= ' ';
+		$stime = strtotime('2020-10-6 '.$this->starttime);
+		$classTime .= date('g:i A' ,$stime).' - ';
+		$ftime = strtotime('2020-10-6 '.$this->endtime);
+		$classTime .= date('g:i A' ,$ftime);
+		return $classTime;
+	}
 }

@@ -1,3 +1,4 @@
+<h1>Edit Your Profile</h1>
 <form method = 'POST'>
     <!--Once submitted, save to database by sending to controller-->
     Department:
