@@ -1,5 +1,3 @@
-
-<body style= "background-image: url(<?php echo $this->publicUrl('images/blueGradient.png')?>); background-size:100% 100%;">
 <div style= "padding-top: 150px; "> 
   <div class="card container" style="width: 18rem;">
     <div class="card-body">
@@ -26,6 +24,3 @@
     </div>
   </div>
 </div> 
-</body>
-
-    

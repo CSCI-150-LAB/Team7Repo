@@ -20,7 +20,6 @@ body.dev:after {
   content: "XS";
 }
 
-
 @media (min-width: 576px) {
   body.dev:after {
     content: "SM";
@@ -263,4 +262,8 @@ h6 {
 
 .footer a:hover {
   color: #404040;
+}
+
+body.user-c.login-a {
+  background-image: linear-gradient(#fff, #d0d0da, #13284c);
 }
