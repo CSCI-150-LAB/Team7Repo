@@ -31,7 +31,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li>
-                <img src="<?php echo $this->publicUrl('images/fl.png') ?>" width="40" height="40">
+                <img src="<?php echo $this->publicUrl('images/fl.png')?>" width="40" height="40">
             </li>
             <?php if ($currentUser) : ?>
             <li class="nav-item active">
