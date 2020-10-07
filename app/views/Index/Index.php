@@ -4,14 +4,13 @@
         <div class="row">
             <div class="col-md-8">
                 <article class="article">
-                    <h1>Wow!</h1>
-                    <p>wow. such aenean! plz full. wow! txt me. much text. very full! need swag! very layout. very ipsum! oh my word! oh my swag. oh my layout. want dolor. so text! go elit! so swag. such doge. wow. rate me, oh my swag. many amet. many consectetur. i iz cute?, very sit, very layout. wow! much design! yes master doge. wow, wow, such lorem! rate me. wow! many amet. i iz cute?, wow! yes master doge, such doge. such doge. plz doge! such word! such ipsum, yes master doge! very doge. i can haz text! go design! much layout. i can haz text! very doge. very sit,</p>
-                    <p>so adipiscing. yes master doge! very doge. such doge. such ipsum, much text. txt me. need word. such ipsum, oh my layout. much full, oh my layout. such aenean! wow, such word! rate me! plz doge! such lorem! such ipsum, much design! much design! so adipiscing. very full! such lorem! go elit! so swag. plz full. many amet. want dolor. much layout. wow, plz full. many design, such aenean! wow, go design! very ipsum! wow, i can haz text! plz full. oh my word! many consectetur. much text. very ipsum! much text. so text! plz full. so text! such ipsum, such doge. </p>
+                    <h1>Welcome to FeedbackLoop!</h1>
+                    <p>This website allows students to give feedback as a class is happening on different learning and teaching styles and any other feedback they feel is important either anonymously or not.  Professors and administrators can create profiles, organize students into classes, conduct feedback sessions, and view their students' feedback.  Administrators also have total control over professors and can moderate feedback, feedback sessions, and classes.</p>
                 </article>
             </div>
             <div class="col-md-4">
-                <h2>Sidebar?!</h2>
-                <p>many design, plz full. i can haz text! very ipsum! much layout. wow. very full! plz full. much full, many design, want dolor. such doge. such aenean! such aenean! plz doge! many design, very ipsum! need word. plz full. such doge. such word! much full, very full! need swag! such word! plz ipsum. very ipsum! many consectetur. so swag. very layout. wow! wow, need word. very full! so adipiscing. need word. wow! plz full. wow, such aenean! plz ipsum. go elit! plz full. many consectetur. need swag! much full, much full, many consectetur. such doge. </p>
+                <h2>About</h2>
+                <p>The idea of this project came from a couple of students who have both taught children and taken classes from professors.  They realized that having real-time feedback about how well the students are comprehending that can be anonoymous or not would help both students and teachers be more effective.</p>
             </div>
         </div>
 
@@ -20,9 +19,8 @@
                 <div class="card">
                     <img class="card-img-top" src="https://placeimg.com/640/400/tech" alt="Card image cap">
                     <div class="card-body">
-                        <h4 class="card-title">Card title</h4>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-info">Go somewhere</a>
+                        <h4 class="card-title">Visual Learning</h4>
+                        <p class="card-text">This learning style is where students best learn by seeing pictures.</p>
                     </div>
                 </div>
             </div>
@@ -30,9 +28,8 @@
                 <div class="card">
                     <img class="card-img-top" src="https://placeimg.com/640/400/people" alt="Card image cap">
                     <div class="card-body">
-                        <h4 class="card-title">Card title</h4>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-info">Go somewhere</a>
+                        <h4 class="card-title">Auditory Learning</h4>
+                        <p class="card-text">This learning style is where students best learn by listening.</p>
                     </div>
                 </div>
             </div>
@@ -40,9 +37,17 @@
                 <div class="card">
                     <img class="card-img-top" src="https://placeimg.com/640/400/arch" alt="Card image cap">
                     <div class="card-body">
-                        <h4 class="card-title">Card title</h4>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-info">Go somewhere</a>
+                        <h4 class="card-title">Reading/Writing Learning</h4>
+                        <p class="card-text">This learning style is where students best learn by reading information or writing notes or summaries.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <img class="card-img-top" src="https://placeimg.com/640/400/arch" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">Kinesthetic Learning</h4>
+                        <p class="card-text">This learning style is where students best learn by interacting with objects or the content through activities.</p>
                     </div>
                 </div>
             </div>
