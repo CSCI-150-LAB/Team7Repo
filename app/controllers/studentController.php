@@ -54,4 +54,11 @@ class studentController extends PermsController {
 
 		return $this->view(['user' => $user]);
 	}
+
+	public function DashboardAction($studentId = 1438) {
+
+		return $this->view();
+
+	}
+
 }
