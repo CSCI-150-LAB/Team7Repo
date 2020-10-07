@@ -11,9 +11,9 @@
 		echo "<a href='" . $this->baseUrl('/Student/ProfileEdit/' . $user->id) . "'>Edit Profile</a>";
     } //Allows user to edit profile if current profile is the user's profile
 
-    echo    "<h3 class = 'sprofile'>$user->email</h3><br>
-            <h3 class = 'sprofile'>$profile->studentMajor</h3><br>";
-    echo    "<h3 class = 'sprofile'>Learning Styles listed here</h3><br>";
-    echo    "<h3 class = 'sprofile'>Major listed here</h3><br>"
+    echo    "<h3 class = 'sprofile'>$user->email</h3><br>";
+           
+    echo    "<h3 class = 'sprofile'>Preferred Learning Style: $profile->learningStyle </h3><br>";
+    echo    "<h3 class = 'sprofile'>Major: $profile->studentMajor</h3>";
             
 ?>
