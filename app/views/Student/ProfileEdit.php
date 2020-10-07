@@ -1,6 +1,6 @@
 <form method="POST">
 	<h1>Student edit page</h1>
-    <input type="text" name="major">
+    <input type="text" name="major" value="<?php echo $this->escapeHtml($profile->studentMajor) ?>">
     <label for="studentMajor">Enter your major</label>
     <br>
     <input type="text" name="learningStyle">

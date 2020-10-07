@@ -3,7 +3,7 @@
 /**
  * @Table('studentprofile')
  */
-class studentModel extends Model {
+class StudentModel extends Model {
 
 	/**
 	 * @Key
