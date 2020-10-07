@@ -55,7 +55,7 @@ class InstructorController extends PermsController {
 	public function ProfileAction($userId = 0) {
 		$user = User::getByKey($userId);
 		$currentUser = User::getCurrentUser();
-		$profile = InstructorModel::getByKey($currentUser->id);
+		$profile = InstructorModel::getByKey($user->id);
 		if($profile == NULL) {
 			return $this->redirect($this->viewHelpers->baseUrl("/Instructor/EditProfile"));
 		}
