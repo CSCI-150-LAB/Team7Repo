@@ -100,7 +100,7 @@ class InstructorController extends PermsController {
 				} //Sets class values for class
 
 				if($instructorClass->save()) {
-					return $this->redirect($this->viewHelpers->baseUrl());
+					return $this->redirect($this->viewHelpers->baseUrl('/Instructor/Dashboard'));
 				} //Redirects user to main page
 				else {
 					$errors[] = 'Failed to save the profile';
@@ -110,6 +110,11 @@ class InstructorController extends PermsController {
 		}
 		return $this->view(['errors' => $errors]);
 	}
+
+	public function ViewClassAction($classid = 0) {
+		$class = InstructorClasses::getByKey($classid);
+		return $this->view(['class' => $class]);
+	} //Send to class page of given class id
 
 	public function DashboardAction() {
 		$user = User::getCurrentUser();

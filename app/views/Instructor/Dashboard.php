@@ -13,16 +13,16 @@
 <table class="table table-bordered">
 	<thead>
 		<tr>
-		<th scope="col"> Class </th>
-		<th scope="col"> Description </th>
-		<th scope="col"> Days/Times</th>
-		<th scope="col"> Student Enrollment</th>
+			<th scope="col"> Class </th>
+			<th scope="col"> Description </th>
+			<th scope="col"> Days/Times</th>
+			<th scope="col"> Student Enrollment</th>
 		</tr>
 	</thead>
 	<tbody>
         <?php foreach($classes as $class):?>
             <tr>
-                <td><?php echo $class->class ?></td>
+                <td><a href = '<?php echo $this->baseUrl("/Instructor/ViewClass/{$class->classid}") ?>'><?php echo $class->class ?></a></td>
                 <td><?php echo $class->description ?></td>
                 <td><?php echo $class->getClassTimeString() ?></td>
                 <td></td>
