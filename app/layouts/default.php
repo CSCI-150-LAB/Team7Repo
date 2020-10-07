@@ -12,7 +12,12 @@
 	$this->scriptEnqueue('main', $this->publicUrl('js/main.js'), ['bootstrap'], false);
 
 	$this->outputStyles();
-    $this->outputScripts();
+	$this->outputScripts();
+	
+	/** @var IRequest */
+	$request = DI::getDefault()->get('Request');
+	$this->bodyClass(strtolower($request->getControllerName()) . '-c');
+	$this->bodyClass(strtolower($request->getActionName()) . '-a');
     
     $currentUser = User::getCurrentUser();
 	?>
