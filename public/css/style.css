@@ -162,30 +162,29 @@ h6 {
   font-size: 0.9375rem;
 }
 
-/* .header {
-	background-color: rgb(80, 80, 80);
+form > .invalid-feedback,
+form > .valid-feedback {
+  display: block;
+}
 
-	.navbar {
-		max-width: 1920px;
-		margin: auto;
-	}
+form .radio-group > .invalid-feedback,
+form .radio-group > .valid-feedback,
+form .checkbox-group > .invalid-feedback,
+form .checkbox-group > .valid-feedback {
+  display: block;
+}
 
-	.user-login-logout {
-		.nav-link {
-			color: #fff;
-
-			a {
-				color: #fff;
-			}
-		}
-	}
-} */
 .navbar {
   padding: 24px;
 }
 
 .user-login-logout .nav-link {
   color: #fff !important;
+}
+
+.current-user-dropdown .dropdown-menu {
+  left: unset;
+  right: 0;
 }
 
 .navbar-toggler {
@@ -239,10 +238,6 @@ h6 {
 
 .navbar-toggler .icon-bar:nth-child(4) {
   margin-bottom: 1px;
-}
-
-.navbar {
-  padding: 0;
 }
 
 .footer {

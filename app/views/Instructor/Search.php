@@ -19,7 +19,9 @@
 			<div class="instructor-listing my-4 px-3 py-2 border">
 				<div class="d-flex align-items-center justify-content-between">
 					<h3><?php echo $profile->name . ' ' . $instructorUser->getFullName() ?></h3>
-					<p><?php echo $instructorUser->email ?></p>
+					<p class="text-right">
+						<?php echo $instructorUser->email ?><br><?php echo $profile->department ?>
+					</p>
 				</div>
 
 				<table class="table table-sm table-striped pl-5">

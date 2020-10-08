@@ -39,13 +39,13 @@
             </li>
             <?php if ($currentUser) : ?>
             <li class="nav-item active">
-                <a class="nav-link" href="#"> My Dashboard </a>
+                <a class="nav-link" href="<?php echo $currentUser->getDashboardUrl() ?>"> My Dashboard </a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="#"> My Ratings </a>
+                <a class="nav-link" href="javascript:void(0)"> My Ratings </a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="#"> Resources </a>
+                <a class="nav-link" href="javascript:void(0)"> Resources </a>
             </li>
             <?php endif; ?>
             <li class="nav-item active">
@@ -54,7 +54,7 @@
 
         </ul>
         <?php if ($currentUser) : ?>
-        <div class="dropdown form-inline my-2 my-lg-0">
+        <div class="dropdown form-inline my-2 my-lg-0 current-user-dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <?php echo $currentUser->firstName ?>
             </button>
