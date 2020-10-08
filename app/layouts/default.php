@@ -72,7 +72,7 @@
         <?php endif; ?>
     </nav>
 
-    <div class="container">
+    <div class="container my-3">
         <?php echo $this->getContents() ?>
     </div>
 
