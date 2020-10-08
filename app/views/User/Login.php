@@ -20,7 +20,9 @@
           <br> 
           <input type="submit" name="submit" value="Submit">
       </form>
-      <p> No account? <a href ='<?php echo $this->baseUrl('/User/Register') ?>'> Register here. </a> </p>
+      <p>
+		  No account? <a href ='<?php echo $this->baseUrl('/User/Register') ?>'>Register here.</a> Or, <a href="<?php echo $this->baseUrl('/User/ForgotPassword') ?>">Reset your password</a>
+	  </p>
     </div>
   </div>
 </div> 
