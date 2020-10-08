@@ -75,7 +75,7 @@
         <label class="form-check-label" for='visual2'>Somewhat</label>
     </div>
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" id='visual3' ame = 'visual' value = 'Minimal'
+        <input class="form-check-input" type="radio" id='visual3' name = 'visual' value = 'Minimal'
             <?php   if($profile->visual == 'minimal') {
                 echo "checked = 'checked'";
             } ?>
