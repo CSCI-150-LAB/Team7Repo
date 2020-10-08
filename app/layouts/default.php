@@ -1,7 +1,7 @@
 <html>
 
 <head>
-	<title><?php echo $this->pageTitle('Minimal MVC', true) ?></title>
+	<title><?php echo $this->pageTitle('FeedbackLoop', true) ?></title>
 	<?php
 	$this->styleEnqueue('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css');
 	$this->styleEnqueue('style', $this->publicUrl('css/style.css'), ['bootstrap']);
