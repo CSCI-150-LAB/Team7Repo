@@ -1,4 +1,3 @@
-<?php  ?>
 <h1>Add a New Class</h1>
 
 <form method="POST">

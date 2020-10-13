@@ -145,12 +145,12 @@ class InstructorController extends PermsController {
 				}
 			} //Check that all values are filled
 			if(!count($errors)) {
-				$studentClass = new studentClasses();
-				$studentClass->classId = $classid;
-				$studentClass->studentId = $user->id;
+				$studentClasses = new studentClasses();
+				$studentClasses->classId = $classid;
+				$studentClasses->studentId = $user->id;
 				//Add new student to the class
 
-				if($studentClass->save()) {
+				if($studentClasses->save()) {
 					return $this->redirect($this->viewHelpers->baseUrl("/Instructor/ViewClass/{$classid}"));
 				} //Redirects user to main page
 				else {
@@ -159,7 +159,7 @@ class InstructorController extends PermsController {
 			}
 			
 		}
-		return $this->view(['errors' => $errors, 'classid' => $classid, 'student' =>$studentClass->studentId]);
+		return $this->view(['errors' => $errors, 'classid' => $classid, 'student' =>$studentClasses->studentId]);
 	}
 
 	public function DashboardAction() {
