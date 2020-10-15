@@ -21,3 +21,9 @@ echo    "<h3 class = 'iprofile'>Teaching Styles</h3><br>
                 <th>$profile->visual</th><th>$profile->auditory</th><th>$profile->readwrite</th><th>$profile->kines</th>
             </tr>
         </table><br>"; //Display's instructor's preferred learning styles
+
+if ($profile->instructorid != $currentUser->id) { //Modify later if another instructor tries rating another?
+    $_SESSION['ratedInstructorId'] = $profile->instructorid;
+    echo "<a href = '".$this->redirect($this->baseUrl("/Student/AddReview/"))."'>Add Review</a>";
+} //If the user is not the instructor, ratings may be added
+?>

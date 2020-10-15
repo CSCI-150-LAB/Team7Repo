@@ -22,6 +22,11 @@ class InstructorRatings extends Model {
     public $recommendation;
 
     /**
+     * @Column('anon')
+     */
+    public $anon;
+
+    /**
      * @Column('author_id')
      */
     public $authorId;

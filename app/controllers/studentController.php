@@ -59,5 +59,53 @@ class studentController extends PermsController {
 		return $this->view();
 
 	}
+	
+	public function AddReviewAction() {
+		$currentUser = User::getCurrentUser();
+		if($this->request->isPost()) {
+			//If the page was directed by a POST form
+			$fields = [
+				'rating' => 'rating',
+				'recommendation' => 'recommendation',
+				'anon' => 'anon'
+			]; //Create an array to hold rating information
+
+			$ratingInfo = [];
+            $errors = [];
+			foreach($fields as $property => $postField) {
+				if(empty($_POST[$postField])) {
+					$errors[] = "{$postField} is required";
+				}
+				else {
+					$ratingInfo[$property] = $_POST[$postField];
+				}
+			} //Check that all values are filled
+			if(!count($errors)) {
+				$instructorRating = new InstructorRatings();
+				if ($ratingInfo['anon'] == 0) {
+					$instructorRating->authorId = $currentUser->id; //store user id if they don't want to be anonymous
+				}
+				else {
+					$instructorRating->authorId = 0; // make the id 0 if they want to be anonymous
+				}
+
+				$instructId = $_SESSION['ratedInstructorId'];
+
+				$instructorRating->instructorId = $instructId;
+
+				foreach ($ratingInfo as $key => $val) {
+					$instructorRating->$key = $val;
+				}
+
+				if($instructorRating->save()) {
+					return $this->redirect($this->viewHelpers->baseUrl("/Instructor/Profile/{$instructId}"));
+				} //Redirects user to instructor profile 
+				else {
+					$errors[] = 'Failed to save the rating';
+				} 
+			}
+		}
+		return $this->view(['errors' => $errors]);
+	}
 
 }
