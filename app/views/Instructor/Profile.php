@@ -31,5 +31,5 @@ if ($isStud[0]->type == 'student') {
 echo "<br><br><br>";
 
 //Will Instructors be able to view their reviews?
-echo "<a href = '".$this->baseUrl("/Instructor/ViewReview/{$profile->instructorid}")."'>View Reviews</a>";
+echo "<a href = '".$this->baseUrl("/Instructor/ViewReviews/{$profile->instructorid}")."'>View Reviews</a>";
 ?>
