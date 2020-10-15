@@ -24,6 +24,6 @@ echo    "<h3 class = 'iprofile'>Teaching Styles</h3><br>
 
 if ($profile->instructorid != $currentUser->id) { //Modify later if another instructor tries rating another?
     $_SESSION['ratedInstructorId'] = $profile->instructorid;
-    echo "<a href = '".$this->redirect($this->baseUrl("/Student/AddReview/{$profile->instructorid}"))."'>Add Review</a>";
+    echo "<a href = '".$this->baseUrl("/Student/AddReview/{$profile->instructorid}")."'>Add Review</a>";
 } //If the user is not the instructor, ratings may be added
 ?>
