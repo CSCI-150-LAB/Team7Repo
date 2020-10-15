@@ -22,8 +22,14 @@ echo    "<h3 class = 'iprofile'>Teaching Styles</h3><br>
             </tr>
         </table><br>"; //Display's instructor's preferred learning styles
 
-if ($profile->instructorid != $currentUser->id) { //Modify later if another instructor tries rating another?
-    $_SESSION['ratedInstructorId'] = $profile->instructorid;
+$isStud = User::find("id = :0:", $currentUser->id);
+
+if ($isStud[0]->type == 'student') {
     echo "<a href = '".$this->baseUrl("/Student/AddReview/{$profile->instructorid}")."'>Add Review</a>";
-} //If the user is not the instructor, ratings may be added
+} //If the user is a student, ratings may be added
+
+echo "<br><br><br>";
+
+//Will Instructors be able to view their reviews?
+echo "<a href = '".$this->baseUrl("/Instructor/ViewReview/{$profile->instructorid}")."'>View Reviews</a>";
 ?>
