@@ -60,7 +60,7 @@ class studentController extends PermsController {
 
 	}
 	
-	public function AddReviewAction() {
+	public function AddReviewAction($instructorId = 0) {
 		$currentUser = User::getCurrentUser();
 		if($this->request->isPost()) {
 			//If the page was directed by a POST form
@@ -89,19 +89,19 @@ class studentController extends PermsController {
 					$instructorRating->authorId = $currentUser->id; //store user id if they don't want to be anonymous
 				}
 
-				$instructId = $_SESSION['ratedInstructorId'];
+				//$instructId = $_SESSION['ratedInstructorId'];
 
-				$instructorRating->instructorId = $instructId;
+				$instructorRating->instructorId = $instructorId;
 
 				foreach ($ratingInfo as $key => $val) {
 					$instructorRating->$key = $val;
 				}
 
 				if($instructorRating->save()) {
-					return $this->redirect($this->viewHelpers->baseUrl("/Instructor/Profile/{$instructId}"));
+					return $this->redirect($this->viewHelpers->baseUrl("/Instructor/Profile/{$instructorId}"));
 				} //Redirects user to instructor profile 
 				else {
-					$errors[] = 'Failed to save the rating';
+					$errors[] = 'Failed to save the review';
 				} 
 			}
 		}
