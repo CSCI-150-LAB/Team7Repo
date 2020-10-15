@@ -31,11 +31,15 @@
                     ?>
 
                     <tr>
-		            <th scope="row"> <?php echo $details[$i]->class ?> </th>
-		            <td> <?php echo $details[$i]->description ?> </td>
-		            <td> <?php echo $details[$i]->getClassTimeString()?> </td>
+					<th scope="row"> <?php echo $details[$i]->class ?> </th>
+					<!--Display the title of the class-->
+					<td> <?php echo $details[$i]->description ?> </td>
+					<!--Display the description of the class-->
+					<td> <?php echo $details[$i]->getClassTimeString()?> </td>
+					<!--Display the time the class runs for-->
 		            <td> <a href = '<?php echo $this->baseUrl("/Instructor/Profile/{$details[$i]->instructorid}") ?>'><?php echo $instructors[$i]->name . " " . $instructorsNames[$i]->firstName . " " . $instructorsNames[$i]->lastName ?></a> </td>
-		            </tr>
+					<!--Display instructor name and link to their profile page-->	
+				</tr>
 
                 <?php
                 }

@@ -15,9 +15,8 @@ Rating (Stars):
     <br>
 
     Would you like this rating to be anonymous?
-    <input type = 'radio' name = 'anon' value = 1> Yes
-    <br>
-    <input type = 'radio' name = 'anon' value = 0> No
+    <input type = 'radio' name = 'anon' value = 'yes'> Yes
+    <input type = 'radio' name = 'anon' value = 'no'> No
 
     <br>
     <button type="submit" class="btn btn-primary">Add Review</button>

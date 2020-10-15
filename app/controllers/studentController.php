@@ -82,11 +82,11 @@ class studentController extends PermsController {
 			} //Check that all values are filled
 			if(!count($errors)) {
 				$instructorRating = new InstructorRatings();
-				if ($ratingInfo['anon'] == 0) {
-					$instructorRating->authorId = $currentUser->id; //store user id if they don't want to be anonymous
+				if ($ratingInfo['anon'] == 'yes') {
+					$instructorRating->authorId = 0; // make the id 0 if they want to be anonymous
 				}
 				else {
-					$instructorRating->authorId = 0; // make the id 0 if they want to be anonymous
+					$instructorRating->authorId = $currentUser->id; //store user id if they don't want to be anonymous
 				}
 
 				$instructId = $_SESSION['ratedInstructorId'];
