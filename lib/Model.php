@@ -162,7 +162,7 @@ class Model extends AnnotatedClass {
 
 			$db = DI::getDefault()->get('Db');
 			$result = $db->query("INSERT INTO {$tableMeta['name']} ({$columns}) VALUES ({$values})", $queryArgs);
-			if ($result) {
+			if ($result !== false) {
 				if (!is_bool($result)) {
 					if ($tableMeta['autoIncrement']) {
 						$autoProp = $tableMeta['autoIncrement'];

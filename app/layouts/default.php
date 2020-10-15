@@ -1,7 +1,7 @@
 <html>
 
 <head>
-	<title><?php echo $this->pageTitle('Minimal MVC', true) ?></title>
+	<title><?php echo $this->pageTitle('FeedbackLoop', true) ?></title>
 	<?php
 	$this->styleEnqueue('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css');
 	$this->styleEnqueue('style', $this->publicUrl('css/style.css'), ['bootstrap']);
@@ -12,7 +12,12 @@
 	$this->scriptEnqueue('main', $this->publicUrl('js/main.js'), ['bootstrap'], false);
 
 	$this->outputStyles();
-    $this->outputScripts();
+	$this->outputScripts();
+	
+	/** @var IRequest */
+	$request = DI::getDefault()->get('Request');
+	$this->bodyClass(strtolower($request->getControllerName()) . '-c');
+	$this->bodyClass(strtolower($request->getActionName()) . '-a');
     
     $currentUser = User::getCurrentUser();
 	?>
@@ -34,13 +39,13 @@
             </li>
             <?php if ($currentUser) : ?>
             <li class="nav-item active">
-                <a class="nav-link" href="#"> My Dashboard </a>
+                <a class="nav-link" href="<?php echo $currentUser->getDashboardUrl() ?>"> My Dashboard </a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="#"> My Ratings </a>
+                <a class="nav-link" href="javascript:void(0)"> My Ratings </a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="#"> Resources </a>
+                <a class="nav-link" href="javascript:void(0)"> Resources </a>
             </li>
             <?php endif; ?>
             <li class="nav-item active">
@@ -49,7 +54,7 @@
 
         </ul>
         <?php if ($currentUser) : ?>
-        <div class="dropdown form-inline my-2 my-lg-0">
+        <div class="dropdown form-inline my-2 my-lg-0 current-user-dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <?php echo $currentUser->firstName ?>
             </button>
@@ -67,7 +72,7 @@
         <?php endif; ?>
     </nav>
 
-    <div class="container">
+    <div class="container my-3">
         <?php echo $this->getContents() ?>
     </div>
 

@@ -128,3 +128,18 @@ h5 {
 h6 {
 	font-size: size(15);
 }
+
+form {
+	> .invalid-feedback,
+	> .valid-feedback {
+		display: block;
+	}
+
+	.radio-group,
+	.checkbox-group {
+		> .invalid-feedback,
+		> .valid-feedback {
+			display: block;
+		}
+	}
+}

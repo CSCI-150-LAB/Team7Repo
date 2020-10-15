@@ -70,27 +70,28 @@ class User extends Model {
 		return $model;
 	}
 
+	protected function getUserTypeController() {
+		return ucfirst($this->type);
+	}
+
 	/**
 	 * Returns the absolute url to this user's profile page
 	 *
 	 * @return string
 	 */
 	public function getProfileUrl() {
-		$suffix = '';
-		switch ($this->type) {
-			case 'student':
-				$suffix = "/Student/Profile/{$this->id}";
-				break;
-			case 'instructor':
-				$suffix = "/Instructor/Profile/{$this->id}";
-				break;
-			case 'admin':
-				$suffix = "/Admin/Profile/{$this->id}";
-				break;
-		}
-
 		$viewHelpers = DI::getDefault()->get('IViewHelpers');
-		return $viewHelpers->baseUrl($suffix);
+		return $viewHelpers->baseUrl("{$this->getUserTypeController()}/Profile/{$this->id}");
+	}
+
+	/**
+	 * Returns the absolute url to this user's dashboard page
+	 *
+	 * @return string
+	 */
+	public function getDashboardUrl() {
+		$viewHelpers = DI::getDefault()->get('IViewHelpers');
+		return $viewHelpers->baseUrl("{$this->getUserTypeController()}/Dashboard");
 	}
 
 	/**

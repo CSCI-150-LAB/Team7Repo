@@ -54,46 +54,54 @@ class InstructorController extends PermsController {
 
 	public function ProfileAction($userId = 0) {
 		$user = User::getByKey($userId);
-		$currentUser = User::getCurrentUser();
 		$profile = InstructorModel::getByKey($user->id);
 		if($profile == NULL) {
-			return $this->redirect($this->viewHelpers->baseUrl("/Instructor/EditProfile"));
+			if($user->isLoggedIn()) {
+				return $this->redirect($this->viewHelpers->baseUrl("/Instructor/EditProfile/{$user->id}"));
+			}
+			else {
+				return $this->redirect($this->viewHelpers->baseUrl());
+			}
 		}
 		return $this->view(['user' => $user]);
 	} //Send to profile page of userId
 
 	public function AddClassAction() {
 		$currentUser = User::getCurrentUser();
+		$errors = [];
+
 		if($this->request->isPost()) {
 			//If the page was directed by a POST form
 			$fields = [
-				'class' => 'class',
-				'description' => 'description',
-				'starttime' => 'starttime',
-				'endtime' => 'endtime'
+				'class' => 'Class Title',
+				'description' => 'Class Description',
+				'starttime' => 'Start time',
+				'endtime' => 'End time'
 			]; //Create an array of class information
 
-            $classData = [];
-            $errors = [];
-			foreach($fields as $prop => $postField) {
-				if(empty($_POST[$postField])) {
-					$errors[] = "{$postField} is required";
+			$classData = [];
+			$noDaysSelected = true;
+			foreach (InstructorClasses::dayMap as $field => $_) {
+				if (!empty($_POST[$field])) {
+					$classData[$field] = 1;
+					$noDaysSelected = false;
+				}
+			}
+			if ($noDaysSelected) {
+				$errors['days'] = 'Please pick a day the class meets';
+			}
+
+			foreach($fields as $prop => $errorStr) {
+				if(empty($_POST[$prop])) {
+					$errors[$prop] = "{$errorStr} is required";
 				}
 				else {
-					$classData[$prop] = $_POST[$postField];
+					$classData[$prop] = $_POST[$prop];
 				}
 			} //Check that all values are filled
 			if(!count($errors)) {
 				$instructorClass = new InstructorClasses();
 				$instructorClass->instructorid = $currentUser->id;
-				$instructorClass->Mon = $_POST['Mon'];
-				$instructorClass->Tue = $_POST['Tue'];
-				$instructorClass->Wed = $_POST['Wed'];
-				$instructorClass->Thur = $_POST['Thur'];
-				$instructorClass->Fri = $_POST['Fri'];
-				$instructorClass->Sat = $_POST['Sat'];
-				$instructorClass->Sun = $_POST['Sun'];
-				//Creates new class with nonrequired values
 
 				foreach ($classData as $key => $val) {
 					$instructorClass->$key = $val;
@@ -103,7 +111,7 @@ class InstructorController extends PermsController {
 					return $this->redirect($this->viewHelpers->baseUrl('/Instructor/Dashboard'));
 				} //Redirects user to main page
 				else {
-					$errors[] = 'Failed to save the profile';
+					$errors['_form'] = 'Failed to save the profile';
 				} //If errors, save error
 			}
 			
@@ -115,6 +123,44 @@ class InstructorController extends PermsController {
 		$class = InstructorClasses::getByKey($classid);
 		return $this->view(['class' => $class]);
 	} //Send to class page of given class id
+
+	public function AddStudentAction($classid = 0) {
+		if($classid == 0) {
+			return $this->redirect($this->viewHelpers->baseUrl());
+		}
+		if($this->request->isPost()) {
+			//If the page was directed by a POST form
+			$fields = [
+				'email' => 'email'
+			]; //Add student's email
+
+            $errors = [];
+			foreach($fields as $prop => $postField) {
+				if(empty($_POST[$postField])) {
+					$errors[] = "{$postField} is required";
+				}
+				else {
+					$student = User::find("email =:0:", $_POST['email']);
+					$user = User::getByKey($student[0]->id);
+				}
+			} //Check that all values are filled
+			if(!count($errors)) {
+				$studentClass = new studentClasses();
+				$studentClass->classId = $classid;
+				$studentClass->studentId = $user->id;
+				//Add new student to the class
+
+				if($studentClass->save()) {
+					return $this->redirect($this->viewHelpers->baseUrl("/Instructor/ViewClass/{$classid}"));
+				} //Redirects user to main page
+				else {
+					$errors[] = 'Failed to save the profile';
+				} //If errors, save error
+			}
+			
+		}
+		return $this->view(['errors' => $errors, 'classid' => $classid, 'student' => $studentClass->studentId]);
+	}
 
 	public function DashboardAction() {
 		$user = User::getCurrentUser();

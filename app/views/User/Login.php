@@ -1,5 +1,3 @@
-
-<body style= "background-image: url(<?php echo $this->publicUrl('images/blueGradient.png')?>); background-size:100% 100%;">
 <div style= "padding-top: 150px; "> 
   <div class="card container" style="width: 18rem;">
     <div class="card-body">
@@ -22,10 +20,9 @@
           <br> 
           <input type="submit" name="submit" value="Submit">
       </form>
-      <p> No account? <a href ='<?php echo $this->baseUrl('/User/Register') ?>'> Register here. </a> </p>
+      <p>
+		  No account? <a href ='<?php echo $this->baseUrl('/User/Register') ?>'>Register here.</a> Or, <a href="<?php echo $this->baseUrl('/User/ForgotPassword') ?>">Reset your password</a>
+	  </p>
     </div>
   </div>
 </div> 
-</body>
-
-    

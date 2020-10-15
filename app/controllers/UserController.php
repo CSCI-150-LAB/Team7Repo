@@ -164,9 +164,9 @@ class UserController extends PermsController {
 
 					if (!count($errors)) {
 						if (HASH_PASSWORDS) {
-							$userData['password'] = hash('sha256', $userData['password']);
+							$userData['pass'] = hash('sha256', $userData['pass']);
 						}
-						$user->password = $userData['password'];
+						$user->password = $userData['pass'];
 						$user->key = null;
 						
 						if ($user->save()) {
