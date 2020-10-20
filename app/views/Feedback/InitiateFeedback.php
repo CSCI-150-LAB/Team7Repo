@@ -5,6 +5,9 @@
 
 <form method="POST">
     <div class="form-group">
+        <label for="classfeedback">Class</label>
+        <input type="text" class="form-control" id="classfeedback" placeholder="CSCI 150">
+    
         <label for="feedback-description">Feedback Description</label>
         <input type="text" class="form-control" id="feedback-description" placeholder='"Explain to me how you feel about doing a kinesthetic activity for a midterm review"'>
     </div>
