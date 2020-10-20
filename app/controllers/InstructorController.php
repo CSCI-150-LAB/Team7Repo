@@ -231,8 +231,5 @@ class InstructorController extends PermsController {
 		return $this->view(compact('search', 'results'));
 	}
 
-	public function FeedbackSessionAction() {
-		
-		return $this->view();
-	}
+
 }

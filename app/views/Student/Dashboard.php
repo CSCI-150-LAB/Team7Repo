@@ -17,6 +17,7 @@
 		<th scope="col"> Description </th>
 		<th scope="col"> Days/Times</th>
 		<th scope="col"> Instructor</th>
+		<th scope="col"> Feedback Session</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -35,7 +36,8 @@
 		            <td> <?php echo $details[$i]->description ?> </td>
 		            <td> <?php echo $details[$i]->getClassTimeString()?> </td>
 		            <td> <a href = '<?php echo $this->baseUrl("/Instructor/Profile/{$details[$i]->instructorid}") ?>'><?php echo $instructors[$i]->name . " " . $instructorsNames[$i]->firstName . " " . $instructorsNames[$i]->lastName ?></a> </td>
-		            </tr>
+					<td></td> 
+					</tr>
 
                 <?php
                 }
