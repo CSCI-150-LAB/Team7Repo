@@ -230,4 +230,9 @@ class InstructorController extends PermsController {
 
 		return $this->view(compact('search', 'results'));
 	}
+
+	public function feedbackSession() {
+		
+		return $this->redirect($this->viewHelpers->baseUrl("/Instructor/FeedbackSession"));
+	}
 }
