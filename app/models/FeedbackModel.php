@@ -18,11 +18,6 @@
         public $classid;
 
         /**
-         * @Column('class_name')
-         */
-        public $classfeedback;
-
-        /**
          * @Column('start')
          */
         public $start;

@@ -9,13 +9,14 @@ class FeedbackController extends PermsController {
         if ($this->request->isPost()) {
 			$fields = [
 				  //key => value 
-				'classfeedback' => 'classfeedback', //Need to set class name in the initiate page 
 				'start' => 'feedbackstart',
 				'end' => 'feedbackend',
 				'feedbackdescription' => 'feedbackdescription'
             ];
 
-            $feedbackData = [];
+            $feedbackData = [
+				'classid' => $class->classid
+			];
             foreach ($fields as $prop => $postField) {
                 if (empty($_POST[$postField])) {
                     $errors[] = "{$postField} is required"; //left an input blank
@@ -26,6 +27,8 @@ class FeedbackController extends PermsController {
             }
             
             if(!count($errors)) {
+				$feedbackData['start'] = date('Y-m-d ') . $feedbackData['start'] . ':00';
+				$feedbackData['end'] = date('Y-m-d ') . $feedbackData['end'] . ':00';
                 $publishedFeedback = new FeedbackModel();
 				foreach ($feedbackData as $key => $val) {
 					$publishedFeedback->$key = $val;
@@ -36,13 +39,18 @@ class FeedbackController extends PermsController {
 				} //Redirects user to profile page
 				else {
 					$errors[] = 'Failed to save the feedback';
+					/** @var Db */
+					$db = $this->get('Db');
+					var_dump($db->getLastError());
+					exit;
+
 				} //If errors, save error
 			}
         }
 
         
 
-        return $this->view(['class' => $class]);
+        return $this->view(['class' => $class, 'errors' => $errors]);
     }
     
     public function PublishedFeedbackAction() {
