@@ -99,69 +99,68 @@ Admin users have the same functionality as instructor users with some additional
     - Description: 
     - Reasoning: So the user can create a profile of preferred learning styles for others to view.
     - Dependencies: UIR2
-UIR4: User Profile
-Description:
-Reasoning: So users can view other users’ profiles, anyone can view Instructor/Admin profiles, only Instructors/Admins can view Student profiles.
-Dependencies: UIR3
-UIR5: User Dashboard
-Description:
-Reasoning: So users can view their classes in a schedule, Students can access their professor’s file, and Instructors/Admins can view and edit classes and access student profiles.
-Dependencies: UIR4
-UIR6: Add Class Page
-Description:
-Reasoning: So that Instructors/Admins can create new classes or sections.
-Dependencies: UIR5
-UIR7: Class View
-Description:
-Reasoning: So that Instructors/Admins can view information about the class and students in the class and their profiles.
-Dependencies: UIR4, UIR5, UIR6
-UIR8: Add Student(s) Page
-Description:
-Reasoning: So that Instructors/Admins can add students to a class, and Students can be added to a class.
-Dependencies: UIR5, UIR6
-UIR9: Search Instructors
-Description:
-Reasoning: So that users can view information on their current or potential Instructors/Admins.
-Dependencies: UIR4
-UIR10: Navigation Bar
-Description:
-Reasoning: So users can easily navigate to pages such as their dashboard, profile, instructor search, logout, and other primary functions.
-Dependencies: UIR4, UIR5, UIR9
-UIR11: Start Feedback Session Page
-Description:
-Reasoning: So that Instructors/Admins can initiate Feedback Sessions to receive feedback as class is taught and improve the learning environment.
-Dependencies: UIR7
-UIR12: Add Feedback in Feedback Session Page
-Description:
-Reasoning: So that Students can add feedback as class is taught and improve the learning environment.
-Dependencies: UIR5
-UIR13: Instructor/Admin Feedback Page
-Description:
-Reasoning: So that users can view feedback and ratings given to the Instructor/Admin.
-Dependencies: UIR4
-UIR14: Add Feedback to a Instructor/Admin Profile
-Description:
-Reasoning: So that users can add feedback and ratings to the Instructor/Admin.
-Dependencies: UIR13
+4. UIR4: User Profile
+    - Description:
+    - Reasoning: So users can view other users’ profiles, anyone can view Instructor/Admin profiles, only Instructors/Admins can view Student profiles.
+    - Dependencies: UIR3
+5. UIR5: User Dashboard
+    - Description:
+    - Reasoning: So users can view their classes in a schedule, Students can access their professor’s file, and Instructors/Admins can view and edit classes and access student profiles.
+    - Dependencies: UIR4
+6. UIR6: Add Class Page
+    - Description:
+    - Reasoning: So that Instructors/Admins can create new classes or sections.
+    - Dependencies: UIR5
+7. UIR7: Class View
+    - Description:
+    - Reasoning: So that Instructors/Admins can view information about the class and students in the class and their profiles.
+    - Dependencies: UIR4, UIR5, UIR6
+8. UIR8: Add Student(s) Page
+    - Description:
+    - Reasoning: So that Instructors/Admins can add students to a class, and Students can be added to a class.
+    - Dependencies: UIR5, UIR6
+9. UIR9: Search Instructors
+    - Description:
+    - Reasoning: So that users can view information on their current or potential Instructors/Admins.
+    - Dependencies: UIR4
+10. UIR10: Navigation Bar
+    - Description:
+    - Reasoning: So users can easily navigate to pages such as their dashboard, profile, instructor search, logout, and other primary functions.
+    - Dependencies: UIR4, UIR5, UIR9
+11. UIR11: Start Feedback Session Page
+    - Description:
+    - Reasoning: So that Instructors/Admins can initiate Feedback Sessions to receive feedback as class is taught and improve the learning environment.
+    - Dependencies: UIR7
+12. UIR12: Add Feedback in Feedback Session Page
+    - Description:
+    - Reasoning: So that Students can add feedback as class is taught and improve the learning environment.
+    - Dependencies: UIR5
+13. UIR13: Instructor/Admin Feedback Page
+    - Description:
+    - Reasoning: So that users can view feedback and ratings given to the Instructor/Admin.
+    - Dependencies: UIR4
+14. UIR14: Add Feedback to a Instructor/Admin Profile
+    - Description:
+    - Reasoning: So that users can add feedback and ratings to the Instructor/Admin.
+    - Dependencies: UIR13
 
 ### 3.2 Functional Requirements
-FR1: User Registration
-Description: The user will register as an administrator, instructor, or student and create login information to access the site later on.  The user must provide their first name, last name, email, the account type (Student/Instructor/Admin), and a password.
-Reasoning: In order for the user to have an account in the system.
-Dependencies: None
-FR2: Login
-Description:
-Reasoning:
-Dependencies:
-FR_: Student Dashboard
-Description: The student user will be able to view all of the classes they are enrolled in and may visit their instructor's profile page or their class page upon clicking each respective item in the schedule.
-Reasoning: In order for the student to see which classes they are enrolled in.
-Dependencies: Instructor Profile, Instructor Classes
-
-FR_: Add Review
-Description: The student user is able to add these reviews to professors' pages: ratings (out of 5 stars), recommendations (textual review of their class experiences with the instructor). The user may remain anonymous in these reviews if they wish.
-Reasoning: In order for other students to understand the professor's teaching style/class experience.
-Dependencies: Instructor Profile
+1. FR1: User Registration
+    - Description: The user will register as an administrator, instructor, or student and create login information to access the site later on.  The user must provide their first name, last name, email, the account type (Student/Instructor/Admin), and a password.
+    - Reasoning: In order for the user to have an account in the system.
+    - Dependencies: None
+2. FR2: Login
+    - Description:
+    - Reasoning:
+    - Dependencies:
+3. FR_: Student Dashboard
+    - Description: The student user will be able to view all of the classes they are enrolled in and may visit their instructor's profile page or their class page upon clicking each respective item in the schedule.
+    - Reasoning: In order for the student to see which classes they are enrolled in.
+    - Dependencies: Instructor Profile, Instructor Classes
+4. FR_: Add Review
+    - Description: The student user is able to add these reviews to professors' pages: ratings (out of 5 stars), recommendations (textual review of their class experiences with the instructor). The user may remain anonymous in these reviews if they wish.
+    - Reasoning: In order for other students to understand the professor's teaching style/class experience.
+    - Dependencies: Instructor Profile
 
 ### 3.3 Non-Functional Requirements
 
