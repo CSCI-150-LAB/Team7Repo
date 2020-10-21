@@ -13,10 +13,10 @@
     </div>
 
     <div class="form-group col-md-6">
-        <label for="feedbackStart">Start Time</label>
-        <input type="time" class="form-control <?php echo !empty($errors['starttime']) ? 'is-invalid' : '' ?>" id="feedbackStart" name="feedbackStart">
-        <label for="feedbackEnd">End Time</label>
-        <input type="time" class="form-control <?php echo !empty($errors['endtime']) ? 'is-invalid' : '' ?>" id="feedbackEnd" name="feedbackEnd">
+        <label for="feedbackstart">Start Time</label>
+        <input type="time" class="form-control <?php echo !empty($errors['starttime']) ? 'is-invalid' : '' ?>" id="feedbackstart" name="feedbackstart">
+        <label for="feedbackend">End Time</label>
+        <input type="time" class="form-control <?php echo !empty($errors['endtime']) ? 'is-invalid' : '' ?>" id="feedbackend" name="feedbackend">
     </div>
     
     <button type="submit" class="btn btn-primary">Initiate Feedback Session</button>
