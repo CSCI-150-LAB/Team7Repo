@@ -1,8 +1,8 @@
 <?php
 class FeedbackController extends PermsController {
     
-    public function InitiateFeedbackAction() { //Passing the selected class id to feedback session?
-
+    public function InitiateFeedbackAction($classId) {
+		$class = InstructorClasses::getByKey($classId);
        
         $errors = [];
 
@@ -42,7 +42,7 @@ class FeedbackController extends PermsController {
 
         
 
-        return $this->view();
+        return $this->view(['class' => $class]);
     }
     
     public function PublishedFeedbackAction() {

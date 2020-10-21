@@ -1,13 +1,10 @@
 <h1 class="mb-3" style= "background-color: #13284c; padding:60px; color: #ffffff;">Feedback Page</h1>
 
 
-
+<h1 class="class-title"><?php echo $class->class ?></h1>
 
 <form method="POST">
     <div class="form-group">
-        <label for="classfeedback">Class</label>
-        <input type="text" class="form-control" id="classfeedback" name="classfeedback" placeholder="CSCI 150">
-    
         <label for="feedback-description">Feedback Description</label>
         <input type="text" class="form-control" id="feedback-description" name="feedbackdescription" placeholder='"Explain to me how you feel about doing a kinesthetic activity for a midterm review"'>
     </div>
