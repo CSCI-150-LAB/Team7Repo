@@ -1,7 +1,7 @@
 <?php
 
     /**
-     * @Table('instructorprofile')
+     * @Table('feedbacksessions')
      */
     class FeedbackModel extends Model {
 

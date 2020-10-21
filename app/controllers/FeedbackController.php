@@ -14,17 +14,16 @@ class FeedbackController extends PermsController {
 				'end' => 'feedbackend',
 				'feedbackdescription' => 'feedbackdescription'
             ];
-        }
 
-        $feedbackData = [];
-        foreach ($fields as $prop => $postField) {
-            if (empty($_POST[$postField])) {
-                $errors[] = "{$postField} is required"; //left an input blank
+            $feedbackData = [];
+            foreach ($fields as $prop => $postField) {
+                if (empty($_POST[$postField])) {
+                    $errors[] = "{$postField} is required"; //left an input blank
+                }
+                else {
+                    $feedbackData[$prop] = $_POST[$postField]; //Publish feedback session
+                }
             }
-            else {
-                $feedbackData[$prop] = $_POST[$postField]; //Publish feedback session
-            }
-        }
             
             if(!count($errors)) {
                 $publishedFeedback = new FeedbackModel();
@@ -39,11 +38,19 @@ class FeedbackController extends PermsController {
 					$errors[] = 'Failed to save the feedback';
 				} //If errors, save error
 			}
+        }
+
+        
 
         return $this->view();
     }
     
     public function PublishedFeedbackAction() {
+		
+		return $this->view();
+    }
+    
+    public function ViewSessionsAction() {
 		
 		return $this->view();
 	}
