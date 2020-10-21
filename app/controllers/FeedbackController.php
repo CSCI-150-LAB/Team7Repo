@@ -55,13 +55,18 @@ class FeedbackController extends PermsController {
     
     public function PublishedFeedbackAction() {
 		/** @var Db */
+
+
 		$db = $this->get('Db');
 		/** @var array[] */
-		$feedBackSessions = $db->query(
+		$feedBackSessions = $db->query( //Create a query where the class id in classes table matches the class id in the feedbacksessions
 			"
+			SELECT * FROM feedbacksessions INNER JOIN instructorclasses ON feedbacksessions.class_id = instructorclasses.class_id
 			
 			"
 		);
+
+		
 		if ($feedBackSessions === false) {
 			die($db->getLastError());
 		}
@@ -71,10 +76,7 @@ class FeedbackController extends PermsController {
 		return $this->view(['feedbackSessions' => $feedBackSessions]);
     }
     
-    public function ViewSessionsAction() {
-		
-		return $this->view();
-	}
+   
 
 }
 
