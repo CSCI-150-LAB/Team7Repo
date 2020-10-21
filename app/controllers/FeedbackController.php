@@ -62,6 +62,9 @@ class FeedbackController extends PermsController {
 			
 			"
 		);
+		if ($feedBackSessions === false) {
+			die($db->getLastError());
+		}
 		/** @var FeedbackModel[] */
 		$feedBackSessions = array_map(['FeedbackModel', 'fromArray'], $feedBackSessions);
 		
