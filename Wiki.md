@@ -87,18 +87,18 @@ Admin users have the same functionality as instructor users with some additional
 
 ## 3 Requirements
 ### 3.1 UI Requirements
-UIR1: Main Page  
-- Description: The homepage of the website that includes a description of what the website is for.
-- Reasoning: So the user can access other contents and see the UI.
-- Dependencies: None  
-UIR2: Login/Register/Recover Password Pages
-Description: Once the user has clicked on the Login/Register link, the user can login with their username/password, or go to pages to register for an account, or recover a forgotten password.
-Reasoning: So the user can use the functionalities of a Student/Instructor/Admin.
-Dependencies: UIR1
-UIR3: User Profile Creation/Edit Page
-Description: 
-Reasoning: So the user can create a profile of preferred learning styles for others to view.
-Dependencies: UIR2
+1. UIR1: Main Page  
+    - Description: The homepage of the website that includes a description of what the website is for.
+    - Reasoning: So the user can access other contents and see the UI.
+    - Dependencies: None  
+2. UIR2: Login/Register/Recover Password Pages
+    - Description: Once the user has clicked on the Login/Register link, the user can login with their username/password, or go to pages to register for an account, or recover a forgotten password.
+    - Reasoning: So the user can use the functionalities of a Student/Instructor/Admin.
+    - Dependencies: UIR1
+3. UIR3: User Profile Creation/Edit Page
+    - Description: 
+    - Reasoning: So the user can create a profile of preferred learning styles for others to view.
+    - Dependencies: UIR2
 UIR4: User Profile
 Description:
 Reasoning: So users can view other users’ profiles, anyone can view Instructor/Admin profiles, only Instructors/Admins can view Student profiles.
