@@ -11,7 +11,7 @@ Feedback Loop will be available to all devices. Both the students and instructor
 ### 1.3 Overview
 The wiki documentation will address each section of the project and will further explain in detail all the specifications, requirements, components, deliverable dates, and how the system works as a whole. 
 
-## 2 Product
+## 2. Product
 
 ### 2.1 Components
 
@@ -85,7 +85,7 @@ Instructors also have a user profile which they are able to edit and a user dash
 #### 2.2.3 Admin
 Admin users have the same functionality as instructor users with some additional functionalities.  Admins have the ability to moderate any other user’s profile, and the ability to edit feedback given to instructors.  Admins are also able to search for instructors and to sort instructors by their overall rating from students.
 
-## 3 Requirements
+## 3. Requirements
 ### 3.1 UI Requirements
 1. UIR1: Main Page  
     - Description: The homepage of the website that includes a description of what the website is for.
@@ -170,6 +170,6 @@ Admin users have the same functionality as instructor users with some additional
 
 ## 5. Diagrams
 
-FeedbackLoop by Null Entity
-Daniel Flynn--Sumanjit Gill--Karla Moreno--Kamarin San Nicolas--Robert Wong
+FeedbackLoop by Null Entity  
+Daniel Flynn--Sumanjit Gill--Karla Moreno--Kamarin San Nicolas--Robert Wong  
 Fresno State CSCI 150
