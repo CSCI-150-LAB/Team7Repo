@@ -88,9 +88,9 @@ Admin users have the same functionality as instructor users with some additional
 ## 3 Requirements
 ### 3.1 UI Requirements
 UIR1: Main Page  
--Description: The homepage of the website that includes a description of what the website is for.
--Reasoning: So the user can access other contents and see the UI.
--Dependencies: None
+- Description: The homepage of the website that includes a description of what the website is for.
+- Reasoning: So the user can access other contents and see the UI.
+- Dependencies: None  
 UIR2: Login/Register/Recover Password Pages
 Description: Once the user has clicked on the Login/Register link, the user can login with their username/password, or go to pages to register for an account, or recover a forgotten password.
 Reasoning: So the user can use the functionalities of a Student/Instructor/Admin.
