@@ -12,6 +12,12 @@
         public $feedbackid;
 
         /**
+         * @Key
+         * @Column('class_id')
+         */
+        public $classid;
+
+        /**
          * @Column('class_name')
          */
         public $classfeedback;
