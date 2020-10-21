@@ -170,6 +170,8 @@ Admin users have the same functionality as instructor users with some additional
 
 ## 5. Diagrams
 
+```
 FeedbackLoop by Null Entity  
-Daniel Flynn--Sumanjit Gill--Karla Moreno--Kamarin San Nicolas--Robert Wong  
+Daniel Flynn & Sumanjit Gill & Karla Moreno & Kamarin San Nicolas & Robert Wong  
 Fresno State CSCI 150
+```
