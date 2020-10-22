@@ -53,17 +53,17 @@ class FeedbackController extends PermsController {
         return $this->view(['class' => $class, 'errors' => $errors]);
     }
     
-    public function PublishedFeedbackAction() {
+    public function PublishedFeedbackAction($classid) { //parameter 
 		/** @var Db */
 
-
+		
 		$db = $this->get('Db');
 		/** @var array[] */
 		$feedBackSessions = $db->query( //Create a query where the class id in classes table matches the class id in the feedbacksessions
 			"
-			SELECT * FROM feedbacksessions INNER JOIN instructorclasses ON feedbacksessions.class_id = instructorclasses.class_id
+			SELECT * FROM feedbacksessions INNER JOIN instructorclasses ON feedbacksessions.class_id = instructorclasses.class_id WHERE feedbacksessions.class_id = :classid:
 			
-			"
+			", ['classid' => $classid]
 		);
 
 		
