@@ -36,7 +36,7 @@
 		            <td> <?php echo $details[$i]->description ?> </td>
 		            <td> <?php echo $details[$i]->getClassTimeString()?> </td>
 		            <td> <a href = '<?php echo $this->baseUrl("/Instructor/Profile/{$details[$i]->instructorid}") ?>'><?php echo $instructors[$i]->name . " " . $instructorsNames[$i]->firstName . " " . $instructorsNames[$i]->lastName ?></a> </td>
-					<td> <a href = '<?php echo $this->baseUrl("/Feedback/PublishedFeedback/3")?>'>Feedback session</a></td> <!--TODO hardcoded for now-->
+					<td> <a href = '<?php echo $this->baseUrl("/Feedback/PublishedFeedback/{$details[$i]->classid}")?>'>Feedback session</a></td> <!--TODO hardcoded for now-->
 					</tr>
 
                 <?php
