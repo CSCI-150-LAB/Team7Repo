@@ -150,14 +150,22 @@ Admin users have the same functionality as instructor users with some additional
     - Reasoning: In order for the user to have an account in the system.
     - Dependencies: None
 2. FR2: Login
-    - Description:
-    - Reasoning:
-    - Dependencies:
-3. FR_: Student Dashboard
+    - Description: The user will input their email and password for their account and it will check the information with the database, if it is correct it will log the user in, if not it will prompt them to try again.
+    - Reasoning: In order for the user to access their account and the relevant information.
+    - Dependencies: FR1
+3. FR3: Create/Edit Instructor Profile
+    - Description: If the user is an instructor, they can put information for their profile such as their preferred title (Professor, Dr., Mr., Mrs., or Ms.), their department as text, and how much they use each learning style (primarily, somehwat, minimal, or not at all for visual, auditory, reading/writing, and kinesthetic learning styles).  If they have already created a profile, they can go back to it and edit it at another time.
+    - Reasoning: So instructors can give some information about themselves to other users.
+    - Dependencies: FR2
+4. FR4: View Instructor Profile
+    - Description: Any user can view information from an instructor's profile that was posted from the create/edit profile.
+    - Reasoning: So users can see instructor's profile information and get a general idea of the instructor.
+    - Dependencies: FR3
+100000. FR_: Student Dashboard
     - Description: The student user will be able to view all of the classes they are enrolled in and may visit their instructor's profile page or their class page upon clicking each respective item in the schedule.
     - Reasoning: In order for the student to see which classes they are enrolled in.
     - Dependencies: Instructor Profile, Instructor Classes
-4. FR_: Add Review
+100001. FR_: Add Review
     - Description: The student user is able to add these reviews to professors' pages: ratings (out of 5 stars), recommendations (textual review of their class experiences with the instructor). The user may remain anonymous in these reviews if they wish.
     - Reasoning: In order for other students to understand the professor's teaching style/class experience.
     - Dependencies: Instructor Profile
