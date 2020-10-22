@@ -35,7 +35,7 @@ class FeedbackController extends PermsController {
 				} //Sets profile values for user
 
 				if($publishedFeedback->save()) {
-					return $this->redirect($this->viewHelpers->baseUrl("/Feedback/PublishedFeedback"));
+					return $this->redirect($this->viewHelpers->baseUrl("/Feedback/PublishedFeedback/3"));
 				} //Redirects user to profile page
 				else {
 					$errors[] = 'Failed to save the feedback';
