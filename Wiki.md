@@ -95,52 +95,52 @@ Admin users have the same functionality as instructor users with some additional
     - Description: Once the user has clicked on the Login/Register link, the user can login with their username/password, or go to pages to register for an account, or recover a forgotten password.
     - Reasoning: So the user can use the functionalities of a Student/Instructor/Admin.
     - Dependencies: UIR1
-3. UIR3: User Profile Creation/Edit Page
-    - Description: 
+3. UIR3: User Profile Creation Page
+    - Description: Once the user has created their account, they will create a profile with their preferred learning style and major for Students, or amount of learning style usage, preferred title, and department for Instructors/Admins.
     - Reasoning: So the user can create a profile of preferred learning styles for others to view.
     - Dependencies: UIR2
 4. UIR4: User Profile
     - Description:
     - Reasoning: So users can view other users’ profiles, anyone can view Instructor/Admin profiles, only Instructors/Admins can view Student profiles.
     - Dependencies: UIR3
-5. UIR5: User Dashboard
-    - Description:
+5. UIR4: Edit Profile Page
+    -Description: Once the user is logged in and has already created a profile, on their user profile page, there will be a button to edit their profile.
+    -Reasoning: So the user can edit their profile.
+    Dependencies: UIR5
+6. UIR6: User Dashboard
+    - Description: Once a user is logged in, they can access their user dashboard and view classes they are enrolled in for Students, and classes they are in charge of and an Add Class/Section button for Instructors/Admins.
     - Reasoning: So users can view their classes in a schedule, Students can access their professor’s file, and Instructors/Admins can view and edit classes and access student profiles.
-    - Dependencies: UIR4
-6. UIR6: Add Class Page
-    - Description:
+    - Dependencies: UIR2
+7. UIR7: Add Class Page
+    - Description: Once an Instructor/Admin is on their dashboard a button that says Add Class/Section can be clicked that takes the user to a page that allows them to add a class number, a description, the days of the week they meet, and times for the class.
     - Reasoning: So that Instructors/Admins can create new classes or sections.
-    - Dependencies: UIR5
-7. UIR7: Class View
-    - Description:
+    - Dependencies: UIR6
+8. UIR8: Class View
+    - Description: Once a class is added, on an Instructor/Admin dashboard, a link for each class is provided that bring them to this page which has the class information as well as a button to add students, and a list of the students.
     - Reasoning: So that Instructors/Admins can view information about the class and students in the class and their profiles.
-    - Dependencies: UIR4, UIR5, UIR6
-8. UIR8: Add Student(s) Page
-    - Description:
+    - Dependencies: UIR6, UIR7
+9. UIR9: Add Student(s) Page
+    - Description: Once the button on the class view page labeled add student is clicked, the professor can add a student by their email address.
     - Reasoning: So that Instructors/Admins can add students to a class, and Students can be added to a class.
-    - Dependencies: UIR5, UIR6
-9. UIR9: Search Instructors
-    - Description:
+    - Dependencies: UIR8
+10. UIR10: Search Instructors
+    - Description: Once the user selects the Instructor Search in the navigation bar, they can type in an instructor's email, first name, last name, full name, department, and any class titles they are associated with and return any relvant instructor's information.
     - Reasoning: So that users can view information on their current or potential Instructors/Admins.
     - Dependencies: UIR4
-10. UIR10: Navigation Bar
-    - Description:
-    - Reasoning: So users can easily navigate to pages such as their dashboard, profile, instructor search, logout, and other primary functions.
-    - Dependencies: UIR4, UIR5, UIR9
 11. UIR11: Start Feedback Session Page
-    - Description:
+    - Description: Once the user is on the Instructor/Admin class view page, they can click the button and create a feedback session by inserting a prompt, and a time frame for the session.
     - Reasoning: So that Instructors/Admins can initiate Feedback Sessions to receive feedback as class is taught and improve the learning environment.
-    - Dependencies: UIR7
+    - Dependencies: UIR8
 12. UIR12: Add Feedback in Feedback Session Page
-    - Description:
+    - Description: Once the user is on the Student dashboard, they can view the feedback sessions for each class, and add feedback for each class.
     - Reasoning: So that Students can add feedback as class is taught and improve the learning environment.
-    - Dependencies: UIR5
+    - Dependencies: UIR6
 13. UIR13: Instructor/Admin Feedback Page
-    - Description:
+    - Description: Once the view feedback button is pressed on the Instructor/Admin profile, a list of all feedback or reviews or ratings are shown.
     - Reasoning: So that users can view feedback and ratings given to the Instructor/Admin.
     - Dependencies: UIR4
 14. UIR14: Add Feedback to a Instructor/Admin Profile
-    - Description:
+    - Description: As a student on an Instructor/Admin profile, a button add feedback can be pressed to take to this page that prompts the student to input a rating, any textual feedback, and whether or not they want to be anonymous for the feedback.
     - Reasoning: So that users can add feedback and ratings to the Instructor/Admin.
     - Dependencies: UIR13
 
