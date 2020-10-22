@@ -20,6 +20,7 @@
                         <td><?php echo $feedback->feedbackdescription ?></td>
                         <td> <?php echo $active ?> </td>
                         <td> <?php echo $feedback->start . ' ' . $feedback->end?> </td> <!--TODO Fix time output-->
+                       
                     </tr>
                 </tbody>
             </table>
