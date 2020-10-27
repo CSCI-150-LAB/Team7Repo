@@ -1,8 +1,19 @@
 <h1> <?php echo $class->class." ".$class->getClassTimeString(); ?> </h1>
 <h2> <?php echo $class->description; ?> </h2>
+
 <a class = "btn btn-secondary float-right" style="color: #ffffff;" href ='<?php echo $this->baseUrl("/Instructor/AddStudent/{$class->classid}") ?>'>Add a Student</a><br>
-<a class = "btn btn-secondary" style="color: #ffffff;" href ='<?php echo $this->baseUrl("/Feedback/InitiateFeedback/{$class->classid}") ?>'>Create feedback session</a><br>
-<a class = "btn btn-secondary float-right" style="color: #ffffff;" href ='<?php echo $this->baseUrl("/Feedback/PublishedFeedback/{$class->classid}") ?>'>View feedback sessions</a><br> <!--This will get the query-->
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Feedback
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href='<?php echo $this->baseUrl("/Feedback/RatingFeedback/{$class->classid}") ?>'>Create a rating feedback session</a>
+    <a class="dropdown-item" href='<?php echo $this->baseUrl("/Feedback/TextFeedback/{$class->classid}") ?>'>Create a text feedback session</a>
+    <a class="dropdown-item" href='<?php echo $this->baseUrl("/Feedback/PublishedFeedback/{$class->classid}") ?>'>View feedback sessions</a>
+  </div>
+</div>
+
+
 <?php $studentids = studentClasses::find("classId =:0:", $class->classid);?>
 <table class="table table-bordered">
 	<thead>

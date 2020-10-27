@@ -1,7 +1,7 @@
 <?php
 class FeedbackController extends PermsController {
     
-    public function InitiateFeedbackAction($classId) {
+    public function TextFeedbackAction($classId) {
 		$class = InstructorClasses::getByKey($classId);
        
         $errors = [];
@@ -9,6 +9,7 @@ class FeedbackController extends PermsController {
         if ($this->request->isPost()) {
 			$fields = [
 				  //key => value 
+				'feedbacktitle' => 'feedbacktitle',
 				'start' => 'feedbackstart',
 				'end' => 'feedbackend',
 				'feedbackdescription' => 'feedbackdescription'
@@ -35,7 +36,7 @@ class FeedbackController extends PermsController {
 				} //Sets profile values for user
 
 				if($publishedFeedback->save()) {
-					return $this->redirect($this->viewHelpers->baseUrl("/Feedback/PublishedFeedback/{$classId}")); //TODO Need to fix redirect linking
+					return $this->redirect($this->viewHelpers->baseUrl("/Feedback/PublishedFeedback/{$classId}")); 
 				} //Redirects user to profile page
 				else {
 					$errors[] = 'Failed to save the feedback';
@@ -82,7 +83,10 @@ class FeedbackController extends PermsController {
 		
 		return $this->view(['feedbackSessions' => $feedBackSessions]);
     }
-    
+	
+	public function RatingFeedbackAction() {
+		return $this->view();
+	}
    
 
 }
