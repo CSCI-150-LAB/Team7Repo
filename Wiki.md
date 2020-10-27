@@ -16,10 +16,10 @@ The wiki documentation will address each section of the project and will further
 ### 2.1 Components
 
 #### 2.1.1 Client
-	
+The client is how the users of FeedbackLoop will be interacting with the application. Clients may interact with the server to communicate with the database, e.g., logging in and out of the system. The client may also interact with other clients, e.g., when an instructor user issues a feedback session and student users respond.
 
 #### 2.1.2 Server
-	
+The server acts as the middleman between the client and the database. A client's requests will be processed by the server, and information will be retrieved from or stored into the database accordingly. Examples include: a student updating their major on their user profile, or an instructor viewing their performance reviews left by students.
 
 #### 2.1.3 Database
 The database is a core part of the application. Information on user accounts -- logins, names, preferred learning styles -- are stored. Also in the database are tables on instructor classes, student enrollment, ratings/reviews of instructor performance, and feedback on conducted activities. This component interacts with the server to present and extract data to and from the client.
