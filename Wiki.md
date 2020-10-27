@@ -176,6 +176,19 @@ Admin users have the same functionality as instructor users with some additional
 
 ### 4.1 Timeline
 
+| **Week**            | **Deliverables**                                                                                                                                          | **Requirement** |
+|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------|
+| **1 (9/24/2020)**   | Database Design Registration Page Login Page                                                                                                              |                 |
+| **2 (10/1/2020)**   | Student Profile View Student Profile Edit Instructor Profile Edit Forgot Password                                                                         |                 |
+| **3 (10/8/2020)**   | Student Dashboard Instructor Dashboard Instructor Add Class Instructor view Student Profile from Dashboard Student view Instructor Profile from Dashboard |                 |
+| **4 (10/15/2020)**  | Students can add Recommendations/Reviews to Instructor Profile                                                                                            |                 |
+| **5 (10/22/2020)**  | Instructors can initiate a Feedback Session Students can give Feedback in Feedback Session Search Instructors                                             |                 |
+| **6 (10/29/2020)**  | Organize data on Professor Rankings Aggregate Professor Feedback Data Add Students using CSV                                                              |                 |
+| **7 (11/5/2020)**   | Students can view Instructor Ratings Admin can manage all profiles                                                                                        |                 |
+| **8 (11/19/2020)**  | Polishing and Perfecting/Documentation                                                                                                                    |                 |
+| **9 (11/19/2020)**  | Polishing and Perfecting/Documentation                                                                                                                    |                 |
+| **10 (11/23/2020)** | Polishing and Perfecting/Documentation                                                                                                                    |                 |
+
 ## 5. Diagrams
 
 ```
