@@ -162,6 +162,56 @@ class InstructorController extends PermsController {
 		return $this->view(['errors' => $errors, 'classid' => $classid, 'student' => $studentClass->studentId]);
 	}
 
+	public function AddCSVStudentsAction($classid = 0) {
+		if($classid == 0) {
+			return $this->redirect($this->viewHelpers->baseUrl());
+		}
+		if($this->request->isPost()) {
+			//If the page was directed by a POST form
+			$fields = [
+				'file' => 'file'
+			]; //Add student's email
+
+			$errors = [];
+			$emails = [];
+			$nouser = [];
+			$users = [];
+			foreach($fields as $prop => $postField) {
+				if(empty($_POST[$postField])) {
+					$errors[] = "{$postField} is required";
+				}
+				else {
+					$file = fopen($_POST['file'], "r");
+					while(!feof($file)) {
+						$list = fgetcsv($file);
+						$emails = array_merge($emails, $list);
+					}
+					foreach($emails as $em) {
+						$student = User::find("email =:0:", $em);
+						if(!empty($student)) {
+							$users[] = User::getByKey($student[0]->id);
+						}
+						else {
+							$nouser[] = "user with email {$em} not found";
+						}
+					}
+				}
+			} //Check that all values are filled
+			if(!count($errors)) {
+				foreach($users as $student) {
+					$studentClass = new studentClasses();
+					$studentClass->classId = $classid;
+					$studentClass->studentId = $student->id;
+				}
+				//Add new student to the class
+				return $this->redirect($this->viewHelpers->baseUrl("/Instructor/ViewClass/{$classid}"));
+				//Redirects user to main page
+			}
+			
+		}
+		return $this->view(['errors' => $errors, 'classid' => $classid, 'nouser' => $nouser]);
+	}
+
 	public function DashboardAction() {
 		$user = User::getCurrentUser();
 		return $this->view(['user' => $user]);
