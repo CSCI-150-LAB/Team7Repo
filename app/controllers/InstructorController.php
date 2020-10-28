@@ -171,14 +171,14 @@ class InstructorController extends PermsController {
 
 			$errors = [];
 			$users = [];
-			if(isset($_FILES['csv'])) {
+			if($_FILES['csv']['size'] > 0) {
 				$csv = $_FILES['csv']['tmp_name'];
 				$emails = array_map('str_getcsv', file($csv));
 				foreach($emails as $email) {
 					foreach($email as $em) {
-						$student = User::find("email =:0:", $em);
-						if(!empty($student)) {
-							$users[] = User::getByKey($student[0]->id);
+						$student = User::findOne("email =:0:", $em);
+						if($student) {
+							$users[] = $student;
 						}
 						else {
 							$errors[] = "user with email {$em} not found";
@@ -186,17 +186,19 @@ class InstructorController extends PermsController {
 					}
 				}
 				foreach($users as $student) {
-					$studentClass = new studentClasses();
-					$studentClass->classId = $classid;
-					$studentClass->studentId = $student->id;
-					if(!$studentClass->save()) {
-						$errors[] = "failed to add user with email {$student->email}";
+					$registered = studentClasses::findOne("studentId =:0: AND classId =:1:", $student->id, $classid);
+					if(!$registered) {
+						$studentClass = new studentClasses();
+						$studentClass->classId = $classid;
+						$studentClass->studentId = $student->id;
+						if(!$studentClass->save()) {
+							$errors[] = "failed to add user with email {$student->email}";
+						}
 					}
 				}
 				//Add new student to the class
-				if(!count($errors)) {
-					return $this->redirect($this->viewHelpers->baseUrl("/Instructor/ViewClass/{$classid}"));
-				}
+				$_SESSION['add_student_errors'] = $errors;
+				return $this->redirect($this->viewHelpers->baseUrl("/Instructor/ViewClass/{$classid}"));
 				//Redirects user to main page
 			}
 			else {
