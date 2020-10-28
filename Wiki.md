@@ -154,13 +154,21 @@ Admin users have the same functionality as instructor users with some additional
     - Reasoning: In order for the user to access their account and the relevant information.
     - Dependencies: FR1
 3. FR3: Create/Edit Instructor Profile
-    - Description: If the user is an instructor, they can put information for their profile such as their preferred title (Professor, Dr., Mr., Mrs., or Ms.), their department as text, and how much they use each learning style (primarily, somehwat, minimal, or not at all for visual, auditory, reading/writing, and kinesthetic learning styles).  If they have already created a profile, they can go back to it and edit it at another time.
+    - Description: If the user is an instructor, they can put information for their profile such as their preferred title (Professor, Dr., Mr., Mrs., or Ms.), their department as text, and how much they use each learning style (primarily, somewhat, minimal, or not at all for visual, auditory, reading/writing, and kinesthetic learning styles).  If they have already created a profile, they can go back to it and edit it at another time.
     - Reasoning: So instructors can give some information about themselves to other users.
     - Dependencies: FR2
 4. FR4: View Instructor Profile
     - Description: Any user can view information from an instructor's profile that was posted from the create/edit profile.
     - Reasoning: So users can see instructor's profile information and get a general idea of the instructor.
     - Dependencies: FR3
+5. FR5: Create/Edit Student Profile
+    - Description: If the user is a student, they will be able to enter the following information in their profile: declared major and preferred learning style (visual, audio, read/write, kinesthetic). If the student already has a profile, they may return to edit it at a later time.
+    - Reasoning: Students can provide instructors and administrators with useful information about themselves.
+    - Dependencies: FR2
+6. FR6: View Student Profile
+    - Description: A student may view their own profile, or an instructor may view a student's profile. 
+    - Reasoning: Instructors may view a student's preferred learning style to adjust their activities accordingly. 
+    - Dependencies: FR5
 100000. FR_: Student Dashboard
     - Description: The student user will be able to view all of the classes they are enrolled in and may visit their instructor's profile page or their class page upon clicking each respective item in the schedule.
     - Reasoning: In order for the student to see which classes they are enrolled in.
