@@ -23,6 +23,7 @@
 		<input type="radio" name="type" value="text">Text Feedback <br>
 		<input type="radio" name="type" value="rating">Rating Feedback
 	</div>
+	
 	<button type="submit" class="btn btn-primary">Initiate Feedback Session</button>
 
 </form>

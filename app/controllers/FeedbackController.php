@@ -5,7 +5,7 @@ class FeedbackController extends PermsController {
 		$class = InstructorClasses::getByKey($classId);
        
 		$errors = [];
-		$type = [];
+		
 
         if ($this->request->isPost()) {
 			$fields = [
@@ -39,11 +39,11 @@ class FeedbackController extends PermsController {
 					$publishedFeedback->$key = $val;
 				} //Sets profile values for user
 
-				if($feedbackData['type'] == 'text') {
-					$publishedFeedback->feedbacktype = 0;
-				}
-				else {
+				if($feedbackData['feedbacktype'] == 'text') { //TODO Why is it not matching? 
 					$publishedFeedback->feedbacktype = 1;
+				}
+				else { //Rating feedback
+					$publishedFeedback->feedbacktype = 2;
 				}
 
 				if($publishedFeedback->save()) {
@@ -95,9 +95,7 @@ class FeedbackController extends PermsController {
 		return $this->view(['feedbackSessions' => $feedBackSessions]);
     }
 	
-	public function RatingFeedbackAction() {
-		return $this->view();
-	}
+	
    
 
 }
