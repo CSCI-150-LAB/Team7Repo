@@ -9,8 +9,7 @@
 		Feedback
 	</button>
 	<div class="dropdown-menu">
-		<a href="#textfeedback" class="dropdown-item" data-toggle="modal" data-target="#textfeedback">Create a Text Feedback</a>
-		<a href="#rating" class="dropdown-item" data-toggle="modal" data-target="#rating">Create a Rating</a>
+		<a href="#textfeedback" class="dropdown-item" data-toggle="modal" data-target="#textfeedback">Create a feedback session</a>
 		<a href='<?php echo $this->baseUrl("/Feedback/PublishedFeedback/{$class->classid}") ?>' class="dropdown-item">View Sessions</a>
 	</div>
 </div>
@@ -19,13 +18,11 @@
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title">Create a Text Feedback</h5>
+				<h5 class="modal-title">Create a feedback session</h5>
 				<button class="close" data-dismiss="modal">&times;</button>
 			</div>
 			<div class="modal-body">
-				<h6>How are you?</h6>
-
-				<?php echo $this->partial('_TextFeedbackForm', ['class' => $class]) ?>
+				<?php echo $this->partial('_FeedbackForm', ['class' => $class]) ?>
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -44,8 +41,7 @@
 			<div class="modal-body">
 				<div class="list-group">
 					<div class="d-flex w-100 justify-content-between">
-						<h6>Rate this activity from 1-5</h6>
-						<?php echo $this->partial('_RatingFeedbackForm') ?>
+						<h6>Rate this activity from 1-5</h6>	
 					</div>
 				</div>
 				<div class="modal-footer">

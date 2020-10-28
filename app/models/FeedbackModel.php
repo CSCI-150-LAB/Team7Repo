@@ -38,5 +38,10 @@
          */
         public $feedbackdescription;
 
+        /**
+         * @Column('type')
+         */
+        public $feedbacktype;
+
     }
 ?>  

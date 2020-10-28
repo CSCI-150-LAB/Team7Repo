@@ -1,10 +1,11 @@
 <?php
 class FeedbackController extends PermsController {
     
-    public function TextFeedbackAction($classId) {
+    public function FeedbackFormAction($classId) {
 		$class = InstructorClasses::getByKey($classId);
        
-        $errors = [];
+		$errors = [];
+		$type = [];
 
         if ($this->request->isPost()) {
 			$fields = [
@@ -12,18 +13,21 @@ class FeedbackController extends PermsController {
 				'feedbacktitle' => 'feedbacktitle',
 				'start' => 'feedbackstart',
 				'end' => 'feedbackend',
-				'feedbackdescription' => 'feedbackdescription'
+				'feedbackdescription' => 'feedbackdescription',
+				'feedbacktype' => 'type'
             ];
 
             $feedbackData = [
 				'classid' => $class->classid
 			];
+
+			
             foreach ($fields as $prop => $postField) {
                 if (empty($_POST[$postField])) {
                     $errors[] = "{$postField} is required"; //left an input blank
                 }
                 else {
-                    $feedbackData[$prop] = $_POST[$postField]; //Publish feedback session
+					$feedbackData[$prop] = $_POST[$postField]; //Publish feedback session
                 }
             }
             
@@ -35,8 +39,15 @@ class FeedbackController extends PermsController {
 					$publishedFeedback->$key = $val;
 				} //Sets profile values for user
 
+				if($feedbackData['type'] == 'text') {
+					$publishedFeedback->feedbacktype = 0;
+				}
+				else {
+					$publishedFeedback->feedbacktype = 1;
+				}
+
 				if($publishedFeedback->save()) {
-					return $this->redirect($this->viewHelpers->baseUrl("/Feedback/PublishedFeedback/{$classId}")); 
+					return $this->json(['result' => 'success']); //TODO Tell user success 
 				} //Redirects user to profile page
 				else {
 					$errors[] = 'Failed to save the feedback';
@@ -51,7 +62,7 @@ class FeedbackController extends PermsController {
 
         
 
-        return $this->view(['class' => $class, 'errors' => $errors]);
+        return $this->json(['errors' => $errors]); //TODO Let user know the errors 
     }
     
     public function PublishedFeedbackAction($classid) { 
