@@ -103,10 +103,10 @@ Admin users have the same functionality as instructor users with some additional
     - Description:
     - Reasoning: So users can view other users’ profiles, anyone can view Instructor/Admin profiles, only Instructors/Admins can view Student profiles.
     - Dependencies: UIR3
-5. UIR4: Edit Profile Page
-    -Description: Once the user is logged in and has already created a profile, on their user profile page, there will be a button to edit their profile.
-    -Reasoning: So the user can edit their profile.
-    Dependencies: UIR5
+5. UIR5: Edit Profile Page
+    - Description: Once the user is logged in and has already created a profile, on their user profile page, there will be a button to edit their profile.
+    - Reasoning: So the user can edit their profile.
+    - Dependencies: UIR4
 6. UIR6: User Dashboard
     - Description: Once a user is logged in, they can access their user dashboard and view classes they are enrolled in for Students, and classes they are in charge of and an Add Class/Section button for Instructors/Admins.
     - Reasoning: So users can view their classes in a schedule, Students can access their professor’s file, and Instructors/Admins can view and edit classes and access student profiles.
@@ -217,18 +217,18 @@ Admin users have the same functionality as instructor users with some additional
 
 ### 4.1 Timeline
 
-| **Week**            | **Deliverables**                                                                                                                                                          | **Requirement**     |
-|---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------|
-| **1 (9/24/2020)**   | Database Design<br> Registration Page<br> Login Page                                                                                                                      |                     |
-| **2 (10/1/2020)**   | Student Profile View<br> Student Profile Edit<br> Instructor Profile Edit<br> Forgot Password                                                                             |                     |
-| **3 (10/8/2020)**   | Student Dashboard<br> Instructor Dashboard<br> Instructor Add Class<br> Instructor view Student Profile from Dashboard<br> Student view Instructor Profile from Dashboard |                     |
-| **4 (10/15/2020)**  | Students can add Recommendations/Reviews to Instructor Profile                                                                                                            |                     |
-| **5 (10/22/2020)**  | Instructors can initiate a Feedback Session<br> Students can give Feedback in Feedback Session<br> Search Instructors                                                     |                     |
-| **6 (10/29/2020)**  | Organize data on Professor Rankings<br> Aggregate Professor Feedback Data<br> Add Students using CSV                                                                      |                     |
-| **7 (11/5/2020)**   | Students can view Instructor Ratings<br> Admin can manage all profiles                                                                                                    |                     |
-| **8 (11/19/2020)**  | Polishing and Perfecting/Documentation                                                                                                                                    | All UI Requirements |
-| **9 (11/19/2020)**  | Polishing and Perfecting/Documentation                                                                                                                                    | All UI Requirements |
-| **10 (11/23/2020)** | Polishing and Perfecting/Documentation                                                                                                                                    | All UI Requirements |
+| **Week**            | **Deliverables**                                                                                                                                                          | **Requirement**                                                        |
+|---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|
+| **1 (9/24/2020)**   | Database Design<br> Registration Page<br> Login Page                                                                                                                      | Unlabeled<br> FR1/UIR2<br> FR2/UIR2                                    |
+| **2 (10/1/2020)**   | Student Profile View<br> Student Profile Edit<br> Instructor Profile View<br> Instructor Profile Edit<br> Forgot Password                                                 | FR6/UIR4<br> FR5/UIR3/UIR5<br> FR4/UIR4<br> FR3/UIR3/UIR5<br> FR_/UIR2 |
+| **3 (10/8/2020)**   | Student Dashboard<br> Instructor Dashboard<br> Instructor Add Class<br> Instructor view Student Profile from Dashboard<br> Student view Instructor Profile from Dashboard | FR_/UIR6<br> FR_/UIR6<br> FR_/UIR7<br> FR6/UIR4<br> FR4/UIR4           |
+| **4 (10/15/2020)**  | Students can add Recommendations/Reviews to Instructor Profile                                                                                                            | FR_/UIR14                                                              |
+| **5 (10/22/2020)**  | Instructors can initiate a Feedback Session<br> Students can give Feedback in Feedback Session<br> Search Instructors                                                     | FR_/UIR11<br> FR_/UIR12<br> FR_/UIR10<br>                              |
+| **6 (10/29/2020)**  | Organize data on Professor Rankings<br> Aggregate Professor Feedback Data<br> Add Students using CSV                                                                      | <br> <br>                                                              |
+| **7 (11/5/2020)**   | Students can view Instructor Ratings<br> Admin can manage all profiles                                                                                                    | FR_/UIR13<br>                                                          |
+| **8 (11/19/2020)**  | Polishing and Perfecting/Documentation                                                                                                                                    | All UI Requirements                                                    |
+| **9 (11/19/2020)**  | Polishing and Perfecting/Documentation                                                                                                                                    | All UI Requirements                                                    |
+| **10 (11/23/2020)** | Polishing and Perfecting/Documentation                                                                                                                                    | All UI Requirements                                                    |
 
 ## 5. Diagrams
 
