@@ -230,7 +230,16 @@ Admin users have the same functionality as instructor users with some additional
 | **9 (11/19/2020)**  | Polishing and Perfecting/Documentation                                                                                                                                    | All UI Requirements                                                    |
 | **10 (11/23/2020)** | Polishing and Perfecting/Documentation                                                                                                                                    | All UI Requirements                                                    |
 
+<br><br>Also see GANTT chart at Schedule.gantt.
+
 ## 5. Diagrams
+
+### 5.1 Use Case Diagram
+See UseCaseDiagram.drawio for the use case diagram.
+
+### 5.2 Class Diagram
+
+### 5.3 Sequence Diagram
 
 ```
 FeedbackLoop by Null Entity  
