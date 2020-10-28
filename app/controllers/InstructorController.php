@@ -170,24 +170,19 @@ class InstructorController extends PermsController {
 			//If the page was directed by a POST form
 
 			$errors = [];
-			$emails = [];
-			$nouser = [];
 			$users = [];
-			if($file = fopen($_FILES['csv']['tmp_name'], "r")) {
-				/*$csv = $_FILES['csv']['tmp_name'];
-				$emails = array_map('str_getcsv', file($csv));*/
-				//$file = fopen($_FILES['csv']['tmp_name'], "r");
-				while(!feof($file)) {
-					$list = fgetcsv($file);
-					$emails = array_merge($emails, $list);
-				}
-				foreach($emails as $em) {
-					$student = User::find("email =:0:", $em);
-					if(!empty($student)) {
-						$users[] = User::getByKey($student[0]->id);
-					}
-					else {
-						$nouser[] = "user with email {$em} not found";
+			if(isset($_FILES['csv'])) {
+				$csv = $_FILES['csv']['tmp_name'];
+				$emails = array_map('str_getcsv', file($csv));
+				foreach($emails as $email) {
+					foreach($email as $em) {
+						$student = User::find("email =:0:", $em);
+						if(!empty($student)) {
+							$users[] = User::getByKey($student[0]->id);
+						}
+						else {
+							$errors[] = "user with email {$em} not found";
+						}
 					}
 				}
 				foreach($users as $student) {
@@ -195,11 +190,11 @@ class InstructorController extends PermsController {
 					$studentClass->classId = $classid;
 					$studentClass->studentId = $student->id;
 					if(!$studentClass->save()) {
-						$nouser[] = "failed to add user with email {$student->email}";
+						$errors[] = "failed to add user with email {$student->email}";
 					}
 				}
 				//Add new student to the class
-				if(!count($errors) && !count($nouser)) {
+				if(!count($errors)) {
 					return $this->redirect($this->viewHelpers->baseUrl("/Instructor/ViewClass/{$classid}"));
 				}
 				//Redirects user to main page
@@ -209,7 +204,7 @@ class InstructorController extends PermsController {
 			}
 			
 		}
-		return $this->view(['errors' => $errors, 'classid' => $classid, 'nouser' => $nouser]);
+		return $this->view(['errors' => $errors, 'classid' => $classid]);
 	}
 
 	public function DashboardAction() {

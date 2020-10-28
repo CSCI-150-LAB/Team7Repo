@@ -1,8 +1,11 @@
 <?php $class = [];
-var_dump($errors);
         $class = InstructorClasses::find("classid =:0:", $classid); ?>
 <h1>Add New Students using a CSV file to <?php echo $class[0]->class ?></h1>
-
+<?php if($errors) {
+    foreach($errors as $error) {
+        echo $error ?><br><?php
+    }
+}?>
 <form method="post" enctype="multipart/form-data">
 
 <div class = 'form-group'>
