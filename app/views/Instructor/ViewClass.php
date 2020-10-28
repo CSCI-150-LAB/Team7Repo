@@ -1,6 +1,6 @@
 <h1> <?php echo $class->class." ".$class->getClassTimeString(); ?> </h1>
 <h2> <?php echo $class->description; ?> </h2>
-<a class = "btn btn-secondary float-right" style="color: #ffffff;" href ='<?php echo $this->baseUrl("/Instructor/AddStudent/{$class->classid}") ?>'>Add a Student</a><br>
+<a class = "btn btn-secondary float-right" style="color: #ffffff;" href ='<?php echo $this->baseUrl("/Instructor/AddStudent/{$class->classid}") ?>'>Add a Student</a><br><br>
 <a class = "btn btn-secondary float-right" style="color: #ffffff;" href ='<?php echo $this->baseUrl("/Instructor/AddCSVStudents/{$class->classid}") ?>'>Add Students by CSV</a><br>
 <?php $studentids = studentClasses::find("classId =:0:", $class->classid);?>
 <table class="table table-bordered">

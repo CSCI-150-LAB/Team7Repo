@@ -173,10 +173,10 @@ class InstructorController extends PermsController {
 			$emails = [];
 			$nouser = [];
 			$users = [];
-			if(isset($_FILES['csv'])) {
+			if($file = fopen($_FILES['csv']['tmp_name'], "r")) {
 				/*$csv = $_FILES['csv']['tmp_name'];
 				$emails = array_map('str_getcsv', file($csv));*/
-				$file = fopen($_FILES['csv']['tmp_name'], "r");
+				//$file = fopen($_FILES['csv']['tmp_name'], "r");
 				while(!feof($file)) {
 					$list = fgetcsv($file);
 					$emails = array_merge($emails, $list);
@@ -194,12 +194,14 @@ class InstructorController extends PermsController {
 					$studentClass = new studentClasses();
 					$studentClass->classId = $classid;
 					$studentClass->studentId = $student->id;
-					if($studentClass->save()) {
+					if(!$studentClass->save()) {
 						$nouser[] = "failed to add user with email {$student->email}";
 					}
 				}
 				//Add new student to the class
-				return $this->redirect($this->viewHelpers->baseUrl("/Instructor/ViewClass/{$classid}"));
+				if(!count($errors) && !count($nouser)) {
+					return $this->redirect($this->viewHelpers->baseUrl("/Instructor/ViewClass/{$classid}"));
+				}
 				//Redirects user to main page
 			}
 			else {
