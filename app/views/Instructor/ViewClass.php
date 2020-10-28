@@ -2,27 +2,81 @@
 <h2> <?php echo $class->description; ?> </h2>
 
 <a class = "btn btn-secondary float-right" style="color: #ffffff;" href ='<?php echo $this->baseUrl("/Instructor/AddStudent/{$class->classid}") ?>'>Add a Student</a><br>
+
+
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Feedback
   </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href='<?php echo $this->baseUrl("/Feedback/RatingFeedback/{$class->classid}") ?>'>Create a rating feedback session</a>
-    <a class="dropdown-item" href='<?php echo $this->baseUrl("/Feedback/TextFeedback/{$class->classid}") ?>'>Create a text feedback session</a>
-    <a class="dropdown-item" href='<?php echo $this->baseUrl("/Feedback/PublishedFeedback/{$class->classid}") ?>'>View feedback sessions</a>
-  </div>
+
+  
+    <div class="dropdown-menu">
+        <a href="#textfeedback" class="dropdown-item" data-toggle="modal" data-target="#textfeedback">Create a Text Feedback</a>
+        <a href="#rating" class="dropdown-item" data-toggle="modal" data-target="#rating">Create a Rating</a>
+        <a href='<?php echo $this->baseUrl("/Feedback/PublishedFeedback/{$class->classid}") ?>' class="dropdown-item">View Sessions</a>
+    </div>
+      
+
+
+    <div class="modal" id="textfeedback">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create a Text Feedback</h5>
+                    <button class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="list-group">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6>How are you?</h6>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="modal" id="rating">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title">Create a Rating</h5>
+                    <button class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="list-group">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6>Rate this activity from 1-5</h6>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 </div>
+
+
+<!--End of drop down menu-->
+
+
 
 
 <?php $studentids = studentClasses::find("classId =:0:", $class->classid);?>
 <table class="table table-bordered">
-	<thead>
-		<tr>
-		    <th scope="col"> Student </th>
-		    <th scope="col"> Email </th>
-		</tr>
-	</thead>
-	<tbody>
+    <thead>
+        <tr>
+            <th scope="col"> Student </th>
+            <th scope="col"> Email </th>
+        </tr>
+    </thead>
+    <tbody>
         <?php   $students = [];
                 foreach($studentids as $ids):
                     $students = User::find("id =:0:", $ids->studentId);
@@ -35,3 +89,7 @@
                 <?php endforeach; ?>
     </tbody>
 </table>
+
+
+
+
