@@ -177,8 +177,41 @@ Admin users have the same functionality as instructor users with some additional
     - Description: The student user is able to add these reviews to professors' pages: ratings (out of 5 stars), recommendations (textual review of their class experiences with the instructor). The user may remain anonymous in these reviews if they wish.
     - Reasoning: In order for other students to understand the professor's teaching style/class experience.
     - Dependencies: Instructor Profile
+100010. FR_: Instructor Dashboard
+    - Description: The instructor will have a dashboard that lists the classes the instructor is teaching with the number of students enrolled. 
+    - Reasoning: This is the central feature for instructors, as they can interact with all of their classes from this page.
+    - Dependencies: Instructor Classes
+100011. FR_: Create Class
+    - Description: On the Instructor Dashboard, an instructor is able to create a class with the following details: start time, end time, meeting days, class title, and class description. 
+    - Reasoning: The instructor will be able to add the classes they will be teaching in the semester. 
+    - Dependencies: Instructor Dash
+100100. FR_: Add Students to Class
+    - Description: On every class page, an instructor has the option to add student users to their roster. 
+    - Reasoning: Instructors will be able to enroll and interact with students in their classes for feedback sessions.
+    - Dependencies: Create Class
 
 ### 3.3 Non-Functional Requirements
+
+1. NFR1: Account Security
+    - Description: Passwords for all user accounts will be hashed.
+    - Reasoning: To ensure accounts are not breached, passwords would need to be stored securely on the database.
+    - Dependencies: 
+
+2. NFR2: UI Responsiveness
+    - Description: The UI of the application should be prompt, taking no longer than 0.5 seconds to carry out an action.
+    - Reasoning: For optimal interaction with the application, the UI must be responsive. 
+    - Dependencies: 
+
+3. NFR3: OS compatibility 
+    - Description: All features of the application should be accessible from any browser.
+    - Reasoning: Students may have Windows or MacOS devices, so the application must run well on both platforms.
+    - Dependencies: 
+
+4. NFR4: Screen Size compatibility
+    - Description: The display of the application needs to be versatile to adapt to screen sizes of all devices.
+    - Reasoning: Students may use their phones or their laptops to access this site, so various screen sizes should be compatible with the display. 
+    - Dependencies: 
+
 
 ## 4. Prioritization
 
