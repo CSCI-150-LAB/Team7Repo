@@ -17,7 +17,7 @@
                 </thead>
                 <tbody>  
                     <tr>
-                        <td><?php echo $feedback->feedbacktitle ?></td> <!--TODO Need to differentiate whether feedback is rating or text in order to display content in instructor account-->
+                        <td> <a href='<?php echo $this->baseUrl("/Feedback/StudentFbView")?>'><?php echo $feedback->feedbacktitle ?></a></td> <!--TODO Need to differentiate whether feedback is rating or text in order to display content in instructor account-->
                         <td> <?php echo $active ?> </td>
                         <td> <?php echo $feedback->start . ' ' . $feedback->end?> </td> <!--TODO Fix time output-->
                        

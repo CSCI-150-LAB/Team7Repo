@@ -95,7 +95,6 @@ class FeedbackController extends PermsController {
 		return $this->view(['feedbackSessions' => $feedBackSessions]);
     }
 	
-	
    
 
 }
