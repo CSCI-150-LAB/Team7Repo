@@ -168,44 +168,42 @@ class InstructorController extends PermsController {
 		}
 		if($this->request->isPost()) {
 			//If the page was directed by a POST form
-			$fields = [
-				'file' => 'file'
-			]; //Add student's email
 
 			$errors = [];
 			$emails = [];
 			$nouser = [];
 			$users = [];
-			foreach($fields as $prop => $postField) {
-				if(empty($_POST[$postField])) {
-					$errors[] = "{$postField} is required";
+			if(isset($_FILES['csv'])) {
+				/*$csv = $_FILES['csv']['tmp_name'];
+				$emails = array_map('str_getcsv', file($csv));*/
+				$file = fopen($_FILES['csv']['tmp_name'], "r");
+				while(!feof($file)) {
+					$list = fgetcsv($file);
+					$emails = array_merge($emails, $list);
 				}
-				else {
-					$file = fopen($_POST['file'], "r");
-					while(!feof($file)) {
-						$list = fgetcsv($file);
-						$emails = array_merge($emails, $list);
+				foreach($emails as $em) {
+					$student = User::find("email =:0:", $em);
+					if(!empty($student)) {
+						$users[] = User::getByKey($student[0]->id);
 					}
-					foreach($emails as $em) {
-						$student = User::find("email =:0:", $em);
-						if(!empty($student)) {
-							$users[] = User::getByKey($student[0]->id);
-						}
-						else {
-							$nouser[] = "user with email {$em} not found";
-						}
+					else {
+						$nouser[] = "user with email {$em} not found";
 					}
 				}
-			} //Check that all values are filled
-			if(!count($errors)) {
 				foreach($users as $student) {
 					$studentClass = new studentClasses();
 					$studentClass->classId = $classid;
 					$studentClass->studentId = $student->id;
+					if($studentClass->save()) {
+						$nouser[] = "failed to add user with email {$student->email}";
+					}
 				}
 				//Add new student to the class
 				return $this->redirect($this->viewHelpers->baseUrl("/Instructor/ViewClass/{$classid}"));
 				//Redirects user to main page
+			}
+			else {
+				$errors[] = "file is required";
 			}
 			
 		}
