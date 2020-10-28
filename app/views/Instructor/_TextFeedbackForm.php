@@ -1,15 +1,7 @@
-<h1 class="mb-3" style="background-color: #13284c; padding:60px; color: #ffffff;">Text Feedback Page</h1>
+<h1 class="mb-3">Text Feedback Page</h1>
 
 
 <h1 class="class-title"><?php echo $class->class ?></h1>
-
-<?php if (count($errors)) : ?>
-	<ul class="error-list">
-		<?php foreach ($errors as $errorMsg) : ?>
-			<li><?php echo $errorMsg ?></li>
-		<?php endforeach; ?>
-	</ul>
-<?php endif; ?>
 
 <form method="POST">
 	<div class="form-group">
