@@ -39,6 +39,7 @@ class FeedbackController extends PermsController {
 					$publishedFeedback->$key = $val;
 				} //Sets profile values for user
 
+				
 				if($feedbackData['feedbacktype'] == 'text') { //TODO Why is it not matching? 
 					$publishedFeedback->feedbacktype = 1;
 				}

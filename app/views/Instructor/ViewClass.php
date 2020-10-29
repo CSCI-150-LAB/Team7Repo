@@ -14,7 +14,7 @@
 	</div>
 </div>
 
-<div class="modal" id="textfeedback">
+<div class="modal fade" id="textfeedback">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">

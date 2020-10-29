@@ -24,7 +24,7 @@
 		<input type="radio" name="type" value="rating">Rating Feedback
 	</div>
 	
-	<button type="submit" class="btn btn-primary">Initiate Feedback Session</button>
+	<button type="submit" class="btn btn-primary" id="close-modal">Initiate Feedback Session</button>
 
 </form>
 
