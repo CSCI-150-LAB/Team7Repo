@@ -120,8 +120,8 @@ Admin users have the same functionality as instructor users with some additional
     - Reasoning: So that Instructors/Admins can view information about the class and students in the class and their profiles.
     - Dependencies: UIR6, UIR7
 9. UIR9: Add Student(s) Page
-    - Description: Once the button on the class view page labeled add student is clicked, the professor can add a student by their email address.
-    - Reasoning: So that Instructors/Admins can add students to a class, and Students can be added to a class.
+    - Description: Once the button on the class view page labeled add student (or the button with csv) is clicked, the professor can add a student by their email address.
+    - Reasoning: So that Instructors/Admins can add students to a class (using csv or individual emails), and Students can be added to a class.
     - Dependencies: UIR8
 10. UIR10: Search Instructors
     - Description: Once the user selects the Instructor Search in the navigation bar, they can type in an instructor's email, first name, last name, full name, department, and any class titles they are associated with and return any relvant instructor's information.
@@ -153,64 +153,92 @@ Admin users have the same functionality as instructor users with some additional
     - Description: The user will input their email and password for their account and it will check the information with the database, if it is correct it will log the user in, if not it will prompt them to try again.
     - Reasoning: In order for the user to access their account and the relevant information.
     - Dependencies: FR1
-3. FR3: Create/Edit Instructor Profile
+3. FR3: Forgot Password
+    - Description: The user can input their email for their account if they forgot their password.  The user will then receive an activation code to the input email address in order to reset their password.
+    - Reasoning: In order for the user to access their account if they forgot their password and can not log in.
+    - Dependencies: FR1
+4. FR4: Create/Edit Instructor Profile
     - Description: If the user is an instructor, they can put information for their profile such as their preferred title (Professor, Dr., Mr., Mrs., or Ms.), their department as text, and how much they use each learning style (primarily, somewhat, minimal, or not at all for visual, auditory, reading/writing, and kinesthetic learning styles).  If they have already created a profile, they can go back to it and edit it at another time.
     - Reasoning: So instructors can give some information about themselves to other users.
     - Dependencies: FR2
-4. FR4: View Instructor Profile
+5. FR5: View Instructor Profile
     - Description: Any user can view information from an instructor's profile that was posted from the create/edit profile.
     - Reasoning: So users can see instructor's profile information and get a general idea of the instructor.
-    - Dependencies: FR3
-5. FR5: Create/Edit Student Profile
+    - Dependencies: FR4
+6. FR6: Create/Edit Student Profile
     - Description: If the user is a student, they will be able to enter the following information in their profile: declared major and preferred learning style (visual, audio, read/write, kinesthetic). If the student already has a profile, they may return to edit it at a later time.
     - Reasoning: Students can provide instructors and administrators with useful information about themselves.
     - Dependencies: FR2
-6. FR6: View Student Profile
+7. FR7: View Student Profile
     - Description: A student may view their own profile, or an instructor may view a student's profile. 
     - Reasoning: Instructors may view a student's preferred learning style to adjust their activities accordingly. 
-    - Dependencies: FR5
-100000. FR_: Student Dashboard
-    - Description: The student user will be able to view all of the classes they are enrolled in and may visit their instructor's profile page or their class page upon clicking each respective item in the schedule.
-    - Reasoning: In order for the student to see which classes they are enrolled in.
-    - Dependencies: Instructor Profile, Instructor Classes
-100001. FR_: Add Review
-    - Description: The student user is able to add these reviews to professors' pages: ratings (out of 5 stars), recommendations (textual review of their class experiences with the instructor). The user may remain anonymous in these reviews if they wish.
-    - Reasoning: In order for other students to understand the professor's teaching style/class experience.
-    - Dependencies: Instructor Profile
-100010. FR_: Instructor Dashboard
-    - Description: The instructor will have a dashboard that lists the classes the instructor is teaching with the number of students enrolled. 
+    - Dependencies: FR6
+8. FR8: Instructor Dashboard
+    - Description: The instructor will have a dashboard that lists the classes the instructor is teaching with the number of students enrolled and other details about the classes. 
     - Reasoning: This is the central feature for instructors, as they can interact with all of their classes from this page.
-    - Dependencies: Instructor Classes
-100011. FR_: Create Class
+    - Dependencies: FR2
+9. FR9: Create Class
     - Description: On the Instructor Dashboard, an instructor is able to create a class with the following details: start time, end time, meeting days, class title, and class description. 
     - Reasoning: The instructor will be able to add the classes they will be teaching in the semester. 
-    - Dependencies: Instructor Dash
-100100. FR_: Add Students to Class
-    - Description: On every class page, an instructor has the option to add student users to their roster. 
+    - Dependencies: FR8
+10. FR10: Add Students to Class
+    - Description: On every class page, an instructor has the option to add student users to their roster. They can add a single student by using their email address, or many students by uploading a csv file of many student emails.
     - Reasoning: Instructors will be able to enroll and interact with students in their classes for feedback sessions.
-    - Dependencies: Create Class
+    - Dependencies: FR9
+11. FR11: Student Dashboard
+    - Description: The student user will be able to view all of the classes they are enrolled in and may visit their instructor's profile page upon clicking their instructor's name in the schedule.
+    - Reasoning: In order for the student to see which classes they are enrolled in.
+    - Dependencies: FR5, FR10
+12. FR12: Add Review
+    - Description: The student user is able to add these reviews to professors' pages: ratings (out of 5 stars), recommendations (textual review of their class experiences with the instructor). The user may remain anonymous in these reviews if they wish.
+    - Reasoning: In order for other students to understand the professor's teaching style/class experience.
+    - Dependencies: FR5
+13. FR13: Search Instructor
+    - Description:
+    - Reasoning:
+    - Dependencies:
+14. Instructors can initiate a Feedback Session
+    - Description:
+    - Reasoning:
+    - Dependencies:
+15. Students can give Feedback in Feedback Session
+    - Description:
+    - Reasoning:
+    - Dependencies:
+16. Organize data on Professor Rankings
+    - Description:
+    - Reasoning:
+    - Dependencies:
+17. Aggregate Professor Feedback Data
+    - Description:
+    - Reasoning:
+    - Dependencies:
+18. Students can view Instructor Ratings
+    - Description:
+    - Reasoning:
+    - Dependencies:
+19. Admin can manage all profiles
+    - Description:
+    - Reasoning:
+    - Dependencies:
 
 ### 3.3 Non-Functional Requirements
 
 1. NFR1: Account Security
     - Description: Passwords for all user accounts will be hashed.
     - Reasoning: To ensure accounts are not breached, passwords would need to be stored securely on the database.
-    - Dependencies: 
 
 2. NFR2: UI Responsiveness
     - Description: The UI of the application should be prompt, taking no longer than 0.5 seconds to carry out an action.
-    - Reasoning: For optimal interaction with the application, the UI must be responsive. 
-    - Dependencies: 
+    - Reasoning: For optimal interaction with the application, the UI must be responsive.
 
 3. NFR3: OS compatibility 
     - Description: All features of the application should be accessible from any browser.
     - Reasoning: Students may have Windows or MacOS devices, so the application must run well on both platforms.
-    - Dependencies: 
 
 4. NFR4: Screen Size compatibility
     - Description: The display of the application needs to be versatile to adapt to screen sizes of all devices.
-    - Reasoning: Students may use their phones or their laptops to access this site, so various screen sizes should be compatible with the display. 
-    - Dependencies: 
+    - Reasoning: Students may use their phones or their laptops to access this site, so various screen sizes should be compatible with the display.
 
 
 ## 4. Prioritization
@@ -220,12 +248,12 @@ Admin users have the same functionality as instructor users with some additional
 | **Week**            | **Deliverables**                                                                                                                                                          | **Requirement**                                                        |
 |---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|
 | **1 (9/24/2020)**   | Database Design<br> Registration Page<br> Login Page                                                                                                                      | Unlabeled<br> FR1/UIR2<br> FR2/UIR2                                    |
-| **2 (10/1/2020)**   | Student Profile View<br> Student Profile Edit<br> Instructor Profile View<br> Instructor Profile Edit<br> Forgot Password                                                 | FR6/UIR4<br> FR5/UIR3/UIR5<br> FR4/UIR4<br> FR3/UIR3/UIR5<br> FR_/UIR2 |
-| **3 (10/8/2020)**   | Student Dashboard<br> Instructor Dashboard<br> Instructor Add Class<br> Instructor view Student Profile from Dashboard<br> Student view Instructor Profile from Dashboard | FR_/UIR6<br> FR_/UIR6<br> FR_/UIR7<br> FR6/UIR4<br> FR4/UIR4           |
-| **4 (10/15/2020)**  | Students can add Recommendations/Reviews to Instructor Profile                                                                                                            | FR_/UIR14                                                              |
-| **5 (10/22/2020)**  | Instructors can initiate a Feedback Session<br> Students can give Feedback in Feedback Session<br> Search Instructors                                                     | FR_/UIR11<br> FR_/UIR12<br> FR_/UIR10<br>                              |
-| **6 (10/29/2020)**  | Organize data on Professor Rankings<br> Aggregate Professor Feedback Data<br> Add Students using CSV                                                                      | <br> <br>                                                              |
-| **7 (11/5/2020)**   | Students can view Instructor Ratings<br> Admin can manage all profiles                                                                                                    | FR_/UIR13<br>                                                          |
+| **2 (10/1/2020)**   | Student Profile View<br> Student Profile Edit<br> Instructor Profile View<br> Instructor Profile Edit<br> Forgot Password                                                 | FR7/UIR4<br> FR6/UIR3/UIR5<br> FR5/UIR4<br> FR4/UIR3/UIR5<br> FR3/UIR2 |
+| **3 (10/8/2020)**   | Student Dashboard<br> Instructor Dashboard<br> Instructor Add Class<br> Instructor view Student Profile from Dashboard<br> Student view Instructor Profile from Dashboard | FR11/UIR6<br> FR8/UIR6<br> FR9/UIR7<br> FR7/UIR4<br> FR5/UIR4          |
+| **4 (10/15/2020)**  | Students can add Recommendations/Reviews to Instructor Profile                                                                                                            | FR12/UIR14                                                             |
+| **5 (10/22/2020)**  | Instructors can initiate a Feedback Session<br> Students can give Feedback in Feedback Session<br> Search Instructors                                                     | FR14/UIR11<br> FR15/UIR12<br> FR13/UIR10<br>                           |
+| **6 (10/29/2020)**  | Organize data on Professor Rankings<br> Aggregate Professor Feedback Data<br> Add Students using CSV                                                                      | FR16<br> FR17<br> FR10/UIR9                                            |
+| **7 (11/5/2020)**   | Students can view Instructor Ratings<br> Admin can manage all profiles                                                                                                    | FR18/UIR13<br> FR19                                                    |
 | **8 (11/19/2020)**  | Polishing and Perfecting/Documentation                                                                                                                                    | All UI Requirements                                                    |
 | **9 (11/19/2020)**  | Polishing and Perfecting/Documentation                                                                                                                                    | All UI Requirements                                                    |
 | **10 (11/23/2020)** | Polishing and Perfecting/Documentation                                                                                                                                    | All UI Requirements                                                    |
