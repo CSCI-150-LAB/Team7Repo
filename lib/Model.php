@@ -128,12 +128,12 @@ class Model extends AnnotatedClass {
 			foreach ($tableMeta['columns'] as $prop => $propInfo) {
 				if (isset($propInfo['key'])) {
 					$where[] = "{$propInfo['name']} = :{$prop}:";
-					$queryArgs[$prop] = $this->$prop;
 				}
 				else {
 					$update[] = "{$propInfo['name']} = :{$prop}:";
-					$queryArgs[$prop] = $this->$prop;
 				}
+
+				$queryArgs[$prop] = $this->getProp($prop);
 			}
 
 			$update = implode(', ', $update);
@@ -154,7 +154,7 @@ class Model extends AnnotatedClass {
 
 				$columns[] = $propInfo['name'];
 				$values[] = ":{$prop}:";
-				$queryArgs[$prop] = $this->$prop;
+				$queryArgs[$prop] = $this->getProp($prop);
 			}
 
 			$columns = implode(', ', $columns);
@@ -196,7 +196,7 @@ class Model extends AnnotatedClass {
 			$tableMeta = static::getTableMeta();
 			foreach ($tableMeta['keys'] as $keyProp) {
 				$query[] = "{$tableMeta['columns'][$keyProp]['name']} = :{$keyProp}:";
-				$queryArgs[$keyProp] = $this->$keyProp;
+				$queryArgs[$keyProp] = $this->getProp($keyProp);
 			}
 			$query = implode(' AND ', $query);
 
@@ -213,6 +213,27 @@ class Model extends AnnotatedClass {
 
 			return $result === true;
 		}
+	}
+
+	/**
+	 * Returns the value as-is from the model
+	 *
+	 * @param string $prop
+	 * @return mixed
+	 */
+	protected function getProp($prop) {
+		return $this->$prop;
+	}
+
+	/**
+	 * Sets the prop after loading from the db
+	 *
+	 * @param string $prop
+	 * @param mixed $value
+	 * @return void
+	 */
+	protected function setProp($prop, $value) {
+		$this->$prop = $value;
 	}
 
 	/**
@@ -356,7 +377,7 @@ class Model extends AnnotatedClass {
 			}
 
 			if (property_exists($record, $prop)) {
-				$record->$prop = $val;
+				$record->setProp($prop, $val);
 			}
 		}
 
