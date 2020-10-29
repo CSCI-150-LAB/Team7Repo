@@ -90,6 +90,18 @@ class studentController extends PermsController {
 				}
 
 				//$instructId = $_SESSION['ratedInstructorId'];
+				if (isset($_POST['takeAgain'])) {
+					$instructorRating->takeAgain = $_POST['takeAgain'];
+				}
+				if (isset($_POST['attendanceRequired'])) {
+					$instructorRating->attendanceRequired = $_POST['attendanceRequired'];
+				}
+				if (isset($_POST['homework'])) {
+					$instructorRating->homework = $_POST['homework'];
+				}
+				if (isset($_POST['grade'])) {
+					$instructorRating->grade = $_POST['grade'];
+				}
 
 				$instructorRating->instructorId = $instructorId;
 

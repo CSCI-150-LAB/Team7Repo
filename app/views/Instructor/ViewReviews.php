@@ -12,6 +12,15 @@ Rating:
 foreach ($reviews as $value) {
     echo $value->rating . "/5 stars";
     echo "<br><br>";
+    echo "Would Take Again? ";
+    echo $value->takeAgain;
+    echo "<br>Attendance Required? ";
+    echo $value->attendanceRequired;
+    echo "<br>Homework? ";
+    echo $value->homework;
+    echo "<br>Grade Received: ";
+    echo $value->grade;
+    echo "<br><br>";
     echo "Recommendation: <br><br>";
     echo $value->recommendation;
     echo "<br><br> Contributed By: <br>";

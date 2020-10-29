@@ -36,4 +36,25 @@ class InstructorRatings extends Model {
      */
     public $instructorId;
 
+    /**
+     * @Column('take_again')
+     */
+    public $takeAgain;
+
+    /**
+     * @Column('homework')
+     */
+    public $homework;
+
+    /**
+     * @Column('attendance_required')
+     */
+    public $attendanceRequired;
+
+    /**
+     * @Column('grade')
+     */
+    public $grade;
+
+
 }
