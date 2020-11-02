@@ -65,11 +65,11 @@ Example Classes Table:
 
 Example Instructor Ratings Table:
 
-| **rating_id** | **rating** | **recommendation**                                                                                                             | **anon** | **authord_id** | **instructor_id** |
-|---------------|------------|--------------------------------------------------------------------------------------------------------------------------------|----------|----------------|-------------------|
-| 1             | 4          | Wonderful at explaining the course material. The homework is fairly reflective of the exam content.                            | yes      | 0              | 6789              |
-| 2             | 5          | Hard professor because of weekly quizzes but if you study properly and attend office hours, you will be able to ace the class. | no       | 1234           | 5678              |
-| 3             | 2          | Not very helpful when answering questions in class.                                                                            | yes      | 0              | 1011              |
+| **rating_id** | **rating** | **recommendation**                                                                                                             | **anon** | **authord_id** | **instructor_id** | **take_again** |  **homework** |  **attendance_required** |  **grade** |
+|---------------|------------|--------------------------------------------------------------------------------------------------------------------------------|----------|----------------|-------------------|-------------|-------------|-------------|-------------|
+| 1             | 4          | Wonderful at explaining the course material. The homework is fairly reflective of the exam content.                            | yes      | 0              | 6789              |    Yes       |    Yes       |    No       |    A       |
+| 2             | 5          | Hard professor because of weekly quizzes but if you study properly and attend office hours, you will be able to ace the class. | no       | 1234           | 5678              |    N/A       |    No       |    No       |    B       |
+| 3             | 2          | Not very helpful when answering questions in class.                                                                            | yes      | 0              | 1011              |    No        |    Yes       |    Yes       |    N/A      |
 
 
 
