@@ -100,7 +100,7 @@ Admin users have the same functionality as instructor users with some additional
     - Reasoning: So the user can create a profile of preferred learning styles for others to view.
     - Dependencies: UIR2
 4. UIR4: User Profile
-    - Description:
+    - Description: Once a user profile is created, information from the profiles can be viewed, Students' Profiles include their preferred learning style and their major and can be viewed by Instructors and Admins, whereas Instructors' Profiles include how much they use each learning style, department, and email and can be viewed by all users.
     - Reasoning: So users can view other users’ profiles, anyone can view Instructor/Admin profiles, only Instructors/Admins can view Student profiles.
     - Dependencies: UIR3
 5. UIR5: Edit Profile Page
@@ -194,30 +194,30 @@ Admin users have the same functionality as instructor users with some additional
     - Reasoning: In order for other students to understand the professor's teaching style/class experience.
     - Dependencies: FR5
 13. FR13: Search Instructor
+    - Description: Any user can search for a certain instructor from the instructor's email, first name, last name, full name, department, and any class titles they are associated with and return any relvant instructor's information.
+    - Reasoning: So users can view information including classes and ratings on any professor they are taking, are going to take, or leave feedback for professors they have already taken.
+    - Dependencies: FR5, FR9
+14. FR14: Instructors can initiate a Feedback Session
     - Description:
     - Reasoning:
     - Dependencies:
-14. Instructors can initiate a Feedback Session
+15. FR15: Students can give Feedback in Feedback Session
     - Description:
     - Reasoning:
     - Dependencies:
-15. Students can give Feedback in Feedback Session
+16. FR16: Organize data on Professor Rankings
     - Description:
     - Reasoning:
     - Dependencies:
-16. Organize data on Professor Rankings
+17. FR17: Aggregate Professor Feedback Data
     - Description:
     - Reasoning:
     - Dependencies:
-17. Aggregate Professor Feedback Data
+18. FR18: Students can view Instructor Ratings
     - Description:
     - Reasoning:
     - Dependencies:
-18. Students can view Instructor Ratings
-    - Description:
-    - Reasoning:
-    - Dependencies:
-19. Admin can manage all profiles
+19. FR19: Admin can manage all profiles
     - Description:
     - Reasoning:
     - Dependencies:
