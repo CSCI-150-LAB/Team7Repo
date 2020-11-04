@@ -2,6 +2,9 @@
 $currentUser = User::getCurrentUser();
 $profile = InstructorModel::getByKey($user->id); ?>
 <h1 class='mb-3' style= 'background-color: #13284c; padding:60px; color: #ffffff;'>Instructor Profile</h1>
+<?php   if($profile->instructorid == $currentUser->id) {
+            echo "<a class = 'btn btn-secondary float-right' style='color: #ffffff;' href = '".$this->baseUrl("/Instructor/EditProfile/{$currentUser->id}")."'>Edit Profile</a><br><br>";
+        } //Allows user to edit profile if current profile is the user's profile ?>
 <h4 style='float: right;'>
 <?php   if($profile->rating) {
             echo $profile->rating.'/5';
@@ -11,9 +14,6 @@ $profile = InstructorModel::getByKey($user->id); ?>
         }
 ?>
 </h4>
-<?php   if($profile->instructorid == $currentUser->id) {
-            echo "<a class = 'btn btn-secondary float-right' style='color: #ffffff;' href = '".$this->baseUrl("/Instructor/EditProfile/{$currentUser->id}")."'>Edit Profile</a>";
-        } //Allows user to edit profile if current profile is the user's profile ?>
 <div style="display: flex; align-items: center;">
 <img src="<?php echo $this->publicUrl('images/blank_avatar.png')?>" width="250px" alt="blank_avatar"><div><h2>
 <?php   if($profile->name != NULL) {
