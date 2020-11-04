@@ -26,13 +26,82 @@ $profile = InstructorModel::getByKey($user->id); ?>
     <div class="card">
         <div class="card-body">
             <h5 class="card-title" style="text-align: center">Top Review</h5>
-            
+            <?php $reviews = InstructorRatings::find("instructor_id = :0:", $profile->instructorid); 
+            ?>
         </div>
     </div>
     <div class="card p-3">
         <div class="card-body">
             <h5 class="card-title" style="text-align: center">Recent Feedback</h5>
-            
+            <?php $recent = count($reviews)-2;
+            for($i=0; $i<5; $i++) {
+                if($reviews[$recent]->rating > $i) {
+                    echo 'X';
+                }
+                else {
+                    echo 'O';
+                }
+            }
+            echo '<br>';
+            if ($reviews[$recent]->takeAgain) {
+                echo 'Would take again: '.$reviews[$recent]->takeAgain.' ';
+            }
+            if ($reviews[$recent]->homework) {
+                echo 'Homework: '.$reviews[$recent]->homework.' ';
+            }
+            if ($reviews[$recent]->attendanceRequired) {
+                echo 'Attendance required: '.$reviews[$recent]->attendanceRequired.' ';
+            }
+            if ($reviews[$recent]->grade) {
+                echo 'Grade: '.$reviews[$recent]->grade;
+            }
+            echo '<br>'.$reviews[$recent]->recommendation.'<br>-';
+            if ($reviews[$recent]->authorId == 0) {
+                echo "Anonymous ";
+            }
+            else {
+                $student = User::find("id = :0:", $reviews[$recent]->authorId);
+                echo $student[0]->firstName.' '.$student[0]->lastName.' ';
+            }
+            if($reviews[$recent]->verified) {
+                echo 'verified';
+            }
+            echo '<br><br>';
+
+            $recent = $recent + 1;
+            for($i=0; $i<5; $i++) {
+                if($reviews[$recent]->rating > $i) {
+                    echo 'X';
+                }
+                else {
+                    echo 'O';
+                }
+            }
+            echo '<br>';
+            if ($reviews[$recent]->takeAgain) {
+                echo 'Would take again: '.$reviews[$recent]->takeAgain.' ';
+            }
+            if ($reviews[$recent]->homework) {
+                echo 'Homework: '.$reviews[$recent]->homework.' ';
+            }
+            if ($reviews[$recent]->attendanceRequired) {
+                echo 'Attendance required: '.$reviews[$recent]->attendanceRequired.' ';
+            }
+            if ($reviews[$recent]->grade) {
+                echo 'Grade: '.$reviews[$recent]->grade;
+            }
+            echo '<br>'.$reviews[$recent]->recommendation.'<br>-';
+            if ($reviews[$recent]->authorId == 0) {
+                echo "Anonymous ";
+            }
+            else {
+                $student = User::find("id = :0:", $reviews[$recent]->authorId);
+                echo $student[0]->firstName.' '.$student[0]->lastName.' ';
+            }
+            if($reviews[$recent]->verified == 1) {
+                echo 'verified';
+            }
+            echo '<br><br>'; ?>
             <a href = '<?php echo $this->baseUrl("/Instructor/ViewReviews/{$profile->instructorid}") ?>' class = 'card-link'>See all reviews >></a>
         </div>
     </div>
