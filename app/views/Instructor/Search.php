@@ -1,3 +1,5 @@
+<?php /** @var User[] $results */ ?>
+
 <h1>Instructor Search</h1>
 
 <form class="instructor-search" method="GET" action="<?php echo $this->baseUrl('/Instructor/Search') ?>">
@@ -18,7 +20,7 @@
 			?>
 			<div class="instructor-listing my-4 px-3 py-2 border">
 				<div class="d-flex align-items-center justify-content-between">
-					<h3><?php echo $profile->name . ' ' . $instructorUser->getFullName() ?></h3>
+					<h3><a href="<?php echo $instructorUser->getProfileUrl() ?>"><?php echo $profile->name . ' ' . $instructorUser->getFullName() ?></a></h3>
 					<p class="text-right">
 						<?php echo $instructorUser->email ?><br><?php echo $profile->department ?>
 					</p>

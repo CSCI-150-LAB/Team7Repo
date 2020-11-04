@@ -38,10 +38,16 @@ class Db {
 			}
 		}
 
-		$sql = preg_replace_callback('/([\'"]?):([a-zA-Z0-9_-]+):\\1/', function($matches) use ($args) {
-			return isset($args[$matches[2]])
-				? $args[$matches[2]]
-				: 'NULL';
+		$sql = preg_replace_callback('/(?:(!?=|<>)\\s*)?([\'"]?):([a-z0-9_-]+):\\2/i', function($matches) use ($args) {
+			if (isset($args[$matches[3]])) {
+				return ltrim($matches[1] . ' ') . $args[$matches[3]];
+			}
+
+			return empty($matches[1])
+				? 'NULL'
+				: ($matches[1] == '='
+					? 'IS NULL'
+					: 'IS NOT NULL');
 		}, $sql);
 
 		$sql = trim($sql);
