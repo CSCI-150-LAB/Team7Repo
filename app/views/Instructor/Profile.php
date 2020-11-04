@@ -37,8 +37,3 @@ $profile = InstructorModel::getByKey($user->id); ?>
         </div>
     </div>
 </div>
-
-<?php  ?>
-
-<br><br>
-
