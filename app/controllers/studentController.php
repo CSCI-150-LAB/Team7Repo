@@ -115,6 +115,14 @@ class studentController extends PermsController {
 					$instructorRating->grade = "N/A";
 				}
 
+				$classes = InstructorClasses::find("instructorid =:0:", $instructorId);
+				foreach($classes as $class) {
+					$verify = studentClasses::find("classId =:0: AND studentId =:1:", $class->classid, $currentUser->id);
+					if($verify) {
+						$instructorRating->verified = 1;
+					}
+				}
+
 				$instructorRating->instructorId = $instructorId;
 
 				foreach ($ratingInfo as $key => $val) {
@@ -129,7 +137,7 @@ class studentController extends PermsController {
 				} 
 			}
 		}
-		return $this->view(['errors' => $errors]);
+		return $this->view(['errors' => $errors, 'instructorId' =>$instructorId]);
 	}
 
 }
