@@ -277,4 +277,10 @@ class InstructorController extends PermsController {
 
 		return $this->view(compact('search', 'results'));
 	}
+
+	public function ViewReviewsAction($instructId = 0) {
+		$instructor = InstructorModel::getByKey($instructId);
+		return $this->view(['instructor' => $instructor]);
+	//Go to page of reviews for instructor
+	}
 }

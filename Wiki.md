@@ -3,7 +3,7 @@
 ## 1. Introduction
 
 ### 1.1 Purpose
-Feedback Loop is a progressive web application that enables feedback communication between instructors and students. Every semester, a new group of students are enrolled in an instructor’s class. Certain teaching styles become incompatible with a student's preferred learning style which causes the student to lack the ability of comprehending the course material. Feedback Loop provides a communication bridge which helps both students and instructors determine the best learning environment. Instructors can use information obtained from FeedbackLoop and students' reviews and feedback to adjust their teaching in ways to help the students. Students can use FeedbackLoop as an anonymous, simpler, or more convenient way to provide address difficulties in understanding.  University administrators can utilize FeedbackLoop as a way to check up on instructors' performance and students' learning needs. 
+Feedback Loop is a progressive web application that enables feedback communication between instructors and students. Every semester, a new group of students are enrolled in an instructor’s class. Certain teaching styles become incompatible with a student's preferred learning style which causes the student to lack the ability of comprehending the course material. Feedback Loop provides a communication bridge which helps both students and instructors determine the best learning environment. Instructors can use information obtained from FeedbackLoop and students' reviews and feedback to adjust their teaching in ways to help the students. Students can use FeedbackLoop as an anonymous, simpler, or more convenient way to provide address difficulties in understanding.  University administrators can utilize FeedbackLoop as a way to check up on instructors' performance and students' learning needs.
 
 ### 1.2 Scope
 Feedback Loop will be available to all devices. Both the students and instructors will have a profile and dashboard. In a student account students will choose their preferred learning style-reading/writing, visual, audio, and kinesthetic. Students will have the option of being anonymous or public when providing feedback towards an instructor. Instructors will be able to initiate a feedback session for each of their enrolled classes as well as for each class activity. Instructors will also have a profile with information and review from previous students that current or future students can view. Feedback Loop will also have an administrator account which will be able to manage all profiles within the application. 
@@ -65,12 +65,12 @@ Example Classes Table:
 
 Example Instructor Ratings Table:
 
+
 | **rating_id** | **rating** | **recommendation**                                                                                                             | **anon** | **authord_id** | **instructor_id** | **take_again** |  **homework** |  **attendance_required** |  **grade** |
 |---------------|------------|--------------------------------------------------------------------------------------------------------------------------------|----------|----------------|-------------------|-------------|-------------|-------------|-------------|
 | 1             | 4          | Wonderful at explaining the course material. The homework is fairly reflective of the exam content.                            | yes      | 0              | 6789              |    Yes       |    Yes       |    No       |    A       |
 | 2             | 5          | Hard professor because of weekly quizzes but if you study properly and attend office hours, you will be able to ace the class. | no       | 1234           | 5678              |    N/A       |    No       |    No       |    B       |
 | 3             | 2          | Not very helpful when answering questions in class.                                                                            | yes      | 0              | 1011              |    No        |    Yes       |    Yes       |    N/A      |
-
 
 
 ### 2.2 Users
@@ -239,7 +239,6 @@ Admin users have the same functionality as instructor users with some additional
 4. NFR4: Screen Size compatibility
     - Description: The display of the application needs to be versatile to adapt to screen sizes of all devices.
     - Reasoning: Students may use their phones or their laptops to access this site, so various screen sizes should be compatible with the display.
-
 
 ## 4. Prioritization
 

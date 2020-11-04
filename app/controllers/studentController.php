@@ -59,5 +59,77 @@ class studentController extends PermsController {
 		return $this->view();
 
 	}
+	
+	public function AddReviewAction($instructorId = 0) {
+		$currentUser = User::getCurrentUser();
+		if($this->request->isPost()) {
+			//If the page was directed by a POST form
+			$fields = [
+				'rating' => 'rating',
+				'recommendation' => 'recommendation',
+				'anon' => 'anon'
+			]; //Create an array to hold rating information
+
+			$ratingInfo = [];
+            $errors = [];
+			foreach($fields as $property => $postField) {
+				if(empty($_POST[$postField])) {
+					$errors[] = "{$postField} is required";
+				}
+				else {
+					$ratingInfo[$property] = $_POST[$postField];
+				}
+			} //Check that all values are filled
+			if(!count($errors)) {
+				$instructorRating = new InstructorRatings();
+				if ($ratingInfo['anon'] == 'yes') {
+					$instructorRating->authorId = 0; // make the id 0 if they want to be anonymous
+				}
+				else {
+					$instructorRating->authorId = $currentUser->id; //store user id if they don't want to be anonymous
+				}
+
+				//$instructId = $_SESSION['ratedInstructorId'];
+				if (isset($_POST['takeAgain'])) {
+					$instructorRating->takeAgain = $_POST['takeAgain'];
+				}
+				else {
+					$instructorRating->takeAgain = "N/A";
+				}
+				if (isset($_POST['attendanceRequired'])) {
+					$instructorRating->attendanceRequired = $_POST['attendanceRequired'];
+				}
+				else {
+					$instructorRating->attendanceRequired = "N/A";
+				}
+				if (isset($_POST['homework'])) {
+					$instructorRating->homework = $_POST['homework'];
+				}
+				else {
+					$instructorRating->homework = "N/A";
+				}
+				if (isset($_POST['grade'])) {
+					$instructorRating->grade = $_POST['grade'];
+				}
+				else {
+					$instructorRating->grade = "N/A";
+				}
+
+				$instructorRating->instructorId = $instructorId;
+
+				foreach ($ratingInfo as $key => $val) {
+					$instructorRating->$key = $val;
+				}
+
+				if($instructorRating->save()) {
+					return $this->redirect($this->viewHelpers->baseUrl("/Instructor/Profile/{$instructorId}"));
+				} //Redirects user to instructor profile 
+				else {
+					$errors[] = 'Failed to save the review';
+				} 
+			}
+		}
+		return $this->view(['errors' => $errors]);
+	}
 
 }
