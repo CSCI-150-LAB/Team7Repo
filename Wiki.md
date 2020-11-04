@@ -206,17 +206,17 @@ Admin users have the same functionality as instructor users with some additional
     - Reasoning: So that students can give feedback to professors on how the current learning environment, teaching style, and their retention are in a class.
     - Dependencies: FR11, FR14
 16. FR16: Organize data on Professor Rankings
-    - Description:
-    - Reasoning:
-    - Dependencies:
+    - Description: Admins have the ability to look at all instructors' profiles and sort them based on their ratings.
+    - Reasoning: So that admins have an easy way to check on instructors' performance and compare them.
+    - Dependencies: FR12, FR15
 17. FR17: Aggregate Professor Feedback Data
-    - Description:
-    - Reasoning:
-    - Dependencies:
+    - Description: All feedback left by students from feedback sessions and ratings, reviews, and comments left by users are all aggregated.
+    - Reasoning: So that the professor and some other users can access the professor's performance and ways the professor can improve.
+    - Dependencies: FR12, FR15
 18. FR18: Students can view Instructor Ratings
-    - Description:
-    - Reasoning:
-    - Dependencies:
+    - Description: A student can view the overall ratings of an instructor from the aggregate feedback and reviews.
+    - Reasoning: So that users that might take or are currently taking the instructor's class, or users want to check the performance of an instructor, can see the data that demonstrates the instructor's performance.
+    - Dependencies: FR17
 19. FR19: Admin can manage all profiles
     - Description: Administrators have the ability to censor and moderate feedback and profile pages of both instructors and students.
     - Reasoning: So everything on FeedbackLoop fits with the university's values, and any inappropriate information on profiles or feedback can be removed.
