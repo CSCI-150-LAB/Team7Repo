@@ -1,5 +1,3 @@
-<?php var_dump($errors);?>
-
 <h1>Add Review</h1>
 
 <form method = 'POST'>

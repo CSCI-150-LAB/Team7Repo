@@ -56,5 +56,10 @@ class InstructorRatings extends Model {
      */
     public $grade;
 
+    /**
+     * @Column('verified')
+     */
+    public $verified;
+
 
 }
