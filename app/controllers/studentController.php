@@ -93,14 +93,26 @@ class studentController extends PermsController {
 				if (isset($_POST['takeAgain'])) {
 					$instructorRating->takeAgain = $_POST['takeAgain'];
 				}
+				else {
+					$instructorRating->takeAgain = "N/A";
+				}
 				if (isset($_POST['attendanceRequired'])) {
 					$instructorRating->attendanceRequired = $_POST['attendanceRequired'];
+				}
+				else {
+					$instructorRating->attendanceRequired = "N/A";
 				}
 				if (isset($_POST['homework'])) {
 					$instructorRating->homework = $_POST['homework'];
 				}
+				else {
+					$instructorRating->homework = "N/A";
+				}
 				if (isset($_POST['grade'])) {
 					$instructorRating->grade = $_POST['grade'];
+				}
+				else {
+					$instructorRating->grade = "N/A";
 				}
 
 				$instructorRating->instructorId = $instructorId;
