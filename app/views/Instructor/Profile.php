@@ -21,3 +21,15 @@ echo    "<h3 class = 'iprofile'>Teaching Styles</h3><br>
                 <th>$profile->visual</th><th>$profile->auditory</th><th>$profile->readwrite</th><th>$profile->kines</th>
             </tr>
         </table><br>"; //Display's instructor's preferred learning styles
+
+$isStud = User::find("id = :0:", $currentUser->id);
+
+if ($isStud[0]->type == 'student') {
+    echo "<button type='submit' class='btn btn-primary'><a href = '".$this->baseUrl("/Student/AddReview/{$profile->instructorid}")."'>Add Review</a></button>";
+} //If the user is a student, ratings may be added
+
+echo "<br><br>";
+
+//Will Instructors be able to view their reviews?
+echo "<button type='submit' class='btn btn-primary'><a href = '".$this->baseUrl("/Instructor/ViewReviews/{$profile->instructorid}")."'>View Reviews</a></button>";
+?>

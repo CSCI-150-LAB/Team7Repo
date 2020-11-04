@@ -3,7 +3,7 @@
 ## 1. Introduction
 
 ### 1.1 Purpose
-Feedback Loop is a progressive web application that enables feedback communication between instructors and students. Every semester, a new group of students are enrolled in an instructor’s class. Certain teaching styles become incompatible with a student's preferred learning style which causes the student to lack the ability of comprehending the course material. Feedback Loop provides a communication bridge which helps both students and instructors determine the best learning environment. 
+Feedback Loop is a progressive web application that enables feedback communication between instructors and students. Every semester, a new group of students are enrolled in an instructor’s class. Certain teaching styles become incompatible with a student's preferred learning style which causes the student to lack the ability of comprehending the course material. Feedback Loop provides a communication bridge which helps both students and instructors determine the best learning environment. Instructors can use information obtained from FeedbackLoop and students' reviews and feedback to adjust their teaching in ways to help the students. Students can use FeedbackLoop as an anonymous, simpler, or more convenient way to provide address difficulties in understanding.  University administrators can utilize FeedbackLoop as a way to check up on instructors' performance and students' learning needs.
 
 ### 1.2 Scope
 Feedback Loop will be available to all devices. Both the students and instructors will have a profile and dashboard. In a student account students will choose their preferred learning style-reading/writing, visual, audio, and kinesthetic. Students will have the option of being anonymous or public when providing feedback towards an instructor. Instructors will be able to initiate a feedback session for each of their enrolled classes as well as for each class activity. Instructors will also have a profile with information and review from previous students that current or future students can view. Feedback Loop will also have an administrator account which will be able to manage all profiles within the application. 
@@ -65,12 +65,12 @@ Example Classes Table:
 
 Example Instructor Ratings Table:
 
+
 | **rating_id** | **rating** | **recommendation**                                                                                                             | **anon** | **authord_id** | **instructor_id** | **take_again** |  **homework** |  **attendance_required** |  **grade** |
 |---------------|------------|--------------------------------------------------------------------------------------------------------------------------------|----------|----------------|-------------------|-------------|-------------|-------------|-------------|
 | 1             | 4          | Wonderful at explaining the course material. The homework is fairly reflective of the exam content.                            | yes      | 0              | 6789              |    Yes       |    Yes       |    No       |    A       |
 | 2             | 5          | Hard professor because of weekly quizzes but if you study properly and attend office hours, you will be able to ace the class. | no       | 1234           | 5678              |    N/A       |    No       |    No       |    B       |
 | 3             | 2          | Not very helpful when answering questions in class.                                                                            | yes      | 0              | 1011              |    No        |    Yes       |    Yes       |    N/A      |
-
 
 
 ### 2.2 Users
@@ -100,7 +100,7 @@ Admin users have the same functionality as instructor users with some additional
     - Reasoning: So the user can create a profile of preferred learning styles for others to view.
     - Dependencies: UIR2
 4. UIR4: User Profile
-    - Description:
+    - Description: Once a user profile is created, information from the profiles can be viewed, Students' Profiles include their preferred learning style and their major and can be viewed by Instructors and Admins, whereas Instructors' Profiles include how much they use each learning style, department, and email and can be viewed by all users.
     - Reasoning: So users can view other users’ profiles, anyone can view Instructor/Admin profiles, only Instructors/Admins can view Student profiles.
     - Dependencies: UIR3
 5. UIR5: Edit Profile Page
@@ -194,33 +194,33 @@ Admin users have the same functionality as instructor users with some additional
     - Reasoning: In order for other students to understand the professor's teaching style/class experience.
     - Dependencies: FR5
 13. FR13: Search Instructor
-    - Description:
-    - Reasoning:
-    - Dependencies:
-14. Instructors can initiate a Feedback Session
-    - Description:
-    - Reasoning:
-    - Dependencies:
-15. Students can give Feedback in Feedback Session
-    - Description:
-    - Reasoning:
-    - Dependencies:
-16. Organize data on Professor Rankings
-    - Description:
-    - Reasoning:
-    - Dependencies:
-17. Aggregate Professor Feedback Data
-    - Description:
-    - Reasoning:
-    - Dependencies:
-18. Students can view Instructor Ratings
-    - Description:
-    - Reasoning:
-    - Dependencies:
-19. Admin can manage all profiles
-    - Description:
-    - Reasoning:
-    - Dependencies:
+    - Description: Any user can search for a certain instructor from the instructor's email, first name, last name, full name, department, and any class titles they are associated with and return any relvant instructor's information.
+    - Reasoning: So users can view information including classes and ratings on any professor they are taking, are going to take, or leave feedback for professors they have already taken.
+    - Dependencies: FR5, FR9
+14. FR14: Instructors can initiate a Feedback Session
+    - Description: A logged in instructor on a class page can set a time and date for a feedback session and when it will end along with the type of question (multiple choice, short answer, etc.) and the question itself.
+    - Reasoning: So that instructors can determine when and what specific feedback questions to ask students to improve their teaching.
+    - Dependencies: FR9
+15. FR15: Students can give Feedback in Feedback Session
+    - Description: A student from their dashboard in a class that an instructor has created a feedback session for can leave feedback based on the question and type of question (multiple choice, short answer, etc) that was created.
+    - Reasoning: So that students can give feedback to professors on how the current learning environment, teaching style, and their retention are in a class.
+    - Dependencies: FR11, FR14
+16. FR16: Organize data on Professor Rankings
+    - Description: Admins have the ability to look at all instructors' profiles and sort them based on their ratings.
+    - Reasoning: So that admins have an easy way to check on instructors' performance and compare them.
+    - Dependencies: FR12, FR15
+17. FR17: Aggregate Professor Feedback Data
+    - Description: All feedback left by students from feedback sessions and ratings, reviews, and comments left by users are all aggregated.
+    - Reasoning: So that the professor and some other users can access the professor's performance and ways the professor can improve.
+    - Dependencies: FR12, FR15
+18. FR18: Students can view Instructor Ratings
+    - Description: A student can view the overall ratings of an instructor from the aggregate feedback and reviews.
+    - Reasoning: So that users that might take or are currently taking the instructor's class, or users want to check the performance of an instructor, can see the data that demonstrates the instructor's performance.
+    - Dependencies: FR17
+19. FR19: Admin can manage all profiles
+    - Description: Administrators have the ability to censor and moderate feedback and profile pages of both instructors and students.
+    - Reasoning: So everything on FeedbackLoop fits with the university's values, and any inappropriate information on profiles or feedback can be removed.
+    - Dependencies: FR4, FR6, FR12, FR15
 
 ### 3.3 Non-Functional Requirements
 
@@ -239,7 +239,6 @@ Admin users have the same functionality as instructor users with some additional
 4. NFR4: Screen Size compatibility
     - Description: The display of the application needs to be versatile to adapt to screen sizes of all devices.
     - Reasoning: Students may use their phones or their laptops to access this site, so various screen sizes should be compatible with the display.
-
 
 ## 4. Prioritization
 

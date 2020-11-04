@@ -1,0 +1,25 @@
+Registration Page: 
+
+Description: The user will register as an administrator, instructor, or student and create login information to access the site later on.
+
+Rationale: In order for the user to have an account in the system.
+
+Dependency: None
+
+
+Student Dashboard: 
+
+Description: The student user will be able to view all of the classes they are enrolled in and may visit their instructor's profile page or their class page upon clicking each respective item in the schedule.
+
+Rationale: In order for the student to see which classes they are enrolled in.
+
+Dependency: Instructor Profile, Instructor Classes
+
+
+Add Review: 
+
+Description: The student user is able to add these reviews to professors' pages: ratings (out of 5 stars), recommendations (textual review of their class experiences with the instructor). The user may remain anonymous in these reviews if they wish.
+
+Rationale: In order for other students to understand the professor's teaching style/class experience.
+
+Dependency: Instructor Profile
