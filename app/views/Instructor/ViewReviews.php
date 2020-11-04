@@ -8,7 +8,7 @@ Reviews for <?php  echo $instructor->name . " " . $instructorInfo[0]->firstName 
 <?php   $currentUser = User::getCurrentUser();
         $isStud = User::find("id = :0:", $currentUser->id);
         if ($isStud[0]->type == 'student') {
-            echo "<a class = 'btn btn-secondary float-right' style='color: #ffffff;' href = '".$this->baseUrl("/Student/AddReview/{$profile->instructorid}")."'>Add Review</a><br>";
+            echo "<a class = 'btn btn-secondary float-right' style='color: #ffffff;' href = '".$this->baseUrl("/Student/AddReview/{$instructor->instructorid}")."'>Add Review</a><br>";
         } //If the user is a student, ratings may be added
 ?>
 

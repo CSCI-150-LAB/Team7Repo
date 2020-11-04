@@ -137,7 +137,7 @@ class studentController extends PermsController {
 				} 
 			}
 		}
-		return $this->view(['errors' => $errors]);
+		return $this->view(['errors' => $errors, 'instructorId' =>$instructorId]);
 	}
 
 }
