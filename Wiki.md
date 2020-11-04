@@ -198,13 +198,13 @@ Admin users have the same functionality as instructor users with some additional
     - Reasoning: So users can view information including classes and ratings on any professor they are taking, are going to take, or leave feedback for professors they have already taken.
     - Dependencies: FR5, FR9
 14. FR14: Instructors can initiate a Feedback Session
-    - Description:
-    - Reasoning:
-    - Dependencies:
+    - Description: A logged in instructor on a class page can set a time and date for a feedback session and when it will end along with the type of question (multiple choice, short answer, etc.) and the question itself.
+    - Reasoning: So that instructors can determine when and what specific feedback questions to ask students to improve their teaching.
+    - Dependencies: FR9
 15. FR15: Students can give Feedback in Feedback Session
-    - Description:
-    - Reasoning:
-    - Dependencies:
+    - Description: A student from their dashboard in a class that an instructor has created a feedback session for can leave feedback based on the question and type of question (multiple choice, short answer, etc) that was created.
+    - Reasoning: So that students can give feedback to professors on how the current learning environment, teaching style, and their retention are in a class.
+    - Dependencies: FR11, FR14
 16. FR16: Organize data on Professor Rankings
     - Description:
     - Reasoning:
@@ -218,9 +218,9 @@ Admin users have the same functionality as instructor users with some additional
     - Reasoning:
     - Dependencies:
 19. FR19: Admin can manage all profiles
-    - Description:
-    - Reasoning:
-    - Dependencies:
+    - Description: Administrators have the ability to censor and moderate feedback and profile pages of both instructors and students.
+    - Reasoning: So everything on FeedbackLoop fits with the university's values, and any inappropriate information on profiles or feedback can be removed.
+    - Dependencies: FR4, FR6, FR12, FR15
 
 ### 3.3 Non-Functional Requirements
 
