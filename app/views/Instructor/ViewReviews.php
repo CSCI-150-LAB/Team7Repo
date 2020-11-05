@@ -13,7 +13,7 @@ Reviews for <?php  echo $instructor->name . " " . $instructorInfo[0]->firstName 
 ?>
 
 <?php $reviews = InstructorRatings::find("instructor_id = :0:", $instructor->instructorid);
-
+echo "<br>---------------------------------------------------<br><br>";
 foreach ($reviews as $value) {
     echo $value->printRating();
 
