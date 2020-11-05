@@ -239,6 +239,12 @@ Admin users have the same functionality as instructor users with some additional
 4. NFR4: Screen Size compatibility
     - Description: The display of the application needs to be versatile to adapt to screen sizes of all devices.
     - Reasoning: Students may use their phones or their laptops to access this site, so various screen sizes should be compatible with the display.
+    
+5. NFR5: User Role Preservation
+    - Description: The software will not allow the role of the user (i.e., student, instructor, administrator) to be changed. 
+    - Reasoning: This will prevent attackers from attempting to change the role of a user account to elevate their capabilities.
+
+6. NFR6: 
 
 ## 4. Prioritization
 
