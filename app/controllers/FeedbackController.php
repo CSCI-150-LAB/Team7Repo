@@ -94,7 +94,30 @@ class FeedbackController extends PermsController {
 		$feedBackSessions = array_map(['FeedbackModel', 'fromArray'], $feedBackSessions);
 		
 		return $this->view(['feedbackSessions' => $feedBackSessions]);
-    }
+	}
+	
+	public function ResponseAction($feedbackid) { //Will have to pass feedback id 
+		$response = ResponseModel::getByKey($feedbackid);
+		$student = User::get_current_user(); //Need to get user id 
+		$errors = [];
+		
+
+		if($this->request->isPost()) {
+			$fields = [
+			  'response' => 'response'
+		  ];
+
+
+		  $responseData = [
+				'feedbackid' => $response->feedbackid,
+				//'studentid' => $student
+			];
+
+		}
+
+
+		return $this->view();
+	}
 	
    
 
