@@ -39,14 +39,24 @@ $profile = InstructorModel::getByKey($user->id); ?>
             if(!$reviews) {
                 $reviews = InstructorRatings::find("instructor_id = :0:", $profile->instructorid);
             }
-            $topreview = $reviews[0];
-            foreach($reviews as $review)  {
-                if($review->rating > $topreview) {
-                    $topreview = $review;
+            if($reviews) {
+                $topreview = $reviews[0];
+                foreach($reviews as $review)  {
+                    if($review->rating > $topreview) {
+                        $topreview = $review;
+                    }
+                }
+                if($topreview) {
+                    echo $topreview->printRating();
                 }
             }
-            if($topreview) {
-                echo $topreview->printRating();
+            else {
+                echo "No recommendations yet";
+                $currentUser = User::getCurrentUser();
+                $isStud = User::find("id = :0:", $currentUser->id);
+                if ($isStud[0]->type == 'student') {
+                    echo ", be the first! <a  href = '".$this->baseUrl("/Student/AddReview/{$instructor->instructorid}")."'>Add Review >></a><br>";
+                }
             }
             ?>
         </div>
@@ -63,9 +73,18 @@ $profile = InstructorModel::getByKey($user->id); ?>
             $recent += 1;
             if($recent >= 0) {
                 echo $reviews[$recent]->printRating();
-                echo '<br><br>';
-            } ?>
+                echo '<br><br>'; ?>
             <a href = '<?php echo $this->baseUrl("/Instructor/ViewReviews/{$profile->instructorid}") ?>' class = 'card-link'>See all reviews >></a>
+            <?php
+            }
+            else {
+                echo "No recommendations yet";
+                $currentUser = User::getCurrentUser();
+                $isStud = User::find("id = :0:", $currentUser->id);
+                if ($isStud[0]->type == 'student') {
+                    echo ", be the first! <a  href = '".$this->baseUrl("/Student/AddReview/{$instructor->instructorid}")."'>Add Review >></a><br>";
+                }
+            } ?>
         </div>
     </div>
 </div>
