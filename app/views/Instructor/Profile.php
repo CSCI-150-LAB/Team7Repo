@@ -35,9 +35,9 @@ $profile = InstructorModel::getByKey($user->id); ?>
     <div class="card">
         <div class="card-body">
             <h4 class="card-title" style="text-align: center">Top Review</h4>
-            <?php $reviews = InstructorRatings::find("instructor_id = :0: AND verified = :1:", $profile->instructorid, 1);
+            <?php $reviews = InstructorRatings::find("instructor_id = :0: AND verified = :1:", $user->id, 1);
             if(!$reviews) {
-                $reviews = InstructorRatings::find("instructor_id = :0:", $profile->instructorid);
+                $reviews = InstructorRatings::find("instructor_id = :0:", $user->id);
             }
             if($reviews) {
                 $topreview = $reviews[0];
@@ -55,7 +55,7 @@ $profile = InstructorModel::getByKey($user->id); ?>
                 $currentUser = User::getCurrentUser();
                 $isStud = User::find("id = :0:", $currentUser->id);
                 if ($isStud[0]->type == 'student') {
-                    echo ", be the first! <a  href = '".$this->baseUrl("/Student/AddReview/{$instructor->instructorid}")."'>Add Review >></a><br>";
+                    echo ", be the first! <a  href = '".$this->baseUrl("/Student/AddReview/{$user->id}")."'>Add Review >></a><br>";
                 }
             }
             ?>
@@ -64,7 +64,7 @@ $profile = InstructorModel::getByKey($user->id); ?>
     <div class="card p-3">
         <div class="card-body">
             <h4 class="card-title" style="text-align: center">Recent Feedback</h4>
-            <?php $reviews = InstructorRatings::find("instructor_id = :0:", $profile->instructorid);
+            <?php $reviews = InstructorRatings::find("instructor_id = :0:", $user->id);
             $recent = count($reviews)-1;
             if($recent >= 0) {
                 echo $reviews[$recent]->printRating();
@@ -74,7 +74,7 @@ $profile = InstructorModel::getByKey($user->id); ?>
             if($recent >= 0) {
                 echo $reviews[$recent]->printRating();
                 echo '<br><br>'; ?>
-            <a href = '<?php echo $this->baseUrl("/Instructor/ViewReviews/{$profile->instructorid}") ?>' class = 'card-link'>See all reviews >></a>
+            <a href = '<?php echo $this->baseUrl("/Instructor/ViewReviews/{$user->id}") ?>' class = 'card-link'>See all reviews >></a>
             <?php
             }
             else {
@@ -82,7 +82,7 @@ $profile = InstructorModel::getByKey($user->id); ?>
                 $currentUser = User::getCurrentUser();
                 $isStud = User::find("id = :0:", $currentUser->id);
                 if ($isStud[0]->type == 'student') {
-                    echo ", be the first! <a  href = '".$this->baseUrl("/Student/AddReview/{$instructor->instructorid}")."'>Add Review >></a><br>";
+                    echo ", be the first! <a  href = '".$this->baseUrl("/Student/AddReview/{$user->id}")."'>Add Review >></a><br>";
                 }
             } ?>
         </div>

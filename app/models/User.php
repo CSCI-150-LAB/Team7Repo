@@ -100,7 +100,7 @@ class User extends Model {
 	 * @return boolean
 	 */
 	public function isLoggedIn() {
-		return isset($_SESSION['current_user']) && $this->doesExist() && $this->id == $_SESSION['current_user'];
+		return (isset($_SESSION['current_user']) && $this->doesExist() && ($this->id == $_SESSION['current_user']));
 	}
 
 	/**
