@@ -65,12 +65,12 @@ $profile = InstructorModel::getByKey($user->id); ?>
         <div class="card-body">
             <h4 class="card-title" style="text-align: center">Recent Feedback</h4>
             <?php $reviews = InstructorRatings::find("instructor_id = :0:", $profile->instructorid);
-            $recent = count($reviews)-2;
+            $recent = count($reviews)-1;
             if($recent >= 0) {
                 echo $reviews[$recent]->printRating();
                 echo '<br><br>';
             }
-            $recent += 1;
+            $recent -= 1;
             if($recent >= 0) {
                 echo $reviews[$recent]->printRating();
                 echo '<br><br>'; ?>
