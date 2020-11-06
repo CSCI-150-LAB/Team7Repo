@@ -8,4 +8,9 @@ class AdminController extends PermsController {
 	public function ProfileAction($userId) {
 		return $this->view();
 	}
+
+	public function PanelAction($userId = 0) {
+		$user = User::getByKey($userID);
+		return $this->view(['user' => $user]);
+	}
 }
