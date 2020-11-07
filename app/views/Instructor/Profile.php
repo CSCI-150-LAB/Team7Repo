@@ -70,13 +70,6 @@ $profile = InstructorModel::getByKey($user->id); ?>
                 echo $reviews[$recent]->printRating();
                 echo '<br><br>';
             }
-            $recent -= 1;
-            if($recent >= 0) {
-                echo $reviews[$recent]->printRating();
-                echo '<br><br>'; ?>
-            <a href = '<?php echo $this->baseUrl("/Instructor/ViewReviews/{$user->id}") ?>' class = 'card-link'>See all reviews >></a>
-            <?php
-            }
             else {
                 echo "No recommendations yet";
                 $currentUser = User::getCurrentUser();
@@ -84,7 +77,15 @@ $profile = InstructorModel::getByKey($user->id); ?>
                 if ($isStud[0]->type == 'student') {
                     echo ", be the first! <a  href = '".$this->baseUrl("/Student/AddReview/{$user->id}")."'>Add Review >></a><br>";
                 }
-            } ?>
+            }
+            $recent -= 1;
+            if($recent >= 0) {
+                echo $reviews[$recent]->printRating();
+                echo '<br><br>';
+            }
+            if($reviews) { ?>
+                <a href = '<?php echo $this->baseUrl("/Instructor/ViewReviews/{$user->id}") ?>' class = 'card-link'>See all reviews >></a>
+            <?php } ?>
         </div>
     </div>
 </div>
