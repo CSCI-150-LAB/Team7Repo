@@ -6,6 +6,8 @@
         $endtime = strtotime($feedback->end) > time();
 
         $active = $starttime && $endtime ? "Inactive" : "Active"; //TODO check start time
+
+        
     ?> 
            <table class="table table-bordered"> 
                 <thead>
@@ -16,8 +18,8 @@
                     </tr>
                 </thead>
                 <tbody>  
-                    <tr>
-                        <td> <a href='<?php echo $this->baseUrl("/Feedback/Response")?>'><?php echo $feedback->feedbacktitle ?></a></td> <!--TODO Need to differentiate whether feedback is rating or text in order to display content in instructor account-->
+                    <tr>                                                             
+                        <td> <a href='<?php echo $this->baseUrl("/Feedback/Response/{$feedback->feedbackid}")?>'><?php echo $feedback->feedbacktitle ?></a></td> 
                         <td> <?php echo $active ?> </td>
                         <td> <?php echo $feedback->start . ' ' . $feedback->end?> </td> <!--TODO Fix time output-->
                        

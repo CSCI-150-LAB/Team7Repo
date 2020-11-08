@@ -37,7 +37,7 @@ class FeedbackController extends PermsController {
                 $publishedFeedback = new FeedbackModel();
 				foreach ($feedbackData as $key => $val) {
 					$publishedFeedback->$key = $val;
-				} //Sets profile values for user
+				} 
 
 				
 				if($feedbackData['feedbacktype'] == 'text') { //TODO Why is it not matching? 
@@ -69,13 +69,6 @@ class FeedbackController extends PermsController {
     public function PublishedFeedbackAction($classid) { 
 		/** @var Db */
 
-		/* $currentclass = InstructorClasses::getByKey($classid);
-		if($currentclass == 0) {
-			return $this->redirect($this->viewHelpers->baseUrl("/Instructor/Dashboard"));
-		} */
-
-
-
 
 		$db = $this->get('Db');
 		/** @var array[] */
@@ -93,14 +86,14 @@ class FeedbackController extends PermsController {
 		/** @var FeedbackModel[] */
 		$feedBackSessions = array_map(['FeedbackModel', 'fromArray'], $feedBackSessions);
 		
-		return $this->view(['feedbackSessions' => $feedBackSessions]);
+		return $this->view(['feedbackSessions' => $feedBackSessions]); //TODO Watch me
 	}
 	
-	public function ResponseAction($feedbackid) { //Will have to pass feedback id 
-		$response = ResponseModel::getByKey($feedbackid);
-		$student = User::get_current_user(); //Need to get user id 
-		$errors = [];
+	public function ResponseAction($feedbackid) { 
 		
+		$errors = [];
+
+		$student = User::getCurrentUser();
 
 		if($this->request->isPost()) {
 			$fields = [
@@ -109,14 +102,42 @@ class FeedbackController extends PermsController {
 
 
 		  $responseData = [
-				'feedbackid' => $response->feedbackid,
-				//'studentid' => $student
+				'feedbackid' => $feedbackid,
+				'studentid' => $student->id
 			];
 
-		}
+			foreach ($fields as $prop => $postField) {
+                if (empty($_POST[$postField])) {
+                    $errors[] = "{$postField} is required"; 
+                }
+                else {
+					$responseData[$prop] = $_POST[$postField]; 
+                }
+			}
+			
+			if(!count($errors)) {
+                $publishedResponse = new ResponseModel();
+				foreach ($responseData as $key => $val) {
+					$publishedResponse->$key = $val;
+				}
 
 
-		return $this->view();
+				if($publishedResponse->save()) {
+					return $this->redirect($this->viewHelpers->baseUrl("/Feedback/PublishedFeedback")); 
+				} //Redirects user to published feedback page
+
+				else {
+					$errors[] = 'Failed to save the feedback';
+
+				}
+				
+			}
+
+		} 
+
+
+		return $this->view(['errors' => $errors]);
+		
 	}
 	
    
