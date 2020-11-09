@@ -123,8 +123,8 @@ class FeedbackController extends PermsController {
 
 
 				if($publishedResponse->save()) {
-					return $this->redirect($this->viewHelpers->baseUrl("/Feedback/PublishedFeedback")); 
-				} //Redirects user to published feedback page
+					return $this->redirect($this->viewHelpers->baseUrl("/Student/Dashboard")); 
+				} 
 
 				else {
 					$errors[] = 'Failed to save the feedback';

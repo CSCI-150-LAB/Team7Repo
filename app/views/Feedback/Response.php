@@ -10,7 +10,7 @@
 
 <form method="POST">
 
-    <textarea id="student-repsonse" name="response" rows="5" cols="80"></textarea> <br>
+    <textarea id="student-response" name="response" rows="5" cols="80"></textarea> <br>
     <input type="submit" id="sub" value="Submit" class = "btn btn-secondary" style="color: #ffffff;">
 
 </form>

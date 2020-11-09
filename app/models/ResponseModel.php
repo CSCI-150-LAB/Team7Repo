@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @Table('studentreponses')
+ * @Table('studentresponses')
  */
 class ResponseModel extends Model {
 
