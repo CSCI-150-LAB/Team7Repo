@@ -9,7 +9,7 @@ class FeedbackController extends PermsController {
 
         if ($this->request->isPost()) {
 			$fields = [
-				  //key => value 
+				  
 				'feedbacktitle' => 'feedbacktitle',
 				'start' => 'feedbackstart',
 				'end' => 'feedbackend',
@@ -24,10 +24,10 @@ class FeedbackController extends PermsController {
 			
             foreach ($fields as $prop => $postField) {
                 if (empty($_POST[$postField])) {
-                    $errors[] = "{$postField} is required"; //left an input blank
+                    $errors[] = "{$postField} is required"; 
                 }
                 else {
-					$feedbackData[$prop] = $_POST[$postField]; //Publish feedback session
+					$feedbackData[$prop] = $_POST[$postField]; 
                 }
             }
             
@@ -40,7 +40,7 @@ class FeedbackController extends PermsController {
 				} 
 
 				
-				if($feedbackData['feedbacktype'] == 'text') { //TODO Why is it not matching? 
+				if($feedbackData['feedbacktype'] == 'text') {  
 					$publishedFeedback->feedbacktype = 1;
 				}
 				else { //Rating feedback
@@ -63,7 +63,7 @@ class FeedbackController extends PermsController {
 
         
 
-        return $this->json(['errors' => $errors]); //TODO Let user know the errors 
+        return $this->json(['errors' => $errors]); 
     }
     
     public function PublishedFeedbackAction($classid) { 
@@ -86,7 +86,7 @@ class FeedbackController extends PermsController {
 		/** @var FeedbackModel[] */
 		$feedBackSessions = array_map(['FeedbackModel', 'fromArray'], $feedBackSessions);
 		
-		return $this->view(['feedbackSessions' => $feedBackSessions]); //TODO Watch me
+		return $this->view(['feedbackSessions' => $feedBackSessions]); 
 	}
 	
 	public function ResponseAction($feedbackid) { 
@@ -140,7 +140,31 @@ class FeedbackController extends PermsController {
 		
 	}
 	
-   
+   public function InstructorResultAction($feedbackid) {
+
+		/** @var Db */
+		
+
+		$db = $this->get('Db');
+		/** @var array[] */
+		$feedbackresult = $db->query( 
+			"
+			SELECT * FROM studentresponses INNER JOIN feedbacksessions ON studentresponses.feedback_id = feedbacksessions.id WHERE studentresponses.feedback_id = :feedbackid:
+			
+			", ['feedbackid' => $feedbackid]
+		);
+
+		
+		if ($feedbackresult === false) {
+			die($db->getLastError());
+		}
+		/** @var ResponseModel[] */
+		$feedbackresult = array_map(['ResponseModel', 'fromArray'], $feedbackresult);
+		
+		return $this->view(['feedbackresult' => $feedbackresult]); 
+
+	   
+   }
 
 }
 
