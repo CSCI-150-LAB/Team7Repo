@@ -4,6 +4,7 @@
 
 $user = User::getCurrentUser();
 $url;
+$type;
 ?>
 
 
@@ -18,9 +19,16 @@ $url;
 
         if($user->type == "instructor") {
             $url = "Feedback/InstructorResult/{$feedback->feedbackid}";
+
         }
-        else {
-            $url = "Feedback/Response/{$feedback->feedbacktype}";
+        if($user->type == "student") {
+            if($feedback->feedbacktype == "1") {
+                $url = "Feedback/Response/{$feedback->feedbackid}";
+            }
+            else { 
+                $url = "Feedback/RatingResponse/{$feedback->feedbackid}"; 
+                
+            }
         }
 
         
@@ -36,9 +44,9 @@ $url;
                     <tr>                                                             
                         <td> <a href='<?php echo $this->baseUrl($url)?>'><?php echo $feedback->feedbacktitle ?></a></td> 
                         <td> <?php echo $feedback->feedbackdescription ?> </td>
-                        
                        
                     </tr>
                 </tbody>
             </table>
 <?php endforeach;?>
+

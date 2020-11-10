@@ -166,6 +166,58 @@ class FeedbackController extends PermsController {
 	   
    }
 
+
+   public function RatingResponseAction($feedbackid) { 
+		
+	$errors = [];
+
+	$student = User::getCurrentUser();
+
+	if($this->request->isPost()) {
+		$fields = [
+		  'response' => 'rating'
+	  ];
+
+
+	  $ratingData = [
+			'feedbackid' => $feedbackid,
+			'studentid' => $student->id
+		];
+
+		foreach ($fields as $prop => $postField) {
+			if (empty($_POST[$postField])) {
+				$errors[] = "{$postField} is required"; 
+			}
+			else {
+				$ratingData[$prop] = $_POST[$postField]; 
+			}
+		}
+		
+		if(!count($errors)) {
+			$ratingResponse = new ResponseModel();
+			foreach ($ratingData as $key => $val) {
+				$ratingResponse->$key = $val;
+			}
+
+
+			if($ratingResponse->save()) {
+				return $this->redirect($this->viewHelpers->baseUrl("/Student/Dashboard")); 
+			} 
+
+			else {
+				$errors[] = 'Failed to save the feedback';
+
+			}
+			
+		}
+
+	} 
+
+
+	return $this->view(['errors' => $errors]);
+	
+}
+
 }
 
 ?>
