@@ -4,6 +4,7 @@
  * A base class that provides a basic framework for processing annotation comments
  */
 class AnnotatedClass {
+	private const WORD_SEPARATORS = " `~!@#%^&*()-=+[{]}\\|;:'\",<>/?$";
 	private static $annotationsMap = [];
 
 	/**
@@ -48,8 +49,9 @@ class AnnotatedClass {
                 // Parsing logic definitely not perfect but suitable for now
                 $comment = preg_replace('/\\r?\\n\\r?/', "\n", $comment);
 
-                $methodCalls = explode("\n", $comment);
-                $methodCalls = array_map(function($line) {
+				$lines = explode("\n", $comment);
+				$methodCalls = [];
+				foreach ($lines as $line) {
 					$line = preg_replace('/^\\s*(?:\\/\\*)?\\*\\s*/', '', $line);
 
                     if ($line && $line[0] == '@') {
@@ -60,87 +62,30 @@ class AnnotatedClass {
                         $paren = strpos($func, '(');
                         if ($paren !== false) {
                             if ($line[$len - 1] != ')') {
-                                return false;
+                                continue;
                             }
 
                             $func = rtrim(substr($func, 0, $paren));
                         }
                         elseif (strpos($func, ' ') !== false) {
-                            return false;
+                            continue;
                         }
 
-                        $args = [];
+						$args = [];
                         if ($paren !== false) {
-                            $argsStr = trim(substr($line, $paren + 1, $len - $paren - 2));
-                            $len = strlen($argsStr);
-
-                            while ($len) {
-                                $firstChar = $argsStr[0];
-
-                                if ($firstChar == '"' || $firstChar == "'") {
-                                    // read string
-                                    $ndx = 1;
-                                    $escaping = false;
-                                    $str = '';
-                                    while ($argsStr[$ndx] != $firstChar || $escaping) {
-                                        $char = $argsStr[$ndx];
-                                        $ndx++;
-                                        if ($ndx == $len) {
-                                            return false;
-                                        }
-
-                                        if ($escaping) {
-                                            $escaping = false;
-                                            $str .= $char;
-                                            continue;
-                                        }
-
-                                        if ($char == '\\') {
-                                            $escaping = true;
-                                        }
-                                        else {
-                                            $str .= $char;
-                                        }
-                                    }
-
-                                    $args[] = $str;
-                                    $skip = $ndx + 1;
-                                }
-                                else {
-                                    // read not-string
-                                    $comma = strpos($argsStr, ',');
-                                    if ($comma === false) {
-                                        $comma = $len;
-                                    }
-
-                                    $args[] = self::getDocBlockVar(rtrim(substr($argsStr, 0, $comma)));
-                                    $skip = 0;
-                                }
-
-                                $skip = strpos($argsStr, ',', $skip);
-                                if ($skip === false) {
-                                    $skip = $len;
-                                }
-                                else {
-                                    $skip++;
-                                }
-
-                                $argsStr = ltrim(substr($argsStr, $skip));
-                                $len = strlen($argsStr);
-                            }
+							$argsStr = trim(substr($line, $paren + 1, $len - $paren - 1));
+							$args = self::readCommaDelimitedValues($argsStr, ')', false);
                         }
                         else {
                             $args = [];
                         }
 
-                        return [
+                        $methodCalls[] = [
                             'func' => $func,
                             'args' => $args
                         ];
                     }
-                }, $methodCalls);
-
-				$methodCalls = array_filter($methodCalls);
+				}
 			}
 			else {
 				$methodCalls = [];
@@ -168,7 +113,144 @@ class AnnotatedClass {
         }
 
         return $annotations;
-    }
+	}
+	
+	private static function readCommaDelimitedValues(&$str, $terminatingCharacter, $isArray) {
+		$result = [];
+		$firstValue = true;
+
+		while ($str[0] != $terminatingCharacter) {
+			if ($str[0] == ',') {
+				if ($firstValue) {
+					throw new Exception("Missing first value");
+				}
+
+				$str = ltrim(substr($str, 1));
+			}
+
+			$part1 = self::readValue($str);
+			if (strpos($str, '=>') === 0) {
+				if (!$isArray) {
+					throw new Exception("Can't have keys in function call");
+				}
+
+				$str = ltrim(substr($str, 2));
+				$part2 = self::readValue($str);
+				$result[$part1] = $part2;
+			}
+			else {
+				$result[] = $part1;
+			}
+
+			$firstValue = false;
+		}
+
+		$str = ltrim(substr($str, 1));
+		return $result;
+	}
+
+	private static function readValue(&$str) {
+		// Strings
+		if ($str[0] == '"' || $str[0] == "'") {
+			return self::readString($str);
+		}
+
+		// Arrays - New
+		elseif ($str[0] == '[') {
+			$str = ltrim(substr($str, 1));
+			return self::readCommaDelimitedValues($str, ']', true);
+		}
+
+		// Arrays - Old
+		elseif (stripos($str, 'array') === 0) {
+			$str = ltrim(substr($str, 5));
+			if ($str[0] != '(') {
+				throw new Exception("Unexpected character while parsing old array");
+			}
+
+			$str = ltrim(substr($str, 1));
+			return self::readCommaDelimitedValues($str, ')', true);
+		}
+
+		// Variable
+		elseif ($str[0] == '$') {
+			$rightSide = strcspn($str, self::WORD_SEPARATORS . '.', 1);
+			$var = substr($str, 1, $rightSide);
+
+			if (is_numeric($var[0])) {
+				throw new Exception("Variable names cannot start with a number");
+			}
+
+			$str = ltrim(substr($str, $rightSide + 1));
+
+			if ($var == 'this') {
+				//TODO: Resolve this
+				return null;
+			}
+			
+			return isset($GLOBALS[$var])
+				? $GLOBALS[$var]
+				: null;
+		}
+
+		// Other primitives
+		else {
+			$rightSide = strcspn($str, self::WORD_SEPARATORS);
+			if (!$rightSide) {
+				throw new Exception("Expected a value in function/array");
+			}
+
+			$value = substr($str, 0, $rightSide);
+			$str = ltrim(substr($str, $rightSide));
+
+			return self::getPrimitiveVar($value);
+		}
+	}
+
+	private static function readString(&$str) {
+		$ndx = 1;
+		$len = strlen($str);
+		$escaping = false;
+		$result = '';
+		$quoteChar = $str[0];
+
+		while ($str[$ndx] != $quoteChar || $escaping) {
+			$char = $str[$ndx];
+			$ndx++;
+			if ($ndx == $len) {
+				throw new Exception("String \"{$result}\" does not terminate");
+			}
+
+			if ($escaping) {
+				$escaping = false;
+				switch ($char) {
+					case 't':
+						$result .= "\t";
+						break;
+					case 'r':
+						$result .= "\r";
+						break;
+					case 'n':
+						$result .= "\n";
+						break;
+					default:
+						$result .= $char;
+						break;
+				}
+				continue;
+			}
+
+			if ($char == '\\') {
+				$escaping = true;
+			}
+			else {
+				$result .= $char;
+			}
+		}
+
+		$str = ltrim(substr($str, $ndx + 1));
+		return $result;
+	}
 
 	/**
 	 * Converts value strings to their real primitive value
@@ -177,7 +259,7 @@ class AnnotatedClass {
 	 * @param string $input
 	 * @return mixed
 	 */
-    private static function getDocBlockVar($input) {
+    private static function getPrimitiveVar($input) {
 		if (strcasecmp($input, 'true') === 0) {
 			return true;
 		}
@@ -186,10 +268,14 @@ class AnnotatedClass {
 			return false;
 		}
 
+		if (strcasecmp($input, 'null') === 0) {
+			return null;
+		}
+
         if (is_numeric($input)) {
             return floatval($input);
         }
 
-        return null;
+        throw new Exception("Unrecognized primitive value");
     }
 }

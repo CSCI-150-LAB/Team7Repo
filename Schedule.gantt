@@ -1,0 +1,23 @@
+Database Design,2020-09-15,2020-11-12
+Registration Page,2020-09-15,2020-09-19
+Login Page,2020-09-20,2020-09-24
+Student Profile View,2020-09-30,2020-10-01
+Student Profile Edit,2020-09-25,2020-09-29
+Instructor Profile View,2020-09-30,2020-10-01
+Instructor Profile Edit,2020-09-25,2020-09-29
+Forgot Password,2020-09-26,2020-10-01
+Student Dashboard,2020-10-02,2020-10-03
+Instructor Dashboard,2020-10-02,2020-10-03
+Instructor Add Class,2020-10-04,2020-10-06
+Instructor view Profile from Dashboard,2020-10-07,2020-10-08
+Student view Instructor Profile from Dashboard,2020-10-07,2020-10-08
+Student can add Recommendations/Reviews to Instructor Profile,2020-10-09,2020-10-15
+Instructor can initiate Feedback Session,2020-10-13,2020-10-18
+Student can give Feedback in Feedback Session,2020-10-19,2020-10-22
+Search Instructors,2020-10-16,2020-10-22
+Organize data on Professor Rankings,2020-10-30,2020-11-03
+Aggregate Professor Feedback Data,2020-10-23,2020-10-29
+Add Students using CSV,2020-10-26,2020-10-27
+Students can view Instructor Ratings,2020-10-30,2020-11-05
+Admin can manage all Profiles,2020-10-23,2020-11-05
+Polishing and Perfecting,2020-11-06,2020-11-23
