@@ -1,0 +1,47 @@
+<?php
+
+    /**
+     * @Table('feedbacksessions')
+     */
+    class FeedbackModel extends Model {
+
+        /**
+         * @Key
+         * @Column('id')
+         */
+        public $feedbackid;
+
+        /**
+         * @Key
+         * @Column('feedback_title')
+         */
+        public $feedbacktitle;
+
+        /**
+         * @Key
+         * @Column('class_id')
+         */
+        public $classid;
+
+        /**
+         * @Column('start')
+         */
+        public $start;
+
+        /**
+         * @Column('end')
+         */
+        public $end;
+
+        /**
+         * @Column('feedback_description')
+         */
+        public $feedbackdescription;
+
+        /**
+         * @Column('type')
+         */
+        public $feedbacktype;
+
+    }
+?>  

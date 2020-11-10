@@ -104,6 +104,8 @@ class InstructorController extends PermsController {
 				$instructorClass->instructorid = $currentUser->id;
 
 				foreach ($classData as $key => $val) {
+
+					
 					$instructorClass->$key = $val;
 				} //Sets class values for class
 

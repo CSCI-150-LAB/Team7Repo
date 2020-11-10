@@ -22,6 +22,9 @@
     $currentUser = User::getCurrentUser();
 	?>
 	<link rel="canonical" href="<?php echo $this->getCanonical() ?>" />
+	<script>
+		var BASEURL = '<?php echo $this->baseUrl() ?>';
+	</script>
 </head>
 
 <body class="<?php echo $this->bodyClass(IS_LOCAL ? 'dev' : '') ?>">
