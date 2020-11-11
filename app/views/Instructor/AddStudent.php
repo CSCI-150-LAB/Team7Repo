@@ -1,6 +1,5 @@
 <?php $class = [];
-var_dump($errors);
-        $class = InstructorClasses::find("classid =:0:", $classid); ?>
+	$class = InstructorClasses::find("classid =:0:", $classid); ?>
 <h1>Add a New Student to <?php echo $class[0]->class ?></h1>
 <form method = 'POST'>
     <div class = 'form-group'>
