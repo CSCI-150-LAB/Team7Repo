@@ -6399,7 +6399,7 @@ body.user-c.login-a {
 .rating > input.radio-btn:checked ~ label:before {
   content: "\2605";
   position: absolute;
-  color: #ffeb0f;
+  color: #FED000;
 }
 
 i.fa-star.fas {
