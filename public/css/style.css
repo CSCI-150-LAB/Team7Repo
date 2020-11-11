@@ -6378,12 +6378,13 @@ body.user-c.login-a {
   background-image: linear-gradient(#fff, #d0d0da, #13284c);
 }
 
-i.fas.fa-star {
+i.fa-star.fas {
+  color: #FED000;
   position: relative;
   --bg-color: white;
 }
 
-i.fas.fa-star:after {
+i.fa-star.fas:after {
   display: block;
   content: "\f005";
   font-weight: 400;
@@ -6392,7 +6393,7 @@ i.fas.fa-star:after {
   top: 0;
 }
 
-i.fas.fa-star .partial {
+i.fa-star.fas .partial {
   display: block;
   background-color: var(--bg-color);
   position: absolute;

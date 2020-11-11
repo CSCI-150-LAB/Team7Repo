@@ -9,7 +9,7 @@ $profile = InstructorModel::getByKey($user->id); ?>
 <?php echo PrintHelpers::printStarRating($profile->rating) ?>
 </h4>
 <div style="display: flex; align-items: center;">
-<img src="<?php echo $this->publicUrl('images/blank_avatar.png')?>" width="250px" alt="blank_avatar"><div><h2>
+<img src="<?php echo $this->publicUrl('images/blank_avatar.png')?>" width="250px" alt="blank_avatar" class="mr-4"><div><h2>
 <?php   if($profile->name != NULL) {
             echo $profile->name." ";
         }

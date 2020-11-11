@@ -1,20 +1,17 @@
 <?php
 
 class PrintHelpers {
-	public static function printStarRating($rating) {
+	public static function printStarRating($rating, $title = null) {
 		$rating = floatval($rating);
-		$ratingString = '';
+		if (!$title) {
+			$title = "{$rating}/5";
+		}
+		$ratingString = "<span title=\"{$title}\">";
 		
 		for ($i=0; $i<5; $i++) {
 			if ($rating > 0) {
-				$ratingString .= '<i class="fas fa-star" style="color:#FED000;">';
+				$ratingString .= '<i class="fas fa-star">';
 				if ($rating < 1) {
-					if ($rating < 0.25) {
-						$rating = 0.25;
-					}
-					elseif ($rating > 0.7) {
-						$rating = 0.7;
-					}
 					$ratingString .= '<i class="partial" style="--partial: ' . ($rating * 100) . '%"></i>';
 				}
 				$ratingString .= '</i>';
@@ -24,6 +21,8 @@ class PrintHelpers {
 				$ratingString .= '<i class="far fa-star"></i>';
 			}
 		}
+
+		$ratingString .= '</span>';
 		
 		return $ratingString;
 	}
