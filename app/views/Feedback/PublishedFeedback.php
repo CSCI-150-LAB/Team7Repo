@@ -1,13 +1,12 @@
-<h1 class="mb-3" style= "background-color: #13284c; padding:60px; color: #ffffff;">Feedback Sessions for CSCI 150 </h1>
+
 
 <?php
 
 $user = User::getCurrentUser();
-$url;
-$type;
+
 ?>
 
-
+<h1 class="mb-3" style= "background-color: #13284c; padding:60px; color: #ffffff;">Feedback Sessions <?php echo $class->class ?></h1>
 
 
 <?php foreach($feedbackSessions as $feedback):?>

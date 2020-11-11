@@ -68,7 +68,7 @@ class FeedbackController extends PermsController {
     
     public function PublishedFeedbackAction($classid) { 
 		/** @var Db */
-
+		$class = InstructorClasses::getByKey($classid);
 
 		$db = $this->get('Db');
 		/** @var array[] */
@@ -86,7 +86,7 @@ class FeedbackController extends PermsController {
 		/** @var FeedbackModel[] */
 		$feedBackSessions = array_map(['FeedbackModel', 'fromArray'], $feedBackSessions);
 		
-		return $this->view(['feedbackSessions' => $feedBackSessions]); 
+		return $this->view(['feedbackSessions' => $feedBackSessions, 'class' => $class]); 
 	}
 	
 	public function ResponseAction($feedbackid) { 
