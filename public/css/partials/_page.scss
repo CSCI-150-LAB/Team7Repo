@@ -1,3 +1,28 @@
 body.user-c.login-a {
 	background-image: linear-gradient(#fff,#d0d0da,#13284c);
 }
+
+i.fa-star.fas {
+	color:#FED000;
+	position: relative;
+	--bg-color: white;
+
+	&:after {
+		display: block;
+		content: "\f005";
+		font-weight: 400;
+		color: rgb(64, 64, 64);
+		position: absolute;
+		top: 0;
+	}
+
+	.partial {
+		display: block;
+		background-color: var(--bg-color);
+		position: absolute;
+		top: 0;
+		left: var(--partial);
+		right: 0;
+		bottom: 0;
+	}
+}

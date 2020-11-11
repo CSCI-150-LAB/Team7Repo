@@ -83,7 +83,7 @@ Students have a user profile which they are able to edit and a user dashboard th
 Instructors also have a user profile which they are able to edit and a user dashboard.  The instructor user dashboard displays their schedule of classes, as well as a button that allows them to add a new class or section.  The classes on the instructor’s dashboard all have links to a summary page for that specific class as well as all of the students enrolled in the class.  Each student’s name is also a link to that student’s profile for the instructor to view.  On the class view page, instructors also have the option to initiate a feedback session, or add a student to the class.
 
 #### 2.2.3 Admin
-Admin users have the same functionality as instructor users with some additional functionalities.  Admins have the ability to moderate any other user’s profile, and the ability to edit feedback given to instructors.  Admins are also able to search for instructors and to sort instructors by their overall rating from students.
+Admin users have the same functionality as instructor users with some additional functionalities. Admins have the ability to moderate any other user’s profile and may search for instructors and sort them based on their overall rating from students. Admin users on a school campus include, but are not limited to: the Dean, university president, HR.
 
 ## 3. Requirements
 ### 3.1 UI Requirements

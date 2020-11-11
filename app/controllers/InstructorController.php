@@ -104,6 +104,8 @@ class InstructorController extends PermsController {
 				$instructorClass->instructorid = $currentUser->id;
 
 				foreach ($classData as $key => $val) {
+
+					
 					$instructorClass->$key = $val;
 				} //Sets class values for class
 
@@ -279,7 +281,7 @@ class InstructorController extends PermsController {
 	}
 
 	public function ViewReviewsAction($instructId = 0) {
-		$instructor = InstructorModel::getByKey($instructId);
+		$instructor = User::getByKey($instructId);
 		return $this->view(['instructor' => $instructor]);
 	//Go to page of reviews for instructor
 	}

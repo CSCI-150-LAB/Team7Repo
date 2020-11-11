@@ -6,16 +6,10 @@ $profile = InstructorModel::getByKey($user->id); ?>
             echo "<a class = 'btn btn-secondary float-right' style='color: #ffffff;' href = '".$this->baseUrl("/Instructor/EditProfile/{$currentUser->id}")."'>Edit Profile</a><br><br>";
         } //Allows user to edit profile if current profile is the user's profile ?>
 <h4 style='float: right;'>
-<?php   if($profile->rating) {
-            echo $profile->rating.'/5';
-        }
-        else {
-            echo 'No ratings yet';
-        }
-?>
+<?php echo PrintHelpers::printStarRating($profile->rating) ?>
 </h4>
 <div style="display: flex; align-items: center;">
-<img src="<?php echo $this->publicUrl('images/blank_avatar.png')?>" width="250px" alt="blank_avatar"><div><h2>
+<img src="<?php echo $this->publicUrl('images/blank_avatar.png')?>" width="250px" alt="blank_avatar" class="mr-4"><div><h2>
 <?php   if($profile->name != NULL) {
             echo $profile->name." ";
         }
@@ -35,9 +29,9 @@ $profile = InstructorModel::getByKey($user->id); ?>
     <div class="card">
         <div class="card-body">
             <h4 class="card-title" style="text-align: center">Top Review</h4>
-            <?php $reviews = InstructorRatings::find("instructor_id = :0: AND verified = :1:", $profile->instructorid, 1);
+            <?php $reviews = InstructorRatings::find("instructor_id = :0: AND verified = :1:", $user->id, 1);
             if(!$reviews) {
-                $reviews = InstructorRatings::find("instructor_id = :0:", $profile->instructorid);
+                $reviews = InstructorRatings::find("instructor_id = :0:", $user->id);
             }
             if($reviews) {
                 $topreview = $reviews[0];
@@ -55,7 +49,7 @@ $profile = InstructorModel::getByKey($user->id); ?>
                 $currentUser = User::getCurrentUser();
                 $isStud = User::find("id = :0:", $currentUser->id);
                 if ($isStud[0]->type == 'student') {
-                    echo ", be the first! <a  href = '".$this->baseUrl("/Student/AddReview/{$instructor->instructorid}")."'>Add Review >></a><br>";
+                    echo ", be the first! <a  href = '".$this->baseUrl("/Student/AddReview/{$user->id}")."'>Add Review >></a><br>";
                 }
             }
             ?>
@@ -64,27 +58,28 @@ $profile = InstructorModel::getByKey($user->id); ?>
     <div class="card p-3">
         <div class="card-body">
             <h4 class="card-title" style="text-align: center">Recent Feedback</h4>
-            <?php $reviews = InstructorRatings::find("instructor_id = :0:", $profile->instructorid);
-            $recent = count($reviews)-2;
+            <?php $reviews = InstructorRatings::find("instructor_id = :0:", $user->id);
+            $recent = count($reviews)-1;
             if($recent >= 0) {
                 echo $reviews[$recent]->printRating();
                 echo '<br><br>';
-            }
-            $recent += 1;
-            if($recent >= 0) {
-                echo $reviews[$recent]->printRating();
-                echo '<br><br>'; ?>
-            <a href = '<?php echo $this->baseUrl("/Instructor/ViewReviews/{$profile->instructorid}") ?>' class = 'card-link'>See all reviews >></a>
-            <?php
             }
             else {
                 echo "No recommendations yet";
                 $currentUser = User::getCurrentUser();
                 $isStud = User::find("id = :0:", $currentUser->id);
                 if ($isStud[0]->type == 'student') {
-                    echo ", be the first! <a  href = '".$this->baseUrl("/Student/AddReview/{$instructor->instructorid}")."'>Add Review >></a><br>";
+                    echo ", be the first! <a  href = '".$this->baseUrl("/Student/AddReview/{$user->id}")."'>Add Review >></a><br>";
                 }
-            } ?>
+            }
+            $recent -= 1;
+            if($recent >= 0) {
+                echo $reviews[$recent]->printRating();
+                echo '<br><br>';
+            }
+            if($reviews) { ?>
+                <a href = '<?php echo $this->baseUrl("/Instructor/ViewReviews/{$user->id}") ?>' class = 'card-link'>See all reviews >></a>
+            <?php } ?>
         </div>
     </div>
 </div>

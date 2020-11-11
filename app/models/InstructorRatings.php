@@ -62,15 +62,8 @@ class InstructorRatings extends Model {
     public $verified;
 
     public function printRating() {
-        $ratingString = '';
-		for($i=0; $i<5; $i++) {
-            if($this->rating > $i) {
-                $ratingString .= '<i class="fas fa-star" style="color:#FED000;"></i>';
-            }
-            else {
-                $ratingString .= '<i class="far fa-star"></i>';
-            }
-        }
+		$ratingString = PrintHelpers::printStarRating($this->rating);
+		
         $ratingString .= '<br>';
         if ($this->takeAgain != 'N/A') {
             $ratingString .= '<b>Would take again:</b> '.$this->takeAgain.' ';

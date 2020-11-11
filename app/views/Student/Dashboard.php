@@ -17,6 +17,7 @@
 		<th scope="col"> Description </th>
 		<th scope="col"> Days/Times</th>
 		<th scope="col"> Instructor</th>
+		
 		</tr>
 	</thead>
 	<tbody>
@@ -30,8 +31,8 @@
                     $instructorsNames = User::find("id = :0:", $instructors[$i]->instructorid);				// Get the specific instructor profile details associated with the instructor
                     ?>
 
-                    <tr>
-					<th scope="row"> <?php echo $details[$i]->class ?> </th>
+                    
+					<th scope="row"> <a href = '<?php echo $this->baseUrl("/Feedback/PublishedFeedback/{$details[$i]->classid}")?>'><?php echo $details[$i]->class ?></a> </th>
 					<!--Display the title of the class-->
 					<td> <?php echo $details[$i]->description ?> </td>
 					<!--Display the description of the class-->

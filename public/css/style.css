@@ -6401,3 +6401,28 @@ body.user-c.login-a {
   position: absolute;
   color: #ffeb0f;
 }
+
+i.fa-star.fas {
+  color: #FED000;
+  position: relative;
+  --bg-color: white;
+}
+
+i.fa-star.fas:after {
+  display: block;
+  content: "\f005";
+  font-weight: 400;
+  color: #404040;
+  position: absolute;
+  top: 0;
+}
+
+i.fa-star.fas .partial {
+  display: block;
+  background-color: var(--bg-color);
+  position: absolute;
+  top: 0;
+  left: var(--partial);
+  right: 0;
+  bottom: 0;
+}
