@@ -130,6 +130,29 @@ class studentController extends PermsController {
 				}
 
 				if($instructorRating->save()) {
+					// Update instructor profile rating
+					/** @var Db */
+					$db = $this->get('Db');
+					$db->query("
+						UPDATE
+							instructorprofile as ip,
+							(
+								SELECT
+									SUM(ir.rating) as sum,
+									COUNT(*) as cnt
+								FROM
+									instructorratings as ir
+								WHERE
+									ir.instructor_id = :0:
+								GROUP BY
+									ir.instructor_id
+							) as results
+						SET
+							ip.rating = results.sum / results.cnt
+						WHERE
+							ip.id = :0:;
+					", $instructorId);
+					
 					return $this->redirect($this->viewHelpers->baseUrl("/Instructor/Profile/{$instructorId}"));
 				} //Redirects user to instructor profile 
 				else {

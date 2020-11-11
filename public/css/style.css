@@ -6377,3 +6377,27 @@ form .checkbox-group > .valid-feedback {
 body.user-c.login-a {
   background-image: linear-gradient(#fff, #d0d0da, #13284c);
 }
+
+i.fas.fa-star {
+  position: relative;
+  --bg-color: white;
+}
+
+i.fas.fa-star:after {
+  display: block;
+  content: "\f005";
+  font-weight: 400;
+  color: #404040;
+  position: absolute;
+  top: 0;
+}
+
+i.fas.fa-star .partial {
+  display: block;
+  background-color: var(--bg-color);
+  position: absolute;
+  top: 0;
+  left: var(--partial);
+  right: 0;
+  bottom: 0;
+}
