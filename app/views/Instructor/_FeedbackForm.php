@@ -6,7 +6,7 @@
 <form method="POST" id="feedback-form" data-classid="<?php echo $class->classid?>">
 	<div class="form-group">
 		<label for="feedback-title">Feedback Title</label>
-		<input type="text" class="form-control" id="feedback-title" name="feedbacktitle" placeholder="Midterm Feeback">
+		<input type="text" class="form-control" id="feedback-title" name="feedbacktitle" placeholder="Midterm Feedback">
 
 		<label for="feedback-description">Feedback Description</label>
 		<input type="text" class="form-control" id="feedback-description" name="feedbackdescription" placeholder='"Explain to me how you feel about doing a kinesthetic activity for a midterm review"'>
