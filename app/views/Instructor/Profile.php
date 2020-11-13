@@ -36,7 +36,7 @@ $profile = InstructorModel::getByKey($user->id); ?>
             if($reviews) {
                 $topreview = $reviews[0];
                 foreach($reviews as $review)  {
-                    if($review->rating > $topreview) {
+                    if($review->rating > $topreview->rating) {
                         $topreview = $review;
                     }
                 }
