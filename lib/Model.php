@@ -57,15 +57,12 @@ class Model extends AnnotatedClass {
 	 * @param mixed ...$args
 	 * @return static[]
 	 */
-	public static function find($query, ...$args) {
-		if (count($args) == 1 && is_array($args[0])) {
-			$args = $args[0];
-		}
+	public static function find($query = '', ...$args) {
 		$query = self::transformStringQuery($query);
 
 		$tableMeta = static::getTableMeta();
 		$db = DI::getDefault()->get('Db');
-		$result = $db->query("SELECT * FROM {$tableMeta['name']} WHERE {$query}", $args);
+		$result = $db->query("SELECT * FROM {$tableMeta['name']} WHERE 1=1" . ($query ? " AND {$query}" : ''), ...$args);
 
 		if ($result !== false) {
 			return array_map(function($row) {
@@ -83,11 +80,8 @@ class Model extends AnnotatedClass {
 	 * @param mixed ...$args
 	 * @return static
 	 */
-	public static function findOne($query, ...$args) {
-		if (count($args) == 1 && is_array($args[0])) {
-			$args = $args[0];
-		}
-		$result = static::find("{$query} LIMIT 1", $args);
+	public static function findOne($query = '', ...$args) {
+		$result = static::find("{$query} LIMIT 1", ...$args);
 
 		if (is_bool($result)) {
 			return $result;
@@ -98,7 +92,32 @@ class Model extends AnnotatedClass {
 			: null;
 	}
 
+	/**
+	 * Returns the count of records that match constraints
+	 *
+	 * @param string $query
+	 * @param mixed ...$args
+	 * @return int
+	 */
+	public static function count($query = '', ...$args) {
+		$query = self::transformStringQuery($query);
+
+		$tableMeta = static::getTableMeta();
+		$db = DI::getDefault()->get('Db');
+		$result = $db->query("SELECT COUNT(*) as row_count FROM {$tableMeta['name']} WHERE 1=1" . ($query ? " AND {$query}" : ''), ...$args);
+
+		if ($result !== false) {
+			return intval($result[0]['row_count']);
+		}
+
+		return false;
+	}
+
 	private static function transformStringQuery($query) {
+		if (!$query) {
+			return $query;
+		}
+
 		$tableMeta = static::getTableMeta();
 
 		$patterns = [];

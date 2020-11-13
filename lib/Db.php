@@ -28,9 +28,24 @@ class Db {
 	 * @return mixed
 	 */
     public function query($sql, ...$args) {
-		if (count($args) == 1 && is_array($args[0])) {
-			$args = $args[0];
-		}
+		$numericNdx = 0;
+		$args = array_reduce($args, function($carry, $item) use (&$numericNdx) {
+			if (is_array($item)) {
+				foreach ($item as $key => $val) {
+					if (is_numeric($key)) {
+						$carry[$numericNdx++] = $val;
+					}
+					else {
+						$carry[$key] = $val;
+					}
+				}
+			}
+			else {
+				$carry[$numericNdx++] = $item;
+			}
+
+			return $carry;
+		}, []);
 
 		foreach ($args as $key => $val) {
 			if (is_string($val)) {
