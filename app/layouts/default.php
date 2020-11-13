@@ -41,17 +41,24 @@
                 <img src="<?php echo $this->publicUrl('images/fl.png')?>" width="40" height="40">
             </li>
             <?php if ($currentUser) : ?>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="<?php echo $currentUser->getDashboardUrl() ?>"> My Dashboard </a>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="javascript:void(0)"> My Ratings </a>
+			<?php if ($currentUser->isInstructor()) : ?>
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo $this->baseUrl("/Instructor/ViewReviews/{$currentUser->id}") ?>"> My Ratings </a>
             </li>
-            <li class="nav-item active">
+			<?php endif; ?>
+			<?php if ($currentUser->isAdmin()) : ?>
+            <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)"> Search Students </a>
+            </li>
+			<?php endif; ?>
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="javascript:void(0)"> Resources </a>
-            </li>
+            </li> -->
             <?php endif; ?>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="<?php echo $this->baseUrl('/Instructor/Search') ?>"> Search Instructors</a>
             </li>
 

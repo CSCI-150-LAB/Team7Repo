@@ -6122,6 +6122,10 @@
   background-color: #c41230;
 }
 
+.bg-dark-blue {
+  background-color: #13284c;
+}
+
 body.dev:after {
   position: fixed;
   padding: .5rem;
@@ -6293,7 +6297,7 @@ form .checkbox-group > .valid-feedback {
   padding: 24px;
 }
 
-.user-login-logout .nav-link {
+.nav-link {
   color: #fff !important;
 }
 
@@ -6376,30 +6380,6 @@ form .checkbox-group > .valid-feedback {
 
 body.user-c.login-a {
   background-image: linear-gradient(#fff, #d0d0da, #13284c);
-}
-
-.hide {
-  display: none;
-}
-
-.rating {
-  unicode-bidi: bidi-override;
-  direction: rtl;
-}
-
-.rating > label {
-  display: inline-block;
-  position: relative;
-  width: 1.1em;
-}
-
-.rating > label:hover:before, 
-.rating > label:hover ~ label:before, 
-.rating > input.radio-btn:checked ~ label:before,
-.rating > input.radio-btn:checked ~ label:before {
-  content: "\2605";
-  position: absolute;
-  color: #FED000;
 }
 
 i.fa-star.fas {

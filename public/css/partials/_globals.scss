@@ -4,7 +4,11 @@
 }
 
 .bg-red {
-	background-color: #c41230;
+	background-color: $red;
+}
+
+.bg-dark-blue {
+	background-color: $darkBlue;
 }
 
 body.dev:after {

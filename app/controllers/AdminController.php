@@ -1,11 +1,35 @@
 <?php
 
 class AdminController extends PermsController {
+	public function beforeActionHook() {
+		$response = $this->CurrentUserMustBeType('admin');
+		if ($response) {
+			return $response;
+		}
+
+		return parent::beforeActionHook();
+	}
+
 	/**
-	 * @CurrentUserMustBeType('admin')
 	 * @IsAdminUser
 	 */
 	public function ProfileAction($userId) {
-		return $this->view();
+		$user = User::getByKey($userId);
+		
+		return $this->view(compact('user'));
+	}
+
+	/**
+	 * @IsAdminUser
+	 */
+	public function ProfileEditAction($userId) {
+		$user = User::getByKey($userId);
+		$errors = [];
+
+		if ($this->request->isPost()) {
+			// TODO: Do this!
+		}
+
+		return $this->view(compact('errors'));
 	}
 }
