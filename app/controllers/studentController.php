@@ -163,4 +163,8 @@ class studentController extends PermsController {
 		return $this->view(['errors' => $errors, 'instructorId' =>$instructorId]);
 	}
 
+	public function AllResponsesAction() {
+		return $this->view();
+	}
+
 }
