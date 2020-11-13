@@ -1,6 +1,6 @@
 <div class="container">
     <div style="padding-top: 60px">
-        <div class="row" style="margin:auto">
+        <div class="row" style="margin-right:auto">
             <div class="col-sm-3" >
                 <div class="card">
                     <img class="card-img-top" src="<?php echo $this->publicUrl('images/dashboard_icon.jpg')?>" alt="Card image cap">
