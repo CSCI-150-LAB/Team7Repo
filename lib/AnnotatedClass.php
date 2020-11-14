@@ -50,6 +50,7 @@ class AnnotatedClass {
                 $comment = preg_replace('/\\r?\\n\\r?/', "\n", $comment);
 
 				$lines = explode("\n", $comment);
+				$methodMeta = [];
 				$methodCalls = [];
 				foreach ($lines as $line) {
 					$line = preg_replace('/^\\s*(?:\\/\\*)?\\*\\s*/', '', $line);
@@ -59,15 +60,18 @@ class AnnotatedClass {
                         $len = strlen($line);
 
                         $func = $line;
-                        $paren = strpos($func, '(');
+						$paren = strpos($func, '(');
                         if ($paren !== false) {
                             if ($line[$len - 1] != ')') {
+								self::readMeta($line, $methodMeta);
                                 continue;
                             }
 
                             $func = rtrim(substr($func, 0, $paren));
                         }
-                        elseif (strpos($func, ' ') !== false) {
+						
+						if (strpos($func, ' ') !== false) {
+							self::readMeta($line, $methodMeta);
                             continue;
                         }
 
@@ -93,7 +97,8 @@ class AnnotatedClass {
 
 			// Format the results
 			$methodCalls = [
-				'calls' => $methodCalls
+				'calls' => $methodCalls,
+				'meta' => $methodMeta
 			];
 
 			if ($refObj instanceof ReflectionClass) {
@@ -113,6 +118,40 @@ class AnnotatedClass {
         }
 
         return $annotations;
+	}
+
+	private static function readMeta($line, &$meta) {
+		if (preg_match('/^([a-z]+)\\s+(.*)$/i', $line, $matches)) {
+			switch ($matches[1]) {
+				case 'param':
+					if (!isset($meta['param'])) {
+						$meta['param'] = [];
+					}
+					$parts = explode(' ', $matches[2], 2);
+					$meta['param'][] = [
+						'type' => $parts[0] ?? 'mixed',
+						'desc' => $parts[1] ?? ''
+					];
+					break;
+				case 'method':
+					if (preg_match('/^(?:(static)\\s+)?(?:([a-z_][a-z0-9_]*)\\s+)?([a-z_][a-z0-9_]*)\\s*\(([^)]*)\)$/i', $matches[2], $matches)) {
+						if (!isset($meta['method'])) {
+							$meta['method'] = [];
+						}
+
+						$meta['method'][] = [
+							'static' => !!$matches[1],
+							'returnType' => $matches[2] ?? 'mixed',
+							'name' => $matches[3],
+							'args' => array_filter(array_map('trim', explode(',', $matches[4])))
+						];
+					}
+					break;
+				default:
+					$meta[$matches[1]] = $matches[2];
+					break;
+			}
+		}
 	}
 	
 	private static function readCommaDelimitedValues(&$str, $terminatingCharacter, $isArray) {

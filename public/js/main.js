@@ -5,22 +5,27 @@ $(function() {
 		location.href = $(this).attr('action') + '/' + $('#search-txt').val();
 	});
 
-	$('#feedback-form').submit(function(e) {
-		e.preventDefault();
-	
-		let data = {};
-		$(e.target).find('input:not([type="radio"]), input[type="radio"]:checked').each(function() {
-			data[$(this).attr('name')] = $(this).val();
-		});
-		
-		var classid = $(e.target).data("classid");
-	
-		$.post(BASEURL + 'Feedback/FeedbackForm/' + classid, data, function(resp)  {
-			console.log(resp);
+	function addRatingFieldClasses(parent, score) {
+		for (let i = 1; i <= 5; i++) {
+			parent[i <= score ? 'addClass' : 'removeClass'](`score-${i}`);
+		}
+	}
 
-			$('#textfeedback').modal('hide');
+	$(document).on('mouseleave', '.rating-field', function() {
+		let parent = $(this),
+			score = parent.find('input').val() || 0;
 
-		});
+		addRatingFieldClasses(parent, score);
 	});
+
+	$(document).on('mouseenter', '.rating-field .fa-star', function() {
+		addRatingFieldClasses($(this).parent(), $(this).index());
+	});
+
+	$(document).on('click', '.rating-field .fa-star', function() {
+		$(this).parent().find('input').val($(this).index());
+	});
+
+	$('.rating-field').trigger('mouseleave');
 
 });

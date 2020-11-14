@@ -1,9 +1,6 @@
-
-
 <?php
 
 $user = User::getCurrentUser();
-
 
 ?>
 
@@ -17,15 +14,31 @@ $user = User::getCurrentUser();
    
 ?>
 
+<?php if ($viewAll) : ?>
+	<a class="btn btn-primary" href="<?php echo $this->baseUrl("/Feedback/PublishedFeedback/{$class->classid}") ?>">View Active Only</a>
+<?php else : ?>
+	<a class="btn btn-primary" href="<?php echo $this->baseUrl("/Feedback/PublishedFeedback/{$class->classid}/all") ?>">View All Sessions</a>
+<?php endif; ?>
+
+<table class="table table-bordered"> 
+	<thead>
+		<tr>
+			<th scope="col"> Title </th>
+			<th scope="col"> Description </th>
+		</tr>
+	</thead>
+	<tbody>  
 <?php foreach($feedbackSessions as $feedback):?>
-    <?php 
+	<?php 
         
         //$exists = ResponseModel::getByKey($feedback->feedbackid);
-        $exists = ResponseModel::findOne("student_id =:0: AND feedback_id =:1:", $user->id, $feedback->feedbackid);
-        
+		$exists = FeedbackResponse::findOne("student_id =:0: AND feedback_session_id =:1:", $user->id, $feedback->id);
+		$feedbackResultCount = FeedbackResponse::count('feedback_session_id = :0:', $feedback->id);
+		
+		$url = '';
 
         if($user->type == "instructor") {
-            $url = "Feedback/InstructorResult/{$feedback->feedbackid}";
+            $url = "Feedback/InstructorResult/{$feedback->id}";
 
         }
 
@@ -34,34 +47,19 @@ $user = User::getCurrentUser();
         }
 
         else {
-
-            if($feedback->feedbacktype == "1") {
-            
-                $url = "Feedback/Response/{$feedback->feedbackid}"; //Go to text feedback page
-            }
-
-            else  { 
-                $url = "Feedback/RatingResponse/{$feedback->feedbackid}"; //Go to rating page
-            }
+			$url = "Feedback/Response/{$feedback->id}"; //Go to text feedback page
         }
                     
            
         
     ?> 
-           <table class="table table-bordered"> 
-                <thead>
-                    <tr>
-                        <th scope="col"> Title </th>
-                        <th scope="col"> Description </th>
-                    </tr>
-                </thead>
-                <tbody>  
+           
                     <tr>                                                             
-                        <td> <a href='<?php echo $this->baseUrl($url)?>'><?php echo $feedback->feedbacktitle ?></a></td> 
-                        <td> <?php echo $feedback->feedbackdescription ?> </td>
+                        <td> <a href='<?php echo $this->baseUrl($url)?>'><?php echo $feedback->title ?></a></td> 
+                        <td> <?php echo $feedbackResultCount ?> Response<?php echo $feedbackResultCount == 1 ? '' : 's' ?></td>
                         
                     </tr>
-                </tbody>
-            </table>
+                
 <?php endforeach;?>
-
+	</tbody>
+</table>

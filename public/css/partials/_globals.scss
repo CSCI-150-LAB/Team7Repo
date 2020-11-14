@@ -143,3 +143,13 @@ form {
 		}
 	}
 }
+
+.preload-area {
+	position: fixed;
+	display: block;
+	overflow: hidden;
+	width: 1px;
+	height: 1px;
+	left: -9999px;
+	top: -9999px;
+}

@@ -26,3 +26,47 @@ i.fa-star.fas {
 		bottom: 0;
 	}
 }
+
+#feedback-app {
+	.question-label {
+		.fa-stack {
+			font-size: 0.5rem;
+		}
+	}
+
+	.form-row.odd {
+		background-color: #f0f0f0;
+	}
+}
+
+.rating-field {
+	display: inline-block;
+
+	.fa-star {
+		cursor: pointer;
+	}
+
+	@for $i from 1 through 5 {
+		&.score-#{$i} .score-#{$i} {
+			font-weight: 900;
+			color: #FED000;
+		}
+	}
+}
+
+form.feedback-response {
+	label {
+		.required {
+			&:after {
+				color: red;
+				content: '*';
+			}
+		}
+	}
+
+	.rating-field-container.is-invalid {
+		.invalid-feedback {
+			display: block;
+		}
+	}
+}

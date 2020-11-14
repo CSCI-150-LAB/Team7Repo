@@ -163,8 +163,15 @@ class studentController extends PermsController {
 		return $this->view(['errors' => $errors, 'instructorId' =>$instructorId]);
 	}
 
+	/**
+	 * @CurrentUserMustBeType('student')
+	 */
 	public function AllResponsesAction() {
-		return $this->view();
+		$currentUser = User::getCurrentUser();
+		//TODO: Add paging... this could get big over time
+		$myResponses = FeedbackResponse::find('student_id = :0:', $currentUser->id) ?? [];
+
+		return $this->view(compact('myResponses'));
 	}
 
 }

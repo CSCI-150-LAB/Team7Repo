@@ -123,6 +123,12 @@ class InstructorController extends PermsController {
 
 	public function ViewClassAction($classid = 0) {
 		$class = InstructorClasses::getByKey($classid);
+		$currentUser = User::getCurrentUser();
+
+		if (!$class || ($currentUser->type != 'admin' && $class->instructorid != $currentUser->id)) {
+			return $this->redirect($this->viewHelpers->baseUrl());
+		}
+
 		return $this->view(['class' => $class]);
 	} //Send to class page of given class id
 
@@ -130,6 +136,7 @@ class InstructorController extends PermsController {
 		if($classid == 0) {
 			return $this->redirect($this->viewHelpers->baseUrl());
 		}
+
 		if($this->request->isPost()) {
 			//If the page was directed by a POST form
 			$fields = [
@@ -230,11 +237,9 @@ class InstructorController extends PermsController {
 		$results = [];
 
 		if ($search !== '') {
-			/** @var Db */
-			$db = $this->get('Db');
 			$searchQuery = str_replace('%', '%%', $search);
 
-			$results = $db->query(
+			$results = User::query(
 				"
 				SELECT
 				(
@@ -273,8 +278,6 @@ class InstructorController extends PermsController {
 				"%{$searchQuery}%",
 				max(0, ($page - 1)) * 10
 			);
-
-			$results = array_map(['User', 'fromArray'], $results);
 		}
 
 		return $this->view(compact('search', 'results'));
