@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @Table('new_feedback_response_field')
+ * @Table('feedback_response_field')
  */
 class FeedbackResponseField extends Model {
 

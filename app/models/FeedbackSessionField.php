@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @Table('new_feedback_session_fields')
+ * @Table('feedback_session_fields')
  */
 class FeedbackSessionField extends Model {
 	/**

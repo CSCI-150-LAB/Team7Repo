@@ -160,7 +160,7 @@ class FeedbackController extends PermsController {
 			SELECT
 				fs.*
 			FROM
-				new_feedback_sessions as fs
+				feedback_sessions as fs
 			INNER JOIN instructorclasses as ic ON
 				fs.class_id = ic.class_id
 			WHERE
@@ -175,7 +175,6 @@ class FeedbackController extends PermsController {
 		}
 
 		
-
 		$feedBackSessions = FeedbackSession::query($query, $classid);
 		
 		return $this->view([
@@ -293,30 +292,88 @@ class FeedbackController extends PermsController {
 		return $this->view(['errors' => $errors, 'fields' => $fields]);
 	}
 	
-   public function InstructorResultAction($feedbackid) {
+   public function InstructorResultAction($feedbackid = 0) {
+		$feedbackSession = FeedbackSession::getByKey($feedbackid);
+		if (!$feedbackSession) {
+			SimpleAlert::warning('The feedback session does not exist');
+			return $this->redirect($this->viewHelpers->baseUrl());
+		}
 
 		/** @var Db */
-		
-
 		$db = $this->get('Db');
-		/** @var array[] */
-		$feedbackresult = $db->query( 
-			"
-			SELECT * FROM studentresponses INNER JOIN feedbacksessions ON studentresponses.feedback_id = feedbacksessions.id WHERE studentresponses.feedback_id = :feedbackid:
-			
-			", ['feedbackid' => $feedbackid]
-		);
-
-		
-		if ($feedbackresult === false) {
-			die($db->getLastError());
+		$fields = [];
+		foreach (FeedbackSessionField::find('feedback_session_id = :0:', $feedbackSession->id) as $field) {
+			$fields[$field->id] = $field;
 		}
-		/** @var ResponseModel[] */
-		$feedbackresult = array_map(['ResponseModel', 'fromArray'], $feedbackresult);
-		
-		return $this->view(['feedbackresult' => $feedbackresult]); 
 
-	   
+		$aggregates = [];
+		$totalResponses = FeedbackResponse::count('feedback_session_id = :0:', $feedbackSession->id);
+		foreach ($fields as $field) {
+			if ($field->type == FormFieldTypeEnum::SHORT_TEXT() || $field->type == FormFieldTypeEnum::LONG_TEXT()) {
+				continue;
+			}
+
+			$fieldResults = [];
+
+			if ($field->type == FormFieldTypeEnum::CHECKBOX_GROUP()) {
+				$fieldResults['responders'] = $totalResponses;
+				$fieldResults['data'] = [];
+				foreach ($field->options as $ndx => $option) {
+					$results = $db->query(
+						"
+						SELECT
+							COUNT(*) as cnt
+						FROM
+							feedback_response_field as frf
+						WHERE
+							frf.feedback_session_field_id = :0: AND
+							SUBSTRING_INDEX(SUBSTRING_INDEX(frf.response, ',', :1:), ',', -1) = 1
+						",
+						$field->id,
+						$ndx + 1
+					);
+
+					$fieldResults['data'][$ndx] = intval($results[0]['cnt']);
+				}
+			}
+			else {
+				$fieldResults['responders'] = 0;
+				$fieldResults['data'] = [];
+
+				$results = $db->query(
+					"
+					SELECT
+						frf.response as ndx,
+						COUNT(*) as cnt
+					FROM
+						feedback_response_field as frf
+					WHERE
+						frf.feedback_session_field_id = :0:
+					GROUP BY
+						frf.response
+					",
+					$field->id
+				);
+
+				foreach ($results as $row) {
+					$fieldResults['data'][intval($row['ndx'])] = intval($row['cnt']);
+					$fieldResults['responders'] += $row['cnt'];
+				}
+
+				$allNdxs = $field->type == FormFieldTypeEnum::RATING()
+					? range(1, 5)
+					: array_keys($field->options);
+
+				foreach ($allNdxs as $ndx) {
+					$fieldResults['data'][$ndx] = $fieldResults['data'][$ndx] ?? 0;
+				}
+			}
+
+			$aggregates[$field->id] = $fieldResults;
+		}
+
+		$allResponses = FeedbackResponse::find('feedback_session_id = :0:', $feedbackSession->id);
+	
+		return $this->view(compact('feedbackSession', 'fields', 'aggregates', 'totalResponses', 'allResponses'));
    }
-
 }

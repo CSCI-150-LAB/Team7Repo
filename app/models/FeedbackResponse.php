@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @Table('new_feedback_responses')
+ * @Table('feedback_responses')
  */
 class FeedbackResponse extends Model {
 
@@ -26,6 +26,12 @@ class FeedbackResponse extends Model {
 	 */
 	public $createdDate;
 
+	/**
+	 * Prints a table with the user responses
+	 * Forgive me for this mess... I'm sleepy
+	 *
+	 * @return void
+	 */
 	public function printResponse() {
 		$feedbackSession = FeedbackSession::getByKey($this->feedbackSessionId);
 		if (!$feedbackSession) {

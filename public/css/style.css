@@ -6462,3 +6462,13 @@ form.feedback-response label .required:after {
 form.feedback-response .rating-field-container.is-invalid .invalid-feedback {
   display: block;
 }
+
+.aggregate-results .percent {
+  display: inline-block;
+  width: 50px;
+  font-weight: bold;
+}
+
+.aggregate-results .percent:after {
+  content: '%';
+}

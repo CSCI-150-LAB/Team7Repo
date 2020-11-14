@@ -70,3 +70,15 @@ form.feedback-response {
 		}
 	}
 }
+
+.aggregate-results {
+	.percent {
+		display: inline-block;
+		width: 50px;
+		font-weight: bold;
+
+		&:after {
+			content: '%';
+		}
+	}
+}

@@ -39,7 +39,6 @@ $user = User::getCurrentUser();
 
         if($user->type == "instructor") {
             $url = "Feedback/InstructorResult/{$feedback->id}";
-
         }
 
         if($exists) {

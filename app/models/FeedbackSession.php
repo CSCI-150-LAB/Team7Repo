@@ -1,6 +1,6 @@
 <?php
 /**
- * @Table('new_feedback_sessions')
+ * @Table('feedback_sessions')
  */
 class FeedbackSession extends Model {
 
