@@ -82,8 +82,6 @@ class FeedbackResponse extends Model {
 													</div>
 												<?php endif; ?>
 											<?php endforeach; ?>
-										<?php else : ?>
-											NOTHING CHECKED
 										<?php endif; ?>
 									<?php elseif ($field->type == FormFieldTypeEnum::RADIO_GROUP()) : ?>
 										<?php echo $field->options[$responseFields[$field->id]->response] ?>
