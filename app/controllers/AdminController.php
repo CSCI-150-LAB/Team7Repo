@@ -32,4 +32,21 @@ class AdminController extends PermsController {
 
 		return $this->view(compact('errors'));
 	}
+		/**
+	 * @IsAdminUser
+	 */
+	public function PanelAction($userId) {
+		$user = User::getByKey($userId);
+		
+		return $this->view(compact('user'));
+	}
+
+		/**
+	 * @IsAdminUser
+	 */
+	public function UserAccountsAction($userId) {
+		$user = User::getByKey($userId);
+		
+		return $this->view(compact('user'));
+	}
 }
