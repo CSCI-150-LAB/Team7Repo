@@ -34,8 +34,12 @@ i.fa-star.fas {
 		}
 	}
 
-	.form-row.odd {
+	.field-row.odd {
 		background-color: #f0f0f0;
+	}
+
+	.field-row {
+		overflow: hidden;
 	}
 }
 

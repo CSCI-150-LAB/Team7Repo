@@ -6299,6 +6299,10 @@ form .checkbox-group > .valid-feedback {
   top: -9999px;
 }
 
+.transition-250 {
+  transition: all 250ms;
+}
+
 .navbar {
   padding: 24px;
 }
@@ -6417,8 +6421,12 @@ i.fa-star.fas .partial {
   font-size: 0.5rem;
 }
 
-#feedback-app .form-row.odd {
+#feedback-app .field-row.odd {
   background-color: #f0f0f0;
+}
+
+#feedback-app .field-row {
+  overflow: hidden;
 }
 
 .rating-field {

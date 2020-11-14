@@ -16,7 +16,7 @@
 					</td>
 					<td>
 						<div class="response-percent">
-							<span class="percent"><?php echo round($results['responders'] / $totalResponses * 100, 2) ?></span> responded to this question
+							<span class="percent"><?php echo $totalResponses == 0 ? 0 : round($results['responders'] / $totalResponses * 100, 2) ?></span> responded to this question
 						</div>
 
 						<?php if ($field->type == FormFieldTypeEnum::RATING()) : ?>
@@ -24,7 +24,7 @@
 								<?php $sum = 0; ?>
 								<?php for ($i = 1; $i <= 5; $i++) : $sum += $results['data'][$i] * $i ?>
 									<div class="response-percent">
-										<span class="percent"><?php echo round($results['data'][$i] / $results['responders'] * 100, 2) ?></span>
+										<span class="percent"><?php echo $results['responders'] == 0 ? 0 : round($results['data'][$i] / $results['responders'] * 100, 2) ?></span>
 										<?php for ($j = 0; $j < $i; $j++) : ?>
 											<i class="fas fa-star"></i>
 										<?php endfor; ?>
@@ -33,13 +33,13 @@
 							</div>
 							<div class="rating-score">
 								<div class="label">Total Rating:</div>
-								<?php echo PrintHelpers::printStarRating($sum / $results['responders']); ?>
+								<?php echo PrintHelpers::printStarRating($results['responders'] == 0 ? 0 : $sum / $results['responders']); ?>
 							</div>
 						<?php else : ?>
 							<div class="option-picks">
 								<?php foreach ($field->options as $ndx => $label) : ?>
 									<div class="response-percent">
-										<span class="percent"><?php echo round($results['data'][$ndx] / $results['responders'] * 100, 2) ?></span> <?php echo $label ?>
+										<span class="percent"><?php echo $results['responders'] == 0 ? 0 : round($results['data'][$ndx] / $results['responders'] * 100, 2) ?></span> <?php echo $label ?>
 									</div>
 								<?php endforeach; ?>
 							</div>

@@ -21,36 +21,37 @@
 					Fields for this feedback session:
 				</div>
 				<div class="card-body">
-					<div v-for="(field, ndx) in fields" class="form-row" v-bind:class="ndx % 2 == 1 ? 'odd' : 'even'">
-						<div class="form-group col-md-5">
-							<label class="question-label" v-bind:for="'title' + ndx">Question {{ ndx + 1 }} Label</label>
-							<!-- <div class="input-group">
-								<div class="input-group-prepend">
-									<button type="button" class="btn btn-danger" v-on:click="removeField(ndx)"><i class="fas fa-trash"></i></button>
-								</div>
+					<transition-group
+						tag="div"
+						v-bind:css="false"
+						v-on:enter="animEnter"
+						v-on:leave="animLeave"
+					>
+						<div v-for="(field, ndx) in fields" class="form-row field-row" v-bind:key="field.id" v-bind:class="ndx % 2 == 1 ? 'odd' : 'even'">
+							<div class="form-group col-lg-5 col-md-6">
+								<label class="question-label" v-bind:for="'title' + ndx">Question {{ ndx + 1 }} Label</label>
 								<input type="text" class="form-control" v-bind:id="'title' + ndx" v-on:placeholder="'Question #' + (ndx + 1) +' Title'" v-model="field.label" required>
-							</div> -->
-							<input type="text" class="form-control" v-bind:id="'title' + ndx" v-on:placeholder="'Question #' + (ndx + 1) +' Title'" v-model="field.label" required>
-						</div>
-						<div class="form-group col-md-5">
-							<label>Preview</label>
-							<component
-								v-bind:is="getFieldComponent(field.type)"
-								v-bind:type="field.type"
-								v-bind:options="field.options"
-								v-on:add-option="addOption(field)"
-								v-on:remove-option="removeOption(field, $event)"
-								v-on:update-option="updateOption(field, $event)">
-							</component>
-						</div>
-						<div class="form-group col-md-2 border-left p-3">
-							<button type="button" class="btn btn-danger w-100" v-on:click="removeField(ndx)"><i class="fas fa-trash"></i> Field</button>
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" v-bind:id="'optional' + ndx" v-model="field.optional">
-								<label class="form-check-label" v-bind:for="'optional' + ndx">Optional</label>
+							</div>
+							<div class="form-group col-lg-5 col-md-6">
+								<label>Preview</label>
+								<component
+									v-bind:is="getFieldComponent(field.type)"
+									v-bind:type="field.type"
+									v-bind:options="field.options"
+									v-on:add-option="addOption(field)"
+									v-on:remove-option="removeOption(field, $event)"
+									v-on:update-option="updateOption(field, $event)">
+								</component>
+							</div>
+							<div class="form-group col-lg-2 col-md-12 border-left p-3">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" v-bind:id="'optional' + ndx" v-model="field.optional">
+									<label class="form-check-label" v-bind:for="'optional' + ndx">Optional</label>
+								</div>
+								<button type="button" class="btn btn-danger w-100" v-on:click="removeField(ndx)"><i class="fas fa-trash"></i> Field</button>
 							</div>
 						</div>
-					</div>
+					</transition-group>
 
 					<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						Add Field
@@ -138,7 +139,8 @@
 					errors: {},
 
 					processing: false,
-					submitted: false
+					submitted: false,
+					nextFieldId: 1
 				};
 			},
 
@@ -186,6 +188,7 @@
 			methods: {
 				addField: function(type) {
 					let field = {
+						id: this.nextFieldId++,
 						type: type,
 						label: '',
 						options: undefined,
@@ -241,7 +244,12 @@
 						title: this.title,
 						start: this.start,
 						end: this.end,
-						fields: JSON.stringify(this.fields)
+						fields: JSON.stringify(this.fields.map(f => ({
+							type: f.type,
+							label: f.label,
+							options: f.options,
+							optional: f.optional
+						})))
 					};
 					
 					let classid = $(e.target).data("classid"),
@@ -261,6 +269,25 @@
 					}).always(function() {
 						that.processing = false;
 					});
+				},
+
+				animEnter: function(el, done) {
+					let $el = $(el),
+						realHeight = $(el).height();
+					$el.height(0).addClass('transition-250');
+
+					this.$nextTick(function() {
+						$el.height(realHeight);
+						setTimeout(function() {
+							$el.height('auto');
+							done();
+						}, 250);
+					});
+				},
+
+				animLeave: function(el, done) {
+					$(el).height(0);
+					setTimeout(done, 250);
 				}
 			},
 
