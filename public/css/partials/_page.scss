@@ -76,6 +76,7 @@ form.feedback-response {
 		display: inline-block;
 		width: 50px;
 		font-weight: bold;
+		text-align: right;
 
 		&:after {
 			content: '%';

@@ -39,15 +39,17 @@ $user = User::getCurrentUser();
 
         if($user->type == "instructor") {
             $url = "Feedback/InstructorResult/{$feedback->id}";
-        }
-
-        if($exists) {
-            $url = "Student/AllResponses";
-        }
-
-        else {
-			$url = "Feedback/Response/{$feedback->id}"; //Go to text feedback page
-        }
+		}
+		else {
+			if($exists) {
+				$url = "Student/AllResponses";
+			}
+	
+			else {
+				$url = "Feedback/Response/{$feedback->id}"; //Go to text feedback page
+			}
+		}
+        
                     
            
         

@@ -6467,6 +6467,7 @@ form.feedback-response .rating-field-container.is-invalid .invalid-feedback {
   display: inline-block;
   width: 50px;
   font-weight: bold;
+  text-align: right;
 }
 
 .aggregate-results .percent:after {

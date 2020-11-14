@@ -184,9 +184,6 @@ class FeedbackController extends PermsController {
 		]);
 	}
 	
-	/**
-	 * @CurrentUserMustBeType('student')
-	 */
 	public function ResponseAction($feedbackid) { 
 		$errors = [];
 
