@@ -19,11 +19,83 @@ $profile = InstructorModel::getByKey($user->id); ?>
 <div class="card-columns" style="column-count: 2;">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title" style="text-align: center">Teaching Styles</h4><br>
+            <h4 class="card-title" style="text-align: center">Teaching Styles</h4>
             <b>Visual:</b> <?php echo $profile->visual ?> <br>
             <b>Auditory:</b> <?php echo $profile->auditory ?> <br>
             <b>Reading/Writing:</b> <?php echo $profile->readwrite ?> <br>
-            <b>Kinesthetic:</b> <?php echo $profile->kines ?> <br>
+            <b>Kinesthetic:</b> <?php echo $profile->kines ?> <br><br>
+            <?php
+            $ratings = InstructorRatings::find("instructor_id = :0:", $user->id);
+            if($ratings) {
+                $numTotalTA = 0;
+                $numTA = 0;
+                $numTotalGrades = 0;
+                $A = 0;
+                $B = 0;
+                $C = 0;
+                $D = 0;
+                $F = 0;
+                foreach($ratings as $rating) {
+                    if($rating->grade != "N/A") {
+                        $numTotalGrades += 1;
+                        if($rating->grade == 'A') {
+                            $A += 1;
+                        }
+                        elseif($rating->grade == 'B') {
+                            $B += 1;
+                        }
+                        elseif($rating->grade == 'C') {
+                            $C += 1;
+                        }
+                        elseif($rating->grade == 'D') {
+                            $D += 1;
+                        }
+                        elseif($rating->grade == 'F') {
+                            $F += 1;
+                        }
+                    }
+                    if($rating->takeAgain != "N/A") {
+                        $numTotalTA += 1;
+                        if($rating->takeAgain == 'Yes') {
+                            $numTA += 1;
+                        }
+                    }
+                }
+                $percentTA = ($numTA/$numTotalTA)*100;
+                $dataPoints = array( 
+                    array("label"=>"A", "y"=>$A/$numTotalGrades),
+                    array("label"=>"B", "y"=>$B/$numTotalGrades),
+                    array("label"=>"C", "y"=>$C/$numTotalGrades),
+                    array("label"=>"D", "y"=>$D/$numTotalGrades),
+                	array("label"=>"F", "y"=>$F/$numTotalGrades)
+                ); ?>
+                <h4 class="card-title" style="text-align: center">Students would take again</h4>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow=<?php echo $percentTA ?> aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $percentTA ?>%">
+                        <?php echo $percentTA ?>%
+                    </div>
+                </div>
+                <p style="text-align: center">Out of <?php echo $numTotalTA?> people who answered</p>
+                <h4 class="card-title" style="text-align: center">Students would take again</h4>
+                <p style="text-align: center">Out of <?php echo $numTotalGrades?> people who answered</p>
+                <script>
+                window.onload = function() {
+                
+                var chart = new CanvasJS.Chart("chartContainer", {
+                	data: [{
+                		type: "pie",
+                		yValueFormatString: "#,##0.00\"%\"",
+                		indexLabel: "{label} ({y})",
+                		dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+                	}]
+                });
+                chart.render();
+
+                }
+                </script>
+                <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+            <?php } ?>
         </div>
     </div>
     <div class="card">
