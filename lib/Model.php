@@ -61,16 +61,7 @@ class Model extends AnnotatedClass {
 		$query = self::transformStringQuery($query);
 
 		$tableMeta = static::getTableMeta();
-		$db = DI::getDefault()->get('Db');
-		$result = $db->query("SELECT * FROM {$tableMeta['name']} WHERE 1=1" . ($query ? " AND {$query}" : ''), ...$args);
-
-		if ($result !== false) {
-			return array_map(function($row) {
-				return static::fromArray($row, true);
-			}, $result);
-		}
-
-		return false;
+		return static::query("SELECT * FROM {$tableMeta['name']} WHERE 1=1" . ($query ? " AND {$query}" : ''), ...$args);
 	}
 
 	/**
@@ -83,13 +74,11 @@ class Model extends AnnotatedClass {
 	public static function findOne($query = '', ...$args) {
 		$result = static::find("{$query} LIMIT 1", ...$args);
 
-		if (is_bool($result)) {
+		if ($result === false) {
 			return $result;
 		}
 
-		return isset($result[0])
-			? $result[0]
-			: null;
+		return reset($result) ?: null;
 	}
 
 	/**
@@ -106,11 +95,32 @@ class Model extends AnnotatedClass {
 		$db = DI::getDefault()->get('Db');
 		$result = $db->query("SELECT COUNT(*) as row_count FROM {$tableMeta['name']} WHERE 1=1" . ($query ? " AND {$query}" : ''), ...$args);
 
-		if ($result !== false) {
-			return intval($result[0]['row_count']);
+		if ($result === false) {
+			return false;
 		}
 
-		return false;
+		return intval($result[0]['row_count']);
+	}
+
+	/**
+	 * Performs a complete MySQL query and casts the results to this model type
+	 *
+	 * @param string $query
+	 * @param mixed ...$args
+	 * @return static[]
+	 */
+	public static function query($query, ...$args) {
+		$db = DI::getDefault()->get('Db');
+
+		$result = $db->query($query, ...$args);
+
+		if ($result === false) {
+			return false;
+		}
+
+		return array_map(function($record) {
+			return static::fromArray($record, true);
+		}, $result);
 	}
 
 	private static function transformStringQuery($query) {
@@ -181,6 +191,7 @@ class Model extends AnnotatedClass {
 
 			$db = DI::getDefault()->get('Db');
 			$result = $db->query("INSERT INTO {$tableMeta['name']} ({$columns}) VALUES ({$values})", $queryArgs);
+			
 			if ($result !== false) {
 				if (!is_bool($result)) {
 					if ($tableMeta['autoIncrement']) {
@@ -309,7 +320,7 @@ class Model extends AnnotatedClass {
 	 *
 	 * @return array
 	 */
-	public static function getTableMeta() {
+	protected static function getTableMeta() {
 		if (!isset(self::$tableMeta[static::class])) {
 			$meta = [
 				'name' => static::class,

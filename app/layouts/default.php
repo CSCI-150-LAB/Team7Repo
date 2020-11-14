@@ -6,10 +6,22 @@
 	$this->styleEnqueue('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css');
 	$this->styleEnqueue('style', $this->publicUrl('css/style.css?t=' . filemtime(APP_ROOT . '/public/css/style.css')), ['bootstrap']);
 
+	$this->scriptEnqueue(
+		'docReady',
+		"
+		function docReady(fn) {
+			if (document.readyState != 'loading'){
+				fn();
+			} else {
+				document.addEventListener('DOMContentLoaded', fn);
+			}
+		}
+		"
+	);
 	$this->scriptRegister('jquery-cdn', 'https://code.jquery.com/jquery-3.5.1.min.js');
 	$this->scriptRegister('jquery', 'window.jQuery || document.write(\'<script src="' . $this->publicUrl('js/jquery-3.5.1.min.js') . '"><\/script>\')', ['jquery-cdn']);
 	$this->scriptRegister('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js', ['jquery']);
-	$this->scriptEnqueue('main', $this->publicUrl('js/main.js'), ['bootstrap'], false);
+	$this->scriptEnqueue('main', $this->publicUrl('js/main.js?t=' . filemtime(APP_ROOT . '/public/js/main.js')), ['bootstrap'], false);
 
 	$this->outputStyles();
 	$this->outputScripts();
@@ -76,6 +88,14 @@
     </nav>
 
     <div class="container my-3">
+		<?php foreach (SimpleAlert::getAndClearAlerts() as $alert) : ?>
+			<div class="alert alert-<?php echo $alert['type'] ?>" role="alert">
+				<?php echo $alert['html'] ? $alert['message'] : $this->escapeHtml($alert['message']) ?>
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		<?php endforeach; ?>
         <?php echo $this->getContents() ?>
     </div>
 

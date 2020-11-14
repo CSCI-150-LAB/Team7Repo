@@ -48,8 +48,28 @@ class Db {
 		}, []);
 
 		foreach ($args as $key => $val) {
-			if (is_string($val)) {
-				$args[$key] = "'" . $this->conn->real_escape_string($val) . "'";
+			switch (gettype($val)) {
+				case 'int':
+				case 'integer':
+				case 'double':
+				case 'NULL':
+					continue 2;	// These are fine as is
+				case 'boolean':
+					$args[$key] = $val ? 1 : 0;
+					break;
+				case 'object':
+					if (method_exists($val, '__toString')) {
+						$val = $val->__toString();
+					}
+					else {
+						throw new Exception('Object cannot be used as a parameter in a query');
+					}
+					// Passthru intended
+				case 'string':
+					$args[$key] = "'" . $this->conn->real_escape_string($val) . "'";
+					break;
+				default:
+					throw new Exception(gettype($val) . ' cannot be used as a parameter in a query');
 			}
 		}
 
@@ -66,7 +86,6 @@ class Db {
 		}, $sql);
 
 		$sql = trim($sql);
-
 		$result = $this->conn->query($sql);
 
         if ($result === true) {
@@ -116,7 +135,7 @@ class Db {
 	public function abortTransaction() {
 		$this->conn->rollback();
 		$this->conn->autocommit(true);
-		$this->trackedCallbacks = [];
+		$this->trackedModelsExistences = [];
 		$this->trackingModels = false;
 	}
 
@@ -128,10 +147,10 @@ class Db {
 	public function commitTransaction() {
 		$this->conn->commit();
 		$this->conn->autocommit(true);
-		foreach ($this->trackedCallbacks as $existenc) {
+		foreach ($this->trackedModelsExistences as $existenc) {
 			$existenc[0] = $existenc[1];
 		}
-		$this->trackedCallbacks = [];
+		$this->trackedModelsExistences = [];
 		$this->trackingModels = false;
 	}
 

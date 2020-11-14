@@ -6076,7 +6076,7 @@
   font-weight: 400;
   font-display: block;
   src: url(../fonts/fa-brands-400.eot);
-  src: url(..bfonts/fa-brands-400.eot?#iefix) format("embedded-opentype"), url(../fonts/fa-brands-400.woff2) format("woff2"), url(../fonts/fa-brands-400.woff) format("woff"), url(../fonts/fa-brands-400.ttf) format("truetype"), url(../fonts/fa-brands-400.svg#fontawesome) format("svg");
+  src: url(../fonts/fa-brands-400.eot?#iefix) format("embedded-opentype"), url(../fonts/fa-brands-400.woff2) format("woff2"), url(../fonts/fa-brands-400.woff) format("woff"), url(../fonts/fa-brands-400.ttf) format("truetype"), url(../fonts/fa-brands-400.svg#fontawesome) format("svg");
 }
 
 .fab {
@@ -6102,7 +6102,7 @@
   font-weight: 900;
   font-display: block;
   src: url(../fonts/fa-solid-900.eot);
-  src: url(../fonts/fa-solid-900.eot?#iefix) format("embedded-opentype"), url(..bfonts/fa-solid-900.woff2) format("woff2"), url(../fonts/fa-solid-900.woff) format("woff"), url(../fonts/fa-solid-900.ttf) format("truetype"), url(../fonts/fa-solid-900.svg#fontawesome) format("svg");
+  src: url(../fonts/fa-solid-900.eot?#iefix) format("embedded-opentype"), url(../fonts/fa-solid-900.woff2) format("woff2"), url(../fonts/fa-solid-900.woff) format("woff"), url(../fonts/fa-solid-900.ttf) format("truetype"), url(../fonts/fa-solid-900.svg#fontawesome) format("svg");
 }
 
 .fa, .far, .fas {
@@ -6289,6 +6289,16 @@ form .checkbox-group > .valid-feedback {
   display: block;
 }
 
+.preload-area {
+  position: fixed;
+  display: block;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  left: -9999px;
+  top: -9999px;
+}
+
 .navbar {
   padding: 24px;
 }
@@ -6378,30 +6388,6 @@ body.user-c.login-a {
   background-image: linear-gradient(#fff, #d0d0da, #13284c);
 }
 
-.hide {
-  display: none;
-}
-
-.rating {
-  unicode-bidi: bidi-override;
-  direction: rtl;
-}
-
-.rating > label {
-  display: inline-block;
-  position: relative;
-  width: 1.1em;
-}
-
-.rating > label:hover:before, 
-.rating > label:hover ~ label:before, 
-.rating > input.radio-btn:checked ~ label:before,
-.rating > input.radio-btn:checked ~ label:before {
-  content: "\2605";
-  position: absolute;
-  color: #FED000;
-}
-
 i.fa-star.fas {
   color: #FED000;
   position: relative;
@@ -6425,4 +6411,64 @@ i.fa-star.fas .partial {
   left: var(--partial);
   right: 0;
   bottom: 0;
+}
+
+#feedback-app .question-label .fa-stack {
+  font-size: 0.5rem;
+}
+
+#feedback-app .form-row.odd {
+  background-color: #f0f0f0;
+}
+
+.rating-field {
+  display: inline-block;
+}
+
+.rating-field .fa-star {
+  cursor: pointer;
+}
+
+.rating-field.score-1 .score-1 {
+  font-weight: 900;
+  color: #FED000;
+}
+
+.rating-field.score-2 .score-2 {
+  font-weight: 900;
+  color: #FED000;
+}
+
+.rating-field.score-3 .score-3 {
+  font-weight: 900;
+  color: #FED000;
+}
+
+.rating-field.score-4 .score-4 {
+  font-weight: 900;
+  color: #FED000;
+}
+
+.rating-field.score-5 .score-5 {
+  font-weight: 900;
+  color: #FED000;
+}
+
+form.feedback-response label .required:after {
+  color: red;
+  content: '*';
+}
+
+form.feedback-response .rating-field-container.is-invalid .invalid-feedback {
+  display: block;
+}
+
+.aggregate-results .percent {
+  display: inline-block;
+  width: 50px;
+  font-weight: bold;
+}
+
+.aggregate-results .percent:after {
+  content: '%';
 }
