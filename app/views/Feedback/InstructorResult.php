@@ -8,7 +8,8 @@
 
 
 
-<?php foreach($feedbackresult as $result):?>
+<?php foreach($feedbackresult as $result):?
+>
     
     <table class="table table-bordered"> 
         <thead>

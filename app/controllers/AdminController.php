@@ -38,15 +38,33 @@ class AdminController extends PermsController {
 	public function PanelAction($userId) {
 		$user = User::getByKey($userId);
 		
-		return $this->view(compact('user'));
+		return $this->view(['users' => $user]);
 	}
 
 		/**
 	 * @IsAdminUser
 	 */
-	public function UserAccountsAction($userId) {
-		$user = User::getByKey($userId);
+	public function UserAccountsAction() {
 		
-		return $this->view(compact('user'));
+		$db = $this->get('Db');
+		/** @var array[] */
+		$useraccounts = $db->query( 
+			"
+			SELECT * FROM users
+			
+			"
+		);
+
+		
+		if ($useraccounts === false) {
+			die($db->getLastError());
+		}
+		/** @var User[] */
+		$useraccounts = array_map(['User', 'fromArray'], $useraccounts);
+		
+		return $this->view(['useraccounts' => $useraccounts]); 
+	
 	}
+
+	
 }
