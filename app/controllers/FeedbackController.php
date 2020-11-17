@@ -143,8 +143,6 @@ class FeedbackController extends PermsController {
 			}
 		}
 
-		var_dump($db->getLastError());
-
 		return $this->json(['errors' => $errors]);
     }
     
