@@ -76,7 +76,7 @@ $profile = InstructorModel::getByKey($user->id); ?>
                     </div>
                 </div>
                 <p style="text-align: center">Out of <?php echo $numTotalTA?> people who answered</p>
-                <h4 class="card-title" style="text-align: center">Students would take again</h4>
+                <h4 class="card-title" style="text-align: center">Student grades</h4>
                 <p style="text-align: center">Out of <?php echo $numTotalGrades?> people who answered</p>
                 <script>
                 window.onload = function() {
