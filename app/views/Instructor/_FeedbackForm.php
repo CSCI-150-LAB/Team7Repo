@@ -286,8 +286,13 @@
 				},
 
 				animLeave: function(el, done) {
-					$(el).height(0);
-					setTimeout(done, 250);
+					let $el = $(el);
+					$el.height($el.height()).addClass('transition-250');
+
+					this.$nextTick(function() {
+						$el.height(0);
+						setTimeout(done, 250);
+					});
 				}
 			},
 
