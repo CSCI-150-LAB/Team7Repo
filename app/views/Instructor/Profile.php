@@ -68,7 +68,8 @@ $profile = InstructorModel::getByKey($user->id); ?>
                     array("label"=>"C", "y"=>$C/$numTotalGrades),
                     array("label"=>"D", "y"=>$D/$numTotalGrades),
                 	array("label"=>"F", "y"=>$F/$numTotalGrades)
-                ); ?>
+                ); 
+                if($numTotalTA) {?>
                 <h4 class="card-title" style="text-align: center">Students would take again</h4>
                 <div class="progress">
                     <div class="progress-bar" role="progressbar" aria-valuenow=<?php echo $percentTA ?> aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $percentTA ?>%">
@@ -76,6 +77,8 @@ $profile = InstructorModel::getByKey($user->id); ?>
                     </div>
                 </div>
                 <p style="text-align: center">Out of <?php echo $numTotalTA?> people who answered</p>
+                <?php }
+                if($numTotalGrades) { ?>
                 <h4 class="card-title" style="text-align: center">Student grades</h4>
                 <p style="text-align: center">Out of <?php echo $numTotalGrades?> people who answered</p>
                 <script>
@@ -95,7 +98,7 @@ $profile = InstructorModel::getByKey($user->id); ?>
                 </script>
                 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
                 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-            <?php } ?>
+            <?php } } ?>
         </div>
     </div>
     <div class="card">
