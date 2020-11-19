@@ -1,4 +1,5 @@
 <?php
+$this->scriptEnqueue('chart-js', 'https://cdn.jsdelivr.net/npm/chart.js@2.8.0');
 $currentUser = User::getCurrentUser();
 $profile = InstructorModel::getByKey($user->id); ?>
 <h1 class='mb-3' style= 'background-color: #13284c; padding:60px; color: #ffffff;'>Instructor Profile</h1>
@@ -62,13 +63,7 @@ $profile = InstructorModel::getByKey($user->id); ?>
                     }
                 }
                 $percentTA = ($numTA/$numTotalTA)*100;
-                $dataPoints = array( 
-                    array("label"=>"A", "y"=>$A/$numTotalGrades),
-                    array("label"=>"B", "y"=>$B/$numTotalGrades),
-                    array("label"=>"C", "y"=>$C/$numTotalGrades),
-                    array("label"=>"D", "y"=>$D/$numTotalGrades),
-                	array("label"=>"F", "y"=>$F/$numTotalGrades)
-                ); 
+                $arr = [$A, $B, $C, $D, $F];
                 if($numTotalTA) {?>
                 <h4 class="card-title" style="text-align: center">Students would take again</h4>
                 <div class="progress">
@@ -81,23 +76,27 @@ $profile = InstructorModel::getByKey($user->id); ?>
                 if($numTotalGrades) { ?>
                 <h4 class="card-title" style="text-align: center">Student grades</h4>
                 <p style="text-align: center">Out of <?php echo $numTotalGrades?> people who answered</p>
+                <canvas id="myChart"></canvas>
                 <script>
-                window.onload = function() {
-                
-                var chart = new CanvasJS.Chart("chartContainer", {
-                	data: [{
-                		type: "pie",
-                		yValueFormatString: "#,##0.00\"%\"",
-                		indexLabel: "{label} ({y})",
-                		dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
-                	}]
-                });
-                chart.render();
-
-                }
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                    var data = [<?php echo join(',',$arr); ?>];
+                    var myPieChart = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                        datasets: [{
+                            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                            data: <?php echo json_encode($arr, JSON_NUMERIC_CHECK); ?>
+                        }],
+                        labels: [
+                            'A',
+                            'B',
+                            'C',
+                            'D',
+                            'F'
+                        ]
+                    }
+                    });
                 </script>
-                <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-                <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
             <?php } } ?>
         </div>
     </div>
