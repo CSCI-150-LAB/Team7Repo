@@ -65,12 +65,43 @@ Example Classes Table:
 
 Example Instructor Ratings Table:
 
-
 | **rating_id** | **rating** | **recommendation**                                                                                                             | **anon** | **authord_id** | **instructor_id** | **take_again** |  **homework** |  **attendance_required** |  **grade** |
 |---------------|------------|--------------------------------------------------------------------------------------------------------------------------------|----------|----------------|-------------------|-------------|-------------|-------------|-------------|
 | 1             | 4          | Wonderful at explaining the course material. The homework is fairly reflective of the exam content.                            | yes      | 0              | 6789              |    Yes       |    Yes       |    No       |    A       |
 | 2             | 5          | Hard professor because of weekly quizzes but if you study properly and attend office hours, you will be able to ace the class. | no       | 1234           | 5678              |    N/A       |    No       |    No       |    B       |
 | 3             | 2          | Not very helpful when answering questions in class.                                                                            | yes      | 0              | 1011              |    No        |    Yes       |    Yes       |    N/A      |
+
+Example Feedback Sessions Table:
+
+| **id** | **class_id** | **title**              | **start_time**      | **end_time**        | **created_on**      |
+|--------|--------------|------------------------|---------------------|---------------------|---------------------|
+| 1      | 1            | Semester Rating        | 2020-12-07 00:00:00 | 2020-12-18 23:59:00 | 2020-11-17 15:02:24 |
+| 2      | 3            | Feelings towards class | 2020-11-24 14:00:00 | 2020-11-24 14:30:00 | 2020-11-24 9:34:06  |
+| 3      | 1            | Final Review           | 2020-12-08 14:00:00 | 2020-13-08 14:55:00 | 2020-11-24 10:07:34 |
+
+Example Feedback Session Fields Table:
+
+| **id** | **feedback_session_id** | **field_type** | **label**                                     | **options**  | **optional** |
+|--------|-------------------------|----------------|-----------------------------------------------|--------------|--------------|
+| 1      | 1                       | RATING         | How am I as a professor?                      | NULL         | 1            |
+| 2      | 2                       | RADIO_GROUP    | Are you enjoying the class?                   | ["Yes","No"] | 1            |
+| 3      | 2                       | LONG_TEXT      | Is there any feedback you would like to give? | NULL         | 0            |
+
+Example Feedback Responses Table:
+
+| **id** | **feedback_session_id** | **student_id** | **created_on**      |
+|--------|-------------------------|----------------|---------------------|
+| 1      | 2                       | 1234           | 2020-11-24 14:13:41 |
+| 2      | 1                       | 1234           | 2020-12-10 13:27:02 |
+| 3      | 1                       | 8888           | 2020-12-18 17:15:57 |
+
+Example Feedback Response Fields Table:
+
+| **id** | **feedback_response_id** | **feedback_session_field_id** | **response**                      |
+|--------|--------------------------|-------------------------------|-----------------------------------|
+| 1      | 1                        | 2                             | "Yes"                             |
+| 2      | 1                        | 3                             | Overall, the class is going well. |
+| 3      | 2                        | 1                             | 4                                 |
 
 
 ### 2.2 Users
@@ -198,7 +229,7 @@ Admin users have the same functionality as instructor users with some additional
     - Reasoning: So users can view information including classes and ratings on any professor they are taking, are going to take, or leave feedback for professors they have already taken.
     - Dependencies: FR5, FR9
 14. FR14: Instructors can initiate a Feedback Session
-    - Description: A logged in instructor on a class page can set a time and date for a feedback session and when it will end along with the type of question (multiple choice, short answer, etc.) and the question itself.
+    - Description: A logged in instructor on a class page can set a time and date for a feedback session and when it will end along with the types of questions (multiple choice, short answer, etc.) and the questions themselves.
     - Reasoning: So that instructors can determine when and what specific feedback questions to ask students to improve their teaching.
     - Dependencies: FR9
 15. FR15: Students can give Feedback in Feedback Session
@@ -226,25 +257,19 @@ Admin users have the same functionality as instructor users with some additional
 
 1. NFR1: Account Security
     - Description: Passwords for all user accounts will be hashed.
-    - Reasoning: To ensure accounts are not breached, passwords would need to be stored securely on the database.
+    - Reasoning: To ensure accounts are not breached, passwords would need to be stored securely on the database (Authentication).
 
-2. NFR2: UI Responsiveness
-    - Description: The UI of the application should be prompt, taking no longer than 0.5 seconds to carry out an action.
-    - Reasoning: For optimal interaction with the application, the UI must be responsive.
-
-3. NFR3: OS compatibility 
+2. NFR2: OS compatibility 
     - Description: All features of the application should be accessible from any browser.
     - Reasoning: Students may have Windows or MacOS devices, so the application must run well on both platforms.
 
-4. NFR4: Screen Size compatibility
+3. NFR3: Screen Size compatibility
     - Description: The display of the application needs to be versatile to adapt to screen sizes of all devices.
     - Reasoning: Students may use their phones or their laptops to access this site, so various screen sizes should be compatible with the display.
     
-5. NFR5: User Role Preservation
+4. NFR4: User Role Preservation
     - Description: The software will not allow the role of the user (i.e., student, instructor, administrator) to be changed. 
-    - Reasoning: This will prevent attackers from attempting to change the role of a user account to elevate their capabilities.
-
-6. NFR6: 
+    - Reasoning: This will prevent attackers from attempting to change the role of a user account to elevate their capabilities (Authorization).
 
 ## 4. Prioritization
 
