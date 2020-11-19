@@ -289,6 +289,7 @@ Admin users have the same functionality as instructor users with some additional
 | **10 (11/23/2020)** | Polishing and Perfecting/Documentation                                                                                                                                    | All UI Requirements                                                    |
 
 <br><br>Also see GANTT chart at Schedule.gantt.
+![](/public/images/gantt.png)
 
 ## 5. Diagrams
 
