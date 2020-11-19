@@ -1,4 +1,5 @@
 <?php
+$this->scriptEnqueue('chart-js', 'https://cdn.jsdelivr.net/npm/chart.js@2.8.0');
 $currentUser = User::getCurrentUser();
 $profile = InstructorModel::getByKey($user->id); ?>
 <h1 class='mb-3' style= 'background-color: #13284c; padding:60px; color: #ffffff;'>Instructor Profile</h1>
@@ -19,11 +20,84 @@ $profile = InstructorModel::getByKey($user->id); ?>
 <div class="card-columns" style="column-count: 2;">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title" style="text-align: center">Teaching Styles</h4><br>
+            <h4 class="card-title" style="text-align: center">Teaching Styles</h4>
             <b>Visual:</b> <?php echo $profile->visual ?> <br>
             <b>Auditory:</b> <?php echo $profile->auditory ?> <br>
             <b>Reading/Writing:</b> <?php echo $profile->readwrite ?> <br>
-            <b>Kinesthetic:</b> <?php echo $profile->kines ?> <br>
+            <b>Kinesthetic:</b> <?php echo $profile->kines ?> <br><br>
+            <?php
+            $ratings = InstructorRatings::find("instructor_id = :0:", $user->id);
+            if($ratings) {
+                $numTotalTA = 0;
+                $numTA = 0;
+                $numTotalGrades = 0;
+                $A = 0;
+                $B = 0;
+                $C = 0;
+                $D = 0;
+                $F = 0;
+                foreach($ratings as $rating) {
+                    if($rating->grade != "N/A") {
+                        $numTotalGrades += 1;
+                        if($rating->grade == 'A') {
+                            $A += 1;
+                        }
+                        elseif($rating->grade == 'B') {
+                            $B += 1;
+                        }
+                        elseif($rating->grade == 'C') {
+                            $C += 1;
+                        }
+                        elseif($rating->grade == 'D') {
+                            $D += 1;
+                        }
+                        elseif($rating->grade == 'F') {
+                            $F += 1;
+                        }
+                    }
+                    if($rating->takeAgain != "N/A") {
+                        $numTotalTA += 1;
+                        if($rating->takeAgain == 'Yes') {
+                            $numTA += 1;
+                        }
+                    }
+                }
+                $percentTA = ($numTA/$numTotalTA)*100;
+                $arr = [$A, $B, $C, $D, $F];
+                if($numTotalTA) {?>
+                <h4 class="card-title" style="text-align: center">Students would take again</h4>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow=<?php echo $percentTA ?> aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $percentTA ?>%">
+                        <?php echo $percentTA ?>%
+                    </div>
+                </div>
+                <p style="text-align: center">Out of <?php echo $numTotalTA?> people who answered</p>
+                <?php }
+                if($numTotalGrades) { ?>
+                <h4 class="card-title" style="text-align: center">Student grades</h4>
+                <p style="text-align: center">Out of <?php echo $numTotalGrades?> people who answered</p>
+                <canvas id="myChart"></canvas>
+                <script>
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                    var data = [<?php echo join(',',$arr); ?>];
+                    var myPieChart = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                        datasets: [{
+                            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                            data: <?php echo json_encode($arr, JSON_NUMERIC_CHECK); ?>
+                        }],
+                        labels: [
+                            'A',
+                            'B',
+                            'C',
+                            'D',
+                            'F'
+                        ]
+                    }
+                    });
+                </script>
+            <?php } } ?>
         </div>
     </div>
     <div class="card">
