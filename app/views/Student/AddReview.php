@@ -5,7 +5,6 @@
             <b>Rating:</b>
     
             <div class = "rating">
-				<label><?php echo $label ?></label>
 				<div class="rating-field-container">
 					<div class="rating-field">
 						<input type="hidden" name="rating">
