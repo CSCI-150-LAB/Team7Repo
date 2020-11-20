@@ -68,7 +68,7 @@ $profile = InstructorModel::getByKey($user->id); ?>
                 <h4 class="card-title" style="text-align: center">Students would take again</h4>
                 <div class="progress">
                     <div class="progress-bar" role="progressbar" aria-valuenow=<?php echo $percentTA ?> aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $percentTA ?>%">
-                        <?php echo $percentTA ?>%
+                        <?php echo round($percentTA) ?>%
                     </div>
                 </div>
                 <p style="text-align: center">Out of <?php echo $numTotalTA?> people who answered</p>
