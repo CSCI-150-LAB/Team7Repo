@@ -32,7 +32,7 @@
             <div class="card">
                 <img class="card-img-top" src="<?php echo $this->publicUrl('images/users_icon.jpg')?>" alt="Card image cap">
                 <div class="card-body">
-                    <h5 class="card-title" style="text-align: center"> <a href='<?php echo $this->baseUrl("Admin/UserAccounts")?>'>Users </a> </h5>  
+                    <h5 class="card-title" style="text-align: center"> <a href='<?php echo $this->baseUrl("Admin/UserAccounts")?>'>Users </a></h5>  
                     
                 </div>
             </div>
@@ -41,7 +41,7 @@
             <div class="card">
                 <img class="card-img-top" src="<?php echo $this->publicUrl('images/adminroles_icon.jpg')?>" alt="Card image cap">
                 <div class="card-body">
-                    <h5 class="card-title" style="text-align: center">Admin Roles</h5>
+                    <h5 class="card-title" style="text-align: center"> <a href='<?php echo $this->baseUrl("Admin/AdminAccounts")?>'> Admin Roles </a></h5>
                 </div>
             </div>
             </div>

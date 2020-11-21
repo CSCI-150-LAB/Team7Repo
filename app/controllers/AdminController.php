@@ -66,5 +66,58 @@ class AdminController extends PermsController {
 	
 	}
 
+	public function AdminAccountsAction() {
+		
+		$db = $this->get('Db');
+		/** @var array[] */
+		$adminaccounts = $db->query( 
+			"
+			SELECT * FROM users
+			
+			"
+		);
+		
+		if ($adminaccounts === false) {
+			die($db->getLastError());
+		}
+		/** @var User[] */
+		$adminaccounts = array_map(['User', 'fromArray'], $adminaccounts);
+		
+		return $this->view(['adminaccounts' => $adminaccounts]); 
+	}
+
 	
+public function AddUserAction() {
+
+	if ($this->request->isPost()) {
+		$fields = [
+			'email' => 'email',
+			'firstName' => 'first',
+			'lastName' => 'last',
+			'password' => 'pass',
+			'type' => 'role'
+		];
+
+		$userData = [];
+		foreach ($fields as $prop => $postField) {
+			if (empty($_POST[$postField])) {
+				$errors[] = "{$postField} is required"; //if user left a input blank
+			}
+			else {
+				$userData[$prop] = $_POST[$postField]; //Assign the credentials submitted by the user to that user
+			}
+		}
+
+		if (!count($errors)) {
+			$userData['createdAt'] = date('Y-m-d H:i:s');
+			if (HASH_PASSWORDS) {
+				$userData['password'] = hash('sha256', $userData['password']);
+			}
+			$user = User::fromArray($userData);
+		}
+	}
+
+	return $this->view(['errors' => $errors]);
+}
+
 }
