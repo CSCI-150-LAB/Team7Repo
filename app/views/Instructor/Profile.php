@@ -2,9 +2,12 @@
 $currentUser = User::getCurrentUser();
 $profile = InstructorModel::getByKey($user->id); ?>
 <h1 class='mb-3' style= 'background-color: #13284c; padding:60px; color: #ffffff;'>Instructor Profile</h1>
-<?php   if($profile->instructorid == $currentUser->id) {
+
+<?php   if($profile->instructorid == $currentUser->id) { //Allows user to edit profile if current profile is the user's profile 
             echo "<a class = 'btn btn-secondary float-right' style='color: #ffffff;' href = '".$this->baseUrl("/Instructor/EditProfile/{$currentUser->id}")."'>Edit Profile</a><br><br>";
-        } //Allows user to edit profile if current profile is the user's profile ?>
+        } elseif ($currentUser->type == "admin") { //Allows any admin to edit instructor page
+                    echo "<a class = 'btn btn-secondary float-right' style='color: #ffffff;' href = '".$this->baseUrl("/Instructor/EditProfile/{$currentUser->id}")."'>Edit Profile</a><br><br>";
+        } ?>
 <h4 style='float: right;'>
 <?php echo PrintHelpers::printStarRating($profile->rating) ?>
 </h4>

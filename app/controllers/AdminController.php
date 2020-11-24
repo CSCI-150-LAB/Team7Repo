@@ -129,4 +129,25 @@ public function AddUserAction() {
 	return $this->view(['errors' => $errors]);
 }
 
+public function StartSessionAction() {
+		
+	$db = $this->get('Db');
+	/** @var array[] */
+	$inclasses = $db->query( 
+		"
+		SELECT * FROM instructorclasses
+		
+		"
+	);
+	
+	if ($inclasses === false) {
+		die($db->getLastError());
+	}
+	/** @var User[] */
+	$inclasses = array_map(['User', 'fromArray'], $inclasses);
+	
+	return $this->view(['inclasses' => $inclasses]); 
+}
+
+
 }
