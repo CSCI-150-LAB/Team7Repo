@@ -41,15 +41,20 @@
                 <img src="<?php echo $this->publicUrl('images/fl.png')?>" width="40" height="40">
             </li>
             <?php if ($currentUser) : ?>
+                <?php if (!($currentUser->isAdmin())) : ?>
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo $currentUser->getDashboardUrl() ?>"> My Dashboard </a>
             </li>
+            <?php endif; ?>
 			<?php if ($currentUser->isInstructor()) : ?>
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo $this->baseUrl("/Instructor/ViewReviews/{$currentUser->id}") ?>"> My Ratings </a>
             </li>
 			<?php endif; ?>
 			<?php if ($currentUser->isAdmin()) : ?>
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo $this->baseUrl("/Admin/Panel/{$currentUser->id}") ?>"> My Panel </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="javascript:void(0)"> Search Students </a>
             </li>

@@ -88,6 +88,7 @@ class AdminController extends PermsController {
 
 	
 public function AddUserAction() {
+	$errors = [];
 
 	if ($this->request->isPost()) {
 		$fields = [
@@ -114,6 +115,14 @@ public function AddUserAction() {
 				$userData['password'] = hash('sha256', $userData['password']);
 			}
 			$user = User::fromArray($userData);
+
+			
+			if ($user->save()) {
+				return $this->redirect("Admin/UserAccounts");
+			}
+			else {
+				$errors[] = 'Failed to save the profile';
+			}
 		}
 	}
 
