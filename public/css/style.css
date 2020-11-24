@@ -6389,7 +6389,27 @@ form .checkbox-group > .valid-feedback {
 }
 
 body.user-c.login-a {
-  background-image: linear-gradient(#fff, #d0d0da, #13284c);
+  background-image: url(../images/fslibrary.jpg) /*linear-gradient(#fff, #d0d0da, #13284c)*/;
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+
+}
+
+body.user-c.userprofiles-a {
+  background-image: url(../images/red-paw-print-background.png);
+  background-size: 70% 100%;
+  background-position: right;
+  background-repeat: no-repeat;
+
+}
+
+body.user-c.allpages-a {
+  background-image: url(../images/blue-paw-print-background.png);
+  background-size: 70% 100%;
+  background-position: right;
+  background-repeat: no-repeat;
+
 }
 
 i.fa-star.fas {
