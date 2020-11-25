@@ -288,17 +288,28 @@ Admin users have the same functionality as instructor users with some additional
 | **9 (11/19/2020)**  | Polishing and Perfecting/Documentation                                                                                                                                    | All UI Requirements                                                    |
 | **10 (11/23/2020)** | Polishing and Perfecting/Documentation                                                                                                                                    | All UI Requirements                                                    |
 
-<br>
-![GANTT Chart](./public/images/gantt.jpg)
+### 4.2 GANTT
+
+![GANTT Chart](/public/images/gantt_chart.png)
+
 
 ## 5. Diagrams
 
 ### 5.1 Use Case Diagram
-See UseCaseDiagram.drawio for the use case diagram.
+![Use Case Diagram](/public/images/use_case_diagram.jpeg)
 
 ### 5.2 Class Diagram
 
 ### 5.3 Sequence Diagram
+
+#### Instructor Creating a Feedback Session
+![Instructor Creating a Feedback Session Sequence Diagram](/public/images/Feedbacksession_Sequencediagram.jpeg)
+
+#### User Searching Instructors
+![User Searching Instructors Sequence Diagram](/public/images/SD_InstructorSearch.png)
+
+#### Instructor Add Class & Add Students
+![Instructor Add Class & Add Students Sequence Diagram](/public/images/add_class_student_sequence_diagram.jpeg)
 
 ```
 FeedbackLoop by Null Entity  
