@@ -47,6 +47,18 @@ body{
 	@media(min-width: $md){	
 		font-size: size(18);
 	}
+
+	background-image: url(../images/blue-paw-print-background.png);
+	background-size: 37%;
+	background-position: bottom right;
+	background-repeat: no-repeat;  	
+}
+
+red-paw-background {
+	background-image: url(../images/red-paw-print-background.png);
+	background-size: 37%;
+	background-position: bottom right;
+	background-repeat: no-repeat;  
 }
 
 a {

@@ -6164,12 +6164,23 @@ body {
   font-size: 1rem;
   line-height: 1.7;
   margin: auto;
+  background-image: url(../images/blue-paw-print-background.png);
+  background-size: 37%;
+  background-position: bottom right;
+  background-repeat: no-repeat;
 }
 
 @media (min-width: 768px) {
   body {
     font-size: 1.125rem;
   }
+}
+
+red-paw-background {
+  background-image: url(../images/red-paw-print-background.png);
+  background-size: 37%;
+  background-position: bottom right;
+  background-repeat: no-repeat;
 }
 
 a {
@@ -6391,8 +6402,8 @@ form .checkbox-group > .valid-feedback {
 
 body.user-c.login-a {
   background-image: url(../images/fslibrary.jpg);
-  background-size: 37%;
-  background-position: bottom right;
+  background-size: 100%;
+  background-position: center;
   background-repeat: no-repeat;
 }
 

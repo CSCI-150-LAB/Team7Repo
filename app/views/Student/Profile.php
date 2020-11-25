@@ -11,12 +11,9 @@
 
 
 
-<body id="profile-style ">
-  
-
-    <div class="container ">
+<body id="profile-style">
+    <div class="container">
         <div class="main-body" id="red-paw-background">
-        
               <div class="row gutters-sm">
               
                 <div class="col-md-4 mb-3">
