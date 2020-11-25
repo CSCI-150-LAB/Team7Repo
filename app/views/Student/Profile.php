@@ -15,7 +15,7 @@
   
 
     <div class="container ">
-        <div class="main-body">
+        <div class="main-body" id="red-paw-background">
         
               <div class="row gutters-sm">
               

@@ -6347,6 +6347,7 @@ form .checkbox-group > .valid-feedback {
 .navbar-toggler .icon-bar {
   position: relative;
   background-color: #fff;
+  box-shadow: 1px 3px 5px 1px rgba(0, 0, 0, 0.1);
   width: 32px;
   height: 3px;
   opacity: 1;
@@ -6389,7 +6390,24 @@ form .checkbox-group > .valid-feedback {
 }
 
 body.user-c.login-a {
-  background-image: linear-gradient(#fff, #d0d0da, #13284c);
+  background-image: url(../images/fslibrary.jpg);
+  background-size: 37%;
+  background-position: bottom right;
+  background-repeat: no-repeat;
+}
+
+.red-paw-background {
+  background-image: url(../images/red-paw-print-background.png);
+  background-size: 37%;
+  background-position: bottom right;
+  background-repeat: no-repeat;
+}
+
+.blue-paw-background {
+  background-image: url(../images/blue-paw-print-background.png);
+  background-size: 37%;
+  background-position: bottom right;
+  background-repeat: no-repeat;
 }
 
 i.fa-star.fas {
@@ -6487,7 +6505,6 @@ body.student-c.profile-a {
   margin-top: 20px;
   color: #1a202c;
   text-align: left;
-  background-color: #e2e8f0;
 }
 
 .main-body {
@@ -6495,7 +6512,7 @@ body.student-c.profile-a {
 }
 
 .card {
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: 1px 3px 5px 1px rgba(0, 0, 0, 0.1), 0 3px 4px 0 rgba(0, 0, 0, 0.06);
 }
 
 .card {
