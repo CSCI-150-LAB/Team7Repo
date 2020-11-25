@@ -61,39 +61,14 @@
 </form>
 
 <script>
-    var visualslider = document.getElementById("visual");
-    var visualoutput = document.getElementById("visualvalue");
-    visualoutput.innerHTML = visualslider.value; 
+
+    document.querySelectorAll('input[type="range"]').forEach(function(input) {
+        input.addEventListener("input", function() {
+            document.querySelector("#" + input.id + "value").innerHTML = this.value;
+        })
+        document.querySelector("#" + input.id + "value").innerHTML = this.value;
+
+    });
 
     
-    visualslider.oninput = function() {
-    visualoutput.innerHTML = this.value;
-    }
-
-    var audioslider = document.getElementById("audio");
-    var audiooutput = document.getElementById("audiovalue");
-    audiooutput.innerHTML = audioslider.value; 
-
-    
-    audioslider.oninput = function() {
-        audiooutput.innerHTML = this.value;
-    }
-
-    var kinestheticslider = document.getElementById("kinesthetic");
-    var kinestheticoutput = document.getElementById("kinestheticvalue");
-    kinestheticoutput.innerHTML = kinestheticslider.value; 
-
-    
-    kinestheticslider.oninput = function() {
-        kinestheticoutput.innerHTML = this.value;
-    }
-
-    var rwslider = document.getElementById("readingwriting");
-    var rwoutput = document.getElementById("readingwritingvalue");
-    rwoutput.innerHTML = rwslider.value; 
-
-    
-    rwslider.oninput = function() {
-        rwoutput.innerHTML = this.value;
-    }
 </script>
