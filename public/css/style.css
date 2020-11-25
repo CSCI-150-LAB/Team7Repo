@@ -6417,18 +6417,6 @@ i.fa-star.fas .partial {
   bottom: 0;
 }
 
-#feedback-app .question-label .fa-stack {
-  font-size: 0.5rem;
-}
-
-#feedback-app .field-row.odd {
-  background-color: #f0f0f0;
-}
-
-#feedback-app .field-row {
-  overflow: hidden;
-}
-
 .rating-field {
   display: inline-block;
 }

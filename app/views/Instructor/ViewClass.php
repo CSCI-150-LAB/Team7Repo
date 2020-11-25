@@ -1,8 +1,3 @@
-<?php
-	// Load extra assets for the feedback form code
-	$this->scriptEnqueue('vuejs', 'https://cdn.jsdelivr.net/npm/vue@2.6.12');
-?>
-
 <h1> <?php echo $class->class . " " . $class->getClassTimeString(); ?> </h1>
 <h2> <?php echo $class->description; ?> </h2>
 
@@ -14,24 +9,12 @@
 		Feedback
 	</button>
 	<div class="dropdown-menu">
-		<a href="#textfeedback" class="dropdown-item" data-toggle="modal" data-target="#textfeedback">Create a feedback session</a>
+		<a href="#feedback-app" class="dropdown-item" data-toggle="modal" data-target="#feedback-app">Create a feedback session</a>
 		<a href='<?php echo $this->baseUrl("/Feedback/PublishedFeedback/{$class->classid}") ?>' class="dropdown-item">View Sessions</a>
 	</div>
 </div>
 
-<div class="modal fade" id="textfeedback">
-	<div class="modal-dialog modal-xl">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title"><?php echo $class->class ?>: Create a feedback session</h5>
-				<button class="close" data-dismiss="modal">&times;</button>
-			</div>
-			<div class="modal-body">
-				<?php echo $this->partial('_FeedbackForm', ['class' => $class]) ?>
-			</div>
-		</div>
-	</div>
-</div>
+<?php echo $this->partial('_FeedbackForm', ['class' => $class]) ?>
 
 
 
