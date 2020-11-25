@@ -9,7 +9,8 @@
 	$this->scriptRegister('jquery-cdn', 'https://code.jquery.com/jquery-3.5.1.min.js');
 	$this->scriptRegister('jquery', 'window.jQuery || document.write(\'<script src="' . $this->publicUrl('js/jquery-3.5.1.min.js') . '"><\/script>\')', ['jquery-cdn']);
 	$this->scriptRegister('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js', ['jquery']);
-	$this->scriptEnqueue('main', $this->publicUrl('js/main.js'), ['bootstrap'], false);
+	$this->scriptRegister('bootstrap-select', $this->publicUrl('js/bootstrap-select.min.js'), ['jquery', 'bootstrap']);
+	$this->scriptEnqueue('main', $this->publicUrl('js/main.js'), ['bootstrap', 'bootstrap-select'], false);
 
 	$this->outputStyles();
 	$this->outputScripts();
