@@ -181,10 +181,8 @@ class ViewHelpers implements IViewHelpers {
 	 * @return string
 	 */
     public function partial($view, $payload = []) {
-        $viewFile = APP_ROOT . '/app/views/' . DI::getDefault()->get('Request')->getControllerName() . '/' . $view . '.php';
-        
         $views = [
-            $viewFile => $payload
+            $view => $payload
         ];
 
         return DI::getDefault()->get('ViewRenderer')->render($views);
