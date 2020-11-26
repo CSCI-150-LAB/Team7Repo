@@ -8,17 +8,17 @@
     <label for="studentMajor">Enter your preferred learning style</label>
    
     <br>
-    <input type="range" name="visual" id="visual" min="1" max="50">
+    <input type="range" name="visual" id="visual" min="1" max="10">
     <label for="visual">How often do you prefer visual learning tools?</label> <b><span id="visualvalue" style="color:red;"></span></b>
     
     <br>
-    <input type="range" name="audio" id="audio" min="1" max="50">
+    <input type="range" name="audio" id="audio" min="1" max="10">
     <label for="audio">How often do you prefer audio learning tools?</label> <b><span  id="audiovalue"style="color:red;"></span></b>
     <br>
-    <input type="range" name="kinesthetic" id="kinesthetic" min="1" max="50">
+    <input type="range" name="kinesthetic" id="kinesthetic" min="1" max="10">
     <label for="kinesthetic">How often do you prefer kinesthetic learning tools?</label> <b><span  id="kinestheticvalue" style="color:red;"></span></b>
     <br>
-    <input type="range" name="readingwriting" id="readingwriting" min="1" max="50">
+    <input type="range" name="readingwriting" id="readingwriting" min="1" max="10">
     <label for="readingwriting">How often do you prefer reading/writing learning tools?</label> <b><span  id="readingwritingvalue" style="color:red;"></span></b>
     <br>
 
@@ -28,13 +28,15 @@
     <select name="visual-tools" id="visual-tools">
         <option value="charts_diagrams">Charts/Diagrams</option>
         <option value="video-pres">Video Presentation </option>
+        <option value="powerpoint">Powerpoint </option>
+        <option value="demonstration">Visual Demonstrations </option>
     </select>
     <br>
 
     <label for="audio-tools">Audio tools</label>
     <select name="audio-tools" id="audio-tools">
-        <option value="lecture">Lecture</option>
-        <option value="storytelling">Story Telling </option>
+        <option value="lecture">Lecture in person</option>
+        <option value="storytelling">Recorded lectures / audio books </option>
     </select>
     <br>
 
@@ -42,6 +44,8 @@
     <select name="kinesthetic-tools" id="kinesthetic-tools">
         <option value="projects-labs">Projects/Labs</option>
         <option value="group-activities">Group Activities </option>
+        <option value="handson-activities">Hands on Activities </option>
+        <option value="physical-activities">Physical Activities </option>
     </select>
     <br>
 

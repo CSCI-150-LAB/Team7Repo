@@ -6,7 +6,7 @@
 		echo "<a class = 'btn btn-secondary float-right' style='color: #ffffff;' href='" . $this->baseUrl('/Student/ProfileEdit/' . $user->id) . "'>Edit Profile</a>";
     } //Allows user to edit profile if current profile is the user's profile
 
-            
+    
 ?>
 
 
@@ -64,19 +64,19 @@
                           <h6 class="d-flex align-items-center mb-3">Other Learning Styles</h6>
                           <small>Visual</small>
                           <div class="progress mb-3" style="height: 5px">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="2" aria-valuemin="0" aria-valuemax="10"></div>
                           </div>
                           <small>Kinesthetic</small>
                           <div class="progress mb-3" style="height: 5px">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 72%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="10"></div>
                           </div>
                           <small>Audio</small>
                           <div class="progress mb-3" style="height: 5px">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 89%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="10"></div>
                           </div>
                           <small>Reading / Writing</small>
                           <div class="progress mb-3" style="height: 5px">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 55%" aria-valuenow="<?php  $profile->$reading_writing?>" aria-valuemin="0" aria-valuemax="10"></div>
                           </div>
                         </div>
                       </div>
@@ -86,9 +86,9 @@
                     <div class="card h-100">
                       <div class="card-body">
                         <h6 class="d-flex align-items-center mb-3"><i class="fas fa-tools"></i> Preferred Learning Tools</h6>
-                        <small>Web Design</small>
+                        <small> <?php echo $profile->visual_tool?> </small>
                         <div class="progress mb-3" style="height: 5px">
-                          <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                          <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         <small>Website Markup</small>
                         <div class="progress mb-3" style="height: 5px">
