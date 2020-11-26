@@ -6176,13 +6176,6 @@ body {
   }
 }
 
-red-paw-background {
-  background-image: url(../images/red-paw-print-background.png);
-  background-size: 37%;
-  background-position: bottom right;
-  background-repeat: no-repeat;
-}
-
 a {
   color: #2F578D;
   transition: color 250ms;
