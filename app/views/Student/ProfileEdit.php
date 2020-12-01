@@ -9,18 +9,20 @@
    
     <br>
     <input type="range" name="visual" id="visual" min="1" max="10" value="<?php echo $profile->visual ?>">
-    <label for="visual">How often do you prefer visual learning tools?</label> <b><span id="visualvalue" style="color:#c41230;"></span></b>
+    <label for="visual">How often do you prefer visual learning tools?</label> 
     
     <br>
-    <input type="range" name="audio" id="audio" min="1" max="10" value="<?php echo $profile->audio ?>">
-    <label for="audio">How often do you prefer audio learning tools?</label> <b><span  id="audiovalue"style="color:#c41230;"></span></b>
+    <input type="range" name="kinesthetic" id="kinesthetic" min="1" max="10" value="<?php echo $profile->kinesthetic ?>">
+    <label for="kinesthetic">How often do you prefer kinesthetic learning tools?</label> 
     <br>
 
-    <input type="range" name="kinesthetic" id="kinesthetic" min="1" max="10" value="<?php echo $profile->kinesthetic ?>">
-    <label for="kinesthetic">How often do you prefer kinesthetic learning tools?</label> <b><span  id="kinestheticvalue" style="color:#c41230;"></span></b>
+    <input type="range" name="audio" id="audio" min="1" max="10" value="<?php echo $profile->audio ?>">
+    <label for="audio">How often do you prefer audio learning tools?</label> 
     <br>
+
+    
     <input type="range" name="readingwriting" id="readingwriting" min="1" max="10" value="<?php echo $profile->reading_writing ?>">
-    <label for="readingwriting">How often do you prefer reading/writing learning tools?</label> <b><span  id="readingwritingvalue" style="color:#c41230;"></span></b>
+    <label for="readingwriting">How often do you prefer reading/writing learning tools?</label> 
     <br>
 
     
@@ -37,7 +39,6 @@
     <label for="audio-tools">Audio tools</label>
     <select name="audio-tools" id="audio-tools">
         <option value="Lecture">Lecture in person</option>
-        <option value="Storytelling">Recorded lectures / audio books </option>
         <option value="Recorded-Lectures/Audio-Books">Recorded lectures / audio books </option>
     </select>
     <br>
@@ -66,15 +67,3 @@
 	<button type="submit" class="btn btn-cardinalred" style = >Save Changes</button>
 </form>
 
-<script>
-
-    document.querySelectorAll('input[type="range"]').forEach(function(input) {
-        input.addEventListener("input", function() {
-            document.querySelector("#" + input.id + "value").innerHTML = this.value;
-        })
-        document.querySelector("#" + input.id + "value").innerHTML = this.value;
-
-    });
-
-    
-</script>
