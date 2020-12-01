@@ -299,8 +299,12 @@ Admin users have the same functionality as instructor users with some additional
 ![Use Case Diagram](/public/images/use_case_diagram.jpeg)
 
 ### 5.2 Class Diagram
+![Class Diagram](/public/images/FeedbackLoop_Class_Diagram.png)
 
-### 5.3 Sequence Diagram
+### 5.3 Sequence Diagrams
+
+#### Student Adding a Review
+![Student Adding a Review](/public/images/FeedbackLoop_Sequence_Diagram_Add_Review.png)
 
 #### Instructor Creating a Feedback Session
 ![Instructor Creating a Feedback Session Sequence Diagram](/public/images/Feedbacksession_Sequencediagram.jpeg)
@@ -309,7 +313,7 @@ Admin users have the same functionality as instructor users with some additional
 ![User Searching Instructors Sequence Diagram](/public/images/SD_InstructorSearch.png)
 
 #### Instructor Add Class & Add Students
-![Instructor Add Class & Add Students Sequence Diagram](/public/images/add_class_student_sequence_diagram.jpeg)
+![Instructor Add Class & Add Students Sequence Diagram](/public/images/addClassStudentSequenceDiagram.jpeg)
 
 ```
 FeedbackLoop by Null Entity  
