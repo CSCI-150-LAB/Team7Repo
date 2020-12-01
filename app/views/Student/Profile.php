@@ -48,11 +48,9 @@
                     <div class="card-body">
                       <div class="row">
                         <div class="col-sm-3">
-                          <h6 class="mb-0">My Bio</h6>
+                          <h6 class="mb-0" style="text-align: center;">Welcome to your profile</h6>
                         </div>
-                        <div class="col-sm-9 text-secondary">
-                         <input type="textarea" width="100px" height="150px">
-                        </div>
+                        
                       </div>
                     </div>
                   </div>
@@ -63,21 +61,14 @@
                         <div class="card-body" >
                           <h6 class="d-flex align-items-center mb-3">Other Learning Styles</h6>
                           <small>Visual</small>
-                          <div class="progress mb-3" style="height: 5px">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="2" aria-valuemin="0" aria-valuemax="10"></div>
-                          </div>
+                            <div><progress value="<?php echo $profile->visual?>" max="10"></progress></div>
                           <small>Kinesthetic</small>
-                          <div class="progress mb-3" style="height: 5px">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: 72%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="10"></div>
-                          </div>
+                            <div><progress value="<?php echo $profile->kinesthetic?>" max="10"></progress></div>
                           <small>Audio</small>
-                          <div class="progress mb-3" style="height: 5px">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: 89%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="10"></div>
-                          </div>
+                            <div><progress value="<?php echo $profile->audio?>" max="10"></progress></div>
                           <small>Reading / Writing</small>
-                          <div class="progress mb-3" style="height: 5px">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: 55%" aria-valuenow="<?php  $profile->$reading_writing?>" aria-valuemin="0" aria-valuemax="10"></div>
-                          </div>
+                          <div><progress value="<?php echo $profile->reading_writing?>" max="10"></progress></div>
+                          
                         </div>
                       </div>
                     </div>
@@ -86,26 +77,14 @@
                     <div class="card h-100">
                       <div class="card-body">
                         <h6 class="d-flex align-items-center mb-3"><i class="fas fa-tools"></i> Preferred Learning Tools</h6>
-                        <small> <?php echo $profile->visual_tool?> </small>
-                        <div class="progress mb-3" style="height: 5px">
-                          <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <small>Website Markup</small>
-                        <div class="progress mb-3" style="height: 5px">
-                          <div class="progress-bar bg-primary" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <small>One Page</small>
-                        <div class="progress mb-3" style="height: 5px">
-                          <div class="progress-bar bg-primary" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <small>Mobile Template</small>
-                        <div class="progress mb-3" style="height: 5px">
-                          <div class="progress-bar bg-primary" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <small>Backend API</small>
-                        <div class="progress mb-3" style="height: 5px">
-                          <div class="progress-bar bg-primary" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
+                        <small> Visual Tool: <?php echo $profile->visual_tool?> </small>
+                        <br>
+                        <small> Audio Tool: <?php echo $profile->audio_tool?></small>
+                        <br>
+                        <small> Kinesthetic Tool: <?php echo $profile->kinesthetic_tool?></small>
+                        <br>
+                        <small> Reading/Writing Tool: <?php echo $profile->read_write_tool?></small>
+                        <br>
                     </div>
                   </div>
 
