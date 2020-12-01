@@ -67,7 +67,8 @@ a {
 }
 
 h1,h2,h3,h4,h5,h6 {
-	font-weight: 700;
+	font-weight: 400;
+	
 	line-height: 1.2;
 	margin-bottom: size(30)
 }
@@ -76,15 +77,19 @@ p {
 	margin-bottom: size(30);
 }
 
+small {
+	font-weight: bold;
+}
+
 h1 {
 	@media(min-width: $md){
-		font-size: size(40);
+		font-size: size(20);
 	}
 	@media(min-width: $lg){
-		font-size: size(50);
+		font-size: size(20);
 	}
 	@media(min-width: $xl){
-		font-size: size(60);
+		font-size: size(40);
 	}
 }
 
@@ -96,7 +101,7 @@ h2 {
 		font-size: size(40);
 	}
 	@media(min-width: $xl){
-		font-size: size(50);
+		font-size: size(40);
 	}
 }
 
@@ -108,7 +113,7 @@ h3 {
 		font-size: size(35);
 	}
 	@media(min-width: $xl){
-		font-size: size(40);
+		font-size: size(30);
 	}
 }
 
@@ -132,7 +137,7 @@ h5 {
 }
 
 h6 {
-	font-size: size(15);
+	font-size: size(20);
 }
 
 form {
