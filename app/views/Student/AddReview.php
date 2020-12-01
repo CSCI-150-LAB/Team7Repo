@@ -64,7 +64,7 @@
             <br>
             <br>
             <br>
-            <button type="submit" class="btn btn-primary">Add Review</button>
+            <button type="submit" class="btn btn-cardinalred">Add Review</button>
 
         </form>
     </div>

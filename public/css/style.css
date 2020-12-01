@@ -6118,8 +6118,23 @@
   border-color: #13284c !important;
 }
 
+.btn-cardinalred {
+  background-color: #c41230;
+  border-color: #c41230;
+  color: #ffffff;
+}
+
+.btn-cardinalred:hover {
+  background-color: #ced1d4;
+  border-color: #ced1d4;
+}
+
 .bg-red {
   background-color: #c41230;
+}
+
+.tbl-background {
+  background-color: #ffffff;
 }
 
 body.dev:after {
@@ -6312,7 +6327,8 @@ form .checkbox-group > .valid-feedback {
 }
 
 .navbar {
-  padding: 24px;
+  padding: 20px;
+  box-shadow: 0px 1px 8px #999;
 }
 
 .user-login-logout .nav-link {
@@ -6496,7 +6512,6 @@ form.feedback-response .rating-field-container.is-invalid .invalid-feedback {
 
 /* Bootstrap student profile code */
 body.student-c.profile-a {
-  margin-top: 20px;
   color: #1a202c;
   text-align: left;
 }

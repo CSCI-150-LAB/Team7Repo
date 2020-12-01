@@ -3,8 +3,22 @@
 	border-color: #13284c !important;
 }
 
+.btn-cardinalred {
+	background-color: #c41230;
+	border-color: #c41230;
+	color: #ffffff;	
+}
+
+.btn-cardinalred:hover {
+	background-color: #ced1d4;
+	border-color: #ced1d4;
+}
 .bg-red {
 	background-color: #c41230;
+}
+
+.tbl-background {
+	background-color: #ffffff;
 }
 
 body.dev:after {

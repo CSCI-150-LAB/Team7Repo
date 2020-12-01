@@ -5,7 +5,8 @@
 	padding: size(16) size(9);
 	right: 0;
     transition: background-color 250ms;
-    background-color: $dark;
+	background-color: $dark;
+
     
 	&:hover {
 		background-color: darken($dark, 10);

@@ -6,7 +6,7 @@
 	<div class="input-group mb-3">
 		<input type="text" class="form-control" placeholder="Search Text" id="search-txt" name="search" aria-label="Search Text" value="<?php echo $this->escapeHtml($search) ?>">
 		<div class="input-group-append">
-			<button class="btn btn-primary" type="submit">Search</button>
+			<button class="btn btn-cardinalred" type="submit">Search</button>
 		</div>
 	</div>
 </form>
@@ -18,7 +18,7 @@
 			<?php
 				$profile = $instructorUser->getProfileModel();
 			?>
-			<div class="instructor-listing my-4 px-3 py-2 border">
+			<div class="instructor-listing my-4 px-3 py-2 border tbl-background">
 				<div class="d-flex align-items-center justify-content-between">
 					<h3><a href="<?php echo $instructorUser->getProfileUrl() ?>"><?php echo $profile->name . ' ' . $instructorUser->getFullName() ?></a></h3>
 					<p class="text-right">
@@ -26,7 +26,7 @@
 					</p>
 				</div>
 
-				<table class="table table-sm table-striped pl-5">
+				<table class="table table-sm table-striped pl-5 tbl-background">
 					<thead>
 						<tr>
 							<th>Class</th>
