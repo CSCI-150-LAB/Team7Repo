@@ -24,7 +24,7 @@ $user = User::getCurrentUser();
 	<thead>
 		<tr>
 			<th scope="col"> Title </th>
-			<th scope="col"> Description </th>
+			<th scope="col"> Student responses </th>
 		</tr>
 	</thead>
 	<tbody>  
