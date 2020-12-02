@@ -1,7 +1,10 @@
 <?php
 $this->scriptEnqueue('chart-js', 'https://cdn.jsdelivr.net/npm/chart.js@2.8.0');
 $currentUser = User::getCurrentUser();
-$profile = InstructorModel::getByKey($user->id); ?>
+$profile = InstructorModel::getByKey($user->id);
+
+$this->pageTitle("{$profile->name} {$currentUser->lastName} - Profile");
+?>
 <h1 class='mb-3' style= 'background-color: #13284c; padding:60px; color: #ffffff;'>Instructor Profile</h1>
 <?php   if($profile->instructorid == $currentUser->id) {
             echo "<a class = 'btn btn-secondary float-right' style='color: #ffffff;' href = '".$this->baseUrl("/Instructor/EditProfile/{$currentUser->id}")."'>Edit Profile</a><br><br>";
@@ -160,5 +163,4 @@ $profile = InstructorModel::getByKey($user->id); ?>
 			</div>
 		</div>
 	</div>
-
 </div>

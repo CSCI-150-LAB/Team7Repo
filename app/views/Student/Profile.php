@@ -1,3 +1,6 @@
+<?php
+	$this->pageTitle('Profile');
+?>
 
 <body id="profile-style">
     <div class="container">

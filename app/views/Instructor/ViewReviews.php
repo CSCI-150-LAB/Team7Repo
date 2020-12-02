@@ -1,3 +1,7 @@
+<?php
+	$this->pageTitle('View Reviews');
+?>
+
 <h1 class="mb-3" style= "background-color: #13284c; padding:60px; color: #ffffff;">
 Reviews for <?php  
 $instructorInfo = InstructorModel::findOne("id = :0:", $instructor->id);

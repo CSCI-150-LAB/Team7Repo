@@ -1,3 +1,7 @@
+<?php
+	$this->pageTitle('Add Review');
+?>
+
 <h1>Add Review</h1>
 <div class = "card">
     <div class = "card-body">

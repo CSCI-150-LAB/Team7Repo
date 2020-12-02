@@ -1,4 +1,7 @@
-<?php /** @var User[] $results */ ?>
+<?php
+	/** @var User[] $results */
+	$this->pageTitle('Search Instructors');
+?>
 
 <h1>Instructor Search</h1>
 

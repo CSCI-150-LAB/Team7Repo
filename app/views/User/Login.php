@@ -1,3 +1,7 @@
+<?php
+	$this->pageTitle('Login');
+?>
+
 <div style= "padding-top: 150px; "> 
   <div class="card container" style="width: 18rem;">
     <div class="card-body">

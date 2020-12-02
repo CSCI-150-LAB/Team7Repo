@@ -1,3 +1,7 @@
+<?php
+	$this->pageTitle('View Class');
+?>
+
 <h1> <?php echo $class->class . " " . $class->getClassTimeString(); ?> </h1>
 <h2> <?php echo $class->description; ?> </h2>
 

@@ -212,7 +212,7 @@ class ViewHelpers implements IViewHelpers {
                 array_unshift($this->pageTitleParts, $titlePart);
             }
             else {
-                $this->pageTitleSeparator[] = $titlePart;
+                $this->pageTitleParts[] = $titlePart;
             }
         }
 

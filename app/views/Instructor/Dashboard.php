@@ -1,3 +1,7 @@
+<?php
+	$this->pageTitle("Dashboard");
+?>
+
 <h1 class="mb-3" style= "background-color: #13284c; padding:60px; color: #ffffff;">
 	Instructor Dashboard</h1>
 

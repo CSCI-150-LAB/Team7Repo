@@ -6415,7 +6415,7 @@ form .checkbox-group > .valid-feedback {
 
 body.user-c.login-a {
   background-image: url(../images/fslibrary.jpg);
-  background-size: 100%;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }

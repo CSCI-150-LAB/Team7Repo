@@ -1,5 +1,6 @@
 <?php 
-    $user = User::getCurrentUser();																			// Get the current user information
+	$user = User::getCurrentUser();																			// Get the current user information
+	$this->pageTitle('Dashboard');
 ?>
 
 <h1 class="mb-3" style= "background-color: #13284c; padding:60px; color: #ffffff;">

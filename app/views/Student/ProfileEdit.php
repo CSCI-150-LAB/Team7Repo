@@ -1,3 +1,6 @@
+<?php
+	$this->pageTitle('Edit Profile');
+?>
 
 <form method="POST">
 	<h1>Edit your profile</h1>
