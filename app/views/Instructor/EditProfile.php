@@ -1,6 +1,5 @@
 <?php
 	$this->pageTitle("Edit Profile");
-	var_dump($errors);
 ?>
 
 <h1>Edit Your Profile</h1>
