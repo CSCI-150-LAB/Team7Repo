@@ -73,6 +73,8 @@ class Db {
 			}
 		}
 
+		//FIXME: Bad bug that I didn't consider... '= NULL' is valid syntax when using the SET command
+		//Refactor code to allow the partial methods easier access to these helper methods
 		$sql = preg_replace_callback('/(?:(!?=|<>)\\s*)?([\'"]?):([a-z0-9_-]+):\\2/i', function($matches) use ($args) {
 			if (isset($args[$matches[3]])) {
 				return ltrim($matches[1] . ' ') . $args[$matches[3]];

@@ -44,7 +44,7 @@ class InstructorModel extends Model {
 	/**
 	 * @Column('rating')
 	 */
-	public $rating;
+	public $rating = 0;
 
 	public function setUserId($userId) {
 		$this->instructorid = $userId;

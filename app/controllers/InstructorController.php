@@ -14,6 +14,7 @@ class InstructorController extends PermsController {
 		 */
 		$profile = $editUser->getProfileModel();
 
+		$errors = [];
 		if($this->request->isPost()) {
 			//If the page was directed by a POST form
 			$fields = [
@@ -26,7 +27,6 @@ class InstructorController extends PermsController {
 			]; //Create an array of profile information
 
             $instructorUserData = [];
-            $errors = [];
 			foreach($fields as $prop => $postField) {
 				if(empty($_POST[$postField])) {
 					$errors[] = "{$postField} is required";
@@ -49,7 +49,7 @@ class InstructorController extends PermsController {
 			}
 		}
 
-		return $this->view(['profile' => $profile]);
+		return $this->view(['profile' => $profile, 'errors' => $errors]);
 	} //If errors, return to edit profile page with errors
 
 	public function ProfileAction($userId = 0) {
