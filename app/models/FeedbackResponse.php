@@ -47,14 +47,10 @@ class FeedbackResponse extends Model {
 
 		?>
 		
-		<div class="feedback-response-listing mb-5" data-id="<?php echo $this->id ?>">
-			<table class="table">
+		<div class="table-responsive feedback-response-listing my-4" data-id="<?php echo $this->id ?>">
+			<table class="table table-sm bg-white shadow-sm border">
+				<caption style="caption-side:top"><?php echo $feedbackSession->title ?></caption>
 				<thead>
-					<tr class="session-title">
-						<th colspan="2">
-							<?php echo $feedbackSession->title ?>
-						</th>
-					</tr>
 					<tr>
 						<th>Question</th>
 						<th>Response</th>

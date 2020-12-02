@@ -1,11 +1,10 @@
 <?php
+	/** @var FeedbackResponse[] $myResponses */
 	$this->pageTitle('View Your Responses');
 ?>
 
-<div class="card p-3">
-	<div class="card-body ">
-		<h4 class="card-title" style="text-align: center">Your Responses</h4>
-	</div>
+<div class="bg-blue p-5 text-white mb-3">
+	<h1 class="mb-0">Your Responses</h1>
 </div>
 
 <?php foreach ($myResponses as $response) : ?>

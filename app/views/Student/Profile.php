@@ -8,13 +8,15 @@
         <?php
           $profile = StudentModel::getByKey($user->id);
           $currentUser = User::getCurrentUser();
-          if($user->id == $currentUser->id) {
-          echo "<a class = 'btn btn-secondary float-right' style='color: #ffffff;' href='" . $this->baseUrl('/Student/ProfileEdit/' . $user->id) . "'>Edit Profile</a>";
-          } //Allows user to edit profile if current profile is the user's profile          
-        ?>
+		  if($user->id == $currentUser->id):  //Allows user to edit profile if current profile is the user's profile ?>
+		  <div class="text-right">
+			  <a class = 'btn btn-secondary mb-3 text-white' href='<?= $this->baseUrl('/Student/ProfileEdit/' . $user->id) ?>'>Edit Profile</a>
+		  </div>
+		  <?php endif; ?>
+		  
               <div class="row gutters-sm">
               
-                <div class="col-md-4 mb-3">
+                <div class="col-lg-4 mb-3">
                   <div class="card">
                     <div class="card-body">
                       <div class="d-flex flex-column align-items-center text-center">
@@ -41,12 +43,10 @@
                   </div>
                 </div>
 
-                <div class="col-md-8">
+                <div class="col-lg-8">
                   <div class="card mb-3">
                     <div class="card-body">
-                      <div class="row">
                         <h6 class="mb-0">Welcome to your profile</h6>
-                      </div>
                     </div>
                   </div>
 
@@ -70,7 +70,7 @@
                   <div class="col-sm-6 mb-3">
                     <div class="card h-100">
                       <div class="card-body">
-                        <h6 class="d-flex align-items-center mb-3"><i class="fas fa-tools"></i> Preferred Learning Tools</h6>
+                        <h6 class="d-flex align-items-center mb-3"><i class="fas fa-tools mr-2"></i> Preferred Learning Tools</h6>
                         <small> Visual Tool: <?php echo $profile->visual_tool?> </small>
                         <br>
                         <small> Audio Tool: <?php echo $profile->audio_tool?></small>

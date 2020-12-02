@@ -1,6 +1,9 @@
 <html>
 
 <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
 	<title><?php echo $this->pageTitle('FeedbackLoop', true) ?></title>
 	<?php
 	$this->styleEnqueue('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css');
@@ -42,28 +45,27 @@
 <body class="<?php echo $this->bodyClass(IS_LOCAL ? 'dev' : '') ?>">
     <nav class="navbar navbar-expand-lg navbar-dark bg-red">
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+	<div class="navbar-brand"> <img src="<?php echo $this->publicUrl('images/fl.png')?>" width="40" height="40"></div>
+
+        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li>
-                <img src="<?php echo $this->publicUrl('images/fl.png')?>" width="40" height="40">
-            </li>
             <?php if ($currentUser) : ?>
             <li class="nav-item active">
                 <a class="nav-link" href="<?php echo $currentUser->getDashboardUrl() ?>"> My Dashboard </a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="javascript:void(0)"> My Ratings </a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="javascript:void(0)"> Resources </a>
             </li>
             <?php endif; ?>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="<?php echo $this->baseUrl('/Instructor/Search') ?>"> Search Instructors</a>
             </li>
 

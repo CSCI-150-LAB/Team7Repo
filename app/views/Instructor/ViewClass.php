@@ -40,26 +40,27 @@
         unset($_SESSION['add_student_errors']);
     }
 ?>
-<a class = "btn btn-secondary float-right" style="color: #ffffff;" href ='<?php echo $this->baseUrl("/Instructor/AddStudent/{$class->classid}") ?>'>Add a Student</a><br><br>
-<a class = "btn btn-secondary float-right" style="color: #ffffff;" href ='<?php echo $this->baseUrl("/Instructor/AddCSVStudents/{$class->classid}") ?>'>Add Students by CSV</a><br>
+<div class="my-3 text-right">
+	<a class = "btn btn-secondary mr-2 text-white" href ='<?php echo $this->baseUrl("/Instructor/AddStudent/{$class->classid}") ?>'>Add a Student</a>
+	<a class = "btn btn-secondary text-white" href ='<?php echo $this->baseUrl("/Instructor/AddCSVStudents/{$class->classid}") ?>'>Add Students by CSV</a>
+</div>
 <?php $studentids = studentClasses::find("classId =:0:", $class->classid);?>
-<table class="table table-bordered tbl-background">
-	<thead>
-		<tr>
-			<th scope="col"> Student </th>
-			<th scope="col"> Email </th>
-		</tr>
-	</thead>
-	<tbody>
-		<?php $students = [];
-		foreach ($studentids as $ids) :
-			$students = User::find("id =:0:", $ids->studentId);
-			foreach ($students as $student) : ?>
-				<tr>
-					<td><a href='<?php echo $this->baseUrl("/Student/Profile/{$student->id}") ?>'><?php echo $student->firstName . " " . $student->lastName ?></a></td>
-					<td><?php echo $student->email ?></td><?php
-														endforeach; ?>
-				</tr>
-			<?php endforeach; ?>
-	</tbody>
-</table>
+<div class="table-responsive">
+	<table class="table table-bordered tbl-background">
+		<thead>
+			<tr>
+				<th scope="col"> Student </th>
+				<th scope="col"> Email </th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php foreach ($studentids as $ids) :
+				$student = User::findOne("id =:0:", $ids->studentId); ?>
+					<tr>
+						<td><a href='<?php echo $this->baseUrl("/Student/Profile/{$student->id}") ?>'><?php echo $student->firstName . " " . $student->lastName ?></a></td>
+						<td><?php echo $student->email ?></td>
+					</tr>
+				<?php endforeach; ?>
+		</tbody>
+	</table>
+</div>

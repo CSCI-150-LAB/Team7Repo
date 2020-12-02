@@ -64,32 +64,31 @@ class InstructorRatings extends Model {
     public function printRating() {
 		$ratingString = PrintHelpers::printStarRating($this->rating);
 		
-        $ratingString .= '<br>';
+		$ratingString .= '<div class="d-flex my-3">';
         if ($this->takeAgain != 'N/A') {
-            $ratingString .= '<b>Would take again:</b> '.$this->takeAgain.' ';
+            $ratingString .= '<div class="mr-3"><strong>Would take again:</strong>'.$this->takeAgain.'</div>';
         }
         if ($this->homework != 'N/A') {
-            $ratingString .= '<b>Homework:</b> '.$this->homework.' ';
+            $ratingString .= '<div class="mr-3"><strong>Homework:</strong> '.$this->homework.'</div>';
         }
         if ($this->attendanceRequired != 'N/A') {
-            $ratingString .= '<b>Attendance required:</b> '.$this->attendanceRequired.' ';
+            $ratingString .= '<div class="mr-3"><strong>Attendance required:</strong> '.$this->attendanceRequired.'</div>';
         }
         if ($this->grade != 'N/A') {
-            $ratingString .= '<b>Grade:</b> '.$this->grade;
-        }
-        if (($this->takeAgain != 'N/A') || ($this->homework != 'N/A') || ($this->attendanceRequired != 'N/A') || ($this->grade != 'N/A')) {
-            $ratingString .= '<br>';
-        }
-        $ratingString .= $this->recommendation.'<br>-';
+            $ratingString .= '<div class="mr-3"><strong>Grade:</strong> '.$this->grade.'</div>';
+		}
+		$ratingString .= "</div>";
+
+        $ratingString .= $this->recommendation.'<br>';
         if ($this->authorId == 0) {
-            $ratingString .= "Anonymous ";
+            $ratingString .= "&ndash;Anonymous";
         }
         else {
             $student = User::find("id = :0:", $this->authorId);
-            $ratingString .= $student[0]->firstName.' '.$student[0]->lastName.' ';
+            $ratingString .= '&ndash;'.$student[0]->firstName.' '.$student[0]->lastName;
         }
         if($this->verified) {
-            $ratingString .= '<i class="fas fa-check" style="color:green;"></i>';
+            $ratingString .= '<i class="fas fa-check ml-1 text-success"></i>';
         }
         return $ratingString;
 	}

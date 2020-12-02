@@ -29,27 +29,29 @@
 					</p>
 				</div>
 
-				<table class="table table-sm table-striped pl-5 tbl-background">
-					<thead>
-						<tr>
-							<th>Class</th>
-							<th>Description</th>
-							<th>Days/Times</th>
-							<th>Student Enrollment</th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php $instructorClasses = InstructorClasses::find('instructorid = :0:', $instructorUser->id); ?>
-						<?php foreach ($instructorClasses as $class) : ?>
+				<div class="table-responsive">
+					<table class="table table-sm table-striped pl-5 tbl-background">
+						<thead>
 							<tr>
-								<td><?php echo $class->class ?></td>
-								<td><?php echo $class->description ?></td>
-								<td><?php echo $class->getClassTimeString() ?></td>
-								<td><?php $students = studentClasses::find("classId =:0:", $class->classid); echo count($students) ?></td>
+								<th>Class</th>
+								<th>Description</th>
+								<th>Days/Times</th>
+								<th>Student Enrollment</th>
 							</tr>
-						<?php endforeach; ?>
-					</tbody>
-				</table>
+						</thead>
+						<tbody>
+							<?php $instructorClasses = InstructorClasses::find('instructorid = :0:', $instructorUser->id); ?>
+							<?php foreach ($instructorClasses as $class) : ?>
+								<tr>
+									<td><?php echo $class->class ?></td>
+									<td><?php echo $class->description ?></td>
+									<td><?php echo $class->getClassTimeString() ?></td>
+									<td><?php $students = studentClasses::find("classId =:0:", $class->classid); echo count($students) ?></td>
+								</tr>
+							<?php endforeach; ?>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		<?php endforeach; ?>
 	<?php else : ?>
