@@ -18,7 +18,15 @@ class studentController extends PermsController {
 		if($this->request->isPost()) {
 			$fields = [
                 'studentMajor' => 'major',
-				'learningStyle' => 'learningStyle'
+				'learningStyle' => 'learningStyle',
+				'visual' => 'visual',
+				'audio' => 'audio',
+				'kinesthetic' => 'kinesthetic',
+				'reading_writing' => 'readingwriting',
+				'visual_tool' => 'visual-tools',
+				'audio_tool' => 'audio-tools',
+				'kinesthetic_tool' => 'kinesthetic-tools',
+				'read_write_tool' => 'rw-tools'
 			]; //Create an array of student information
 
             $studentData = [];

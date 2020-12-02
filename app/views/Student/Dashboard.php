@@ -5,12 +5,9 @@
 <h1 class="mb-3" style= "background-color: #13284c; padding:60px; color: #ffffff;">
 	Student Dashboard</h1>
 
-<h2 style="padding-left:60px; padding-top:25px;"> Enrolled Classes </h2> <br>
-
-
 <?php $classes = studentClasses::find("student_id = :0:", $user->id); ?>									<!--Find all classes associated with the student ID of the current user-->
 
-<table class="table table-bordered">																		<!--Lay out the table to hold info on enrolled classes-->
+<table class="table table-bordered tbl-background">																		<!--Lay out the table to hold info on enrolled classes-->
 	<thead>
 		<tr>
 		<th scope="col"> Class </th>
