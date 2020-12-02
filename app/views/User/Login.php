@@ -12,7 +12,7 @@
         <?php endforeach; ?>
       </ul>
       <?php endif; ?>
-      <h4 class="card-title" style="text-align: center;">Login</h4>
+      <h4 class="card-title text-center">Login</h4>
       <form method="POST">
           <label for="email">Email:</label>
           <br>

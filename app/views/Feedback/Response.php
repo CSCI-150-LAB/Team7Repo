@@ -4,10 +4,12 @@
         resize: none;
     }
 </style>
-<h2 class="mb-3" style= "background-color: #13284c; padding:60px; color: #ffffff;">Response</h2>
 
+<div class="bg-blue text-white mb-3 p-5">
+	<h1 class="mb-0">Response</h1>
+</div>
 
-<h3 style="text-align:center;">Text feedback Submission</h3>
+<h3 class="text-center">Text feedback Submission</h3>
 
 <form method="POST" class="feedback-response">
 	<div class="preload-area">

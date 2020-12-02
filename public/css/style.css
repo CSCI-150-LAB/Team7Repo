@@ -6118,6 +6118,10 @@
   border-color: #13284c !important;
 }
 
+.bg-blue {
+  background-color: #13284c;
+}
+
 .btn-cardinalred {
   background-color: #c41230;
   border-color: #c41230;
@@ -6196,7 +6200,7 @@ a {
   transition: color 250ms;
 }
 
-a:visited, a:focus, a:hover {
+a:active, a:focus, a:hover {
   color: #223f67;
 }
 
@@ -6329,6 +6333,10 @@ form .checkbox-group > .valid-feedback {
 .navbar {
   padding: 20px;
   box-shadow: 0px 1px 8px #999;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: #fff;
 }
 
 .user-login-logout .nav-link {
