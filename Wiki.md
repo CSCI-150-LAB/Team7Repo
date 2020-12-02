@@ -298,37 +298,37 @@ Admin users have the same functionality as instructor users with some additional
 ### 5.1 Wireframes
 
 ## Login Page Wireframe
-![Login Page Wireframe](/public/images/Slide1.png)
+![Login Page Wireframe](/public/images/Slide1.PNG)
 
 ## Admin Profile Wireframe
-![Admin Profile Wireframe](/public/images/Slide2.png)
+![Admin Profile Wireframe](/public/images/Slide2.PNG)
 
 ## Admin User Account Management Wireframe
-![Admin User Account Management Wireframe](/public/images/Slide3.png)
+![Admin User Account Management Wireframe](/public/images/Slide3.PNG)
 
 ## Instructor Profile Wireframe
-![Instructor Profile Wireframe](/public/images/Slide4.png)
+![Instructor Profile Wireframe](/public/images/Slide4.PNG)
 
 ## Student Profile Page Wireframe
-![Student Profile Page Wireframe](/public/images/Slide5.png)
+![Student Profile Page Wireframe](/public/images/Slide5.PNG)
 
 ## Instructor Dashboard Wireframe
-![Instructor Dashboard Wireframe](/public/images/Slide6.png)
+![Instructor Dashboard Wireframe](/public/images/Slide6.PNG)
 
 ## Student Dashboard Wireframe
-![Student Dashboard Wireframe](/public/images/Slide7.png)
+![Student Dashboard Wireframe](/public/images/Slide7.PNG)
 
 ## Instructor Class Details Wireframe
-![Instructor Class Details Wireframe](/public/images/Slide8.png)
+![Instructor Class Details Wireframe](/public/images/Slide8.PNG)
 
 ## Initiate Feedback Session Wireframe
-![Initiate Feedback Session Wireframe](/public/images/Slide9.png)
+![Initiate Feedback Session Wireframe](/public/images/Slide9.PNG)
 
 ## Public Feedback Wireframe
-![Public Feedback Wireframe](/public/images/Slide10.png)
+![Public Feedback Wireframe](/public/images/Slide10.PNG)
 
 ## Instructor Feedback Session Results Wireframe
-![Instructor Feedback Session Results Wireframe](/public/images/Slide11.png)
+![Instructor Feedback Session Results Wireframe](/public/images/Slide11.PNG)
 
 ### 5.2 Use Case Diagram
 ![Use Case Diagram](/public/images/use_case_diagram.jpeg)
