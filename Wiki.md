@@ -290,7 +290,7 @@ Admin users have the same functionality as instructor users with some additional
 
 ### 4.2 GANTT
 
-![GANTT Chart](/public/images/gantt_chart.png)
+![GANTT Chart](/documentation/gantt_chart.png)
 
 
 ## 5. Diagrams
@@ -298,57 +298,57 @@ Admin users have the same functionality as instructor users with some additional
 ### 5.1 Wireframes
 
 ## Login Page Wireframe
-![Login Page Wireframe](/public/images/Slide1.PNG)
+![Login Page Wireframe](/documentation/Slide1.PNG)
 
 ## Admin Profile Wireframe
-![Admin Profile Wireframe](/public/images/Slide2.PNG)
+![Admin Profile Wireframe](/documentation/Slide2.PNG)
 
 ## Admin User Account Management Wireframe
-![Admin User Account Management Wireframe](/public/images/Slide3.PNG)
+![Admin User Account Management Wireframe](/documentation/Slide3.PNG)
 
 ## Instructor Profile Wireframe
-![Instructor Profile Wireframe](/public/images/Slide4.PNG)
+![Instructor Profile Wireframe](/documentation/Slide4.PNG)
 
 ## Student Profile Page Wireframe
-![Student Profile Page Wireframe](/public/images/Slide5.PNG)
+![Student Profile Page Wireframe](/documentation/Slide5.PNG)
 
 ## Instructor Dashboard Wireframe
-![Instructor Dashboard Wireframe](/public/images/Slide6.PNG)
+![Instructor Dashboard Wireframe](/documentation/Slide6.PNG)
 
 ## Student Dashboard Wireframe
-![Student Dashboard Wireframe](/public/images/Slide7.PNG)
+![Student Dashboard Wireframe](/documentation/Slide7.PNG)
 
 ## Instructor Class Details Wireframe
-![Instructor Class Details Wireframe](/public/images/Slide8.PNG)
+![Instructor Class Details Wireframe](/documentation/Slide8.PNG)
 
 ## Initiate Feedback Session Wireframe
-![Initiate Feedback Session Wireframe](/public/images/Slide9.PNG)
+![Initiate Feedback Session Wireframe](/documentation/Slide9.PNG)
 
 ## Public Feedback Wireframe
-![Public Feedback Wireframe](/public/images/Slide10.PNG)
+![Public Feedback Wireframe](/documentation/Slide10.PNG)
 
 ## Instructor Feedback Session Results Wireframe
-![Instructor Feedback Session Results Wireframe](/public/images/Slide11.PNG)
+![Instructor Feedback Session Results Wireframe](/documentation/Slide11.PNG)
 
 ### 5.2 Use Case Diagram
-![Use Case Diagram](/public/images/use_case_diagram.jpeg)
+![Use Case Diagram](/documentation/use_case_diagram.jpeg)
 
 ### 5.3 Class Diagram
-![Class Diagram](/public/images/FeedbackLoop_Class_Diagram.png)
+![Class Diagram](/documentation/FeedbackLoop_Class_Diagram.png)
 
 ### 5.4 Sequence Diagrams
 
 #### Student Adding a Review
-![Student Adding a Review](/public/images/FeedbackLoop_Sequence_Diagram_Add_Review.png)
+![Student Adding a Review](/documentation/FeedbackLoop_Sequence_Diagram_Add_Review.png)
 
 #### Instructor Creating a Feedback Session
-![Instructor Creating a Feedback Session Sequence Diagram](/public/images/Feedbacksession_Sequencediagram.jpeg)
+![Instructor Creating a Feedback Session Sequence Diagram](/documentation/Feedbacksession_Sequencediagram.jpeg)
 
 #### User Searching Instructors
-![User Searching Instructors Sequence Diagram](/public/images/SD_InstructorSearch.png)
+![User Searching Instructors Sequence Diagram](/documentation/SD_InstructorSearch.png)
 
 #### Instructor Add Class & Add Students
-![Instructor Add Class & Add Students Sequence Diagram](/public/images/addClassStudentSequenceDiagram.jpeg)
+![Instructor Add Class & Add Students Sequence Diagram](/documentation/addClassStudentSequenceDiagram.jpeg)
 
 ```
 FeedbackLoop by Null Entity  
