@@ -295,13 +295,48 @@ Admin users have the same functionality as instructor users with some additional
 
 ## 5. Diagrams
 
-### 5.1 Use Case Diagram
+### 5.1 Wireframes
+
+## Login Page Wireframe
+![Login Page Wireframe](/public/images/Slide1.png)
+
+## Admin Profile Wireframe
+![Admin Profile Wireframe](/public/images/Slide2.png)
+
+## Admin User Account Management Wireframe
+![Admin User Account Management Wireframe](/public/images/Slide3.png)
+
+## Instructor Profile Wireframe
+![Instructor Profile Wireframe](/public/images/Slide4.png)
+
+## Student Profile Page Wireframe
+![Student Profile Page Wireframe](/public/images/Slide5.png)
+
+## Instructor Dashboard Wireframe
+![Instructor Dashboard Wireframe](/public/images/Slide6.png)
+
+## Student Dashboard Wireframe
+![Student Dashboard Wireframe](/public/images/Slide7.png)
+
+## Instructor Class Details Wireframe
+![Instructor Class Details Wireframe](/public/images/Slide8.png)
+
+## Initiate Feedback Session Wireframe
+![Initiate Feedback Session Wireframe](/public/images/Slide9.png)
+
+## Public Feedback Wireframe
+![Public Feedback Wireframe](/public/images/Slide10.png)
+
+## Instructor Feedback Session Results Wireframe
+![Instructor Feedback Session Results Wireframe](/public/images/Slide11.png)
+
+### 5.2 Use Case Diagram
 ![Use Case Diagram](/public/images/use_case_diagram.jpeg)
 
-### 5.2 Class Diagram
+### 5.3 Class Diagram
 ![Class Diagram](/public/images/FeedbackLoop_Class_Diagram.png)
 
-### 5.3 Sequence Diagrams
+### 5.4 Sequence Diagrams
 
 #### Student Adding a Review
 ![Student Adding a Review](/public/images/FeedbackLoop_Sequence_Diagram_Add_Review.png)
