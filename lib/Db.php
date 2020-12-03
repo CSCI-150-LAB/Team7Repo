@@ -72,22 +72,10 @@ class Db {
 					throw new Exception(gettype($val) . ' cannot be used as a parameter in a query');
 			}
 		}
-
-		//FIXME: Bad bug that I didn't consider... '= NULL' is valid syntax when using the SET command
-		//Refactor code to allow the partial methods easier access to these helper methods
-		$sql = preg_replace_callback('/(?:(!?=|<>)\\s*)?([\'"]?):([a-z0-9_-]+):\\2/i', function($matches) use ($args) {
-			if (isset($args[$matches[3]])) {
-				return ltrim($matches[1] . ' ') . $args[$matches[3]];
-			}
-
-			return empty($matches[1])
-				? 'NULL'
-				: ($matches[1] == '='
-					? 'IS NULL'
-					: 'IS NOT NULL');
-		}, $sql);
-
+		
 		$sql = trim($sql);
+		$sql = self::insertSqlParams($sql, $args);
+
 		$result = $this->conn->query($sql);
 
         if ($result === true) {
@@ -176,5 +164,79 @@ class Db {
 		if ($this->trackingModels) {
 			$this->trackedModelsExistences[] = [&$exist, $futureValue];
 		}
+	}
+
+	private static function insertSqlParams($sql, $params) {
+		// Scan query for any set keywords
+		$lastNdx = 0;
+		$strLen = strlen($sql);
+		$result = '';
+		$currentToken = '';
+		$inSet = false;
+		
+		for ($i = 0; $i < $strLen; $i++) {
+			if (ctype_space($sql[$i])) {
+				if (strcasecmp($currentToken, 'SET') == 0) {
+					$result .= self::insertSqlParamsHelper(substr($sql, $lastNdx, $i - $lastNdx), $params, false);
+					$lastNdx = $i;
+					$inSet = true;
+				}
+				elseif (strcasecmp($currentToken, 'WHERE') == 0) {
+					$result .= self::insertSqlParamsHelper(substr($sql, $lastNdx, $i - $lastNdx), $params, $inSet);
+					$lastNdx = $i;
+					$inSet = false;
+				}
+
+				$currentToken = '';
+			}
+			elseif ($sql[$i] == '"' || $sql[$i] == "'") {
+				// Read past the string
+				$quoteChar = $sql[$i];
+				$i++;
+				$escaping = false;
+				while ($sql[$i] != $quoteChar || $escaping) {
+					$char = $sql[$i];
+					$i++;
+					if ($i == $strLen) {
+						throw new Exception('Bad SQL query');
+					}
+
+					if ($escaping) {
+						$escaping = false;
+					}
+					else {
+						if ($char == '\\') {
+							$escaping = true;
+						}
+					}
+				}
+				$i++;
+			}
+			else {
+				$currentToken .= $sql[$i];
+			}
+		}
+
+		// Grab last piece
+		$result .= self::insertSqlParamsHelper(substr($sql, $lastNdx), $params, $inSet);
+		return $result;
+	}
+
+	private static function insertSqlParamsHelper($sql, $params, $inSet) {
+		return preg_replace_callback('/(?:(!?=|<>)\\s*)?([\'"]?):([a-z0-9_-]+):\\2/i', function($matches) use ($params, $inSet) {
+			if (isset($params[$matches[3]])) {
+				return ltrim($matches[1] . ' ') . $params[$matches[3]];
+			}
+
+			if ($inSet) {
+				return ltrim($matches[1] . ' ') . 'NULL';
+			}
+
+			return empty($matches[1])
+				? 'NULL'
+				: ($matches[1] == '='
+					? 'IS NULL'
+					: 'IS NOT NULL');
+		}, $sql);
 	}
 }
