@@ -26,10 +26,10 @@ The database is a core part of the application. Information on user accounts -- 
 
 Example User Table:
 | **id** | **email**    | **preferred_title** | **first_name** | **last_name** | **password** | **activation** | **type**   | **updated_at** | **created_at** |
-|--------|--------------|---------------------|----------------|---------------|--------------|----------------|------------|----------------|----------------|
-| 1234   | jd@gmail.com |                     | Jane           | Doe           | t3st         | NULL           | student    | 2020-10-15     | 2020-9-15      |
-| 5678   | js@gmail.com | Dr.                 | John           | Smith         | p@ss         | NULL           | instructor | 2020-10-17     | 2020-9-30      |
-| 9101   | bs@gmail.com |                     | Bob            | Saget         | w0rd         | NULL           | admin      | 2020-10-20     | 2020-10-18     |
+|--------|--------------|---------------------|----------------|---------------|-------------------------|----------------|------------|----------------|----------------|
+| 1234   | jd@gmail.com |                     | Jane           | Doe           | 93c68d42c4e8107d6bd124c70c4bcfef         | NULL           | student    | 2020-10-15     | 2020-9-15      |
+| 5678   | js@gmail.com | Dr.                 | John           | Smith         | f9fa10ba956cacf91d7878861139efb9         | NULL           | instructor | 2020-10-17     | 2020-9-30      |
+| 9101   | bs@gmail.com |                     | Bob            | Saget         | 5d554bc5f3d2cd182cdd0952b1fb87ca         | NULL           | admin      | 2020-10-20     | 2020-10-18     |
 
 Example Student Profile Table:
 
