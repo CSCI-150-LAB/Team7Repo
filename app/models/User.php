@@ -32,6 +32,11 @@ class User extends Model {
 	public $password;
 
 	/**
+	 * @Column('password_salt')
+	 */
+	public $passwordSalt;
+
+	/**
 	 * @Column('activation')
 	 */
 	public $key;
