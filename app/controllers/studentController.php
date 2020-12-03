@@ -62,9 +62,27 @@ class studentController extends PermsController {
 		return $this->view(['user' => $user]);
 	}
 
-	public function DashboardAction($studentId = 1438) {
+	/**
+	 * @CurrentUserMustBeType('student')
+	 */
+	public function DashboardAction() {
+		$studentUser = User::getCurrentUser();
 
-		return $this->view();
+		$classes = InstructorClasses::query(
+			"
+			SELECT
+				ic.*
+			FROM
+				instructorclasses as ic
+			INNER JOIN classes as c ON
+				c.class_id = ic.class_id
+			WHERE
+				c.student_id = :0:
+			",
+			$studentUser->id
+		);
+
+		return $this->view(['user' => $studentUser, 'classes' => $classes]);
 
 	}
 	

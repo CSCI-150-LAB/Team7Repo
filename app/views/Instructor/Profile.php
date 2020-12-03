@@ -1,9 +1,10 @@
 <?php
+/** @var User $user */
 $this->scriptEnqueue('chart-js', 'https://cdn.jsdelivr.net/npm/chart.js@2.8.0');
 $currentUser = User::getCurrentUser();
 $profile = InstructorModel::getByKey($user->id);
 
-$this->pageTitle("{$profile->name} {$currentUser->lastName} - Profile");
+$this->pageTitle("{$user->preferredTitle} {$user->lastName} - Profile");
 ?>
 <div class="bg-blue p-5 text-white mb-3">
 	<h1 class="mb-0">Instructor Profile</h1>
@@ -19,7 +20,7 @@ $this->pageTitle("{$profile->name} {$currentUser->lastName} - Profile");
 		</div>
 		<div>
 			<!--Makes heading of professor's profile, with title if chosen-->
-			<h2><?= $profile->name != NULL ? $profile->name : '' ?> <?= $user->firstName." ".$user->lastName ?></h2>
+			<h2><?= $user->getFullName(true) ?></h2>
 			<h3 class="mb-2"><?= $profile->department ?><br></h3>
 			<div class="small text-truncate"><?= $user->email ?></div>
 		</div>

@@ -36,20 +36,29 @@ class InstructorController extends PermsController {
 				}
 			} //Check that all values are filled
 			if(!count($errors)) {
+				$editUser->preferredTitle = $instructorUserData['name'];
 				foreach ($instructorUserData as $key => $val) {
-					$profile->$key = $val;
+					if (property_exists($profile, $key)) {
+						$profile->$key = $val;
+					}
 				} //Sets profile values for user
 
-				if($profile->save()) {
+				/** @var Db */
+				$db = $this->get('Db');
+				$db->startTransaction();
+
+				if($editUser->save() && $profile->save()) {
+					$db->commitTransaction();
 					return $this->redirect($this->viewHelpers->baseUrl("/Instructor/Profile/{$profile->instructorid}"));
 				} //Redirects user to profile page
 				else {
+					$db->abortTransaction();
 					$errors[] = 'Failed to save the profile';
 				} //If errors, save error
 			}
 		}
 
-		return $this->view(['profile' => $profile, 'errors' => $errors]);
+		return $this->view(['instructor' => $editUser, 'profile' => $profile, 'errors' => $errors]);
 	} //If errors, return to edit profile page with errors
 
 	public function ProfileAction($userId = 0) {

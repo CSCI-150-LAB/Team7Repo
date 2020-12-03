@@ -25,11 +25,11 @@ The server acts as the middleman between the client and the database. A client's
 The database is a core part of the application. Information on user accounts -- logins, names, preferred learning styles -- are stored. Also in the database are tables on instructor classes, student enrollment, ratings/reviews of instructor performance, and feedback on conducted activities. This component interacts with the server to present and extract data to and from the client.
 
 Example User Table:
-| **id** | **email**    | **first_name** | **last_name** | **password** | **activation** | **type**   | **updated_at** | **created_at** |
-|--------|--------------|----------------|---------------|--------------|----------------|------------|----------------|----------------|
-| 1234   | jd@gmail.com | Jane           | Doe           | t3st         | NULL           | student    | 2020-10-15     | 2020-9-15      |
-| 5678   | js@gmail.com | John           | Smith         | p@ss         | NULL           | instructor | 2020-10-17     | 2020-9-30      |
-| 9101   | bs@gmail.com | Bob            | Saget         | w0rd         | NULL           | admin      | 2020-10-20     | 2020-10-18     |
+| **id** | **email**    | **preferred_title** | **first_name** | **last_name** | **password** | **activation** | **type**   | **updated_at** | **created_at** |
+|--------|--------------|---------------------|----------------|---------------|--------------|----------------|------------|----------------|----------------|
+| 1234   | jd@gmail.com |                     | Jane           | Doe           | t3st         | NULL           | student    | 2020-10-15     | 2020-9-15      |
+| 5678   | js@gmail.com | Dr.                 | John           | Smith         | p@ss         | NULL           | instructor | 2020-10-17     | 2020-9-30      |
+| 9101   | bs@gmail.com |                     | Bob            | Saget         | w0rd         | NULL           | admin      | 2020-10-20     | 2020-10-18     |
 
 Example Student Profile Table:
 
@@ -41,11 +41,11 @@ Example Student Profile Table:
 
 Example Instructor Profile Table:
 
-| **id** | **department** | **preferred_title** | **visual_style** | **auditory_style** | **read_write_style** | **kinesthetic_style** | **rating** |
-|--------|----------------|---------------------|------------------|--------------------|----------------------|-----------------------|------------|
-| 5678   | ECE            | Dr.                 | somewhat         | minimal            | primarily            | not at all            | 4.3        |
-| 6789   | CSCI           | Mrs.                | not at all       | primarily          | primarily            | somewhat              | 4.2        |
-| 1011   | CM             | Professor           | primarily        | somewhat           | somewhat             | not at all            | 2.5        |
+| **id** | **department** | **visual_style** | **auditory_style** | **read_write_style** | **kinesthetic_style** | **rating** |
+|--------|----------------|------------------|--------------------|----------------------|-----------------------|------------|
+| 5678   | ECE            | somewhat         | minimal            | primarily            | not at all            | 4.3        |
+| 6789   | CSCI           | not at all       | primarily          | primarily            | somewhat              | 4.2        |
+| 1011   | CM             | primarily        | somewhat           | somewhat             | not at all            | 2.5        |
 
 Example Instructor Classes Table:
 

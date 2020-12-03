@@ -4,10 +4,9 @@
 
 <?php
 $instructorInfo = $instructor->getProfileModel();
-$displayName = ltrim($instructorInfo->name . ' ' . $instructor->getFullName());
 ?>
 <div class="bg-blue p-5 text-white mb-3">
-	<h1 class="mb-0">Reviews for <?= $displayName ?></h1>
+	<h1 class="mb-0">Reviews for <?= $instructor->getFullName(true) ?></h1>
 </div>
 
 <div class="my-3">

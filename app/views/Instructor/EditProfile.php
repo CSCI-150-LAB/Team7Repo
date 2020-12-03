@@ -24,7 +24,7 @@
 			<!--Selection of user's preferred title, autoselects if previously chosen-->
 			<div class="form-check form-check-inline">
 				<input class="form-check-input" type="radio" id='name1' name = 'name' value = 'Dr.'
-					<?php   if($profile->name == 'Dr.') {
+					<?php   if($instructor->preferredTitle == 'Dr.') {
 						echo "checked = 'checked'";
 					} ?>
 			>
@@ -32,7 +32,7 @@
 			</div>
 			<div class="form-check form-check-inline">
 				<input class="form-check-input" type="radio" id='name2' name = 'name' value = 'Professor'
-					<?php   if($profile->name == 'Professor') {
+					<?php   if($instructor->preferredTitle == 'Professor') {
 						echo "checked = 'checked'";
 					} ?>
 			>
@@ -40,7 +40,7 @@
 			</div>
 			<div class="form-check form-check-inline">
 				<input class="form-check-input" type="radio" id='name3' name = 'name' value = 'Mr.'
-					<?php   if($profile->name == 'Mr.') {
+					<?php   if($instructor->preferredTitle == 'Mr.') {
 						echo "checked = 'checked'";
 					} ?>
 			>
@@ -48,7 +48,7 @@
 			</div>
 			<div class="form-check form-check-inline">
 				<input class="form-check-input" type="radio" id='name4' name = 'name' value = 'Mrs.'
-					<?php   if($profile->name == 'Mr2.') {
+					<?php   if($instructor->preferredTitle == 'Mr2.') {
 						echo "checked = 'checked'";
 					} ?>
 			>
@@ -56,7 +56,7 @@
 			</div>
 			<div class="form-check form-check-inline">
 				<input class="form-check-input" type="radio" id='name5' name = 'name' value = 'Ms.'
-					<?php   if($profile->name == 'Ms.') {
+					<?php   if($instructor->preferredTitle == 'Ms.') {
 						echo "checked = 'checked'";
 					} ?>
 			>

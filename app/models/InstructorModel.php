@@ -17,11 +17,6 @@ class InstructorModel extends Model {
 	public $department;
 
 	/**
-	 * @Column('preferred_title')
-	 */
-	public $name;
-
-	/**
 	 * @Column('visual_style')
 	 */
     public $visual;

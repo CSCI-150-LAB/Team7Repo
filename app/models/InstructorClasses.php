@@ -95,4 +95,13 @@ class InstructorClasses extends Model {
 		$classTime .= date('g:i A' ,$ftime);
 		return $classTime;
 	}
+
+	/**
+	 * Fetches the instructor user associated with this class
+	 *
+	 * @return User
+	 */
+	public function getInstructor() {
+		return User::getByKey($this->instructorid);
+	}
 }

@@ -23,7 +23,7 @@
 			?>
 			<div class="instructor-listing my-4 px-3 py-2 border tbl-background">
 				<div class="d-flex align-items-center justify-content-between">
-					<h3><a href="<?php echo $instructorUser->getProfileUrl() ?>"><?php echo $profile->name . ' ' . $instructorUser->getFullName() ?></a></h3>
+					<h3><a href="<?php echo $instructorUser->getProfileUrl() ?>"><?php echo $instructorUser->getFullName(true) ?></a></h3>
 					<p class="text-right">
 						<?php echo $instructorUser->email ?><br><?php echo $profile->department ?>
 					</p>
