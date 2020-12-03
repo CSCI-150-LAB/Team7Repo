@@ -7,7 +7,6 @@
     <table class="table table-bordered"> 
         <thead>
             <tr>
-                <th scope="col"> Account Type </th>
                 <th scope="col"> Full Name </th>
                 <th scope="col"> Email </th>
             </tr>
@@ -16,7 +15,6 @@
         <?php foreach($adminaccounts as $account):?>    
             <tr>   
             <?php if ($account->type == "admin") {?>                                                          
-                <td> <?php echo $account->type ?></td>
                 <td> <a href='<?php echo $this->baseUrl("/Admin/Profile/{$account->id}") ?>'><?php echo $account->getFullName()?></a></td>
                 <td> <?php echo $account->email ?> </td>  
             </tr>

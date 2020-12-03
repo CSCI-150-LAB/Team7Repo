@@ -86,6 +86,27 @@ class AdminController extends PermsController {
 		return $this->view(['adminaccounts' => $adminaccounts]); 
 	}
 
+	public function InstructorFeedbackAction() {
+		
+		$db = $this->get('Db');
+		/** @var array[] */
+		$feedback = $db->query( 
+			"
+			SELECT * FROM users
+			
+			"
+		);
+
+		
+		if ($feedback === false) {
+			die($db->getLastError());
+		}
+		/** @var User[] */
+		$feedback = array_map(['User', 'fromArray'], $feedback);
+		
+		return $this->view(['feedback' => $feedback]); 
+	
+	}
 	
 public function AddUserAction() {
 	$errors = [];

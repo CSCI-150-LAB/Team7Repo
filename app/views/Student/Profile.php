@@ -13,9 +13,10 @@ profile!
     echo "<a class = 'btn btn-secondary float-right' style='color: #ffffff;' href = '".$this->baseUrl("/Instructor/EditProfile/{$currentUser->id}")."'>Edit Profile</a><br><br>";
   } ?>
 
-    echo    "<h3 class = 'sprofile'>$user->email</h3><br>";
+<?php>
+    echo "<h3 class = 'sprofile'>$user->email</h3><br>";
            
-    echo    "<h3 class = 'sprofile'>Preferred Learning Style: $profile->learningStyle </h3><br>";
-    echo    "<h3 class = 'sprofile'>Major: $profile->studentMajor</h3>";
+    echo "<h3 class = 'sprofile'>Preferred Learning Style: $profile->learningStyle </h3><br>";
+    echo "<h3 class = 'sprofile'>Major: $profile->studentMajor</h3>";
             
 ?>

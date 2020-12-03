@@ -19,7 +19,41 @@ if($instructorInfo) {
 
 <?php $reviews = InstructorRatings::find("instructor_id = :0:", $instructor->id);?>
 
+
+<?php   if($currentUser->type != "admin") { //Allows user to edit profile if current profile is the user's profile 
+                for ($counter = count($reviews)-1; $counter >= 0; $counter--) { ?> 
+                    <div class = "card"> 
+                        <div class = "card-body"> 
+                            <?php echo $reviews[$counter]->printRating(); ?>
+                            <br>
+                        </div>
+                    </div>
+                    <br>
+       <?php }
+       } else { 
+                for ($counter = count($reviews)-1; $counter >= 0; $counter--) { ?>
+                <div class="row">
+                    <div class= col-sm>
+                        <div class = "card">
+                            <div class = "card-body">
+                                <?php echo $reviews[$counter]->printRating(); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class= col-sm>
+                        <div class = "card">
+                            <div class = "card-body">
+                                <button type="button" class="btn btn-secondary">Secondary</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+<?php}
+ } ?>
+
 <?php 
+/*
     for ($counter = count($reviews)-1; $counter >= 0; $counter--) { ?>
     <div class = "card">
         <div class = "card-body">
@@ -28,5 +62,4 @@ if($instructorInfo) {
         </div>
     </div>
     <br>
-<?php } ?>
-
+<?php } */?>
