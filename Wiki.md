@@ -260,11 +260,11 @@ Admin users have the same functionality as instructor users with some additional
     - Reasoning: To ensure accounts are not breached, passwords would need to be stored securely on the database (Authentication).
 
 2. NFR2: OS compatibility 
-    - Description: All features of the application should be accessible from any browser.
+    - Description: All features of the application should be accessible from any browser and on any operating system.
     - Reasoning: Students may have Windows or MacOS devices, so the application must run well on both platforms.
 
 3. NFR3: Screen Size compatibility
-    - Description: The display of the application needs to be versatile to adapt to screen sizes of all devices.
+    - Description: The display of the application needs to be versatile to adapt to screen sizes of devices such as monitors and laptops, smart tablets, and smart phones ranging from 4" to 17" displays.
     - Reasoning: Students may use their phones or their laptops to access this site, so various screen sizes should be compatible with the display.
     
 4. NFR4: User Role Preservation
