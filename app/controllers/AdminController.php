@@ -156,7 +156,8 @@ public function StartSessionAction() {
 	/** @var array[] */
 	$inclasses = $db->query( 
 		"
-		SELECT * FROM instructorclasses
+		SELECT class_id, class_title
+		FROM instructorclasses
 		
 		"
 	);
