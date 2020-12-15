@@ -33,7 +33,5 @@ Autoloader::init([
 		$di->addScoped('Db', function() {
 			return new Db($_ENV['dbhost'], $_ENV['dbuser'], $_ENV['dbpass'], $_ENV['dbname']);
 		});
-
-		define('HASH_PASSWORDS', false);
 	})
 	->start();

@@ -57,23 +57,11 @@ class Model extends AnnotatedClass {
 	 * @param mixed ...$args
 	 * @return static[]
 	 */
-	public static function find($query, ...$args) {
-		if (count($args) == 1 && is_array($args[0])) {
-			$args = $args[0];
-		}
+	public static function find($query = '', ...$args) {
 		$query = self::transformStringQuery($query);
 
 		$tableMeta = static::getTableMeta();
-		$db = DI::getDefault()->get('Db');
-		$result = $db->query("SELECT * FROM {$tableMeta['name']} WHERE {$query}", $args);
-
-		if ($result !== false) {
-			return array_map(function($row) {
-				return static::fromArray($row, true);
-			}, $result);
-		}
-
-		return false;
+		return static::query("SELECT * FROM {$tableMeta['name']} WHERE 1=1" . ($query ? " AND {$query}" : ''), ...$args);
 	}
 
 	/**
@@ -83,22 +71,63 @@ class Model extends AnnotatedClass {
 	 * @param mixed ...$args
 	 * @return static
 	 */
-	public static function findOne($query, ...$args) {
-		if (count($args) == 1 && is_array($args[0])) {
-			$args = $args[0];
-		}
-		$result = static::find("{$query} LIMIT 1", $args);
+	public static function findOne($query = '', ...$args) {
+		$result = static::find("{$query} LIMIT 1", ...$args);
 
-		if (is_bool($result)) {
+		if ($result === false) {
 			return $result;
 		}
 
-		return isset($result[0])
-			? $result[0]
-			: null;
+		return reset($result) ?: null;
+	}
+
+	/**
+	 * Returns the count of records that match constraints
+	 *
+	 * @param string $query
+	 * @param mixed ...$args
+	 * @return int
+	 */
+	public static function count($query = '', ...$args) {
+		$query = self::transformStringQuery($query);
+
+		$tableMeta = static::getTableMeta();
+		$db = DI::getDefault()->get('Db');
+		$result = $db->query("SELECT COUNT(*) as row_count FROM {$tableMeta['name']} WHERE 1=1" . ($query ? " AND {$query}" : ''), ...$args);
+
+		if ($result === false) {
+			return false;
+		}
+
+		return intval($result[0]['row_count']);
+	}
+
+	/**
+	 * Performs a complete MySQL query and casts the results to this model type
+	 *
+	 * @param string $query
+	 * @param mixed ...$args
+	 * @return static[]
+	 */
+	public static function query($query, ...$args) {
+		$db = DI::getDefault()->get('Db');
+
+		$result = $db->query($query, ...$args);
+
+		if ($result === false) {
+			return false;
+		}
+
+		return array_map(function($record) {
+			return static::fromArray($record, true);
+		}, $result);
 	}
 
 	private static function transformStringQuery($query) {
+		if (!$query) {
+			return $query;
+		}
+
 		$tableMeta = static::getTableMeta();
 
 		$patterns = [];
@@ -162,6 +191,7 @@ class Model extends AnnotatedClass {
 
 			$db = DI::getDefault()->get('Db');
 			$result = $db->query("INSERT INTO {$tableMeta['name']} ({$columns}) VALUES ({$values})", $queryArgs);
+			
 			if ($result !== false) {
 				if (!is_bool($result)) {
 					if ($tableMeta['autoIncrement']) {
@@ -290,7 +320,7 @@ class Model extends AnnotatedClass {
 	 *
 	 * @return array
 	 */
-	public static function getTableMeta() {
+	protected static function getTableMeta() {
 		if (!isset(self::$tableMeta[static::class])) {
 			$meta = [
 				'name' => static::class,

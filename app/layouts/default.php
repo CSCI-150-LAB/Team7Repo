@@ -1,11 +1,26 @@
 <html>
 
 <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
 	<title><?php echo $this->pageTitle('FeedbackLoop', true) ?></title>
 	<?php
 	$this->styleEnqueue('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css');
 	$this->styleEnqueue('style', $this->publicUrl('css/style.css?t=' . filemtime(APP_ROOT . '/public/css/style.css')), ['bootstrap']);
 
+	$this->scriptEnqueue(
+		'docReady',
+		"
+		function docReady(fn) {
+			if (document.readyState != 'loading'){
+				fn();
+			} else {
+				document.addEventListener('DOMContentLoaded', fn);
+			}
+		}
+		"
+	);
 	$this->scriptRegister('jquery-cdn', 'https://code.jquery.com/jquery-3.5.1.min.js');
 	$this->scriptRegister('jquery', 'window.jQuery || document.write(\'<script src="' . $this->publicUrl('js/jquery-3.5.1.min.js') . '"><\/script>\')', ['jquery-cdn']);
 	$this->scriptRegister('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js', ['jquery']);
@@ -31,16 +46,15 @@
 <body class="<?php echo $this->bodyClass(IS_LOCAL ? 'dev' : '') ?>">
     <nav class="navbar navbar-expand-lg navbar-dark bg-red">
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+	<div class="navbar-brand"> <img src="<?php echo $this->publicUrl('images/fl.png')?>" width="40" height="40"></div>
+
+        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li>
-                <img src="<?php echo $this->publicUrl('images/fl.png')?>" width="40" height="40">
-            </li>
             <?php if ($currentUser) : ?>
                 <?php if (!($currentUser->isAdmin())) : ?>
             <li class="nav-item">
@@ -89,6 +103,14 @@
     </nav>
 
     <div class="container my-3">
+		<?php foreach (SimpleAlert::getAndClearAlerts() as $alert) : ?>
+			<div class="alert alert-<?php echo $alert['type'] ?>" role="alert">
+				<?php echo $alert['html'] ? $alert['message'] : $this->escapeHtml($alert['message']) ?>
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		<?php endforeach; ?>
         <?php echo $this->getContents() ?>
     </div>
 

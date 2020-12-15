@@ -17,11 +17,6 @@ class InstructorModel extends Model {
 	public $department;
 
 	/**
-	 * @Column('preferred_title')
-	 */
-	public $name;
-
-	/**
 	 * @Column('visual_style')
 	 */
     public $visual;
@@ -44,7 +39,7 @@ class InstructorModel extends Model {
 	/**
 	 * @Column('rating')
 	 */
-	public $rating;
+	public $rating = 0;
 
 	public function setUserId($userId) {
 		$this->instructorid = $userId;

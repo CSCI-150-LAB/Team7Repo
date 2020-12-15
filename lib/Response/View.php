@@ -4,10 +4,8 @@ class Response_View implements IResponse {
     private $html;
 
     public function __construct($view, $layout, $payload = []) {
-        $viewFile = APP_ROOT . '/app/views/' . DI::getDefault()->get('Request')->getControllerName() . '/' . $view . '.php';
-        
         $views = [
-            $viewFile => $payload,
+            $view => $payload,
         ];
 
         if ($layout) {

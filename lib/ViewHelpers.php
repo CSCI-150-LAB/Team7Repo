@@ -181,10 +181,8 @@ class ViewHelpers implements IViewHelpers {
 	 * @return string
 	 */
     public function partial($view, $payload = []) {
-        $viewFile = APP_ROOT . '/app/views/' . DI::getDefault()->get('Request')->getControllerName() . '/' . $view . '.php';
-        
         $views = [
-            $viewFile => $payload
+            $view => $payload
         ];
 
         return DI::getDefault()->get('ViewRenderer')->render($views);
@@ -214,7 +212,7 @@ class ViewHelpers implements IViewHelpers {
                 array_unshift($this->pageTitleParts, $titlePart);
             }
             else {
-                $this->pageTitleSeparator[] = $titlePart;
+                $this->pageTitleParts[] = $titlePart;
             }
         }
 

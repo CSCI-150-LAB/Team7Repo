@@ -3,12 +3,30 @@
 	border-color: #13284c !important;
 }
 
+.bg-blue {
+	background-color: #13284c;
+}
+
+.btn-cardinalred {
+	background-color: #c41230;
+	border-color: #c41230;
+	color: #ffffff;	
+}
+
+.btn-cardinalred:hover {
+	background-color: #ced1d4;
+	border-color: #ced1d4;
+}
 .bg-red {
 	background-color: $red;
 }
 
 .bg-dark-blue {
 	background-color: $darkBlue;
+}
+
+.tbl-background {
+	background-color: #ffffff;
 }
 
 body.dev:after {
@@ -51,13 +69,19 @@ body{
 	@media(min-width: $md){	
 		font-size: size(18);
 	}
+
+	background-image: url(../images/blue-paw-print-background.png);
+	background-size: 37%;
+	background-position: bottom right;
+	background-repeat: no-repeat;  	
 }
+
 
 a {
 	color: $blue;
     transition: color 250ms;
     
-	&:visited,
+	&:active,
 	&:focus,
 	&:hover {
 		color: darken($blue, 10);
@@ -65,7 +89,8 @@ a {
 }
 
 h1,h2,h3,h4,h5,h6 {
-	font-weight: 700;
+	font-weight: 400;
+	
 	line-height: 1.2;
 	margin-bottom: size(30)
 }
@@ -74,15 +99,19 @@ p {
 	margin-bottom: size(30);
 }
 
+small {
+	font-weight: bold;
+}
+
 h1 {
 	@media(min-width: $md){
-		font-size: size(40);
+		font-size: size(20);
 	}
 	@media(min-width: $lg){
-		font-size: size(50);
+		font-size: size(20);
 	}
 	@media(min-width: $xl){
-		font-size: size(60);
+		font-size: size(40);
 	}
 }
 
@@ -94,7 +123,7 @@ h2 {
 		font-size: size(40);
 	}
 	@media(min-width: $xl){
-		font-size: size(50);
+		font-size: size(30);
 	}
 }
 
@@ -106,7 +135,7 @@ h3 {
 		font-size: size(35);
 	}
 	@media(min-width: $xl){
-		font-size: size(40);
+		font-size: size(20);
 	}
 }
 
@@ -130,7 +159,7 @@ h5 {
 }
 
 h6 {
-	font-size: size(15);
+	font-size: size(20);
 }
 
 form {
@@ -146,4 +175,18 @@ form {
 			display: block;
 		}
 	}
+}
+
+.preload-area {
+	position: fixed;
+	display: block;
+	overflow: hidden;
+	width: 1px;
+	height: 1px;
+	left: -9999px;
+	top: -9999px;
+}
+
+.transition-250 {
+	transition: all 250ms;
 }

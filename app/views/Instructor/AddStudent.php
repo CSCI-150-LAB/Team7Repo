@@ -1,6 +1,9 @@
+<?php
+	$this->pageTitle("Add Student");
 
-<?php $class = [];
-	$class = InstructorClasses::find("classid =:0:", $classid); ?>
+	$class = [];
+	$class = InstructorClasses::find("classid =:0:", $classid);
+?>
 <h1>Add a New Student to <?php echo $class[0]->class ?></h1>
 <form method = 'POST'>
     <div class = 'form-group'>

@@ -1,3 +1,7 @@
+<?php
+	$this->pageTitle('Forgot Password');
+?>
+
 <main>
 	<div class="container">
 		<div class="row">

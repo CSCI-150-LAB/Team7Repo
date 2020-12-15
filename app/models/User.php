@@ -15,6 +15,11 @@ class User extends Model {
 	public $email;
 
 	/**
+	 * @Column('preferred_title')
+	 */
+	public $preferredTitle;
+
+	/**
 	 * @Column('first_name')
 	 */
 	public $firstName;
@@ -25,6 +30,11 @@ class User extends Model {
 	public $lastName;
 
 	public $password;
+
+	/**
+	 * @Column('password_salt')
+	 */
+	public $passwordSalt;
 
 	/**
 	 * @Column('activation')
@@ -48,8 +58,8 @@ class User extends Model {
 	 *
 	 * @return string
 	 */
-	public function getFullName() {
-		return trim($this->firstName . ' ' . $this->lastName);
+	public function getFullName($withTitle = false) {
+		return trim(($withTitle ? $this->preferredTitle : '') . ' ' . $this->firstName . ' ' . $this->lastName);
 	}
 
 	/**

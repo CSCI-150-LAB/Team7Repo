@@ -28,29 +28,53 @@ class Db {
 	 * @return mixed
 	 */
     public function query($sql, ...$args) {
-		if (count($args) == 1 && is_array($args[0])) {
-			$args = $args[0];
-		}
+		$numericNdx = 0;
+		$args = array_reduce($args, function($carry, $item) use (&$numericNdx) {
+			if (is_array($item)) {
+				foreach ($item as $key => $val) {
+					if (is_numeric($key)) {
+						$carry[$numericNdx++] = $val;
+					}
+					else {
+						$carry[$key] = $val;
+					}
+				}
+			}
+			else {
+				$carry[$numericNdx++] = $item;
+			}
+
+			return $carry;
+		}, []);
 
 		foreach ($args as $key => $val) {
-			if (is_string($val)) {
-				$args[$key] = "'" . $this->conn->real_escape_string($val) . "'";
+			switch (gettype($val)) {
+				case 'int':
+				case 'integer':
+				case 'double':
+				case 'NULL':
+					continue 2;	// These are fine as is
+				case 'boolean':
+					$args[$key] = $val ? 1 : 0;
+					break;
+				case 'object':
+					if (method_exists($val, '__toString')) {
+						$val = $val->__toString();
+					}
+					else {
+						throw new Exception('Object cannot be used as a parameter in a query');
+					}
+					// Passthru intended
+				case 'string':
+					$args[$key] = "'" . $this->conn->real_escape_string($val) . "'";
+					break;
+				default:
+					throw new Exception(gettype($val) . ' cannot be used as a parameter in a query');
 			}
 		}
-
-		$sql = preg_replace_callback('/(?:(!?=|<>)\\s*)?([\'"]?):([a-z0-9_-]+):\\2/i', function($matches) use ($args) {
-			if (isset($args[$matches[3]])) {
-				return ltrim($matches[1] . ' ') . $args[$matches[3]];
-			}
-
-			return empty($matches[1])
-				? 'NULL'
-				: ($matches[1] == '='
-					? 'IS NULL'
-					: 'IS NOT NULL');
-		}, $sql);
-
+		
 		$sql = trim($sql);
+		$sql = self::insertSqlParams($sql, $args);
 
 		$result = $this->conn->query($sql);
 
@@ -101,7 +125,7 @@ class Db {
 	public function abortTransaction() {
 		$this->conn->rollback();
 		$this->conn->autocommit(true);
-		$this->trackedCallbacks = [];
+		$this->trackedModelsExistences = [];
 		$this->trackingModels = false;
 	}
 
@@ -113,10 +137,10 @@ class Db {
 	public function commitTransaction() {
 		$this->conn->commit();
 		$this->conn->autocommit(true);
-		foreach ($this->trackedCallbacks as $existenc) {
+		foreach ($this->trackedModelsExistences as $existenc) {
 			$existenc[0] = $existenc[1];
 		}
-		$this->trackedCallbacks = [];
+		$this->trackedModelsExistences = [];
 		$this->trackingModels = false;
 	}
 
@@ -140,5 +164,79 @@ class Db {
 		if ($this->trackingModels) {
 			$this->trackedModelsExistences[] = [&$exist, $futureValue];
 		}
+	}
+
+	private static function insertSqlParams($sql, $params) {
+		// Scan query for any set keywords
+		$lastNdx = 0;
+		$strLen = strlen($sql);
+		$result = '';
+		$currentToken = '';
+		$inSet = false;
+		
+		for ($i = 0; $i < $strLen; $i++) {
+			if (ctype_space($sql[$i])) {
+				if (strcasecmp($currentToken, 'SET') == 0) {
+					$result .= self::insertSqlParamsHelper(substr($sql, $lastNdx, $i - $lastNdx), $params, false);
+					$lastNdx = $i;
+					$inSet = true;
+				}
+				elseif (strcasecmp($currentToken, 'WHERE') == 0) {
+					$result .= self::insertSqlParamsHelper(substr($sql, $lastNdx, $i - $lastNdx), $params, $inSet);
+					$lastNdx = $i;
+					$inSet = false;
+				}
+
+				$currentToken = '';
+			}
+			elseif ($sql[$i] == '"' || $sql[$i] == "'") {
+				// Read past the string
+				$quoteChar = $sql[$i];
+				$i++;
+				$escaping = false;
+				while ($sql[$i] != $quoteChar || $escaping) {
+					$char = $sql[$i];
+					$i++;
+					if ($i == $strLen) {
+						throw new Exception('Bad SQL query');
+					}
+
+					if ($escaping) {
+						$escaping = false;
+					}
+					else {
+						if ($char == '\\') {
+							$escaping = true;
+						}
+					}
+				}
+				$i++;
+			}
+			else {
+				$currentToken .= $sql[$i];
+			}
+		}
+
+		// Grab last piece
+		$result .= self::insertSqlParamsHelper(substr($sql, $lastNdx), $params, $inSet);
+		return $result;
+	}
+
+	private static function insertSqlParamsHelper($sql, $params, $inSet) {
+		return preg_replace_callback('/(?:(!?=|<>)\\s*)?([\'"]?):([a-z0-9_-]+):\\2/i', function($matches) use ($params, $inSet) {
+			if (isset($params[$matches[3]])) {
+				return ltrim($matches[1] . ' ') . $params[$matches[3]];
+			}
+
+			if ($inSet) {
+				return ltrim($matches[1] . ' ') . 'NULL';
+			}
+
+			return empty($matches[1])
+				? 'NULL'
+				: ($matches[1] == '='
+					? 'IS NULL'
+					: 'IS NOT NULL');
+		}, $sql);
 	}
 }

@@ -8,14 +8,11 @@ class UserController extends PermsController {
 		$errors = [];
 		
 		if ($this->request->isPost()) {
-			//Searches for user email and password from database 
-			$password = $_POST['password'];
-			if (HASH_PASSWORDS) {
-				$password = hash('sha256', $password);
-			}
-			$user = User::findOne('email = :0: AND password = :1:', $_POST['email'], $password);
+			//Searches for user email and password from database
+			$user = User::findOne('email = :0:', $_POST['email']);
+			$hashedPassword = hash('sha256', $_POST['password'] . $user->passwordSalt);
 
-			if ($user) { //Logs in user 
+			if ($hashedPassword == $user->password) { //Logs in user 
 				User::loginUser($user);
 				return $this->redirect($user->getProfileUrl());
 			}
@@ -59,9 +56,8 @@ class UserController extends PermsController {
 
 			if (!count($errors)) {
 				$userData['createdAt'] = date('Y-m-d H:i:s');
-				if (HASH_PASSWORDS) {
-					$userData['password'] = hash('sha256', $userData['password']);
-				}
+				$userData['passwordSalt'] = hash('sha256', rand());
+				$userData['password'] = hash('sha256', $userData['password'] . $userData['passwordSalt']);
 				$user = User::fromArray($userData);
 
 				if ($user->save()) {
@@ -163,10 +159,7 @@ class UserController extends PermsController {
 					}
 
 					if (!count($errors)) {
-						if (HASH_PASSWORDS) {
-							$userData['pass'] = hash('sha256', $userData['pass']);
-						}
-						$user->password = $userData['pass'];
+						$user->password = hash('sha256', $userData['pass'] .  $user->passwordSalt);
 						$user->key = null;
 						
 						if ($user->save()) {

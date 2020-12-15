@@ -5,7 +5,8 @@
 	padding: size(16) size(9);
 	right: 0;
     transition: background-color 250ms;
-    background-color: $dark;
+	background-color: $dark;
+
     
 	&:hover {
 		background-color: darken($dark, 10);
@@ -30,6 +31,7 @@
 	.icon-bar {
 		position: relative;
 		background-color: $light;
+		box-shadow: 1px 3px 5px 1px rgba(0,0,0,.1);
 		width: 32px;
 		height: 3px;
 		opacity: 1;

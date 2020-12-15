@@ -1,9 +1,21 @@
 .navbar{
-	padding:24px;
+	padding:20px;
+	box-shadow: 0px 1px 8px #999;
 }
 
-.nav-link {
-	color: #fff !important;
+.navbar-dark {
+	.navbar-nav {
+		.nav-link {
+			color: #fff;
+		}
+	}
+}
+
+
+.user-login-logout {
+	.nav-link {
+		color: #fff !important;
+	}
 }
 
 .current-user-dropdown {

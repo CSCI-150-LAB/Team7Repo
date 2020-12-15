@@ -1,6 +1,10 @@
 body.user-c.login-a {
-	background-image: linear-gradient(#fff,#d0d0da,#13284c);
+	background-image: url(../images/fslibrary.jpg);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;  	
 }
+
 
 i.fa-star.fas {
 	color:#FED000;
@@ -24,5 +28,50 @@ i.fa-star.fas {
 		left: var(--partial);
 		right: 0;
 		bottom: 0;
+	}
+}
+
+.rating-field {
+	display: inline-block;
+
+	.fa-star {
+		cursor: pointer;
+	}
+
+	@for $i from 1 through 5 {
+		&.score-#{$i} .score-#{$i} {
+			font-weight: 900;
+			color: #FED000;
+		}
+	}
+}
+
+form.feedback-response {
+	label {
+		.required {
+			&:after {
+				color: red;
+				content: '*';
+			}
+		}
+	}
+
+	.rating-field-container.is-invalid {
+		.invalid-feedback {
+			display: block;
+		}
+	}
+}
+
+.aggregate-results {
+	.percent {
+		display: inline-block;
+		width: 50px;
+		font-weight: bold;
+		text-align: right;
+
+		&:after {
+			content: '%';
+		}
 	}
 }

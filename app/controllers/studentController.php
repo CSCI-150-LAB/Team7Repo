@@ -18,7 +18,15 @@ class studentController extends PermsController {
 		if($this->request->isPost()) {
 			$fields = [
                 'studentMajor' => 'major',
-				'learningStyle' => 'learningStyle'
+				'learningStyle' => 'learningStyle',
+				'visual' => 'visual',
+				'audio' => 'audio',
+				'kinesthetic' => 'kinesthetic',
+				'reading_writing' => 'readingwriting',
+				'visual_tool' => 'visual-tools',
+				'audio_tool' => 'audio-tools',
+				'kinesthetic_tool' => 'kinesthetic-tools',
+				'read_write_tool' => 'rw-tools'
 			]; //Create an array of student information
 
             $studentData = [];
@@ -54,9 +62,27 @@ class studentController extends PermsController {
 		return $this->view(['user' => $user]);
 	}
 
-	public function DashboardAction($studentId = 1438) {
+	/**
+	 * @CurrentUserMustBeType('student')
+	 */
+	public function DashboardAction() {
+		$studentUser = User::getCurrentUser();
 
-		return $this->view();
+		$classes = InstructorClasses::query(
+			"
+			SELECT
+				ic.*
+			FROM
+				instructorclasses as ic
+			INNER JOIN classes as c ON
+				c.class_id = ic.class_id
+			WHERE
+				c.student_id = :0:
+			",
+			$studentUser->id
+		);
+
+		return $this->view(['user' => $studentUser, 'classes' => $classes]);
 
 	}
 	
@@ -161,6 +187,17 @@ class studentController extends PermsController {
 			}
 		}
 		return $this->view(['errors' => $errors, 'instructorId' =>$instructorId]);
+	}
+
+	/**
+	 * @CurrentUserMustBeType('student')
+	 */
+	public function AllResponsesAction() {
+		$currentUser = User::getCurrentUser();
+		//TODO: Add paging... this could get big over time
+		$myResponses = FeedbackResponse::find('student_id = :0:', $currentUser->id) ?? [];
+
+		return $this->view(compact('myResponses'));
 	}
 
 }

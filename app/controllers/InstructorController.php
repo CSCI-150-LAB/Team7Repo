@@ -14,6 +14,7 @@ class InstructorController extends PermsController {
 		 */
 		$profile = $editUser->getProfileModel();
 
+		$errors = [];
 		if($this->request->isPost()) {
 			//If the page was directed by a POST form
 			$fields = [
@@ -26,7 +27,6 @@ class InstructorController extends PermsController {
 			]; //Create an array of profile information
 
             $instructorUserData = [];
-            $errors = [];
 			foreach($fields as $prop => $postField) {
 				if(empty($_POST[$postField])) {
 					$errors[] = "{$postField} is required";
@@ -36,20 +36,29 @@ class InstructorController extends PermsController {
 				}
 			} //Check that all values are filled
 			if(!count($errors)) {
+				$editUser->preferredTitle = $instructorUserData['name'];
 				foreach ($instructorUserData as $key => $val) {
-					$profile->$key = $val;
+					if (property_exists($profile, $key)) {
+						$profile->$key = $val;
+					}
 				} //Sets profile values for user
 
-				if($profile->save()) {
+				/** @var Db */
+				$db = $this->get('Db');
+				$db->startTransaction();
+
+				if($editUser->save() && $profile->save()) {
+					$db->commitTransaction();
 					return $this->redirect($this->viewHelpers->baseUrl("/Instructor/Profile/{$profile->instructorid}"));
 				} //Redirects user to profile page
 				else {
+					$db->abortTransaction();
 					$errors[] = 'Failed to save the profile';
 				} //If errors, save error
 			}
 		}
 
-		return $this->view(['profile' => $profile]);
+		return $this->view(['instructor' => $editUser, 'profile' => $profile, 'errors' => $errors]);
 	} //If errors, return to edit profile page with errors
 
 	public function ProfileAction($userId = 0) {
@@ -123,6 +132,12 @@ class InstructorController extends PermsController {
 
 	public function ViewClassAction($classid = 0) {
 		$class = InstructorClasses::getByKey($classid);
+		$currentUser = User::getCurrentUser();
+
+		if (!$class || ($currentUser->type != 'admin' && $class->instructorid != $currentUser->id)) {
+			return $this->redirect($this->viewHelpers->baseUrl());
+		}
+
 		return $this->view(['class' => $class]);
 	} //Send to class page of given class id
 
@@ -130,6 +145,7 @@ class InstructorController extends PermsController {
 		if($classid == 0) {
 			return $this->redirect($this->viewHelpers->baseUrl());
 		}
+
 		if($this->request->isPost()) {
 			//If the page was directed by a POST form
 			$fields = [
@@ -230,11 +246,9 @@ class InstructorController extends PermsController {
 		$results = [];
 
 		if ($search !== '') {
-			/** @var Db */
-			$db = $this->get('Db');
 			$searchQuery = str_replace('%', '%%', $search);
 
-			$results = $db->query(
+			$results = User::query(
 				"
 				SELECT
 				(
@@ -273,8 +287,6 @@ class InstructorController extends PermsController {
 				"%{$searchQuery}%",
 				max(0, ($page - 1)) * 10
 			);
-
-			$results = array_map(['User', 'fromArray'], $results);
 		}
 
 		return $this->view(compact('search', 'results'));

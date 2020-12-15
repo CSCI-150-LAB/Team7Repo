@@ -25,11 +25,11 @@ The server acts as the middleman between the client and the database. A client's
 The database is a core part of the application. Information on user accounts -- logins, names, preferred learning styles -- are stored. Also in the database are tables on instructor classes, student enrollment, ratings/reviews of instructor performance, and feedback on conducted activities. This component interacts with the server to present and extract data to and from the client.
 
 Example User Table:
-| **id** | **email**    | **first_name** | **last_name** | **password** | **activation** | **type**   | **updated_at** | **created_at** |
-|--------|--------------|----------------|---------------|--------------|----------------|------------|----------------|----------------|
-| 1234   | jd@gmail.com | Jane           | Doe           | t3st         | NULL           | student    | 2020-10-15     | 2020-9-15      |
-| 5678   | js@gmail.com | John           | Smith         | p@ss         | NULL           | instructor | 2020-10-17     | 2020-9-30      |
-| 9101   | bs@gmail.com | Bob            | Saget         | w0rd         | NULL           | admin      | 2020-10-20     | 2020-10-18     |
+| **id** | **email**    | **preferred_title** | **first_name** | **last_name** | **password**                     | **password_salt**                | **activation** | **type**   | **updated_at** | **created_at** |
+|--------|--------------|---------------------|----------------|---------------|----------------------------------|----------------------------------|----------------|------------|----------------|----------------|
+| 1234   | jd@gmail.com |                     | Jane           | Doe           | 93c68d42c4e8107d6bd124c70c4bcfef | a034af1acfa5b265816763fc37c74575 | NULL           | student    | 2020-10-15     | 2020-9-15      |
+| 5678   | js@gmail.com | Dr.                 | John           | Smith         | f9fa10ba956cacf91d7878861139efb9 | 166b8207d1557d6ee1f32ca86de15bf9 | NULL           | instructor | 2020-10-17     | 2020-9-30      |
+| 9101   | bs@gmail.com |                     | Bob            | Saget         | 5d554bc5f3d2cd182cdd0952b1fb87ca | 9cd70b858c3b1b128356511a805f8e88 | NULL           | admin      | 2020-10-20     | 2020-10-18     |
 
 Example Student Profile Table:
 
@@ -41,11 +41,11 @@ Example Student Profile Table:
 
 Example Instructor Profile Table:
 
-| **id** | **department** | **preferred_title** | **visual_style** | **auditory_style** | **read_write_style** | **kinesthetic_style** | **rating** |
-|--------|----------------|---------------------|------------------|--------------------|----------------------|-----------------------|------------|
-| 5678   | ECE            | Dr.                 | somewhat         | minimal            | primarily            | not at all            | 4.3        |
-| 6789   | CSCI           | Mrs.                | not at all       | primarily          | primarily            | somewhat              | 4.2        |
-| 1011   | CM             | Professor           | primarily        | somewhat           | somewhat             | not at all            | 2.5        |
+| **id** | **department** | **visual_style** | **auditory_style** | **read_write_style** | **kinesthetic_style** | **rating** |
+|--------|----------------|------------------|--------------------|----------------------|-----------------------|------------|
+| 5678   | ECE            | somewhat         | minimal            | primarily            | not at all            | 4.3        |
+| 6789   | CSCI           | not at all       | primarily          | primarily            | somewhat              | 4.2        |
+| 1011   | CM             | primarily        | somewhat           | somewhat             | not at all            | 2.5        |
 
 Example Instructor Classes Table:
 
@@ -65,12 +65,43 @@ Example Classes Table:
 
 Example Instructor Ratings Table:
 
-
 | **rating_id** | **rating** | **recommendation**                                                                                                             | **anon** | **authord_id** | **instructor_id** | **take_again** |  **homework** |  **attendance_required** |  **grade** |
 |---------------|------------|--------------------------------------------------------------------------------------------------------------------------------|----------|----------------|-------------------|-------------|-------------|-------------|-------------|
 | 1             | 4          | Wonderful at explaining the course material. The homework is fairly reflective of the exam content.                            | yes      | 0              | 6789              |    Yes       |    Yes       |    No       |    A       |
 | 2             | 5          | Hard professor because of weekly quizzes but if you study properly and attend office hours, you will be able to ace the class. | no       | 1234           | 5678              |    N/A       |    No       |    No       |    B       |
 | 3             | 2          | Not very helpful when answering questions in class.                                                                            | yes      | 0              | 1011              |    No        |    Yes       |    Yes       |    N/A      |
+
+Example Feedback Sessions Table:
+
+| **id** | **class_id** | **title**              | **start_time**      | **end_time**        | **created_on**      |
+|--------|--------------|------------------------|---------------------|---------------------|---------------------|
+| 1      | 1            | Semester Rating        | 2020-12-07 00:00:00 | 2020-12-18 23:59:00 | 2020-11-17 15:02:24 |
+| 2      | 3            | Feelings towards class | 2020-11-24 14:00:00 | 2020-11-24 14:30:00 | 2020-11-24 9:34:06  |
+| 3      | 1            | Final Review           | 2020-12-08 14:00:00 | 2020-13-08 14:55:00 | 2020-11-24 10:07:34 |
+
+Example Feedback Session Fields Table:
+
+| **id** | **feedback_session_id** | **field_type** | **label**                                     | **options**  | **optional** |
+|--------|-------------------------|----------------|-----------------------------------------------|--------------|--------------|
+| 1      | 1                       | RATING         | How am I as a professor?                      | NULL         | 1            |
+| 2      | 2                       | RADIO_GROUP    | Are you enjoying the class?                   | ["Yes","No"] | 1            |
+| 3      | 2                       | LONG_TEXT      | Is there any feedback you would like to give? | NULL         | 0            |
+
+Example Feedback Responses Table:
+
+| **id** | **feedback_session_id** | **student_id** | **created_on**      |
+|--------|-------------------------|----------------|---------------------|
+| 1      | 2                       | 1234           | 2020-11-24 14:13:41 |
+| 2      | 1                       | 1234           | 2020-12-10 13:27:02 |
+| 3      | 1                       | 8888           | 2020-12-18 17:15:57 |
+
+Example Feedback Response Fields Table:
+
+| **id** | **feedback_response_id** | **feedback_session_field_id** | **response**                      |
+|--------|--------------------------|-------------------------------|-----------------------------------|
+| 1      | 1                        | 2                             | "Yes"                             |
+| 2      | 1                        | 3                             | Overall, the class is going well. |
+| 3      | 2                        | 1                             | 4                                 |
 
 
 ### 2.2 Users
@@ -198,7 +229,7 @@ Admin users have the same functionality as instructor users with some additional
     - Reasoning: So users can view information including classes and ratings on any professor they are taking, are going to take, or leave feedback for professors they have already taken.
     - Dependencies: FR5, FR9
 14. FR14: Instructors can initiate a Feedback Session
-    - Description: A logged in instructor on a class page can set a time and date for a feedback session and when it will end along with the type of question (multiple choice, short answer, etc.) and the question itself.
+    - Description: A logged in instructor on a class page can set a time and date for a feedback session and when it will end along with the types of questions (multiple choice, short answer, etc.) and the questions themselves.
     - Reasoning: So that instructors can determine when and what specific feedback questions to ask students to improve their teaching.
     - Dependencies: FR9
 15. FR15: Students can give Feedback in Feedback Session
@@ -226,25 +257,19 @@ Admin users have the same functionality as instructor users with some additional
 
 1. NFR1: Account Security
     - Description: Passwords for all user accounts will be hashed.
-    - Reasoning: To ensure accounts are not breached, passwords would need to be stored securely on the database.
+    - Reasoning: To ensure accounts are not breached, passwords would need to be stored securely on the database (Authentication).
 
-2. NFR2: UI Responsiveness
-    - Description: The UI of the application should be prompt, taking no longer than 0.5 seconds to carry out an action.
-    - Reasoning: For optimal interaction with the application, the UI must be responsive.
-
-3. NFR3: OS compatibility 
-    - Description: All features of the application should be accessible from any browser.
+2. NFR2: OS compatibility 
+    - Description: All features of the application should be accessible from any browser and on any operating system.
     - Reasoning: Students may have Windows or MacOS devices, so the application must run well on both platforms.
 
-4. NFR4: Screen Size compatibility
-    - Description: The display of the application needs to be versatile to adapt to screen sizes of all devices.
+3. NFR3: Screen Size compatibility
+    - Description: The display of the application needs to be versatile to adapt to screen sizes of devices such as monitors and laptops, smart tablets, and smart phones ranging from 4" to 17" displays.
     - Reasoning: Students may use their phones or their laptops to access this site, so various screen sizes should be compatible with the display.
     
-5. NFR5: User Role Preservation
+4. NFR4: User Role Preservation
     - Description: The software will not allow the role of the user (i.e., student, instructor, administrator) to be changed. 
-    - Reasoning: This will prevent attackers from attempting to change the role of a user account to elevate their capabilities.
-
-6. NFR6: 
+    - Reasoning: This will prevent attackers from attempting to change the role of a user account to elevate their capabilities (Authorization).
 
 ## 4. Prioritization
 
@@ -263,16 +288,67 @@ Admin users have the same functionality as instructor users with some additional
 | **9 (11/19/2020)**  | Polishing and Perfecting/Documentation                                                                                                                                    | All UI Requirements                                                    |
 | **10 (11/23/2020)** | Polishing and Perfecting/Documentation                                                                                                                                    | All UI Requirements                                                    |
 
-<br><br>Also see GANTT chart at Schedule.gantt.
+### 4.2 GANTT
+
+![GANTT Chart](/documentation/gantt_chart.png)
+
 
 ## 5. Diagrams
 
-### 5.1 Use Case Diagram
-See UseCaseDiagram.drawio for the use case diagram.
+### 5.1 Wireframes
 
-### 5.2 Class Diagram
+## Login Page Wireframe
+![Login Page Wireframe](/documentation/Slide1.PNG)
 
-### 5.3 Sequence Diagram
+## Admin Profile Wireframe
+![Admin Profile Wireframe](/documentation/Slide2.PNG)
+
+## Admin User Account Management Wireframe
+![Admin User Account Management Wireframe](/documentation/Slide3.PNG)
+
+## Instructor Profile Wireframe
+![Instructor Profile Wireframe](/documentation/Slide4.PNG)
+
+## Student Profile Page Wireframe
+![Student Profile Page Wireframe](/documentation/Slide5.PNG)
+
+## Instructor Dashboard Wireframe
+![Instructor Dashboard Wireframe](/documentation/Slide6.PNG)
+
+## Student Dashboard Wireframe
+![Student Dashboard Wireframe](/documentation/Slide7.PNG)
+
+## Instructor Class Details Wireframe
+![Instructor Class Details Wireframe](/documentation/Slide8.PNG)
+
+## Initiate Feedback Session Wireframe
+![Initiate Feedback Session Wireframe](/documentation/Slide9.PNG)
+
+## Public Feedback Wireframe
+![Public Feedback Wireframe](/documentation/Slide10.PNG)
+
+## Instructor Feedback Session Results Wireframe
+![Instructor Feedback Session Results Wireframe](/documentation/Slide11.PNG)
+
+### 5.2 Use Case Diagram
+![Use Case Diagram](/documentation/use_case_diagram.jpeg)
+
+### 5.3 Class Diagram
+![Class Diagram](/documentation/FeedbackLoop_Class_Diagram.png)
+
+### 5.4 Sequence Diagrams
+
+#### Student Adding a Review
+![Student Adding a Review](/documentation/FeedbackLoop_Sequence_Diagram_Add_Review.png)
+
+#### Instructor Creating a Feedback Session
+![Instructor Creating a Feedback Session Sequence Diagram](/documentation/Feedbacksession_Sequencediagram.jpeg)
+
+#### User Searching Instructors
+![User Searching Instructors Sequence Diagram](/documentation/SD_InstructorSearch.png)
+
+#### Instructor Add Class & Add Students
+![Instructor Add Class & Add Students Sequence Diagram](/documentation/addClassStudentSequenceDiagram.jpeg)
 
 ```
 FeedbackLoop by Null Entity  

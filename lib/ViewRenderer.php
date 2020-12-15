@@ -14,9 +14,18 @@ class ViewRenderer implements IViewRenderer {
 	 */
     public function render(array $views) {
         array_walk($views, function($__payload, $__file) {
+			if (!file_exists($__file)) {
+				$__file = preg_split('/\\\\|\\//', $__file);
+				if (count($__file) == 1) {
+					array_unshift($__file, DI::getDefault()->get('Request')->getControllerName());
+				}
+				
+				$__file = APP_ROOT . '/app/views/' . implode('/', $__file) . '.php';
+			}
+			
             extract($__payload);
 
-            ob_start();
+			ob_start();
             require($__file);
             $this->__output = ob_get_clean();
         });
