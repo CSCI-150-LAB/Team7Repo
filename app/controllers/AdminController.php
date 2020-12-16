@@ -87,22 +87,7 @@ class AdminController extends PermsController {
 	}
 
 	public function InstructorFeedbackAction() {
-		
-		$db = $this->get('Db');
-		/** @var array[] */
-		$feedback = $db->query( 
-			"
-			SELECT * FROM users
-			
-			"
-		);
-
-		
-		if ($feedback === false) {
-			die($db->getLastError());
-		}
-		/** @var User[] */
-		$feedback = array_map(['User', 'fromArray'], $feedback);
+		$feedback = User::find('type == "instructor"');
 		
 		return $this->view(['feedback' => $feedback]); 
 	
@@ -132,11 +117,9 @@ public function AddUserAction() {
 
 		if (!count($errors)) {
 			$userData['createdAt'] = date('Y-m-d H:i:s');
-			if (HASH_PASSWORDS) {
-				$userData['password'] = hash('sha256', $userData['password']);
-			}
+			$userData['passwordSalt'] = hash('sha256', rand());
+			$userData['password'] = hash('sha256', $userData['password'] . $userData['passwordSalt']);
 			$user = User::fromArray($userData);
-
 			
 			if ($user->save()) {
 				return $this->redirect("Admin/UserAccounts");
@@ -151,22 +134,7 @@ public function AddUserAction() {
 }
 
 public function StartSessionAction() {
-		
-	$db = $this->get('Db');
-	/** @var array[] */
-	$inclasses = $db->query( 
-		"
-		SELECT class_id, class_title
-		FROM instructorclasses
-		
-		"
-	);
-	
-	if ($inclasses === false) {
-		die($db->getLastError());
-	}
-	/** @var User[] */
-	$inclasses = array_map(['User', 'fromArray'], $inclasses);
+	$inclasses = InstructorClasses::find();
 	
 	return $this->view(['inclasses' => $inclasses]); 
 }
