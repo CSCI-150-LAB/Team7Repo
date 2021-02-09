@@ -20,7 +20,13 @@ Autoloader::init([
 /* Application Start */
 
 (new Application())
-	->bootstrap(function($app) {
+	->hook(function($app) {
+		require_once APP_ROOT . '/app/lib/vendor/autoload.php';
+		if (ob_get_level()) {
+			ob_end_clean();
+		}
+		ob_start();
+
 		session_start();
 		EnvLoader::load();
 
@@ -34,4 +40,11 @@ Autoloader::init([
 			return new Db($_ENV['dbhost'], $_ENV['dbuser'], $_ENV['dbpass'], $_ENV['dbname']);
 		});
 	})
-	->start();
+	->start()
+	->hook(function() {
+		WebSockets_Helpers::closeBrowserConnection();
+
+		if (!WebSockets_Helpers::isRunning()) {
+			WebSockets_App::start();
+		}
+	});
