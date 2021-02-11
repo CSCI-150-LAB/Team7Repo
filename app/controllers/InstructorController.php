@@ -297,4 +297,11 @@ class InstructorController extends PermsController {
 		return $this->view(['instructor' => $instructor]);
 	//Go to page of reviews for instructor
 	}
+
+	public function CourseMaterialsAction() {
+		$errors = [];
+
+
+		return $this->view(['errors' => $errors]);
+	}
 }
