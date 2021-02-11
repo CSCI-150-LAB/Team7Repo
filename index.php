@@ -44,7 +44,21 @@ Autoloader::init([
 	->hook(function() {
 		WebSockets_Helpers::closeBrowserConnection();
 
-		if (!WebSockets_Helpers::isRunning()) {
-			WebSockets_App::start();
+		if (!WebSockets_Helpers::isServerRunning()) {
+			$di = DI::getDefault();
+			$di->clearAll();
+
+			// TODO: Duplicate of the hook above
+			$di->addTransient('Db', function() {
+				return new Db($_ENV['dbhost'], $_ENV['dbuser'], $_ENV['dbpass'], $_ENV['dbname']);
+			});
+
+			$serverApp = new WebSockets_ServerApp();
+			$di->addScoped('WebSockets_Server', $serverApp->getServer());
+
+			$serverApp->addApplication(WebSockets_System_App::class);
+			$serverApp->addApplication(WebSockets_Chat_App::class);
+
+			$serverApp->start();
 		}
 	});
