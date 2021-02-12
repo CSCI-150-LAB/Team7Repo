@@ -5,6 +5,8 @@
 <body id="profile-style">
     <div class="container">
         <div class="main-body" id="red-paw-background">
+        <h1 class="mb-3 p-5 text-white bg-blue">
+	        Student Profile</h1>
         <?php
           $profile = StudentModel::getByKey($user->id);
           $currentUser = User::getCurrentUser();
