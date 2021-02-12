@@ -1,8 +1,6 @@
 <?php
 
-class Response_View implements IResponse {
-    private $html;
-
+class Response_View extends Response_Html {
     public function __construct($view, $layout, $payload = []) {
         $views = [
             $view => $payload,
@@ -11,12 +9,9 @@ class Response_View implements IResponse {
         if ($layout) {
             $layoutFile = APP_ROOT . '/app/layouts/' . $layout . '.php';
             $views[$layoutFile] = [];
-        }
-
-        $this->html = DI::getDefault()->get('ViewRenderer')->render($views);
-    }
-
-    public function output() {
-        echo $this->html;
+		}
+		
+		$html = DI::getDefault()->get('ViewRenderer')->render($views);
+        parent::__construct($html);
     }
 }
