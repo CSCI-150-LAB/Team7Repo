@@ -350,6 +350,9 @@ Admin users have the same functionality as instructor users with some additional
 #### Instructor Add Class & Add Students
 ![Instructor Add Class & Add Students Sequence Diagram](/documentation/addClassStudentSequenceDiagram.jpeg)
 
+#### User Direct Messaging
+![User Direct Messaging Sequence Diagram](/documentation/direct_messaging_diagram.png)
+
 ```
 FeedbackLoop by Null Entity  
 Daniel Flynn & Sumanjit Gill & Karla Moreno & Kamarin San Nicolas & Robert Wong  
