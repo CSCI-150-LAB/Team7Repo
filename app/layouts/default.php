@@ -45,7 +45,7 @@
 <body class="<?php echo $this->bodyClass(IS_LOCAL ? 'dev' : '') ?>">
     <nav class="navbar navbar-expand-lg navbar-dark bg-red">
 
-	<div class="navbar-brand"> <img src="<?php echo $this->publicUrl('images/fl.png')?>" width="40" height="40"></div>
+	<div class="navbar-brand"> <a class="nav-link" href="<?php echo $this->baseUrl() ?>"><img src="<?php echo $this->publicUrl('images/fl.png')?>" width="40" height="40"></a></div>
 
         <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,7 +59,11 @@
                 <a class="nav-link" href="<?php echo $currentUser->getDashboardUrl() ?>"> My Dashboard </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0)"> My Ratings </a>
+            <?php if ($currentUser->type == "instructor") : ?>
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo $this->baseUrl("/Instructor/ViewReviews/{$currentUser->id}") ?>"> My Ratings </a>
+            </li>
+            <?php endif; ?>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="javascript:void(0)"> Resources </a>
