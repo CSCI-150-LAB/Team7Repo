@@ -15,6 +15,12 @@ class WebSockets_User {
 		return $this->user;
 	}
 
+	public function getUserId() {
+		return $this->user
+			? $this->user->id
+			: 0;
+	}
+
 	public function isAuthenticated() {
 		return !is_null($this->user);
 	}

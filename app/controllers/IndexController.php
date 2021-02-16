@@ -29,4 +29,8 @@ class IndexController extends Controller {
 		http_response_code(400);
 		return $this->view();
 	}
+
+	public function MessagingAction() {
+		return $this->view();
+	}
 }
