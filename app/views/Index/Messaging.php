@@ -1,13 +1,42 @@
-<form class="messaging-form">
-	<div class="form-group">
-		<label for="message">Message</label>
-		<input type="text" class="form-control" id="message" name="message">
+<?php $users = User::find(); ?>
+<div class = "row">
+	<div class = "col-4">
+	<div class = "card p-4">
+  		<div class = "row">
+			<div class = "col-8">Recent Messages</div>
+			<div class = "col">
+				<button type = "button" class="btn btn-secondary" style = "float: right;" data-toggle = "tooltip" data-placement = "right" title = "Start New Conversation">
+					<i class = "fas fa-edit"></i>
+				</button>
+			</div>
+		</div>
+		<div class = "row">
+		<div class = "col" style = "height: 500px; overflow-y: scroll;">
+			<?php foreach ($users as $user) : ?>
+			<div class = "row">
+				<div> <img src="<?php echo $this->publicUrl('images/blank_avatar.png')?>" width="50" height="50" alt="blank_avatar" class="mr-md-4 mb-3 img-fluid"> </div>
+				<div> <?php echo($user->firstName . " " . $user->lastName); ?> </div>
+			</div>
+			<?php endforeach; ?>
+		</div>
+		</div>
+	</div>
 	</div>
 
-	<button type="submit" class="btn btn-primary">Submit</button>
-</form>
+	<!-- List of messages above, selected message group below -->
 
-<div id="message-log"></div>
+	<div class = "col">
+	<div class = "card p-4">
+		<div id="message-log" style = "height: 475px; overflow-y: scroll;"></div>
+		<form class = "messaging-form">
+			<div class = "input-group">
+				<input type = "text" class = "form-control" id = "message" name = "message" placeholder = "Message">
+				<button type = "submit" class = "btn btn-primary"><i class="fas fa-search"></i></button>
+			</div>
+		</form>
+	</div>
+  	</div>
+</div>
 
 <script>
 	docReady(function() {
