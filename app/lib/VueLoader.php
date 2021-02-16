@@ -109,7 +109,7 @@ class VueLoader {
     }
 
     private static function addAttributeToTemplate($node, $attr) {
-        if (!$node->isTextNode()) {
+        if (!$node->isTextNode() && !$node->isCommentNode()) {
             if ($node->tag != 'slot') {
                 $node->setAttribute($attr, null);
             }
