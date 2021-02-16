@@ -7,14 +7,6 @@ class WebSockets_System_App implements WebSockets_IApp {
 
 	public function __construct(WebSockets_Server $server) {
 		$this->server = $server;
-
-		$filePath = APP_ROOT . '/shutdown_websocket_server.txt';
-		$server->addPeriodicTimer(function() use ($filePath, $server) {
-			if (file_exists($filePath)) {
-				unlink($filePath);
-				$server->stop();
-			}
-		}, 30);
 	}
 
 	public function onUserConnect(WebSockets_User $user) {
@@ -32,8 +24,16 @@ class WebSockets_System_App implements WebSockets_IApp {
 	}
 
 	public function onMessage(WebSockets_User $user, $data) {
-		if (!$user->isAuthenticated() && $data instanceof WebSockets_Message_Auth) {
-			$user->authenticate($data);
+		if ($user->isAuthenticated()) {
+			//TODO: Only admins should be able to do this
+			if ($data instanceof WebSockets_Message_ShutdownServer) {
+				$this->server->stop();
+			}
+		}
+		else {
+			if ($data instanceof WebSockets_Message_Auth) {
+				$user->authenticate($data);
+			}
 		}
 	}
 }
