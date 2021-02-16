@@ -87,9 +87,28 @@ class AdminController extends PermsController {
 	}
 
 	public function InstructorFeedbackAction() {
-		$feedback = User::find('type == "instructor"');
+		/**$feedback = User::find('type == "instructor"');
 		
-		return $this->view(['feedback' => $feedback]); 
+		return $this->view(['feedback' => $feedback]); **/
+
+
+		$db = $this->get('Db');
+		/** @var array[] */
+		$useraccounts = $db->query( 
+			"
+			SELECT * FROM users
+			
+			"
+		);
+
+		
+		if ($useraccounts === false) {
+			die($db->getLastError());
+		}
+		/** @var User[] */
+		$useraccounts = array_map(['User', 'fromArray'], $useraccounts);
+		
+		return $this->view(['useraccounts' => $useraccounts]);
 	
 	}
 	

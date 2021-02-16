@@ -40,7 +40,7 @@ $instructorInfo = $instructor->getProfileModel();
                         <?php echo $reviews[$counter]->printRating(); ?>
                         <br>
                         <br>
-                        <button type="button" class="btn btn-danger" style ="text-align:right"><a href="<?php echo $this->baseUrl("Instructor/DeleteRating/{$reviews[$counter]->ratingId}") ?>"> Delete </a></button>
+                        <button type="button" class="btn btn-outline-danger " style ="text-align:right"><a href="<?php echo $this->baseUrl("Instructor/DeleteRating/{$reviews[$counter]->ratingId}") ?>"> Delete </a></button>
                     </div>
                 </div>
                 <br>

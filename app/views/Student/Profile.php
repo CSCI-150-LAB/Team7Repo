@@ -8,7 +8,7 @@
         <?php
           $profile = StudentModel::getByKey($user->id);
           $currentUser = User::getCurrentUser();
-		  if($user->id == $currentUser->id):  //Allows user to edit profile if current profile is the user's profile ?>
+		  if(($user->id == $currentUser->id) || ($currentUser->type == "admin")):  //Allows user to edit profile if current profile is the user's profile ?>
 		  <div class="text-right">
 			  <a class = 'btn btn-secondary mb-3 text-white' href='<?= $this->baseUrl('/Student/ProfileEdit/' . $user->id) ?>'>Edit Profile</a>
 		  </div>

@@ -4,7 +4,8 @@
         <a class = "btn btn-secondary float-right" style="color: #ffffff;" href ='<?php echo $this->baseUrl("/Admin/AddUser") ?>'>Add a User</a><br><br>
         <a class = "btn btn-secondary float-right" style="color: #ffffff;" href ='<?php echo $this->baseUrl("/Admin/AddUser") ?>'>Add Users by CSV</a><br><br>
     
-    <table class="table table-bordered"> 
+    <table class="table table-bordered table-sm table-striped
+     pl-5 tbl-background"> 
         <thead>
             <tr>
                 <th scope="col"> Account Type </th>
