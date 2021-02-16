@@ -7,6 +7,7 @@
             <tr>
                 <th scope="col"> Account Type </th>
                 <th scope="col"> Full Name </th>
+                <th scope="col"> Average Rating </th>
             </tr>
         </thead> 
         <tbody>  
@@ -14,7 +15,8 @@
             <tr>   
             <?php if ($account->type == "instructor") {?>                                                          
                 <td> <?php echo $account->type ?></td>
-                <td> <a href='<?php echo $this->baseUrl("/Instructor/ViewReviews/{$account->id}") ?>'><?php echo $account->getFullName()?></a></td> 
+                <td> <a href='<?php echo $this->baseUrl("/Instructor/ViewReviews/{$account->id}") ?>'><?php echo $account->getFullName()?></a></td>
+                <td> </td> 
             </tr>
             <?php } ?>
         <?php endforeach; ?>
