@@ -103,12 +103,12 @@ class Application {
 	}
 
 	/**
-	 * Provides a location for developers to initialize helpers and register things with the dependency injection service
+	 * Provides a location for developers to work with the application instance such as registering things with the dependency injection service
 	 *
 	 * @param callable $callable
 	 * @return Application
 	 */
-	public function bootstrap(callable $callable) : Application {
+	public function hook(callable $callable) : Application {
 		$callable($this);
 
 		return $this;
@@ -191,7 +191,7 @@ class Application {
 	 *
 	 * @return void
 	 */
-	public function start() {
+	public function start() : Application {
 		$this->configureServices();
 		$this->configureErrorReporting();
 
@@ -208,6 +208,8 @@ class Application {
 		);
 
 		$response->output();
+
+		return $this;
 	}
 
 	/**

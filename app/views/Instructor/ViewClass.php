@@ -2,7 +2,7 @@
 	$this->pageTitle('View Class');
 ?>
 
-<h1> <?php echo $class->class . " " . $class->getClassTimeString(); ?> </h1>
+<h1 class="mb-3 p-5 text-white bg-blue"> <?php echo $class->class . " " . $class->getClassTimeString(); ?> </h1>
 <h2> <?php echo $class->description; ?> </h2>
 
 

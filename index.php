@@ -20,7 +20,13 @@ Autoloader::init([
 /* Application Start */
 
 (new Application())
-	->bootstrap(function($app) {
+	->hook(function($app) {
+		require_once APP_ROOT . '/app/lib/vendor/autoload.php';
+		if (ob_get_level()) {
+			ob_end_clean();
+		}
+		ob_start();
+
 		session_start();
 		EnvLoader::load();
 
@@ -34,4 +40,25 @@ Autoloader::init([
 			return new Db($_ENV['dbhost'], $_ENV['dbuser'], $_ENV['dbpass'], $_ENV['dbname']);
 		});
 	})
-	->start();
+	->start()
+	->hook(function() {
+		WebSockets_Helpers::closeBrowserConnection();
+
+		if (!WebSockets_Helpers::isServerRunning()) {
+			$di = DI::getDefault();
+			$di->clearAll();
+
+			// TODO: Duplicate of the hook above
+			$di->addTransient('Db', function() {
+				return new Db($_ENV['dbhost'], $_ENV['dbuser'], $_ENV['dbpass'], $_ENV['dbname']);
+			});
+
+			$serverApp = new WebSockets_ServerApp();
+			$di->addScoped('WebSockets_Server', $serverApp->getServer());
+
+			$serverApp->addApplication(WebSockets_System_App::class);
+			$serverApp->addApplication(WebSockets_Chat_App::class);
+
+			$serverApp->start();
+		}
+	});
