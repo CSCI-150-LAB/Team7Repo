@@ -41,9 +41,18 @@
     }
 ?>
 <div class="my-3 text-right">
-	<a class = "btn btn-secondary mr-2 text-white" href ='<?php echo $this->baseUrl("/Instructor/AddStudent/{$class->classid}") ?>'>Add a Student</a>
-	<a class = "btn btn-secondary text-white" href ='<?php echo $this->baseUrl("/Instructor/AddCSVStudents/{$class->classid}") ?>'>Add Students by CSV</a>
+	<div class="dropdown">
+		<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Add
+		</button>
+		<div class="dropdown-menu">
+			<a href='<?php echo $this->baseUrl("/Instructor/AddStudent/{$class->classid}") ?>' class="dropdown-item">Add Student</a>
+			<a href='<?php echo $this->baseUrl("/Instructor/AddCSVStudents/{$class->classid}") ?>' class="dropdown-item">Add Students by CSV</a>
+			<a href='<?php echo $this->baseUrl("/Instructor/AddTA/{$class->classid}") ?>' class="dropdown-item">Add TA</a>
+		</div>
+	</div>
 </div>
+
 <?php $studentids = studentClasses::find("classId =:0:", $class->classid);?>
 <div class="table-responsive">
 	<table class="table table-bordered tbl-background">
