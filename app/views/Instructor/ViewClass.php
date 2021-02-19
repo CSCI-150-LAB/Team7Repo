@@ -13,8 +13,8 @@
 	}
 	else {
 		$ta = User::find("id =:0:", $class->TAid); ?>
-		<a href = '<?php echo $this->baseUrl("/Student/Profile/{$ta[0]->id}") ?>'> <?php echo $ta[0]->firstName . " " . $ta[0]->lastName ?></a>
-		<?php
+		 <a href = '<?php echo $this->baseUrl("/Student/Profile/{$ta[0]->id}") ?>'> <?php echo $ta[0]->firstName . " " . $ta[0]->lastName; ?></a>
+		 <?php
 	}
 ?> </h5>
 
