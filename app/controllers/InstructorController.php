@@ -134,7 +134,7 @@ class InstructorController extends PermsController {
 		$class = InstructorClasses::getByKey($classid);
 		$currentUser = User::getCurrentUser();
 
-		if (!$class || ($currentUser->type != 'admin' && $class->instructorid != $currentUser->id)) {
+		if (!$class || ($currentUser->type != 'admin' && $class->instructorid != $currentUser->id && $class->TAid != $currentUser->id)) {
 			return $this->redirect($this->viewHelpers->baseUrl());
 		}
 
@@ -160,6 +160,12 @@ class InstructorController extends PermsController {
 				else {
 					$student = User::find("email =:0:", $_POST['email']);
 					$user = User::getByKey($student[0]->id);
+					
+					//Make sure student being added is not TA
+					$class = InstructorClasses::find("class_id =:0:", $classid);
+					if ($class[0]->TAid != NULL && $class[0]->TAid == $user->id) {
+						$errors[] = "Class TA cannot be student";
+					}
 				}
 			} //Check that all values are filled
 			if(!count($errors)) {
@@ -236,7 +242,7 @@ class InstructorController extends PermsController {
 			//If the page was directed by a POST form
 			$fields = [
 				'email' => 'email'
-			]; //Add student's email
+			]; //Add ta's email
 
             $errors = [];
 			foreach($fields as $prop => $postField) {
@@ -244,17 +250,30 @@ class InstructorController extends PermsController {
 					$errors[] = "{$postField} is required";
 				}
 				else {
-					$student = User::find("email =:0:", $_POST['email']);
-					$user = User::getByKey($student[0]->id);
+					$ta = User::find("email =:0:", $_POST['email']);
+					$user = User::getByKey($ta[0]->id);
+
+					//make sure TA is a student user
+					if ($user->type != "student") {
+						$errors[] = "TA must be a student";
+					}
+
+					//make sure TA is not enrolled as a student in class
+					$enrolledClass = studentClasses::find("class_id =:0:", $classid);
+
+					foreach ($enrolledClass as $enrolled) {
+						if ($enrolled->studentId == $user->id) {
+							$errors[] = "TA must not be enrolled in the class";
+						}
+					}
 				}
 			} //Check that all values are filled
 			if(!count($errors)) {
-				$studentClass = new studentClasses();
-				$studentClass->classId = $classid;
-				$studentClass->studentId = $user->id;
-				//Add new student to the class
+				$class = InstructorClasses::find("class_id =:0:", $classid);
+				$class[0]->TAid = $user->id;
+				//Add TA to the class; if another TA is added the original will be replaced
 
-				if($studentClass->save()) {
+				if($class[0]->save()) {
 					return $this->redirect($this->viewHelpers->baseUrl("/Instructor/ViewClass/{$classid}"));
 				} //Redirects user to main page
 				else {
@@ -263,7 +282,7 @@ class InstructorController extends PermsController {
 			}
 			
 		}
-		return $this->view(['errors' => $errors, 'classid' => $classid, 'student' => $studentClass->studentId]);
+		return $this->view(['errors' => $errors, 'classid' => $classid, 'ta' => $class[0]->TAid]);
 	}
 
 	public function DashboardAction() {
