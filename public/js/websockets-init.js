@@ -1,7 +1,10 @@
 window.SocketHandler = (function() {
 	var conn = null,
 		events = {},
-		result = {};
+		result = {
+			userInfo: false,
+			userList: []
+		};
 
 	function on(evt, fn) {
 		if (!events[evt]) {
@@ -73,23 +76,37 @@ window.SocketHandler = (function() {
 	on('_connect', function() {
 		result.status = 'connected';
 
-		send('Auth', {
-			userId: AUTH_INFO.userId,
-			userToken: AUTH_INFO.authToken
-		});
+		if (result.userInfo) {
+			send('Auth', {
+				userId: result.userInfo.userId,
+				userToken: result.userInfo.authToken
+			});
+		}
 	});
 
 	on('_disconnect', () => result.status = 'disconnected');
 
 	on('UserStatus', function(status) {
-		if (result.loggedIn = status.userId > 0) {
-			trigger('_authenticated');
+		if (result.userInfo && result.userInfo.userId == status.userId) {
+			trigger(status.status == 'online' ? '_authenticated' : '_unathenticated');
+		}
+		else {
+			if (status.status == 'online') {
+				result.userList.push(status.userId);
+			}
+			else {
+				var ndx = result.userList.indexOf(status.userId);
+				if (ndx >= 0) {
+					result.userList.splice(ndx, 1);
+				}
+			}
 		}
 	});
 
-	if (AUTH_INFO) {
-		connectToServer();
-	}
+	docReady(function() {
+		result.userInfo = AUTH_INFO;
+		setTimeout(connectToServer, 0);
+	});
 
 	Object.assign(result, {
 		_trigger: trigger,

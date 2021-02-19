@@ -4,6 +4,7 @@ class Db {
 	private $conn;
 	private $trackingModels = false;
 	private $trackedModelsExistences = [];
+	private $lastQuery = '';
 
     public function __construct($host, $user, $pass, $dbname) {
         $this->conn = new mysqli($host, $user, $pass, $dbname);
@@ -76,6 +77,7 @@ class Db {
 		$sql = trim($sql);
 		$sql = self::insertSqlParams($sql, $args);
 
+		$this->lastQuery = $sql;
 		$result = $this->conn->query($sql);
 
         if ($result === true) {
@@ -105,6 +107,15 @@ class Db {
 	 */
     public function getLastError() {
         return $this->conn->error;
+	}
+
+	/**
+	 * Gets the last query that was executed
+	 *
+	 * @return string
+	 */
+	public function getLastQuery() {
+		return $this->lastQuery;
 	}
 	
 	/**

@@ -25,15 +25,13 @@ class WebSockets_User {
 		return !is_null($this->user);
 	}
 
-	public function authenticate(WebSockets_Message_Auth $data) {
-		if ($data->userId) {
+	public function authenticate(?WebSockets_Message_Auth $data) {
+		if ($data && $data->userId) {
 			$this->user = User::findOne('id = :0: AND auth_token = :1:', $data->userId, $data->userToken);
 		}
 		else {
 			$this->user = null;
 		}
-		
-		$this->send(new WebSockets_Message_UserStatus(['userId' => $this->user ? $this->user->id : null]));
 	}
 
 	public function closeConnection() {

@@ -36,10 +36,13 @@
 		var AUTH_INFO = " . json_encode($authInfo) . ";
 		"
 	);
+
+	$this->scriptEnqueue('standard-vue-mixin', $this->publicUrl('js/standard-vue-mixin.js?t=' . filemtime(APP_ROOT . '/public/js/standard-vue-mixin.js')));
+	$this->scriptEnqueue('websockets', $this->publicUrl('js/websockets-init.js?t=' . filemtime(APP_ROOT . '/public/js/websockets-init.js')));
+
 	$this->scriptRegister('jquery-cdn', 'https://code.jquery.com/jquery-3.5.1.min.js');
 	$this->scriptRegister('jquery', 'window.jQuery || document.write(\'<script src="' . $this->publicUrl('js/jquery-3.5.1.min.js') . '"><\/script>\')', ['jquery-cdn']);
 	$this->scriptRegister('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js', ['jquery']);
-	$this->scriptEnqueue('websockets', $this->publicUrl('js/websockets-init.js?t=' . filemtime(APP_ROOT . '/public/js/websockets-init.js')));
 	$this->scriptEnqueue('main', $this->publicUrl('js/main.js?t=' . filemtime(APP_ROOT . '/public/js/main.js')), ['bootstrap'], false);
 
 	$this->outputStyles();

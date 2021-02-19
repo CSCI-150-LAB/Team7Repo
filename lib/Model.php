@@ -156,10 +156,10 @@ class Model extends AnnotatedClass {
 			$where = [];
 			foreach ($tableMeta['columns'] as $prop => $propInfo) {
 				if (isset($propInfo['key'])) {
-					$where[] = "{$propInfo['name']} = :{$prop}:";
+					$where[] = "t.`{$propInfo['name']}` = :{$prop}:";
 				}
 				else {
-					$update[] = "{$propInfo['name']} = :{$prop}:";
+					$update[] = "t.`{$propInfo['name']}` = :{$prop}:";
 				}
 
 				$queryArgs[$prop] = $this->getProp($prop);
@@ -169,7 +169,7 @@ class Model extends AnnotatedClass {
 			$where = implode(' AND ', $where);
 
 			$db = DI::getDefault()->get('Db');
-			return $db->query("UPDATE {$tableMeta['name']} SET {$update} WHERE {$where} LIMIT 1", $queryArgs);
+			return $db->query("UPDATE {$tableMeta['name']} as t SET {$update} WHERE {$where} LIMIT 1", $queryArgs);
 		}
 
 		// Insert
@@ -181,7 +181,7 @@ class Model extends AnnotatedClass {
 					continue;
 				}
 
-				$columns[] = $propInfo['name'];
+				$columns[] = "`{$propInfo['name']}`";
 				$values[] = ":{$prop}:";
 				$queryArgs[$prop] = $this->getProp($prop);
 			}

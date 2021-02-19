@@ -1,13 +1,11 @@
 <?php
 
 class WebSockets_Chat_App implements WebSockets_IApp {
-	private $rooms = [];
-	private $userRoomMap;
-
-	private $usersInHardCodedRoom = [];
+	private $userIdConnectionMap = [];
+	private $connectionConversationMap;
 
 	public function __construct() {
-		$this->userRoomMap = new SplObjectStorage;
+		$this->connectionConversationMap = new SplObjectStorage;
 	}
 
 	public function onUserConnect(WebSockets_User $user) {
@@ -15,44 +13,81 @@ class WebSockets_Chat_App implements WebSockets_IApp {
 	}
 
 	public function onUserDisconnect(WebSockets_User $user) {
-		// Disconnect the user from their room
-		// if (isset($this->userRoomMap[$user])) {
-		// 	foreach ($this->userRoomMap[$user] as $room) {
-		// 		/** @var WebSockets_Chat_Room $room */
-		// 		$room->disconnectUser($user);
-		// 	}
-		// }
+		if ($user->isAuthenticated()) {
+			$ndx = array_search($user, $this->userIdConnectionMap[$user->getUserId()]);
+			if ($ndx >= 0) {
+				unset($this->userIdConnectionMap[$user->getUserId()][$ndx]);
+			}
+		}
 
-		$resp = new WebSockets_Message_Chat(['message' => "User {$user->getUser()->getFullName()} Left the chat"]);
-		foreach ($this->usersInHardCodedRoom as $ndx => $otherUser) {
-			if ($otherUser === $user) {
-				unset($this->usersInHardCodedRoom[$ndx]);
-			}
-			else {
-				$otherUser->send($resp);
-			}
+		if (isset($this->connectionConversationMap[$user])) {
+			unset($this->connectionConversationMap[$user]);
 		}
 	}
 
-	public function onMessage(WebSockets_User $user, $data) {
+	public function onUserAuthChanged(WebSockets_User $user) {
+		if ($user->isAuthenticated()) {
+			if (!isset($this->userIdConnectionMap[$user->getUserId()])) {
+				$this->userIdConnectionMap[$user->getUserId()] = [];
+			}
+			$this->userIdConnectionMap[$user->getUserId()][] = $user;
+		}
+	}
+
+	public function onMessage(WebSockets_User $user, WebSockets_Message_Abstract $data) {
 		if (!$user->isAuthenticated()) {
 			return;
 		}
 
 		if ($data instanceof WebSockets_Message_JoinChatRoom) {
-			$resp = new WebSockets_Message_Chat(['message' => "User {$user->getUser()->getFullName()} Joined the chat"]);
-			foreach ($this->usersInHardCodedRoom as $otherUser) {
-				/** @var WebSockets_User $otherUser */
-				$otherUser->send($resp);
-			}
+			$conversation = ChatConversation::getConversation($user->getUserId(), $data->withUserId, true);
 
-			$this->usersInHardCodedRoom[] = $user;
+			$this->connectionConversationMap[$user] = $conversation;
+			
+			$data->conversationId = $conversation->id;
+			$user->send($data);
+
+			// Send messages to user
+			$chatMessage = new WebSockets_Message_Chat();
+			foreach ($conversation->getMessages() as $dbMessage) {
+				$chatMessage->copyData($dbMessage);
+				$user->send($chatMessage);
+			}
 		}
 		else if ($data instanceof WebSockets_Message_Chat) {
-			foreach ($this->usersInHardCodedRoom as $otherUser) {
-				/** @var WebSockets_User $otherUser */
-				if ($otherUser !== $user) {
-					$otherUser->send($data);
+			if (isset($this->connectionConversationMap[$user])) {
+				/** @var ChatConversation */
+				$conversation = $this->connectionConversationMap[$user];
+
+				$data->read = false;
+				$data->authorId = $user->getUserId();
+				$data->createdAt = date('Y-m-d H:i:s');
+				$data->conversationId = $conversation->id;
+
+				// Store in db
+				$dbChatMessage = ChatMessage::fromArray((array)$data);
+				$dbChatMessage->save();
+				
+				$otherUserId = $conversation->getOtherUser($user->getUserId());
+
+				if ($otherUserId != $user->getUserId()) {
+					foreach ($this->userIdConnectionMap[$user->getUserId()] as $otherConnection) {
+						/** @var WebSockets_User $otherConnection */
+						if (isset($this->connectionConversationMap[$otherConnection])) {
+							/** @var ChatConversation */
+							$someConversation = $this->connectionConversationMap[$otherConnection];
+							if ($someConversation->id == $conversation->id) {
+								$otherConnection->send($data);
+							}
+						}
+					}
+				}
+				
+				if (isset($this->userIdConnectionMap[$otherUserId])) {
+					foreach ($this->userIdConnectionMap[$otherUserId] as $otherUser) {
+						/** @var WebSockets_User $otherUser */
+						$otherUser->send($data);
+					}
 				}
 			}
 		}
