@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @Table('test_conversations')
+ * @Table('conversations')
  */
 class ChatConversation extends Model {
 
@@ -12,14 +12,9 @@ class ChatConversation extends Model {
 	public $id;
 
 	/**
-	 * @Column('user1')
+	 * @Column('users')
 	 */
-	public $userId1;
-
-	/**
-	 * @Column('user2')
-	 */
-    public $userId2;
+	public $users;
 
 	/**
 	 * Gets an array of sorted messages in this conversation
@@ -31,7 +26,7 @@ class ChatConversation extends Model {
 			SELECT
 				*
 			FROM
-				test_conversation_messages as cm
+				conversation_messages as cm
 			WHERE
 				cm.conversation_id = :0:
 			ORDER BY
@@ -46,14 +41,13 @@ class ChatConversation extends Model {
 	 * @return int
 	 */
 	public function getOtherUser($oneUser) {
-		if ($this->userId1 == $oneUser) {
-			return $this->userId2;
-		}
-		elseif ($this->userId2 == $oneUser) {
-			return $this->userId1;
-		}
+		$otherUsers = [];
+		foreach($this->users as $user) {
+			if($oneUser != $user) {
+				$otherUsers[] = $user;
+			}
 
-		return 0;
+		return $otherUsers;
 	}
 
 	/**
@@ -63,13 +57,12 @@ class ChatConversation extends Model {
 	 * @param int $userId2
 	 * @return static
 	 */
-	public static function getConversation($userId1, $userId2, $create = false) {
-		$record = self::findOne('(userId1 = :0: AND userId2 = :1:) OR (userId1 = :1: AND userId2 = :0:)', $userId1, $userId2);
+	public static function getConversation($users, $create = false) {
+		$record = self::findOne('users = :0:', $users);
 
 		if (!$record && $create) {
 			$record = new self();
-			$record->userId1 = $userId1;
-			$record->userId2 = $userId2;
+			$record->users = $users;
 			$record->save();
 		}
 

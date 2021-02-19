@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @Table('test_conversation_messages')
+ * @Table('conversation_messages')
  */
 class ChatMessage extends Model {
 

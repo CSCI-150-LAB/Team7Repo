@@ -6,9 +6,12 @@
 					<div class="row">
 						<div class="col-8">Recent Messages</div>
 						<div class="col">
-							<button type="button" class="btn btn-secondary float-right" data-toggle="tooltip" data-placement="right" title="Start New Conversation">
+							<button type="button" class="btn btn-secondary float-right" data-placement="right" title="Start New Conversation" id="contactlist" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<i class="fas fa-edit"></i>
 							</button>
+							<div class="dropdown-menu" aria-labelledby="contactlist">
+								<a v-for="user in userList" :key="user.id" class="dropdown-item">{{user.fullName}}</a>
+							</div>
 						</div>
 					</div>
 					<div class="row">
