@@ -114,6 +114,33 @@ class User extends Model {
 	}
 
 	/**
+	 * Returns whether the user is an admin
+	 *
+	 * @return boolean
+	 */
+	public function isAdmin() {
+		return $this->type == 'admin';
+	}
+
+	/**
+	 * Returns whether the user is an instructor
+	 *
+	 * @return boolean
+	 */
+	public function isInstructor() {
+		return $this->type == 'instructor';
+	}
+
+	/**
+	 * Returns whether the user is a student
+	 *
+	 * @return boolean
+	 */
+	public function isStudent() {
+		return $this->type == 'student';
+	}
+
+	/**
 	 * Fetches the current logged in user
 	 *
 	 * @return User|null

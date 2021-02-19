@@ -5,10 +5,12 @@
 <body id="profile-style">
     <div class="container">
         <div class="main-body" id="red-paw-background">
+        <h1 class="mb-3 p-5 text-white bg-blue">
+	        Student Profile</h1>
         <?php
           $profile = StudentModel::getByKey($user->id);
           $currentUser = User::getCurrentUser();
-		  if($user->id == $currentUser->id):  //Allows user to edit profile if current profile is the user's profile ?>
+		  if(($user->id == $currentUser->id) || ($currentUser->type == "admin")):  //Allows user to edit profile if current profile is the user's profile ?>
 		  <div class="text-right">
 			  <a class = 'btn btn-secondary mb-3 text-white' href='<?= $this->baseUrl('/Student/ProfileEdit/' . $user->id) ?>'>Edit Profile</a>
 		  </div>
@@ -23,7 +25,7 @@
                       
                         <img src="<?php echo $this->publicUrl('images/blank_avatar.png')?>" alt="pic" class="rounded-circle" width="150">
                         <div class="mt-3">
-                          <h4><?php echo $currentUser->getFullName()?></h4>
+                          <h4><?php echo $user->getFullName()?></h4>
                           <p class="text-secondary mb-1"><?php echo $profile->studentMajor?></p>
                         </div>
                       </div>
@@ -33,7 +35,7 @@
                     <ul class="list-group list-group-flush">
                       <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                         <h6 class="mb-0">Email</h6>
-                        <span class="text-secondary"><?php echo $currentUser->email?></span>
+                        <span class="text-secondary"><?php echo $user->email?></span>
                       </li>
                       <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                         <h6 class="mb-0">Preferred Learning Style </h6>
@@ -44,11 +46,13 @@
                 </div>
 
                 <div class="col-lg-8">
+                  <?php if($user->id == $currentUser->id): ?>
                   <div class="card mb-3">
                     <div class="card-body">
                         <h6 class="mb-0">Welcome to your profile</h6>
                     </div>
                   </div>
+                  <?php endif; ?>
 
                   <div class="row gutters-sm">
                     <div class="col-sm-6 mb-3">

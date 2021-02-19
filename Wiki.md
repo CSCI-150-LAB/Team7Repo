@@ -330,6 +330,27 @@ Admin users have the same functionality as instructor users with some additional
 ## Instructor Feedback Session Results Wireframe
 ![Instructor Feedback Session Results Wireframe](/documentation/Slide11.PNG)
 
+## Instructor Add Class Files Wireframe
+![Instructor Add Class Files Wireframe](/documentation/Slide12.PNG)
+
+## Instructor Whiteboard Wireframe
+![Instructor Whiteboard Wireframe](/documentation/Slide13.PNG)
+
+## Instructor Direct Messaging Wireframe
+![Instructor Direct Messaging Wireframe](/documentation/Slide14.PNG)
+
+## Instructor Help Menu Wireframe
+![Instructor Help Menu Wireframe](/documentation/Slide15.PNG)
+
+## Instructor Resources Page Wireframe
+![Instructor Resources Page Wireframe](/documentation/Slide16.PNG)
+
+## Instructor Course Materials Wireframe
+![Instructor Course Materials Wireframe](/documentation/Slide17.PNG)
+
+## Instructor Review Course Material Wireframe
+![Instructor Review Course Material Wireframe](/documentation/Slide18.PNG)
+
 ### 5.2 Use Case Diagram
 ![Use Case Diagram](/documentation/use_case_diagram.jpeg)
 
