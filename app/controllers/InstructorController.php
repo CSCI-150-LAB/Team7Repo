@@ -355,4 +355,10 @@ class InstructorController extends PermsController {
 		return $this->view(['instructor' => $instructor]);
 	//Go to page of reviews for instructor
 	}
+
+	public function ClassAttendanceAction() {
+		$user = User::getCurrentUser();
+		return $this->view(['user' => $user]);
+	}
+
 }
