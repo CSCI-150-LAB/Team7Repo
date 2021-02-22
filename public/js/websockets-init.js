@@ -100,6 +100,8 @@ window.SocketHandler = (function() {
 					result.userList.splice(ndx, 1);
 				}
 			}
+
+			trigger('_userList');
 		}
 	});
 
@@ -129,11 +131,21 @@ window.SocketHandler = (function() {
 				data() {
 					return {
 						websockets_loggedIn: result.loggedIn,
-						websockets_status: result.status
+						websockets_status: result.status,
+						websockets_userList: result.userList	// By reference
 					};
 				},
 
 				computed: {
+					currentUserId() {
+						return result.userInfo
+							// @ts-ignore
+							? result.userInfo.userId
+							: 0;
+					},
+					connectedUsers() {
+						return this.websockets_userList;
+					},
 					isSocketConnected() {
 						return this.websockets_status == 'connected';
 					},

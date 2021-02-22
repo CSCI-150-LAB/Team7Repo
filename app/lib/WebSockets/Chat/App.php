@@ -40,12 +40,21 @@ class WebSockets_Chat_App implements WebSockets_IApp {
 		}
 
 		if ($data instanceof WebSockets_Message_JoinChatRoom) {
-			$conversation = ChatConversation::getConversation($user->getUserId(), $data->withUserId, true);
+			$conversationUserIds = array_merge($data->withUserIds, [$user->getUserId()]);
+			$conversation = ChatConversation::getConversation($conversationUserIds, true);
 
 			$this->connectionConversationMap[$user] = $conversation;
 			
+			$data->withUserIds = $conversation->users;
 			$data->conversationId = $conversation->id;
-			$user->send($data);
+
+			// Send to all parties involved
+			foreach ($conversation->users as $userId) {
+				foreach ($this->userIdConnectionMap[$userId] as $otherConnection) {
+					/** @var WebSockets_User $otherConnection */
+					$otherConnection->send($data);
+				}
+			}
 
 			// Send messages to user
 			$chatMessage = new WebSockets_Message_Chat();
@@ -59,7 +68,7 @@ class WebSockets_Chat_App implements WebSockets_IApp {
 				/** @var ChatConversation */
 				$conversation = $this->connectionConversationMap[$user];
 
-				$data->read = false;
+				$data->read = [];
 				$data->authorId = $user->getUserId();
 				$data->createdAt = date('Y-m-d H:i:s');
 				$data->conversationId = $conversation->id;
@@ -67,11 +76,10 @@ class WebSockets_Chat_App implements WebSockets_IApp {
 				// Store in db
 				$dbChatMessage = ChatMessage::fromArray((array)$data);
 				$dbChatMessage->save();
-				
-				$otherUserId = $conversation->getOtherUser($user->getUserId());
 
-				if ($otherUserId != $user->getUserId()) {
-					foreach ($this->userIdConnectionMap[$user->getUserId()] as $otherConnection) {
+				// Send message to all users' connections
+				foreach ($conversation->users as $userId) {
+					foreach ($this->userIdConnectionMap[$userId] as $otherConnection) {
 						/** @var WebSockets_User $otherConnection */
 						if (isset($this->connectionConversationMap[$otherConnection])) {
 							/** @var ChatConversation */
@@ -80,13 +88,6 @@ class WebSockets_Chat_App implements WebSockets_IApp {
 								$otherConnection->send($data);
 							}
 						}
-					}
-				}
-				
-				if (isset($this->userIdConnectionMap[$otherUserId])) {
-					foreach ($this->userIdConnectionMap[$otherUserId] as $otherUser) {
-						/** @var WebSockets_User $otherUser */
-						$otherUser->send($data);
 					}
 				}
 			}

@@ -38,27 +38,25 @@ class ChatConversation extends Model {
 	 * Returns the user id of the other party as given
 	 *
 	 * @param int $oneUser
-	 * @return int
+	 * @return int[]
 	 */
-	public function getOtherUser($oneUser) {
-		$otherUsers = [];
-		foreach($this->users as $user) {
-			if($oneUser != $user) {
-				$otherUsers[] = $user;
-			}
-
-		return $otherUsers;
+	public function getOtherUsers($oneUser) {
+		return array_filter($this->users, function($userId) use ($oneUser) {
+			return $userId != $oneUser;
+		});
 	}
 
 	/**
 	 * Fetches or creates a conversation between two users
 	 *
-	 * @param int $userId1
-	 * @param int $userId2
+	 * @param int[] $users
 	 * @return static
 	 */
 	public static function getConversation($users, $create = false) {
-		$record = self::findOne('users = :0:', $users);
+		$users = array_unique($users);
+		sort($users);
+
+		$record = self::findOne('users = :0:', implode(',', $users));
 
 		if (!$record && $create) {
 			$record = new self();
@@ -67,5 +65,24 @@ class ChatConversation extends Model {
 		}
 
 		return $record;
+	}
+
+	protected function getProp($prop) {
+		if ($prop == 'users' && is_array($this->$prop)) {
+			return implode(',', $this->$prop);
+		}
+
+		return parent::getProp($prop);
+	}
+
+	protected function setProp($prop, $value) {
+		if ($prop == 'users') {
+			$this->$prop = is_array($value)
+				? $value
+				: explode(',', $value);
+		}
+		else {
+			parent::setProp($prop, $value);
+		}
 	}
 }

@@ -135,7 +135,9 @@ class VueLoader {
                     $selector->setSelector($deepSelStr);
                 }
                 else {
-                    $selector->setSelector($selStr . $attr);
+					// TODO: Really really bad fix
+					// Should actually parse the selector and append at the right location
+                    $selector->setSelector(preg_replace('/::?(?:after|before)|$/', "{$attr}$0", $selStr, 1));
                 }
             }
         }

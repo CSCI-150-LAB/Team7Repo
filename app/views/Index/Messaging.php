@@ -1,63 +1,87 @@
 <?php
 $currentUser = User::getCurrentUser();
 
-$contacts = [];
-if($currentUser->type == "student") {
-	$classes = studentClasses::find("studentId =:0:", $currentUser->id);
-}
-elseif($currentUser->type == "instructor") {
-	$classes = InstructorClasses::find("instructorid =:0:", $currentUser->id);
-}
-if($currentUser->type != "admin") {
-	$users = User::find("type =:0:", "admin");
-	//There has to be a better way of doing this, but idk yet
-	foreach($classes as $class) {
-		$people = studentClasses::find("classId = :0:", $class->classId);
-		foreach($people as $student) {
-			$person = User::getByKey($student->studentId);
-			if(!in_array($person,$users)) {
-				$users[] = $person;
-			}
-		}
-		$teachers = InstructorClasses::find("classid = :0:", $class->classId);
-		foreach($teachers as $teacher) {
-			$instructor = User::getByKey($teacher->instructorid);
-			if(!in_array($instructor,$users)) {
-				$users[] = $instructor;
-			}
-		}
-	}
-	$contacts = array_map(function($user) {
-		return [
-			'id' => $user->id,
-			'fullName' => $user->getFullName()
-		];
-	}, $users);
-}
-else {
-	$contacts = array_map(function($user) {
-		return [
-			'id' => $user->id,
-			'firstName' => $user->firstName,
-			'lastName' => $user->lastName,
-			'fullName' => $user->getFullName()
-		];
-	}, User::find());
-}
+$conversations = ChatConversation::find("FIND_IN_SET(:0:, conversations.users)", $currentUser->id);
+$conversationUsers = [];
+$conversations = array_map(function(ChatConversation $chatconversation) use (&$conversationUsers) {
+	$conversationUsers = array_merge($conversationUsers, $chatconversation->users);
 
-$convos = ChatConversation::query("
-SELECT
-	*
-FROM
-	conversations
-WHERE
-	FIND_IN_SET(:0:,conversations.users)
-", $currentUser->id);
-$conversations = array_map(function($chatconversation) {
 	return [
+		'id' => $chatconversation->id,
 		'users' => $chatconversation->users
 	];
-}, $convos);
+}, $conversations);
+
+// Student -> classes -> instructors, tas, and students, admins
+// instructor -> classes -> students and tas, admins
+// admin -> all users
+if ($currentUser->type == 'admin') {
+	$contacts = User::find();
+}
+else {
+	$conversationUsers = array_unique($conversationUsers);
+
+	if ($currentUser->type == 'instructor') {
+		// Select classes from instructor id
+		$sql = "
+			SELECT
+				ic.*
+			FROM
+				instructorclasses as ic
+			WHERE
+				ic.instructor_id = :0:
+		";
+	}
+	else {
+		// Select classes from student id
+		$sql = "
+			SELECT
+				ic.*
+			FROM
+				instructorclasses as ic
+			INNER JOIN classes as c ON
+				c.class_id = ic.class_id
+			WHERE
+				c.student_id = :0:
+		";
+	}
+
+	// Select all related users from classes
+	$sql = "
+		SELECT
+			u.*
+		FROM
+			({$sql}) as ic
+		INNER JOIN classes as c ON
+			c.class_id = ic.class_id
+		INNER JOIN users as u ON
+			u.id = ic.instructor_id OR
+			u.id = ic.ta_id OR
+			u.id = c.student_id OR
+			u.id IN :1:
+		WHERE
+			u.id <> :0:
+		GROUP BY
+			u.id
+		ORDER BY
+			u.first_name ASC,
+			u.last_name ASC
+	";
+
+	$contacts = User::query(
+		$sql, $currentUser->id,
+		$conversationUsers ?: [0]
+	);
+}
+
+$contacts = array_map(function($user) {
+	return [
+		'id' => $user->id,
+		'firstName' => $user->firstName,
+		'lastName' => $user->lastName,
+		'fullName' => $user->getFullName()
+	];
+}, $contacts);
 
 $this->scriptEnqueue('vuejs', 'https://cdn.jsdelivr.net/npm/vue@2.6.12');
 VueLoader::render(APP_ROOT . '/app/vue-components/chat-form.vue', '#messaging-app');

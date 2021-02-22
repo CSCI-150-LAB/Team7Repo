@@ -34,10 +34,8 @@ class ChatMessage extends Model {
 	public $createdAt;
 
 	protected function getProp($prop) {
-		if ($prop == 'read' && !is_bool($this->$prop)) {
-			return $this->$prop
-				? 1
-				: 0;
+		if ($prop == 'read' && is_array($this->$prop)) {
+			return implode(',', $this->$prop);
 		}
 
 		return parent::getProp($prop);
@@ -45,7 +43,9 @@ class ChatMessage extends Model {
 
 	protected function setProp($prop, $value) {
 		if ($prop == 'read') {
-			$this->$prop = !!$value;
+			$this->$prop = is_array($value)
+				? $value
+				: array_filter(explode(',', $value));
 		}
 		else {
 			parent::setProp($prop, $value);

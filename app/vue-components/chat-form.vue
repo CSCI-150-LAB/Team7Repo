@@ -10,15 +10,16 @@
 								<i class="fas fa-edit"></i>
 							</button>
 							<div class="dropdown-menu" aria-labelledby="contactlist">
-								<a v-for="user in userList" :key="user.id" class="dropdown-item">{{user.fullName}}</a>
+								<a v-for="user in sortedContactList" :key="user.id" class="dropdown-item" v-bind:class="getUserListClasses(user)" href="javascript:void(0)" v-on:click="joinChatRoom(user.id)">{{user.fullName}}</a>
 							</div>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col user-list">
-							<div v-for="user in userList" class="row user-row" v-bind:class="selectedUserId == user.id ? 'selected' : ''" v-bind:key="user.id" v-on:click="joinChatRoom(user.id)" >
-								<div> <img v-bind:src="publicUrl('images/blank_avatar.png')" width="50" height="50" alt="blank_avatar" class="mr-md-4 mb-3 img-fluid"> </div>
-								<div> {{user.fullName}} </div>
+							<div v-for="(convoUsers, convoId) in conversationList" class="row user-row" v-bind:class="currentConversationId == convoId ? 'selected' : ''" v-bind:key="convoId" v-on:click="joinChatRoom(convoUsers, convoId)">
+								<div v-for="userId in convoUsers" v-bind:key="userId" class="col">
+									<img v-bind:title="getUserName(userId)" v-bind:src="publicUrl('images/blank_avatar.png')">
+								</div>
 							</div>
 						</div>
 					</div>
@@ -52,23 +53,50 @@
 
 		data() {
 			return {
-				selectedUserId: 0,
 				currentConversationId: 0,
-				userList: window.userList,
+				userList: window.contactList.reduce((acc, cur) => {
+					acc[cur.id] = cur;
+					return acc;
+				}, {}),
+				conversationList: window.conversationList.reduce((acc, cur) => {
+					acc[cur.id] = cur.users;
+					return acc;
+				}, {}),
 				messageTxt: '',
 				chatLog: []
 			};
 		},
 
 		created() {
-			this.socketOn('JoinChatRoom', ({ conversationId }) => {
-				this.chatLog = [];
-				this.currentConversationId = conversationId;
+			this.socketOn('JoinChatRoom', ({ conversationId, withUserIds }) => {
+				if (!this.conversationList[conversationId]) {
+					this.$set(this.conversationList, conversationId, withUserIds);
+				}
 			});
 
 			this.socketOn('Chat', (obj) => {
 				this.chatLog.push(obj);
 			});
+		},
+
+		computed: {
+			sortedContactList() {
+				return Object.values(this.userList)
+					.map(u => {
+						return {
+							...u,
+							online: this.connectedUsers.includes(u.id)
+						};
+					})
+					.sort((a, b) => {
+						let ret = b.online - a.online;
+						if (ret == 0) {
+							ret = a.fullName.localeCompare(b.fullName);
+						}
+
+						return ret;
+					});
+			}
 		},
 
 		methods: {
@@ -81,15 +109,34 @@
 				this.messageTxt = '';
 			},
 
-			joinChatRoom(userId) {
-				this.selectedUserId = userId;
-				this.socketSend('JoinChatRoom', { withUserId: userId });
+			joinChatRoom(userIds, conversationId = 0) {
+				if (!Array.isArray(userIds)) {
+					userIds = [userIds];
+				}
+				
+				this.currentConversationId = conversationId;
+				this.chatLog = [];
+				this.socketSend('JoinChatRoom', { withUserIds: userIds });
 			},
 
 			getMessageClasses(chat) {
 				return {
 					[chat.authorId == SocketHandler.userInfo.userId ? 'me' : 'them']: true
 				}
+			},
+
+			getUserName(userId) {
+				if (userId == SocketHandler.userInfo.userId) {
+					return SocketHandler.userInfo.fullName;
+				}
+				
+				return this.userList[userId].fullName;
+			},
+
+			getUserListClasses(user) {
+				return {
+					online: user.online
+				};
 			}
 		}
 	}
@@ -99,6 +146,10 @@
 	.user-list {
 		height: 500px;
 		overflow-y: scroll;
+	}
+
+	.user-list img {
+		max-width: 50px;
 	}
 
 	.user-row {
@@ -116,5 +167,20 @@
 
 	.message-log .item.me {
 		text-align: right;
+	}
+
+	.dropdown-item:after {
+		font-family: "Font Awesome 5 Free";
+		font-weight: 900;
+		content: '\f111 ';
+		color: red;
+		margin-left: 4px;
+		font-size: 8px;
+		position: relative;
+		top: -4px;
+	}
+
+	.dropdown-item.online:after {
+		color: green;
 	}
 </style>
