@@ -1,24 +1,25 @@
 <template>
 	<div class="messaging-form">
 		<div class="row">
-			<div class="col-4">
+			<div class="col-6">
 				<div class="card p-4">
 					<div class="row">
-						<div class="col-8">Recent Messages</div>
-						<div class="col">
-							<button type="button" class="btn btn-secondary float-right" data-placement="right" title="Start New Conversation" id="contactlist" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="fas fa-edit"></i>
-							</button>
-							<div class="dropdown-menu" aria-labelledby="contactlist">
-								<a v-for="user in sortedContactList" :key="user.id" class="dropdown-item" v-bind:class="getUserListClasses(user)" href="javascript:void(0)" v-on:click="joinChatRoom(user.id)">{{user.fullName}}</a>
-							</div>
-						</div>
+						<select class="selectpicker" data-live-search="true" multiple title="Contacts">
+							<option v-for="user in sortedContactList" :key="user.id" :value="user.id" class="contacts">{{user.fullName}}</option>
+						</select>
+						<button type="button" class="btn btn-secondary float-right" data-placement="right" title="Start New Conversation" aria-haspopup="true" aria-expanded="false" v-on:click="joinChatRoom($('.selectpicker').val())">
+							<i class="fas fa-edit"></i>
+						</button>
 					</div>
+					<div class="row">Recent Messages</div>
 					<div class="row">
 						<div class="col user-list">
 							<div v-for="(convoUsers, convoId) in conversationList" class="row user-row" v-bind:class="currentConversationId == convoId ? 'selected' : ''" v-bind:key="convoId" v-on:click="joinChatRoom(convoUsers, convoId)">
-								<div v-for="userId in convoUsers" v-bind:key="userId" class="col">
-									<img v-bind:title="getUserName(userId)" v-bind:src="publicUrl('images/blank_avatar.png')">
+								<div v-for="userId in convoUsers" v-bind:key="userId">
+									<div v-if="userId !== currentid" class="col">
+										<img v-bind:title="getUserName(userId)" v-bind:src="publicUrl('images/blank_avatar.png')">
+										{{getUserName(userId)}}
+									</div>
 								</div>
 							</div>
 						</div>
@@ -31,8 +32,14 @@
 			<div class="col">
 				<div class="card p-4">
 					<div ref="log" class="message-log">
-						<div v-for="chat in chatLog" v-bind:key="chat.createdAt" class="item" v-bind:class="getMessageClasses(chat)">
-							{{chat.message}}
+						<div v-for="chat in chatLog" v-bind:key="chat.createdAt" class="item">
+							<div v-if="chat.authorId !== currentid" class="sender">
+								<img v-bind:title="getUserName(chat.authorId)" v-bind:src="publicUrl('images/blank_avatar.png')">
+								{{getUserName(chat.authorId)}}
+							</div>
+							<div class="item" v-bind:class="getMessageClasses(chat)">
+								{{chat.message}}
+							</div>
 						</div>
 					</div>
 					<form class="messaging-form" v-on:submit="submit">
@@ -154,6 +161,8 @@
 
 	.user-row {
 		cursor: pointer;
+		border: 1px solid black;
+    	border-radius: 20px;
 	}
 	.user-row:hover,
 	.user-row.selected {
@@ -166,10 +175,32 @@
 	}
 
 	.message-log .item.me {
-		text-align: right;
+		text-align: left;
+		color: white;
+    	background-color: red;
+    	margin-bottom: 10px;
+    	margin-left: calc(100% - 210px);
+    	padding: 10px;
+    	width: 200px;
+    	height: auto;
+    	border: 1px solid black;
+    	border-radius: 20px;
 	}
 
-	.dropdown-item:after {
+	.message-log .item.them {
+		text-align: left;
+		color: white;
+		background-color: blue;
+		width: 200px;
+		margin-left: 10px;
+		margin-bottom: 10px;
+		padding: 10px;
+    	height: auto;
+		border: 1px solid black;
+		border-radius: 20px;
+	}
+
+	.contacts:after {
 		font-family: "Font Awesome 5 Free";
 		font-weight: 900;
 		content: '\f111 ';
@@ -180,7 +211,17 @@
 		top: -4px;
 	}
 
-	.dropdown-item.online:after {
+	.contacts.online:after {
 		color: green;
 	}
+
+	.sender {
+		color: black;
+	}
+
+	.sender img {
+		max-width: 20px;
+		border-radius: 50%;
+	}
+	
 </style>
