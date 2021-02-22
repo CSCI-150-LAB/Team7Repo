@@ -29,49 +29,13 @@ class Db {
 	 * @return mixed
 	 */
     public function query($sql, ...$args) {
-		$numericNdx = 0;
-		$args = array_reduce($args, function($carry, $item) use (&$numericNdx) {
-			if (is_array($item)) {
-				foreach ($item as $key => $val) {
-					if (is_numeric($key)) {
-						$carry[$numericNdx++] = $val;
-					}
-					else {
-						$carry[$key] = $val;
-					}
-				}
-			}
-			else {
-				$carry[$numericNdx++] = $item;
-			}
-
-			return $carry;
-		}, []);
+		if (count($args) == 1 && is_array($args[0])) {
+			$args = $args[0];
+		}
 
 		foreach ($args as $key => $val) {
-			switch (gettype($val)) {
-				case 'int':
-				case 'integer':
-				case 'double':
-				case 'NULL':
-					continue 2;	// These are fine as is
-				case 'boolean':
-					$args[$key] = $val ? 1 : 0;
-					break;
-				case 'object':
-					if (method_exists($val, '__toString')) {
-						$val = $val->__toString();
-					}
-					else {
-						throw new Exception('Object cannot be used as a parameter in a query');
-					}
-					// Passthru intended
-				case 'string':
-					$args[$key] = "'" . $this->conn->real_escape_string($val) . "'";
-					break;
-				default:
-					throw new Exception(gettype($val) . ' cannot be used as a parameter in a query');
-			}
+			list($val) = $this->prepareSqlParam($val);
+			$args[$key] = $val;
 		}
 		
 		$sql = trim($sql);
@@ -174,6 +138,65 @@ class Db {
 	public function trackModel(&$exist, $futureValue) {
 		if ($this->trackingModels) {
 			$this->trackedModelsExistences[] = [&$exist, $futureValue];
+		}
+	}
+
+	private function prepareSqlParam($val) {
+		if ($val instanceof DbParam_Abstract) {
+			$val = $val->getVariableValue();
+		}
+
+		if ($val instanceof DbParam_Raw) {
+			return [$val->__toString(), 'raw'];
+		}
+
+		switch ($type = gettype($val)) {
+			case 'int':
+			case 'integer':
+			case 'double':
+			case 'NULL':
+				return [$val, $type];	// These are fine as is
+			case 'boolean':
+				return [$val ? 1 : 0, $type];
+			case 'array':
+				$ret = '';
+				$subType = null;
+				foreach ($val as $v) {
+					if ($ret) {
+						$ret .= ',';
+					}
+
+					list($v, $vType) = $this->prepareSqlParam($v);
+					if ($vType == 'NULL') {
+						continue;
+					}
+					elseif ($vType == 'array') {
+						throw new Exception('Array params must not contain other arrays');
+					}
+
+					if (is_null($subType)) {
+						$subType = $vType;
+					}
+					elseif ($subType != $vType) {
+						throw new Exception('Array params must continue like-typed entries');
+					}
+
+					$ret .= $v;
+				}
+
+				return ["({$ret})", $type];
+			case 'object':
+				if (method_exists($val, '__toString')) {
+					$val = $val->__toString();
+				}
+				else {
+					throw new Exception('Object cannot be used as a parameter in a query');
+				}
+				// Passthru intended
+			case 'string':
+				return ["'" . $this->conn->real_escape_string($val) . "'", 'string'];
+			default:
+				throw new Exception(gettype($val) . ' cannot be used as a parameter in a query');
 		}
 	}
 
