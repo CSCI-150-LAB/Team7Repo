@@ -233,8 +233,9 @@
 	}
 
 	.message-log {
-		min-height: 475px;
-		max-height: 600px;
+		/*min-height: 475px;
+		max-height: 600px;*/
+		height: 475px;
 		overflow-y: scroll;
 	}
 

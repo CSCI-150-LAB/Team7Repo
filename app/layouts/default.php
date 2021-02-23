@@ -95,6 +95,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo $this->baseUrl('/Instructor/Search') ?>"> Search Instructors</a>
             </li>
+			<li class="nav-item">
+                <a class="nav-link" href="<?php echo $this->baseUrl('/Index/Messaging') ?>"> Messages</a>
+            </li>
 
         </ul>
         <?php if ($currentUser) : ?>
