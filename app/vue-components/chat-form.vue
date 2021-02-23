@@ -82,7 +82,12 @@
 				}
 
 				if (!this.currentConversationId) {
-					this.joinChatRoom(withUserIds, conversationId);
+					if (this.conversationList[conversationId]) {
+						this.currentConversationId = conversationId;
+					}
+					else {
+						this.joinChatRoom(withUserIds, conversationId);
+					}
 				}
 			});
 
