@@ -6,11 +6,11 @@
 					<div class="row mb-3">
 						<div class="col">
 							<div class="input-group">
-								<select ref="bsSelect" class="selectpicker form-control" data-none-selected-text="Pick people to chat with" multiple data-icon-base="">
+								<select ref="bsSelect" v-model="selectedUsers" class="selectpicker form-control" data-none-selected-text="Pick people to chat with" multiple data-icon-base="">
 									<option v-for="user in sortedContactList" v-bind:key="user.id" v-bind:data-content="getUserOption(user)" v-bind:value="user.id"></option>
 								</select>
 								<div class="input-group-append">
-									<button type="button" class="btn btn-primary" v-on:click="createChatRoom()"><i class="fas fa-edit"></i></button>
+									<button type="button" class="btn btn-primary" v-on:click="createChatRoom()" v-bind:disabled="selectedUsers.length == 0"><i class="fas fa-edit"></i></button>
 								</div>
 							</div>
 						</div>
@@ -60,6 +60,7 @@
 
 		data() {
 			return {
+				selectedUsers: [],
 				currentConversationId: 0,
 				userList: window.contactList.reduce((acc, cur) => {
 					acc[cur.id] = cur;
@@ -126,11 +127,9 @@
 			},
 
 			createChatRoom() {
-				var bsSelect = $(this.$refs.bsSelect),
-					userIds = bsSelect.selectpicker('val');
-				
-				bsSelect.selectpicker('val', []);
-				this.joinChatRoom(userIds);
+				this.joinChatRoom(this.selectedUsers);
+				this.selectedUsers = [];
+				$(this.$refs.bsSelect).selectpicker('refresh');
 			},
 
 			joinChatRoom(userIds, conversationId = 0) {
