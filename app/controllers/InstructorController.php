@@ -291,17 +291,17 @@ class InstructorController extends PermsController {
 		}
 
 		if($this->request->isPost()) {
-			$class = InstructorClasses::find("class_id =:0:", $classid);
+			$class = InstructorClasses::findOne("class_id =:0:", $classid);
 			$errors = [];
 			if(empty($_POST['remove'])) {
 				$errors[] = "remove is required";
 			}
 			else if ($_POST['remove'] == 'Remove TA') {
-				$class[0]->TAid = NULL;
+				$class->TAid = NULL;
 			}
 
 			if(!count($errors)) {
-				if($class[0]->save()) {
+				if($class->save()) {
 					return $this->redirect($this->viewHelpers->baseUrl("/Instructor/ViewClass/{$classid}"));
 				} //Redirects user to main page
 				else {
