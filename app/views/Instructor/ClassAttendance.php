@@ -1,4 +1,4 @@
-<?php  $this->papgeTitle("CourseMaterials");?>
+<?php  $this->papgeTitle("ClassAttendance");?>
 
 <div class="container">
 
@@ -6,21 +6,21 @@
 
 <?php $classes = InstructorClasses::find("instructorid =:0:", $user->id); ?>
 
-<form method="post" action="">
+<form method="post" action=""> <!-- form for  class selection-->
     <div class="row">
         <div class="col-sm">
-                <label for="course">Choose Class:</label>
-                <select name="course" id="class" data-live-search="true" class="mdb-select md-form colorful-select dropdown-primary">
-                    <?php  foreach($classes as $class):?>
-                        <option value="<?php echo $class->classid ?>"> <?php echo $class->class ?> </option>
-                    <?php endforeach;?>
-                </select>
+            <label for="course">Choose Class:</label>
+            <select name="course" id="class" data-live-search="true" class="mdb-select md-form colorful-select dropdown-primary">
+                <?php  foreach($classes as $class):?>
+                    <option value="<?php echo $class->classid ?>"> <?php echo $class->class ?> </option>
+                <?php endforeach;?>
+            </select>
         </div>
         <div class="col-sm">
-            <label for="">Choose Date:</label>
-            <input type="date" id="start" name="trip-start"
-                value="2020-01-01"
-                min="2021-01-01" max="2021-12-31">
+            <form method="post" action =""> <!-- form for week selecttion--> 
+                <label for="week-start">Choose Date:</label>
+                <input type="date" id="start" name="week-start"value="2021-01-01"min="2021-01-01" max="2021-12-31">
+            </form>
         </div>
         <div class="col-sm">
             <input class="btn btn-secondary text-white" type="submit" value="Go"> 
@@ -31,9 +31,20 @@
 
 <div id="course">
     <?php
-        if(isset($_POST))    // checks whether any value is posted
+        if(isset($_POST))    // checks whether any course is posted
         {
           $c_id = $_POST['course'];
+          echo "Class: $c_id";
+        }
+    ?>
+</div>
+
+<div id="week-start">
+    <?php
+        if(isset($_POST))    // checks whether any week is posted
+        {
+          $week = $_POST['week-start'];
+          echo "Start of Week: $week";
         }
     ?>
 </div>
@@ -44,11 +55,11 @@
             <thead> 
                 <tr> 
                     <th scope="col"> Student Name <i class="fas fa-sort-down"></th>
-                    <th scope="col"> Date </th>
-                    <th scope="col"> Date </th>
-                    <th scope="col"> Date </th>
-                    <th scope="col"> Date </th>
-                    <th scope="col"> Date </th>
+                    <th scope="col"> Date: <?php $week ?> </th>
+                    <th scope="col"> Date: <?php $week ?> </th>
+                    <th scope="col"> Date: <?php $week ?> </th>
+                    <th scope="col"> Date: <?php $week ?> </th>
+                    <th scope="col"> Date: <?php $week ?> </th>
                 </tr>
             </thead>
             <tbody>
