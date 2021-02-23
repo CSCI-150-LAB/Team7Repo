@@ -49,7 +49,7 @@ $instructorInfo = $instructor->getProfileModel();
 
 <?php 
 /*
-Pervious code before admin code was added:
+Previous code before admin code was added:
     for ($counter = count($reviews)-1; $counter >= 0; $counter--) { ?>
     <div class = "card my-3">
         <div class = "card-body">

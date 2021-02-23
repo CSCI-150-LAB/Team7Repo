@@ -9,7 +9,8 @@
 </div>
 
 <div class="table-responsive">
-	<h3 class="mb-0">Enrolled Classes</h3>
+	<h3 class="mb-0"><b>Enrolled Classes</b></h3>
+	<br>
 	<table class="table table-bordered tbl-background">																		<!--Lay out the table to hold info on enrolled classes-->
 		<thead>
 			<tr>
@@ -39,7 +40,8 @@
 <?php 
 	$taClass = InstructorClasses::find("ta_id =:0:", $user->id);
 	if ($taClass[0] != NULL) { ?>
-		<div><h3 class="mb-0">TA Classes</h3></div>
+		<div><h3 class="mb-0"><b>TA Classes</b></h3></div>
+		<br>
 		<table class="table table-bordered tbl-background">																		<!--Lay out the table to hold info on enrolled classes-->
 			<thead>
 				<tr>

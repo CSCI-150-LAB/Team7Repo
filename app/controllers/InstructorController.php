@@ -285,6 +285,34 @@ class InstructorController extends PermsController {
 		return $this->view(['errors' => $errors, 'classid' => $classid, 'ta' => $class[0]->TAid]);
 	}
 
+	public function RemoveTAAction($classid = 0) {
+		if($classid == 0) {
+			return $this->redirect($this->viewHelpers->baseUrl());
+		}
+
+		if($this->request->isPost()) {
+			$class = InstructorClasses::findOne("class_id =:0:", $classid);
+			$errors = [];
+			if(empty($_POST['remove'])) {
+				$errors[] = "remove is required";
+			}
+			else if ($_POST['remove'] == 'Remove TA') {
+				$class->TAid = NULL;
+			}
+
+			if(!count($errors)) {
+				if($class->save()) {
+					return $this->redirect($this->viewHelpers->baseUrl("/Instructor/ViewClass/{$classid}"));
+				} //Redirects user to main page
+				else {
+					$errors[] = 'Failed to save the profile';
+				} //If errors, save error
+			}
+		}
+
+		return $this->view(['classid' => $classid]);
+	}
+
 	public function DashboardAction() {
 		$user = User::getCurrentUser();
 		return $this->view(['user' => $user]);
