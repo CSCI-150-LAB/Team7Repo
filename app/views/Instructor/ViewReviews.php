@@ -22,12 +22,39 @@ $instructorInfo = $instructor->getProfileModel();
 
 <?php $reviews = InstructorRatings::find("instructor_id = :0:", $instructor->id);?>
 
+
+<?php   if($currentUser->type != "admin") { //Allows admin to delete reviews
+                for ($counter = count($reviews)-1; $counter >= 0; $counter--) { ?> 
+                    <div class = "card"> 
+                        <div class = "card-body"> 
+                            <?php echo $reviews[$counter]->printRating(); ?>
+                            <br>
+                        </div>
+                    </div>
+                    <br>
+       <?php }
+       } else { 
+            for ($counter = count($reviews)-1; $counter >= 0; $counter--) { ?> 
+                <div class = "card"> 
+                    <div class = "card-body"> 
+                        <?php echo $reviews[$counter]->printRating(); ?>
+                        <br>
+                        <br>
+                        <button type="button" class="btn btn-outline-danger " style ="text-align:right"><a href="<?php echo $this->baseUrl("Instructor/DeleteRating/{$reviews[$counter]->ratingId}") ?>"> Delete </a></button>
+                    </div>
+                </div>
+                <br>
+        <?php } 
+    }?>
+
 <?php 
+/*
+Pervious code before admin code was added:
     for ($counter = count($reviews)-1; $counter >= 0; $counter--) { ?>
     <div class = "card my-3">
         <div class = "card-body">
             <div class="mb-3"><?php echo $reviews[$counter]->printRating(); ?></div>
         </div>
     </div>
-<?php } ?>
-
+    <br>
+<?php } */?>

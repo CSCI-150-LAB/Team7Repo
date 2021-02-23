@@ -70,19 +70,27 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <?php if ($currentUser) : ?>
-            <li class="nav-item active">
+                <?php if (!($currentUser->isAdmin())) : ?>
+            <li class="nav-item">
                 <a class="nav-link" href="<?php echo $currentUser->getDashboardUrl() ?>"> My Dashboard </a>
             </li>
-            <li class="nav-item">
-            <?php if ($currentUser->type == "instructor") : ?>
+            <?php endif; ?>
+			<?php if ($currentUser->isInstructor()) : ?>
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo $this->baseUrl("/Instructor/ViewReviews/{$currentUser->id}") ?>"> My Ratings </a>
             </li>
-            <?php endif; ?>
+			<?php endif; ?>
+			<?php if ($currentUser->isAdmin()) : ?>
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo $this->baseUrl("/Admin/Panel/{$currentUser->id}") ?>"> My Panel </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0)"> Resources </a>
+                <a class="nav-link" href="javascript:void(0)"> Search Students </a>
             </li>
+			<?php endif; ?>
+            <!-- <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)"> Resources </a>
+            </li> -->
             <?php endif; ?>
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo $this->baseUrl('/Instructor/Search') ?>"> Search Instructors</a>
