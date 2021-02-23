@@ -14,8 +14,13 @@
 	else {
 		$ta = User::find("id =:0:", $class->TAid); ?>
 		 <a href = '<?php echo $this->baseUrl("/Student/Profile/{$ta[0]->id}") ?>'> <?php echo $ta[0]->firstName . " " . $ta[0]->lastName; ?></a>
-		 <?php
-	}
+		 <!--Allow instructor to remove a TA if they have one-->
+		 <?php $currentUser = User::getCurrentUser(); 
+		 			if ($currentUser->id != $ta[0]->id) { ?>
+						<button type="button" class="btn btn-outline-danger " style ="text-align:right"><a href="<?php echo $this->baseUrl("Instructor/RemoveTA/{$class->classid}") ?>"> Remove </a></button>
+					 <?php } 
+					 
+		 }
 ?> </h5>
 
 <div class="dropdown">
@@ -50,6 +55,7 @@
         unset($_SESSION['add_student_errors']);
     }
 ?>
+
 <div class="my-3 text-right">
 	<div class="dropdown">
 		<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -58,7 +64,13 @@
 		<div class="dropdown-menu">
 			<a href='<?php echo $this->baseUrl("/Instructor/AddStudent/{$class->classid}") ?>' class="dropdown-item">Add Student</a>
 			<a href='<?php echo $this->baseUrl("/Instructor/AddCSVStudents/{$class->classid}") ?>' class="dropdown-item">Add Students by CSV</a>
-			<a href='<?php echo $this->baseUrl("/Instructor/AddTA/{$class->classid}") ?>' class="dropdown-item">Add TA</a>
+
+			
+			<?php
+				if ($ta[0]->id == NULL) { ?>
+					<a href='<?php echo $this->baseUrl("/Instructor/AddTA/{$class->classid}") ?>' class="dropdown-item">Add TA</a>
+			<?php 
+				} ?>
 		</div>
 	</div>
 </div>
