@@ -137,10 +137,16 @@ window.SocketHandler = (function() {
 				},
 
 				computed: {
-					currentUserId() {
+					currentUser() {
 						return result.userInfo
 							// @ts-ignore
-							? result.userInfo.userId
+							? result.userInfo
+							: null;
+					},
+					currentUserId() {
+						return this.currentUser
+							// @ts-ignore
+							? this.currentUser.userId
 							: 0;
 					},
 					connectedUsers() {

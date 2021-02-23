@@ -86,13 +86,15 @@ $contacts = array_map(function($user) {
 $currentUser = User::getCurrentUser();
 
 $this->scriptEnqueue('vuejs', 'https://cdn.jsdelivr.net/npm/vue@2.6.12');
-VueLoader::render(APP_ROOT . '/app/vue-components/chat-form.vue', '#messaging-app');
+VueLoader::render([
+	APP_ROOT . '/app/vue-components/chat-form.vue',
+	APP_ROOT . '/app/vue-components/chat-bubble.vue'
+], '#messaging-app');
 ?>
 
 <script>
 	var contactList = <?= json_encode($contacts) ?>;
 	var conversationList = <?= json_encode($conversations) ?>;
-	var currentid = <?= json_encode($currentUser->id) ?>;
 </script>
 
 <div id="messaging-app">

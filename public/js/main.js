@@ -1,6 +1,6 @@
 $(function() {
 
-	$('select').selectpicker();
+	// $('select').selectpicker();
 
 	$(document).on('submit', '.instructor-search', function(e) {
 		e.preventDefault();

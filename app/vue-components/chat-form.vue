@@ -1,24 +1,32 @@
 <template>
 	<div class="messaging-form">
 		<div class="row">
-			<div class="col-6">
-				<div class="card p-4">
-					<div class="row">
-						<select class="selectpicker" data-live-search="true" multiple title="Contacts">
-							<option v-for="user in sortedContactList" :key="user.id" :value="user.id" class="contacts">{{user.fullName}}</option>
-						</select>
-						<button type="button" class="btn btn-secondary float-right" data-placement="right" title="Start New Conversation" aria-haspopup="true" aria-expanded="false" v-on:click="joinChatRoom($('.selectpicker').val())">
-							<i class="fas fa-edit"></i>
-						</button>
+			<div class="col-md-6">
+				<div class="card p-4 mb-3 mb-md-0">
+					<div class="row mb-3">
+						<div class="col">
+							<div class="input-group">
+								<select ref="bsSelect" class="selectpicker form-control" data-none-selected-text="Pick people to chat with" multiple data-icon-base="">
+									<option v-for="user in sortedContactList" v-bind:key="user.id" v-bind:data-icon="getContactIcon(user)" v-bind:value="user.id">{{user.fullName}}</option>
+								</select>
+								<div class="input-group-append">
+									<button type="button" class="btn btn-primary" v-on:click="createChatRoom()"><i class="fas fa-edit"></i></button>
+								</div>
+							</div>
+						</div>
 					</div>
 					<div class="row">Recent Messages</div>
 					<div class="row">
 						<div class="col user-list">
-							<div v-for="(convoUsers, convoId) in conversationList" class="row user-row" v-bind:class="currentConversationId == convoId ? 'selected' : ''" v-bind:key="convoId" v-on:click="joinChatRoom(convoUsers, convoId)">
-								<div v-for="userId in convoUsers" v-bind:key="userId">
-									<div v-if="userId !== currentid" class="col">
-										<img v-bind:title="getUserName(userId)" v-bind:src="publicUrl('images/blank_avatar.png')">
-										{{getUserName(userId)}}
+							<div v-for="(convoUsers, convoId) in conversationList"
+								class="row user-row"
+								v-bind:class="currentConversationId == convoId ? 'selected' : ''"
+								v-bind:key="convoId"
+								v-on:click="joinChatRoom(convoUsers, convoId)"
+							>
+								<div class="col">
+									<div v-for="userId in convoUsers" v-bind:key="userId" class="user-item" v-bind:class="userId != currentUserId ? 'd-inline-block' : 'd-none'">
+										<i class="fas fa-circle" v-bind:class="isUserOnline(userId) ? 'online' : ''"></i> {{getUserName(userId, 'fullName')}}
 									</div>
 								</div>
 							</div>
@@ -29,10 +37,11 @@
 
 			<!-- List of messages above, selected message group below -->
 
-			<div class="col">
-				<div class="card p-4">
-					<div ref="log" class="message-log">
-						<div v-for="chat in chatLog" v-bind:key="chat.createdAt" class="item">
+			<div class="col-md-6">
+				<div class="card h-100 p-4 d-flex flex-column">
+					<div ref="log" class="message-log flex-grow-1">
+						<chat-bubble v-for="(chat, ndx) in chatLog" v-bind:key="chat.createdAt" v-bind:chat="chat" v-bind:previous-chat="ndx > 0 ? chatLog[ndx - 1] : null"></chat-bubble>
+						<!-- <div v-for="chat in chatLog" v-bind:key="chat.createdAt" class="item">
 							<div v-if="chat.authorId !== currentid" class="sender">
 								<img v-bind:title="getUserName(chat.authorId)" v-bind:src="publicUrl('images/blank_avatar.png')">
 								{{getUserName(chat.authorId)}}
@@ -40,9 +49,9 @@
 							<div class="item" v-bind:class="getMessageClasses(chat)">
 								{{chat.message}}
 							</div>
-						</div>
+						</div> -->
 					</div>
-					<form class="messaging-form" v-on:submit="submit">
+					<form class="messaging-form mb-0" v-on:submit="submit">
 						<div class="input-group">
 							<input type="text" class="form-control" v-model="messageTxt" placeholder="Message">
 							<button type="submit" class="btn btn-primary" v-bind:disabled="!isSocketConnected"><i class="fas fa-paper-plane"></i></button>
@@ -79,11 +88,20 @@
 				if (!this.conversationList[conversationId]) {
 					this.$set(this.conversationList, conversationId, withUserIds);
 				}
+
+				if (!this.currentConversationId) {
+					this.joinChatRoom(withUserIds, conversationId);
+				}
 			});
 
 			this.socketOn('Chat', (obj) => {
+				obj.author = this.getUserInfo(obj.authorId);
 				this.chatLog.push(obj);
 			});
+		},
+
+		updated() {
+			$(this.$refs.bsSelect).selectpicker('refresh');
 		},
 
 		computed: {
@@ -116,11 +134,15 @@
 				this.messageTxt = '';
 			},
 
-			joinChatRoom(userIds, conversationId = 0) {
-				if (!Array.isArray(userIds)) {
-					userIds = [userIds];
-				}
+			createChatRoom() {
+				var bsSelect = $(this.$refs.bsSelect),
+					userIds = bsSelect.selectpicker('val');
 				
+				bsSelect.selectpicker('val', []);
+				this.joinChatRoom(userIds);
+			},
+
+			joinChatRoom(userIds, conversationId = 0) {
 				this.currentConversationId = conversationId;
 				this.chatLog = [];
 				this.socketSend('JoinChatRoom', { withUserIds: userIds });
@@ -128,22 +150,37 @@
 
 			getMessageClasses(chat) {
 				return {
-					[chat.authorId == SocketHandler.userInfo.userId ? 'me' : 'them']: true
+					[chat.authorId == this.currentUserId ? 'me' : 'them']: true
 				}
 			},
 
-			getUserName(userId) {
-				if (userId == SocketHandler.userInfo.userId) {
-					return SocketHandler.userInfo.fullName;
-				}
-				
-				return this.userList[userId].fullName;
+			getUserInfo(userId) {
+				return userId == this.currentUserId
+					? this.currentUser
+					: this.userList[userId];
+			},
+
+			getUserName(userId, field = 'fullName') {
+				return this.getUserInfo(userId)[field];
 			},
 
 			getUserListClasses(user) {
 				return {
 					online: user.online
 				};
+			},
+
+			isUserOnline(userId) {
+				return this.connectedUsers.includes(userId);
+			},
+
+			getContactIcon(user) {
+				var classes = ['fas', 'fa-circle'];
+				if (user.online) {
+					classes.push('online');
+				}
+
+				return classes.join(' ');
 			}
 		}
 	}
@@ -161,20 +198,32 @@
 
 	.user-row {
 		cursor: pointer;
-		border: 1px solid black;
-    	border-radius: 20px;
+		border-top: 1px solid #ddd;
 	}
+	.user-row:first-child {
+		border: none;
+	}
+
+	.user-row:nth-child(even) {
+		background-color: #f0f0f0;
+	}
+
+	.user-row .user-item {
+		padding: 0px 4px;
+	}
+	
 	.user-row:hover,
 	.user-row.selected {
 		background-color: #faa;
 	}
 
 	.message-log {
-		height: 475px;
+		min-height: 475px;
+		max-height: 600px;
 		overflow-y: scroll;
 	}
 
-	.message-log .item.me {
+	/* .message-log .item.me {
 		text-align: left;
 		color: white;
     	background-color: red;
@@ -198,7 +247,7 @@
     	height: auto;
 		border: 1px solid black;
 		border-radius: 20px;
-	}
+	} */
 
 	.contacts:after {
 		font-family: "Font Awesome 5 Free";
@@ -222,6 +271,16 @@
 	.sender img {
 		max-width: 20px;
 		border-radius: 50%;
+	}
+
+	.selectpicker ::v-deep ~ * .fa-circle,
+	.user-list .fa-circle {
+		color: red;
+	}
+
+	.selectpicker ::v-deep ~ * .fa-circle.online,
+	.user-list .fa-circle.online {
+		color: green;
 	}
 	
 </style>
