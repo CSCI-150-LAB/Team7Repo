@@ -1,6 +1,6 @@
 <?php
 
-class IndexController extends Controller {
+class IndexController extends PermsController {
     public function IndexAction() {
         return $this->view();
     }
@@ -30,6 +30,9 @@ class IndexController extends Controller {
 		return $this->view();
 	}
 
+	/**
+	 * @MustBeLoggedIn('/User/Login')
+	 */
 	public function MessagingAction() {
 		return $this->view();
 	}

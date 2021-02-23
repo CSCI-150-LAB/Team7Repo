@@ -3,7 +3,7 @@
 	$this->pageTitle('Search Instructors');
 ?>
 
-<h1>Instructor Search</h1>
+<h1 class="mb-3 p-5 text-white bg-blue">Instructor Search</h1>
 
 <form class="instructor-search" method="GET" action="<?php echo $this->baseUrl('/Instructor/Search') ?>">
 	<div class="input-group mb-3">

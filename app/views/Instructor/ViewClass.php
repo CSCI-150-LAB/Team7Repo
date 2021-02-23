@@ -2,11 +2,21 @@
 	$this->pageTitle('View Class');
 ?>
 
-<h1> <?php echo $class->class . " " . $class->getClassTimeString(); ?> </h1>
+<h1 class="mb-3 p-5 text-white bg-blue"> <?php echo $class->class . " " . $class->getClassTimeString(); ?> </h1>
 <h2> <?php echo $class->description; ?> </h2>
 
 
-
+<h5> <b>Class TA:</b> 
+<?php 
+	if ($class->TAid == NULL) {
+		echo "None";
+	}
+	else {
+		$ta = User::find("id =:0:", $class->TAid); ?>
+		 <a href = '<?php echo $this->baseUrl("/Student/Profile/{$ta[0]->id}") ?>'> <?php echo $ta[0]->firstName . " " . $ta[0]->lastName; ?></a>
+		 <?php
+	}
+?> </h5>
 
 <div class="dropdown">
 	<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -41,9 +51,18 @@
     }
 ?>
 <div class="my-3 text-right">
-	<a class = "btn btn-secondary mr-2 text-white" href ='<?php echo $this->baseUrl("/Instructor/AddStudent/{$class->classid}") ?>'>Add a Student</a>
-	<a class = "btn btn-secondary text-white" href ='<?php echo $this->baseUrl("/Instructor/AddCSVStudents/{$class->classid}") ?>'>Add Students by CSV</a>
+	<div class="dropdown">
+		<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Add
+		</button>
+		<div class="dropdown-menu">
+			<a href='<?php echo $this->baseUrl("/Instructor/AddStudent/{$class->classid}") ?>' class="dropdown-item">Add Student</a>
+			<a href='<?php echo $this->baseUrl("/Instructor/AddCSVStudents/{$class->classid}") ?>' class="dropdown-item">Add Students by CSV</a>
+			<a href='<?php echo $this->baseUrl("/Instructor/AddTA/{$class->classid}") ?>' class="dropdown-item">Add TA</a>
+		</div>
+	</div>
 </div>
+
 <?php $studentids = studentClasses::find("classId =:0:", $class->classid);?>
 <div class="table-responsive">
 	<table class="table table-bordered tbl-background">

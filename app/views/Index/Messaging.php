@@ -60,12 +60,19 @@ else {
 			u.id = c.student_id OR
 			u.id IN :1:
 		WHERE
-			u.id <> :0:
+			u.id <> :0: AND
+			u.type <> 'admin'
 		GROUP BY
 			u.id
-		ORDER BY
-			u.first_name ASC,
-			u.last_name ASC
+
+		UNION
+
+		SELECT
+			u.*
+		FROM
+			users as u
+		WHERE
+			u.type = 'admin'
 	";
 
 	$contacts = User::query(
@@ -79,7 +86,8 @@ $contacts = array_map(function($user) {
 		'id' => $user->id,
 		'firstName' => $user->firstName,
 		'lastName' => $user->lastName,
-		'fullName' => $user->getFullName()
+		'fullName' => $user->getFullName(),
+		'type' => $user->type
 	];
 }, $contacts);
 
