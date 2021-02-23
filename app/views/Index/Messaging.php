@@ -64,10 +64,9 @@ else {
 			u.type <> 'admin'
 		GROUP BY
 			u.id
-		ORDER BY
-			u.first_name ASC,
-			u.last_name ASC
+
 		UNION
+
 		SELECT
 			u.*
 		FROM
@@ -87,7 +86,8 @@ $contacts = array_map(function($user) {
 		'id' => $user->id,
 		'firstName' => $user->firstName,
 		'lastName' => $user->lastName,
-		'fullName' => $user->getFullName()
+		'fullName' => $user->getFullName(),
+		'type' => $user->type
 	];
 }, $contacts);
 

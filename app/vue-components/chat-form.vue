@@ -7,7 +7,7 @@
 						<div class="col">
 							<div class="input-group">
 								<select ref="bsSelect" class="selectpicker form-control" data-none-selected-text="Pick people to chat with" multiple data-icon-base="">
-									<option v-for="user in sortedContactList" v-bind:key="user.id" v-bind:data-icon="getContactIcon(user)" v-bind:value="user.id">{{user.fullName}}</option>
+									<option v-for="user in sortedContactList" v-bind:key="user.id" v-bind:data-content="getUserOption(user)" v-bind:value="user.id"></option>
 								</select>
 								<div class="input-group-append">
 									<button type="button" class="btn btn-primary" v-on:click="createChatRoom()"><i class="fas fa-edit"></i></button>
@@ -41,15 +41,6 @@
 				<div class="card h-100 p-4 d-flex flex-column">
 					<div ref="log" class="message-log flex-grow-1">
 						<chat-bubble v-for="(chat, ndx) in chatLog" v-bind:key="chat.createdAt" v-bind:chat="chat" v-bind:previous-chat="ndx > 0 ? chatLog[ndx - 1] : null"></chat-bubble>
-						<!-- <div v-for="chat in chatLog" v-bind:key="chat.createdAt" class="item">
-							<div v-if="chat.authorId !== currentid" class="sender">
-								<img v-bind:title="getUserName(chat.authorId)" v-bind:src="publicUrl('images/blank_avatar.png')">
-								{{getUserName(chat.authorId)}}
-							</div>
-							<div class="item" v-bind:class="getMessageClasses(chat)">
-								{{chat.message}}
-							</div>
-						</div> -->
 					</div>
 					<form class="messaging-form mb-0" v-on:submit="submit">
 						<div class="input-group">
@@ -181,6 +172,31 @@
 				}
 
 				return classes.join(' ');
+			},
+
+			getUserOption(user) {
+				let icon = 'fas fa-circle';
+				if (user.online) {
+					icon += ' online';
+				}
+
+				let badge;
+				switch (user.type) {
+					case 'student':
+						badge = 'light';
+						break;
+					case 'admin':
+						badge = 'danger';
+						break;
+					case 'instructor':
+						badge = 'warning';
+						break;
+				}
+
+				// TODO: Figure out why VueLoader glitches out when I put closing html tags inside the below string
+				return `
+					<span class="${icon}"><` + `/span>&nbsp; ${user.fullName} <span class="badge badge-${badge}">${user.type}<` + `/span>
+				`.trim();
 			}
 		}
 	}
