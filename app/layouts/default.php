@@ -1,4 +1,16 @@
-<html>
+<?php
+	$currentUser = User::getCurrentUser();
+	$authInfo = false;
+	if ($currentUser) {
+		$authInfo = [
+			'userId' => $currentUser->id,
+			'authToken' => $currentUser->getAuthToken(),
+			'firstName' => $currentUser->firstName,
+			'lastName' => $currentUser->lastName,
+			'fullName' => $currentUser->getFullName()
+		];
+	}
+?><html>
 
 <head>
 	<meta charset="utf-8">
@@ -19,8 +31,15 @@
 				document.addEventListener('DOMContentLoaded', fn);
 			}
 		}
+
+		var BASEURL = '{$this->baseUrl()}';
+		var AUTH_INFO = " . json_encode($authInfo) . ";
 		"
 	);
+
+	$this->scriptEnqueue('standard-vue-mixin', $this->publicUrl('js/standard-vue-mixin.js?t=' . filemtime(APP_ROOT . '/public/js/standard-vue-mixin.js')));
+	$this->scriptEnqueue('websockets', $this->publicUrl('js/websockets-init.js?t=' . filemtime(APP_ROOT . '/public/js/websockets-init.js')));
+
 	$this->scriptRegister('jquery-cdn', 'https://code.jquery.com/jquery-3.5.1.min.js');
 	$this->scriptRegister('jquery', 'window.jQuery || document.write(\'<script src="' . $this->publicUrl('js/jquery-3.5.1.min.js') . '"><\/script>\')', ['jquery-cdn']);
 	$this->scriptRegister('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js', ['jquery']);
@@ -34,13 +53,8 @@
 	$request = DI::getDefault()->get('Request');
 	$this->bodyClass(strtolower($request->getControllerName()) . '-c');
 	$this->bodyClass(strtolower($request->getActionName()) . '-a');
-    
-    $currentUser = User::getCurrentUser();
 	?>
 	<link rel="canonical" href="<?php echo $this->getCanonical() ?>" />
-	<script>
-		var BASEURL = '<?php echo $this->baseUrl() ?>';
-	</script>
 </head>
 
 <body class="<?php echo $this->bodyClass(IS_LOCAL ? 'dev' : '') ?>">
@@ -80,6 +94,9 @@
             <?php endif; ?>
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo $this->baseUrl('/Instructor/Search') ?>"> Search Instructors</a>
+            </li>
+			<li class="nav-item">
+                <a class="nav-link" href="<?php echo $this->baseUrl('/Index/Messaging') ?>"> Messages</a>
             </li>
 
         </ul>

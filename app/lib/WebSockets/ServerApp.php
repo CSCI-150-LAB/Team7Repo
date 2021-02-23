@@ -35,6 +35,7 @@ class WebSockets_ServerApp implements MessageComponentInterface {
     }
 
 	public function onClose(ConnectionInterface $conn) {
+		/** @var WebSockets_User */
 		$user = $this->users[$conn];
 
 		foreach ($this->applications as $app) {
@@ -48,6 +49,7 @@ class WebSockets_ServerApp implements MessageComponentInterface {
 		$payload = json_decode($msg, true);
 		/** @var WebSockets_User */
 		$user = $this->users[$from];
+		$authenticated = $user->isAuthenticated();
 
 		if (!is_array($payload) || !isset($payload['type'])) {
 			return;
@@ -56,15 +58,21 @@ class WebSockets_ServerApp implements MessageComponentInterface {
 		$class = 'WebSockets_Message_' . $payload['type'];
 		if (class_exists($class)) {
 			try {
-				$message = new $class(isset($payload['data']) ? $payload['data'] : null);
+				$message = new $class(isset($payload['data']) ? $payload['data'] : []);
 
 				foreach ($this->applications as $app) {
 					$app->onMessage($user, $message);
 				}
+
+				if ($authenticated != $user->isAuthenticated()) {
+					foreach ($this->applications as $app) {
+						$app->onUserAuthChanged($user);
+					}
+				}
 			}
 			catch (Throwable $e) {
 				if (IS_LOCAL) {
-					$message = new WebSockets_Message_Error(['msg' => $e->getMessage()]);
+					$message = new WebSockets_Message_Error(['msg' => $e->getMessage() . PHP_EOL . $e->getFile() . PHP_EOL . $e->getLine()]);
 					$user->send($message);
 				}
 			}

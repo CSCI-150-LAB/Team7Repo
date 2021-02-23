@@ -44,6 +44,16 @@ class User extends Model {
 	public $type;
 
 	/**
+	 * @Column('auth_token')
+	 */
+	public $authToken;
+
+	/**
+	 * @Column('auth_token_date')
+	 */
+	public $authTokenExpirationDate;
+
+	/**
 	 * @Column('updated_at')
 	 */
 	public $updatedAt;
@@ -181,5 +191,42 @@ class User extends Model {
 	public static function loggoutUser() {
 		self::$currentUser = null;
 		unset($_SESSION['current_user']);
+	}
+
+	/**
+	 * Get's an auth token for the current user
+	 *
+	 * @return string
+	 */
+	public function getAuthToken() {
+		if (is_null($this->authTokenExpirationDate) || $this->authTokenExpirationDate < time()) {
+			$this->authToken = sha1(rand());
+			$this->authTokenExpirationDate = strtotime('+1 day');
+			$this->save();
+		}
+
+		return $this->authToken;
+	}
+
+	protected function getProp($prop) {
+		if ($prop == 'authTokenExpirationDate' && !is_string($this->$prop)) {
+			return date('Y-m-d H:i:s', $this->$prop);
+		}
+
+		return parent::getProp($prop);
+	}
+
+	protected function setProp($prop, $value) {
+		if ($prop == 'authTokenExpirationDate') {
+			if (is_string($value)) {
+				$this->$prop = strtotime($value) ?: 0;
+			}
+			else {
+				$this->$prop = $value ?: 0;
+			}
+		}
+		else {
+			parent::setProp($prop, $value);
+		}
 	}
 }

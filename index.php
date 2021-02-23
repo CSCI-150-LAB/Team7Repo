@@ -49,7 +49,7 @@ Autoloader::init([
 			$di->clearAll();
 
 			// TODO: Duplicate of the hook above
-			$di->addTransient('Db', function() {
+			$di->addScoped('Db', function() {
 				return new Db($_ENV['dbhost'], $_ENV['dbuser'], $_ENV['dbpass'], $_ENV['dbname']);
 			});
 
