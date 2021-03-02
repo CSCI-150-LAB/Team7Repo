@@ -100,6 +100,9 @@ class Db {
 	public function abortTransaction() {
 		$this->conn->rollback();
 		$this->conn->autocommit(true);
+		foreach ($this->trackedModelsExistences as $existenc) {
+			$existenc[0] = $existenc[1];
+		}
 		$this->trackedModelsExistences = [];
 		$this->trackingModels = false;
 	}
@@ -112,9 +115,6 @@ class Db {
 	public function commitTransaction() {
 		$this->conn->commit();
 		$this->conn->autocommit(true);
-		foreach ($this->trackedModelsExistences as $existenc) {
-			$existenc[0] = $existenc[1];
-		}
 		$this->trackedModelsExistences = [];
 		$this->trackingModels = false;
 	}
