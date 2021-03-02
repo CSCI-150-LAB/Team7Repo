@@ -69,6 +69,10 @@ class File extends Model {
 			$info = pathinfo($name);
 			$googleFileId = $helper->createFile("{$record->id}.{$info['extension']}", $mimeType, $data);
 
+			if (is_null($googleFileId)) {
+				throw new Exception("Failed to create file");
+			}
+
 			$record->googleId = $googleFileId;
 			$record->save();
 
