@@ -55,18 +55,29 @@ class File extends Model {
 		/** @var GoogleApi_Helper */
 		$helper = DI::getDefault()->get('googleApiHelper');
 
-		try {
-			$googleFileId = $helper->createFile($name, $mimeType, $data);
+		/** @var Db */
+		$db = DI::getDefault()->get('Db');
+		$db->startTransaction();
 
+		try {
 			$record = new self();
-			$record->googleId = $googleFileId;
+			$record->googleId = 'temp';
 			$record->name = $name;
 			$record->mimeType = $mimeType;
 			$record->save();
 
+			$info = pathinfo($name);
+			$googleFileId = $helper->createFile("{$record->id}.{$info['extension']}", $mimeType, $data);
+
+			$record->googleId = $googleFileId;
+			$record->save();
+
+			$db->commitTransaction();
+
 			return $record;
 		}
 		catch (Exception $e) {
+			$db->abortTransaction();
 			return null;
 		}
 	}
