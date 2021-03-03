@@ -201,9 +201,7 @@ class Model extends AnnotatedClass {
 				}
 
 				$this->_exists = true;
-				if ($db->isTrackingModels()) {
-					$db->trackModel($this->_exists, false);
-				}
+				$db->trackModel(DbTrackTypeEnum::ABORTED(), function() { $this->_exists = false; });
 
 				return true;
 			}
@@ -232,10 +230,7 @@ class Model extends AnnotatedClass {
 			$result = $db->query("DELETE FROM {$tableMeta['name']} WHERE {$query} LIMIT 1", $queryArgs);
 			if ($result === true) {
 				$this->_exists = false;
-
-				if ($db->isTrackingModels()) {
-					$db->trackModel($this->_exists, true);
-				}
+				$db->trackModel(DbTrackTypeEnum::ABORTED(), function() { $this->_exists = true; });
 			}
 
 			return $result === true;
