@@ -200,11 +200,9 @@ class Model extends AnnotatedClass {
 					}
 				}
 
+				$this->_exists = true;
 				if ($db->isTrackingModels()) {
-					$db->trackModel($this->_exists, true);
-				}
-				else {
-					$this->_exists = true;
+					$db->trackModel($this->_exists, false);
 				}
 
 				return true;
@@ -233,11 +231,10 @@ class Model extends AnnotatedClass {
 			$db = DI::getDefault()->get('Db');
 			$result = $db->query("DELETE FROM {$tableMeta['name']} WHERE {$query} LIMIT 1", $queryArgs);
 			if ($result === true) {
+				$this->_exists = false;
+
 				if ($db->isTrackingModels()) {
-					$db->trackModel($this->_exists, false);
-				}
-				else {
-					$this->_exists = false;
+					$db->trackModel($this->_exists, true);
 				}
 			}
 
