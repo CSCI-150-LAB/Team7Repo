@@ -3,6 +3,7 @@
 class DI {
 	private static $defaultInstance = null;
 	private $typeDict = [];
+	private $scopedInstances = [];
 	private $stackLevelExtra = 0;
 
 	/**
@@ -30,6 +31,10 @@ class DI {
 			throw new Exception('Factory provided is not a function or class name');
 		}
 
+		if (isset($this->scopedInstances[$class])) {
+			unset($this->scopedInstances[$class]);
+		}
+
 		$this->typeDict[$class] = is_callable($factory)
 			? $factory
 			: function() use ($factory) {
@@ -45,22 +50,24 @@ class DI {
 	 * @return void
 	 */
 	public function addScoped($class, $factory) {
-		$cached = null;
+		if (isset($this->scopedInstances[$class])) {
+			unset($this->scopedInstances[$class]);
+		}
 
-		$this->typeDict[$class] = function() use ($factory, &$cached) {
-			if (is_null($cached)) {
+		$this->typeDict[$class] = function() use ($class, $factory) {
+			if (is_null($this->scopedInstances[$class])) {
 				if (is_callable($factory)) {
-					$cached = $factory($this);
+					$this->scopedInstances[$class] = $factory($this);
 				}
 				elseif (is_string($factory) && class_exists($factory)) {
-					$cached = $this->constructClass($factory);
+					$this->scopedInstances[$class] = $this->constructClass($factory);
 				}
 				else {
-					$cached = $factory;
+					$this->scopedInstances[$class] = $factory;
 				}
 			}
 
-			return $cached;
+			return $this->scopedInstances[$class];
 		};
 	}
 
@@ -150,5 +157,15 @@ class DI {
 		}
 		
 		return $classOrInst->$method(...$params);
+	}
+
+	public function clearAll() {
+		foreach ($this->scopedInstances as $ndx => $val) {
+			unset($this->scopedInstances[$ndx]);
+		}
+
+		foreach ($this->typeDict as $ndx => $val) {
+			unset($this->scopedInstances[$ndx]);
+		}
 	}
 }

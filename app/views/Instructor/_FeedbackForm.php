@@ -5,7 +5,7 @@
 	$this->scriptEnqueue('vuejs', 'https://cdn.jsdelivr.net/npm/vue@2.6.12');
 
 	// Load vue components
-	VueLoader_Loader::render(glob(APP_ROOT . '/app/vue-components/feedback-form/*.vue'), '#feedback-app');
+	VueLoader::render(glob(APP_ROOT . '/app/vue-components/feedback-form/*.vue'), '#feedback-app');
 ?>
 
 <div class="modal fade" id="feedback-app">

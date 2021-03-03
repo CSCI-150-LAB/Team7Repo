@@ -1,4 +1,16 @@
-<html>
+<?php
+	$currentUser = User::getCurrentUser();
+	$authInfo = false;
+	if ($currentUser) {
+		$authInfo = [
+			'userId' => $currentUser->id,
+			'authToken' => $currentUser->getAuthToken(),
+			'firstName' => $currentUser->firstName,
+			'lastName' => $currentUser->lastName,
+			'fullName' => $currentUser->getFullName()
+		];
+	}
+?><html>
 
 <head>
 	<meta charset="utf-8">
@@ -19,12 +31,20 @@
 				document.addEventListener('DOMContentLoaded', fn);
 			}
 		}
+
+		var BASEURL = '{$this->baseUrl()}';
+		var AUTH_INFO = " . json_encode($authInfo) . ";
 		"
 	);
+
+	$this->scriptEnqueue('standard-vue-mixin', $this->publicUrl('js/standard-vue-mixin.js?t=' . filemtime(APP_ROOT . '/public/js/standard-vue-mixin.js')));
+	$this->scriptEnqueue('websockets', $this->publicUrl('js/websockets-init.js?t=' . filemtime(APP_ROOT . '/public/js/websockets-init.js')));
+
 	$this->scriptRegister('jquery-cdn', 'https://code.jquery.com/jquery-3.5.1.min.js');
 	$this->scriptRegister('jquery', 'window.jQuery || document.write(\'<script src="' . $this->publicUrl('js/jquery-3.5.1.min.js') . '"><\/script>\')', ['jquery-cdn']);
 	$this->scriptRegister('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js', ['jquery']);
-	$this->scriptEnqueue('main', $this->publicUrl('js/main.js?t=' . filemtime(APP_ROOT . '/public/js/main.js')), ['bootstrap'], false);
+	$this->scriptRegister('bootstrap-select', $this->publicUrl('js/bootstrap-select.min.js'), ['jquery', 'bootstrap']);
+	$this->scriptEnqueue('main', $this->publicUrl('js/main.js'), ['bootstrap', 'bootstrap-select'], false);
 
 	$this->outputStyles();
 	$this->outputScripts();
@@ -33,19 +53,14 @@
 	$request = DI::getDefault()->get('Request');
 	$this->bodyClass(strtolower($request->getControllerName()) . '-c');
 	$this->bodyClass(strtolower($request->getActionName()) . '-a');
-    
-    $currentUser = User::getCurrentUser();
 	?>
 	<link rel="canonical" href="<?php echo $this->getCanonical() ?>" />
-	<script>
-		var BASEURL = '<?php echo $this->baseUrl() ?>';
-	</script>
 </head>
 
 <body class="<?php echo $this->bodyClass(IS_LOCAL ? 'dev' : '') ?>">
     <nav class="navbar navbar-expand-lg navbar-dark bg-red">
 
-	<div class="navbar-brand"> <img src="<?php echo $this->publicUrl('images/fl.png')?>" width="40" height="40"></div>
+	<div class="navbar-brand"> <a class="nav-link" href="<?php echo $this->baseUrl() ?>"><img src="<?php echo $this->publicUrl('images/fl.png')?>" width="40" height="40"></a></div>
 
         <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,18 +70,33 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <?php if ($currentUser) : ?>
-            <li class="nav-item active">
+                <?php if (!($currentUser->isAdmin())) : ?>
+            <li class="nav-item">
                 <a class="nav-link" href="<?php echo $currentUser->getDashboardUrl() ?>"> My Dashboard </a>
             </li>
+            <?php endif; ?>
+			<?php if ($currentUser->isInstructor()) : ?>
             <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0)"> My Ratings </a>
+                <a class="nav-link" href="<?php echo $this->baseUrl("/Instructor/ViewReviews/{$currentUser->id}") ?>"> My Ratings </a>
+            </li>
+			<?php endif; ?>
+			<?php if ($currentUser->isAdmin()) : ?>
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo $this->baseUrl("/Admin/Panel/{$currentUser->id}") ?>"> My Panel </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)"> Search Students </a>
+            </li>
+			<?php endif; ?>
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="javascript:void(0)"> Resources </a>
-            </li>
+            </li> -->
             <?php endif; ?>
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo $this->baseUrl('/Instructor/Search') ?>"> Search Instructors</a>
+            </li>
+			<li class="nav-item">
+                <a class="nav-link" href="<?php echo $this->baseUrl('/Index/Messaging') ?>"> Messages</a>
             </li>
 
         </ul>

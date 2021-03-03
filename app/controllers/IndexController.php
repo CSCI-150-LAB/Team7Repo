@@ -1,6 +1,6 @@
 <?php
 
-class IndexController extends Controller {
+class IndexController extends PermsController {
     public function IndexAction() {
         return $this->view();
     }
@@ -27,6 +27,13 @@ class IndexController extends Controller {
 
 	public function InvalidParamsAction() {
 		http_response_code(400);
+		return $this->view();
+	}
+
+	/**
+	 * @MustBeLoggedIn('/User/Login')
+	 */
+	public function MessagingAction() {
 		return $this->view();
 	}
 }

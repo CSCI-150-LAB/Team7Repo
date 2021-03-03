@@ -18,7 +18,11 @@
 	border-color: #ced1d4;
 }
 .bg-red {
-	background-color: #c41230;
+	background-color: $red;
+}
+
+.bg-dark-blue {
+	background-color: $darkBlue;
 }
 
 .tbl-background {

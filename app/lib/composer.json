@@ -1,0 +1,8 @@
+{
+    "require": {
+		"cboden/ratchet": "^0.4.3",
+		"imangazaliev/didom": "^1.16",
+        "sabberworm/php-css-parser": "*",
+        "google/apiclient": "2.0"
+    }
+}

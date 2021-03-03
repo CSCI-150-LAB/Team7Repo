@@ -156,10 +156,10 @@ class Model extends AnnotatedClass {
 			$where = [];
 			foreach ($tableMeta['columns'] as $prop => $propInfo) {
 				if (isset($propInfo['key'])) {
-					$where[] = "{$propInfo['name']} = :{$prop}:";
+					$where[] = "t.`{$propInfo['name']}` = :{$prop}:";
 				}
 				else {
-					$update[] = "{$propInfo['name']} = :{$prop}:";
+					$update[] = "t.`{$propInfo['name']}` = :{$prop}:";
 				}
 
 				$queryArgs[$prop] = $this->getProp($prop);
@@ -169,7 +169,7 @@ class Model extends AnnotatedClass {
 			$where = implode(' AND ', $where);
 
 			$db = DI::getDefault()->get('Db');
-			return $db->query("UPDATE {$tableMeta['name']} SET {$update} WHERE {$where} LIMIT 1", $queryArgs);
+			return $db->query("UPDATE {$tableMeta['name']} as t SET {$update} WHERE {$where} LIMIT 1", $queryArgs);
 		}
 
 		// Insert
@@ -181,7 +181,7 @@ class Model extends AnnotatedClass {
 					continue;
 				}
 
-				$columns[] = $propInfo['name'];
+				$columns[] = "`{$propInfo['name']}`";
 				$values[] = ":{$prop}:";
 				$queryArgs[$prop] = $this->getProp($prop);
 			}
@@ -200,11 +200,9 @@ class Model extends AnnotatedClass {
 					}
 				}
 
+				$this->_exists = true;
 				if ($db->isTrackingModels()) {
-					$db->trackModel($this->_exists, true);
-				}
-				else {
-					$this->_exists = true;
+					$db->trackModel($this->_exists, false);
 				}
 
 				return true;
@@ -233,11 +231,10 @@ class Model extends AnnotatedClass {
 			$db = DI::getDefault()->get('Db');
 			$result = $db->query("DELETE FROM {$tableMeta['name']} WHERE {$query} LIMIT 1", $queryArgs);
 			if ($result === true) {
+				$this->_exists = false;
+
 				if ($db->isTrackingModels()) {
-					$db->trackModel($this->_exists, false);
-				}
-				else {
-					$this->_exists = false;
+					$db->trackModel($this->_exists, true);
 				}
 			}
 
