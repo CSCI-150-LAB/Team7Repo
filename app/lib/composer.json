@@ -3,5 +3,8 @@
 		"cboden/ratchet": "^0.4.3",
 		"imangazaliev/didom": "^1.16",
         "sabberworm/php-css-parser": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "9"
     }
 }
