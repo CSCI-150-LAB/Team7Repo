@@ -1,9 +1,29 @@
 <?php
 	$this->pageTitle("Edit Profile");
+	/** @var User $instructor */
 ?>
 
+<?php if (count($errors)) : ?>
+	<ul class="form-errors">
+		<li><?= implode('</li><li>', $errors) ?></li>
+	</ul>
+<?php endif; ?>
+
 <h1>Edit Your Profile</h1>
-<form method = 'POST'>
+<form method="POST" enctype="multipart/form-data">
+	<div class="form-row">
+		<div class="form-group col-sm-4">
+			<img id="profile-preview" src="<?= $instructor->getProfileImageSrc() ?>" data-src="<?= $instructor->getProfileImageSrc() ?>" class="img-fluid">
+			<div class="mt-1">
+				Current Profile Image
+			</div>
+		</div>
+		<div class="form-group col-sm-8">
+			<label for="profile-image">Upload New Profile Image</label>
+			<input name="profile-image" type="file" class="form-control-file has-img-preview" data-target="#profile-preview" id="profile-image" accept=".gif,.jpg,.jpeg,.png">
+			<button type="button" class="btn btn-danger btn-reset-file-input mt-3" data-target="#profile-image">Clear</button>
+		</div>
+	</div>
     <!--Once submitted, save to database by sending to controller-->
     <div class="form-group">
 		<label for="department">Department:</label>

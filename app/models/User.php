@@ -20,6 +20,11 @@ class User extends Model {
 	public $preferredTitle;
 
 	/**
+	 * @Column('profile_image_id')
+	 */
+	public $profileImageId;
+
+	/**
 	 * @Column('first_name')
 	 */
 	public $firstName;
@@ -206,6 +211,31 @@ class User extends Model {
 		}
 
 		return $this->authToken;
+	}
+
+	/**
+	 * Fetches the referenced File model
+	 * 
+	 * @return null|File 
+	 */
+	public function getProfileImage() {
+		return is_null($this->profileImageId)
+			? null
+			: File::getByKey($this->profileImageId);
+	}
+
+	/**
+	 * Generates an image href for the profile image
+	 * 
+	 * @return string 
+	 */
+	public function getProfileImageSrc() {
+		/** @var ViewHelpers */
+		$viewHelpers = DI::getDefault()->get('IViewHelpers');
+
+		return is_null($this->profileImageId)
+			? $viewHelpers->publicUrl('images/blank_avatar.png')
+			: $viewHelpers->baseUrl("/File/Load/{$this->profileImageId}");
 	}
 
 	protected function getProp($prop) {
