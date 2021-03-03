@@ -4,6 +4,8 @@
  * @Table('files')
  */
 class File extends Model {
+	const FILE_SIZE_ABBREVIATIONS = ['bytes', 'kb', 'mb', 'gb', 'tb'];
+
 	/**
 	 * @Key
 	 * @AutoIncrement
@@ -60,7 +62,14 @@ class File extends Model {
 		return false;
 	}
 
-	// TODO: It's unlikely but possible for the below code to fail at certain points to delete or rename remote entities. Look into logging these errors
+	public function getFileSizeString($decimals = 1) {
+		$ndx = floor(log($this->fileSize, 1024));
+		$number = round($this->fileSize / pow(1024, $ndx), $decimals);
+		$unit = self::FILE_SIZE_ABBREVIATIONS[$ndx];
+
+		return "{$number} {$unit}";
+	}
+
 	/**
 	 * Replaces current file entities data with given arguments. Performs a save and returns the result.
 	 *
@@ -76,35 +85,19 @@ class File extends Model {
 		/** @var GoogleApi_Helper */
 		$helper = DI::getDefault()->get('googleApiHelper');
 		$newExt = pathinfo($name, PATHINFO_EXTENSION);
-		$oldGoogleFileId = $this->googleId;
 
-		// Upload new file
-		$newGoogleFileId = $helper->createFile("{$this->id}_new.{$newExt}", $mimeType, $data);
-
-		$this->googleId = $newGoogleFileId;
 		$this->name = $name;
 		$this->mimeType = $mimeType;
 		$this->fileSize = strlen($data);
 
-		if ($this->save()) {
-			// Delete old remote file
-			if (!$helper->deleteFile($oldGoogleFileId)) {
-				$helper->deleteFile($newGoogleFileId);
-				$db->abortTransaction();
-				return false;
-			}
-
-			// Pretty much too far in to abort
-			// Rename new remote file
-			$helper->renameFile($this->googleId, "{$this->id}.{$newExt}");
+		if ($this->save() && $helper->replaceFile($this->googleId, "{$this->id}.{$newExt}", $mimeType, $data)) {
 			$db->commitTransaction();
 			return true;
 		}
 		else {
 			$db->abortTransaction();
+			return false;
 		}
-
-		return false;
 	}
 
 	/**

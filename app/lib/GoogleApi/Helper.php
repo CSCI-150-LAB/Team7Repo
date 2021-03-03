@@ -159,6 +159,42 @@ class GoogleApi_Helper {
 	}
 
 	/**
+	 * Replaces a remote file on Google Drive
+	 *
+	 * @param string $googleFileId
+	 * @param string $name
+	 * @param string $mimeType
+	 * @param string $data
+	 * @return bool
+	 */
+	public function replaceFile($googleFileId, $name, $mimeType, $data) {
+		$this->toggleErrorLevels(true);
+
+		try {
+			$service = new Google_Service_Drive($this->client);
+
+			$fileMetadata = new Google_Service_Drive_DriveFile([
+				'name' => $name
+			]);
+
+			$file = $service->files->update($googleFileId, $fileMetadata, [
+				'data' => $data,
+				'mimeType' => $mimeType,
+				'fields' => 'id'
+			]);
+
+			return $file->getId() ? true : false;
+		}
+		catch (Exception $e) {
+			$this->lastError = $e->getMessage();
+			return false;
+		}
+		finally {
+			$this->toggleErrorLevels();
+		}
+	}
+
+	/**
 	 * Returns an array of all files in the drive. Mostly for testing
 	 *
 	 * @return Google_Service_Drive_DriveFile[]
