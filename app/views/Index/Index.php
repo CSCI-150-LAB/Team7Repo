@@ -1,6 +1,5 @@
 <main class="main main-home">
     <div class="container pt-5">
-
         <div class="row mb-4">
             <div class="col-md-8 pr-md-5">
                 <article class="article">
