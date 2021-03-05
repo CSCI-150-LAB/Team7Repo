@@ -10,12 +10,13 @@ $this->pageTitle("{$user->preferredTitle} {$user->lastName} - Profile");
 	<h1 class="mb-0">Instructor Profile</h1>
 </div>
 <?php if(($profile->instructorid == $currentUser->id) || ($currentUser->type == "admin")) {
-	echo "<a class = 'btn btn-secondary float-md-right text-white' href = '".$this->baseUrl("/Instructor/EditProfile/{$currentUser->id}")."'>Edit Profile</a><br><br>";
+	echo "<a class = 'btn btn-secondary float-md-right text-white' onclick = 'instrProfTut()')>Help</a><br><br>";
+	echo "<a class = 'btn btn-secondary float-md-right text-white editprofile' href = '".$this->baseUrl("/Instructor/EditProfile/{$currentUser->id}")."'>Edit Profile</a><br><br>";
 } //Allows user to edit profile if current profile is the user's profile ?>
-<div class="d-flex flex-column flex-md-row">
+<div class="d-flex flex-column flex-md-row instructor_info">
 	<img src="<?php echo $this->publicUrl('images/blank_avatar.png')?>" width="250" alt="blank_avatar" class="mr-md-4 mb-3 img-fluid">
 	<div class="w-100">
-		<div class="text-md-right mb-3">
+		<div class="text-md-right mb-3 starrating">
 			<?php echo PrintHelpers::printStarRating($profile->rating) ?>
 		</div>
 		<div>
@@ -170,3 +171,45 @@ $this->pageTitle("{$user->preferredTitle} {$user->lastName} - Profile");
 		</div>
 	</div>
 </div>
+
+<script>
+	function instrProfTut(){
+		var tour = new Tour({
+			name: "instructor tour",
+			container: "body",
+			smartPlacement: true,
+			backdrop: true,
+			backdropPadding: 10,
+			duration: 5000,
+            steps: [
+            {
+                element: ".instructor_info",
+                title: "Your Profile",
+				next: 1,
+				prev:-1,
+                content: "This is your instructor profile, here is basic information about you."
+            },
+            {
+                element: ".editprofile",
+                title: "Edit Profile",
+				next: 2,
+				prev: 0,
+                content: "You can update that information by pressing here."
+            },
+            {
+                element: ".starrating",
+                title: "Rating",
+				prev: 1,
+                content: "Here is your overall instructor rating based on all your reviews."
+            }]
+        });
+	  
+		// Initialize the tour
+		tour.init();
+	  
+		// Start the tour
+		tour.start(true);
+		tour.goTo(0);
+	  
+	};
+</script>
