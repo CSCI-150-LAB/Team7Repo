@@ -208,97 +208,96 @@ $this->pageTitle("{$user->preferredTitle} {$user->lastName} - Profile");
 				</div>
 			`,
             steps: [
-				{
-					element: ".instructorinfo",
-					title: "Your Profile",
-					next: 1,
-					prev:-1,
-					content: "This is your instructor profile, here is basic information about you."
-				},
-				{
-					element: ".editprofile",
-					title: "Edit Profile",
-					next: 2,
-					prev: 0,
-					content: "You can update that information by pressing here."
-				},
-				{
-					element: ".starrating",
-					title: "Rating",
-					next: 3,
-					prev: 1,
-					content: "Here is your overall instructor rating based on all your reviews.  You can hover your mouse over it to see the fractional value."
-				},
-				{
-					element: ".teachingstyles",
-					title: "Your selected Teaching Styles",
-					next: 4,
-					prev: 2,
-					content: "Here are the selected options for how frequently you use each of the four primary learning/teaching styles."
-				},
-				{
-					element: ".topreview",
-					title: "Top Review",
-					next: 5,
-					prev: 3,
-					content: "This is the top review for you based on the highest rating, and by a verified student if you have a review by a verified student."
-				},
-				{
-					element: ".studentrating:first",
-					title: "Given Rating",
-					next: 6,
-					prev: 4,
-					content: "These stars represent the rating that student gave on a scale of 1 to 5 as seen by the stars."
-				},
-				{
-					element: ".optionalresponses:first",
-					title: "Class Information",
-					next: 7,
-					prev: 5,
-					content: "Here is where students can leave optional information about their class.  Options include if they would take the class again, if there was a lot of homework in the class, whether or not class attendance is required, and their self-reported grade."
-				},
-				{
-					element: ".reviewinfo:first",
-					title: "Review Description",
-					next: 8,
-					prev: 6,
-					content: "This is where the student left personalized information about how they felt about the class."
-				},
-				{
-					element: ".author:first",
-					title: "Reviewer",
-					next: 9,
-					prev: 7,
-					content: "This is where the name of the student that left the review is if they decided not to be anonymous.  The green checkmark next to their name means they have been verified to have been in one of your classes."
-				},
-				{
-					element: ".recentfeedback",
-					title: "Recent Feedback",
-					next: 10,
-					prev: 8,
-					content: "Here is where you will find up to the two most recent feedback for you."
-				},
-				{
-					element: ".allreviews",
-					title: "See all reviews",
-					next: 11,
-					prev: 9,
-					content: "You can click here to view all of the reviews you have received."
-				},
-				{
-					element: ".takeagain",
-					title: "Who would take again?",
-					next: 12,
-					prev: 10,
-					content: "If students have answered the optional question about whether they would take your class again, the percentage who responded yes out of those who responded will be shown here."
-				},
-				{
-					element: ".grades",
-					title: "Grade Distribution",
-					prev: 11,
-					content: "Based on the students who responded to the self-reported grade option, a distribution of those student's grades will appear here."
-				}
-			]
+            {
+                element: ".instructorinfo",
+                title: "Instructor Profile",
+				next: 1,
+				prev:-1,
+                content: "This is an instructor profile, here is basic information about the instructor."
+            },
+            {
+                element: ".editprofile",
+                title: "Edit Profile",
+				next: 2,
+				prev: 0,
+                content: "You can update that information by pressing here, or you can continue this tour first and update your information later."
+            },
+            {
+                element: ".starrating",
+                title: "Rating",
+				next: 3,
+				prev: 1,
+                content: "Here is this instructor's overall instructor rating based on all of their reviews.  You can hover your mouse over it to see the fractional value."
+            },
+			{
+				element: ".teachingstyles",
+				title: "Selected Teaching Styles",
+				next: 4,
+				prev: 2,
+				content: "Here are the selected options for how frequently this instructor uses each of the four primary learning/teaching styles."
+			},
+			{
+				element: ".topreview",
+				title: "Top Review",
+				next: 5,
+				prev: 3,
+				content: "This is the top review for this instructor based on the highest rating, and by a verified student if there is a review by a verified student."
+			},
+			{
+				element: ".studentrating:first",
+				title: "Given Rating",
+				next: 6,
+				prev: 4,
+				content: "These stars represent the rating that student gave on a scale of 1 to 5 as seen by the stars."
+			},
+			{
+				element: ".optionalresponses:first",
+				title: "Class Information",
+				next: 7,
+				prev: 5,
+				content: "Here is where students can leave optional information about the class they took with this instructor.  Options include if they would take the class again, if there was a lot of homework in the class, whether or not class attendance is required, and their self-reported grade."
+			},
+			{
+				element: ".reviewinfo:first",
+				title: "Review Description",
+				next: 8,
+				prev: 6,
+				content: "This is where the student left personalized information about how they felt about the class or the instructor."
+			},
+			{
+				element: ".author:first",
+				title: "Reviewer",
+				next: 9,
+				prev: 7,
+				content: "This is where the name of the student that left the review is if they decided not to be anonymous.  The green checkmark next to their name means they have been verified to have been in one of the instructor's classes."
+			},
+			{
+				element: ".recentfeedback",
+				title: "Recent Feedback",
+				next: 10,
+				prev: 8,
+				content: "Here is where you will find up to the two most recent feedback for this instructor."
+			},
+			{
+				element: ".allreviews",
+				title: "See all reviews",
+				next: 11,
+				prev: 9,
+				content: "You can click here to view all of the reviews this instructor has received."
+			},
+			{
+				element: ".takeagain",
+				title: "Who would take again?",
+				next: 12,
+				prev: 10,
+				content: "If students have answered the optional question about whether they would take this instructor's class again, the percentage who responded yes out of those who responded will be shown here."
+			},
+			{
+				element: ".grades",
+				title: "Grade Distribution",
+				prev: 11,
+				content: "Based on the students who responded to the self-reported grade option, a distribution of those student's grades will appear here."
+			}]
         });
 	  
 		// Initialize the tour

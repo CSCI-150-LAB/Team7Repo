@@ -234,15 +234,29 @@
 	function instrProfEditTut(){
 		// Declare the tour
 		var instructorProfileEditTutorial = new Tour({
-			name: "instructor edit profile tour",
+			name: "instructor-edit-tour",
 			container: "body",
 			smartPlacement: true,
 			backdrop: true,
 			backdropPadding: 5,
-			duration: 10000,
+			//duration: 10000,
 			storage: false,
-			template: '<div class="popover" role="tooltip"> <div class="arrow"></div> <h3 class="popover-header"></h3> <div class="popover-body"></div> <div class="popover-navigation"> <div class="btn-group"> <button class="btn btn-sm btn-secondary" data-role="prev"><< Prev</button> <button class="btn btn-sm btn-secondary" data-role="next">Next >></button> <button class="btn btn-sm btn-secondary" data-role="pause-resume" data-pause-text="Pause" data-resume-text="Resume">Pause</button> </div> <button class="btn btn-sm btn-secondary" data-role="end">End tour</button> </div> </div>',
-            steps: [
+			template: (i, step) => `
+				<div class="popover" role="tooltip">
+					<div class="arrow"></div>
+					<h3 class="popover-header" data-progress="${i + 1} / ${instructorProfileEditTutorial._options.steps.length}"></h3>
+					<div class="popover-body"></div>
+					<div class="popover-navigation">
+						<div class="btn-group">
+							<button class="btn btn-sm btn-secondary" data-role="prev"><< Prev</button>
+							<button class="btn btn-sm btn-secondary" data-role="next">Next >></button>
+							<button class="btn btn-sm btn-secondary" data-role="pause-resume" data-pause-text="Pause" data-resume-text="Resume">Pause</button>
+						</div>
+						<button class="btn btn-sm btn-secondary" data-role="end">End tour</button>
+					</div>
+				</div>
+			`,
+			steps: [
             {
                 element: ".editinstructorprofile",
                 title: "Edit your profile here!",
