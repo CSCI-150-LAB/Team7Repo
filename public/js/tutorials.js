@@ -70,4 +70,54 @@ $(function() {
 	});
 	//#endregion
 
+	//#region Instructor Edit Profile Tour
+	let instructorEditProfileTour = new TourInstance('Instructor Edit Profile Tour');
+	instructorEditProfileTour.addPageLoadTrigger(/^\/Instructor\/EditProfile\/\d+$/);
+	instructorEditProfileTour.addStep({
+		element: ".editinstructorprofile",
+        title: "Edit your profile here!",
+        content: "This is where you can first create, edit, or update your instructor profile."
+	});
+	instructorEditProfileTour.addStep({
+		element: ".department",
+        title: "Change your department",
+        content: "Here is where you can type in the name of the department you work for, you can use an abbreviation or type it out fully, whatever you decide."
+    });
+	instructorEditProfileTour.addStep({
+		element: ".titlename",
+        title: "Preferred Title",
+        content: "Select your preferred title for how you are addressed.  You can only select one, but if you change your mind you can always come back and change it later."
+    });
+	instructorEditProfileTour.addStep({
+		element: ".teachingstyles",
+		title: "Select Teaching Styles",
+		content: "Here is where you select your usage of each teaching style.  We recommend you be as accurate as possible so students have a better idea of how your class is run."
+	});
+	instructorEditProfileTour.addStep({
+		element: ".visual",
+		title: "Visual Teaching",
+		content: "Visual teaching broadly refers to any teaching that uses visuals.  Commonly this includes lecture slides, videos, and other visual aids.  Select how often you believe you use these types of materials when teaching here."
+	});
+	instructorEditProfileTour.addStep({
+		element: ".auditory",
+		title: "Auditory Teaching",
+		content: "Auditory teaching broadly refers to any teaching that uses sound.  Commonly this includes lectures, videos, music, and other things you listen to.  Select how often you believe you use these types of materials when teaching here."
+	});
+	instructorEditProfileTour.addStep({
+		element: ".readwrite",
+		title: "Reading and Writing Teaching",
+		content: "Reading and writing teaching broadly refers to any teaching where students can read and write while learning.  Commonly this includes when students take notes, but can also refer to writing essays, responses to quizzes, assigning textbook reading, and so on.  Select how often you believe you use these types of materials when teaching here."
+	});
+	instructorEditProfileTour.addStep({
+		element: ".kinesthetic",
+		title: "Kinesthetic Teaching",
+		content: "Kinesthetic teaching broadly refers to any teaching that encourages students to participate.  Commonly this includes homework assignments, quizzes, labs, and other activities where students get a hands-on experience.  Select how often you believe you use these types of materials when teaching here"
+	});
+	instructorEditProfileTour.addStep({
+		element: ".savebutton",
+		title: "Submit",
+		content: "When you are done with editting your profile, you can click here to save it and it will redirect you back to your profile to view."
+	});
+	//#endregion
+
 });

@@ -3,7 +3,7 @@
 ?>
 
 <h1>Edit Your Profile</h1>
-<button class = 'btn btn-secondary float-md-right text-white' onclick = 'instrProfEditTut()'>Help</button><br><br>
+<button class = 'btn btn-secondary float-md-right text-white' data-start-tour="Instructor Edit Profile Tour">Help</button><br><br>
 <form class = 'editinstructorprofile' method = 'POST'>
     <!--Once submitted, save to database by sending to controller-->
     <div class="form-group department">
@@ -229,104 +229,3 @@
 	</div>
 	<input type = 'submit' class = 'btn btn-primary savebutton' name = 'save changes' value = 'Save Changes'>
 </form> <!--Submit button-->
-
-<script>
-	function instrProfEditTut(){
-		// Declare the tour
-		var instructorProfileEditTutorial = new Tour({
-			name: "instructor-edit-tour",
-			container: "body",
-			smartPlacement: true,
-			backdrop: true,
-			backdropPadding: 5,
-			//duration: 10000,
-			storage: false,
-			template: (i, step) => `
-				<div class="popover" role="tooltip">
-					<div class="arrow"></div>
-					<h3 class="popover-header" data-progress="${i + 1} / ${instructorProfileEditTutorial._options.steps.length}"></h3>
-					<div class="popover-body"></div>
-					<div class="popover-navigation">
-						<div class="btn-group">
-							<button class="btn btn-sm btn-secondary" data-role="prev"><< Prev</button>
-							<button class="btn btn-sm btn-secondary" data-role="next">Next >></button>
-							<button class="btn btn-sm btn-secondary" data-role="pause-resume" data-pause-text="Pause" data-resume-text="Resume">Pause</button>
-						</div>
-						<button class="btn btn-sm btn-secondary" data-role="end">End tour</button>
-					</div>
-				</div>
-			`,
-			steps: [
-            {
-                element: ".editinstructorprofile",
-                title: "Edit your profile here!",
-				next: 1,
-				prev:-1,
-                content: "This is where you can first create, edit, or update your instructor profile."
-            },
-            {
-                element: ".department",
-                title: "Change your department",
-				next: 2,
-				prev: 0,
-                content: "Here is where you can type in the name of the department you work for, you can use an abbreviation or type it out fully, whatever you decide."
-            },
-            {
-                element: ".titlename",
-                title: "Preferred Title",
-				next: 3,
-				prev: 1,
-                content: "Select your preferred title for how you are addressed.  You can only select one, but if you change your mind you can always come back and change it later."
-            },
-			{
-				element: ".teachingstyles",
-				title: "Select Teaching Styles",
-				next: 4,
-				prev: 2,
-				content: "Here is where you select your usage of each teaching style.  We recommend you be as accurate as possible so students have a better idea of how your class is run."
-			},
-			{
-				element: ".visual",
-				title: "Visual Teaching",
-				next: 5,
-				prev: 3,
-				content: "Visual teaching broadly refers to any teaching that uses visuals.  Commonly this includes lecture slides, videos, and other visual aids.  Select how often you believe you use these types of materials when teaching here."
-			},
-			{
-				element: ".auditory",
-				title: "Auditory Teaching",
-				next: 6,
-				prev: 4,
-				content: "Auditory teaching broadly refers to any teaching that uses sound.  Commonly this includes lectures, videos, music, and other things you listen to.  Select how often you believe you use these types of materials when teaching here."
-			},
-			{
-				element: ".readwrite",
-				title: "Reading and Writing Teaching",
-				next: 7,
-				prev: 5,
-				content: "Reading and writing teaching broadly refers to any teaching where students can read and write while learning.  Commonly this includes when students take notes, but can also refer to writing essays, responses to quizzes, assigning textbook reading, and so on.  Select how often you believe you use these types of materials when teaching here."
-			},
-			{
-				element: ".kinesthetic",
-				title: "Kinesthetic Teaching",
-				next: 8,
-				prev: 6,
-				content: "Kinesthetic teaching broadly refers to any teaching that encourages students to participate.  Commonly this includes homework assignments, quizzes, labs, and other activities where students get a hands-on experience.  Select how often you believe you use these types of materials when teaching here"
-			},
-			{
-				element: ".savebutton",
-				title: "Submit",
-				next: -1,
-				prev: 7,
-				content: "When you are done with editting your profile, you can click here to save it and it will redirect you back to your profile to view."
-			}]
-        });
-	  
-		// Initialize the tour
-		instructorProfileEditTutorial.init();
-	  
-		// Start the tour
-		instructorProfileEditTutorial.restart();
-	  
-	};
-</script>
