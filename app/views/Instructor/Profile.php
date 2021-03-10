@@ -9,8 +9,9 @@ $this->pageTitle("{$user->preferredTitle} {$user->lastName} - Profile");
 <div class="bg-blue p-5 text-white mb-3">
 	<h1 class="mb-0">Instructor Profile</h1>
 </div>
-<?php if(($profile->instructorid == $currentUser->id) || ($currentUser->type == "admin")) {
-	echo "<a class = 'btn btn-secondary float-md-right text-white' onclick = 'instrProfTut()')>Help</a><br><br>";
+<button class = 'btn btn-secondary float-md-right text-white' onclick = 'instrProfTut()'>Help</button><br><br> 
+<?php
+	if(($profile->instructorid == $currentUser->id) || ($currentUser->type == "admin")) {
 	echo "<a class = 'btn btn-secondary float-md-right text-white editprofile' href = '".$this->baseUrl("/Instructor/EditProfile/{$currentUser->id}")."'>Edit Profile</a><br><br>";
 } //Allows user to edit profile if current profile is the user's profile ?>
 <div class="d-flex flex-column flex-md-row instructorinfo">
