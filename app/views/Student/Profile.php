@@ -12,14 +12,15 @@
           $currentUser = User::getCurrentUser();
 		  if(($user->id == $currentUser->id) || ($currentUser->type == "admin")):  //Allows user to edit profile if current profile is the user's profile ?>
 		  <div class="text-right">
-			  <a class = 'btn btn-secondary mb-3 text-white' href='<?= $this->baseUrl('/Student/ProfileEdit/' . $user->id) ?>'>Edit Profile</a>
+	          <a class = 'btn btn-secondary float-md-right text-white' onclick = 'studProfTut()')>Help</a><br><br>
+			  <a class = 'btn btn-secondary mb-3 text-white editprofile' href='<?= $this->baseUrl('/Student/ProfileEdit/' . $user->id) ?>'>Edit Profile</a>
 		  </div>
 		  <?php endif; ?>
 		  
               <div class="row gutters-sm">
               
                 <div class="col-lg-4 mb-3">
-                  <div class="card">
+                  <div class="card studentprofile">
                     <div class="card-body">
                       <div class="d-flex flex-column align-items-center text-center">
                       
@@ -33,11 +34,11 @@
                   </div>
                   <div class="card mt-3">
                     <ul class="list-group list-group-flush">
-                      <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                      <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap studentemail">
                         <h6 class="mb-0">Email</h6>
                         <span class="text-secondary"><?php echo $user->email?></span>
                       </li>
-                      <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                      <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap preferredlearningstyle">
                         <h6 class="mb-0">Preferred Learning Style </h6>
                         <span class="text-secondary"><?php echo $profile->learningStyle?></span>
                       </li>
@@ -56,7 +57,7 @@
 
                   <div class="row gutters-sm">
                     <div class="col-sm-6 mb-3">
-                      <div class="card h-100">
+                      <div class="card h-100 learningstyles">
                         <div class="card-body" >
                           <h6 class="d-flex align-items-center mb-3">Other Learning Styles</h6>
                           <small>Visual</small>
@@ -72,7 +73,7 @@
                     </div>
                     
                   <div class="col-sm-6 mb-3">
-                    <div class="card h-100">
+                    <div class="card h-100 learningtools">
                       <div class="card-body">
                         <h6 class="d-flex align-items-center mb-3"><i class="fas fa-tools mr-2"></i> Preferred Learning Tools</h6>
                         <small> Visual Tool: <?php echo $profile->visual_tool?> </small>
@@ -92,3 +93,67 @@
             </div>
         </div>
 </body>
+
+<script>
+	function studProfTut(){
+		// Declare the tour
+		var studentProfileTutorial = new Tour({
+			name: "student tour",
+			container: "body",
+			smartPlacement: true,
+			backdrop: true,
+			backdropPadding: 5,
+			duration: 10000,
+			storage: false,
+            steps: [
+            {
+                element: ".studentprofile",
+                title: "Your Profile",
+				next: 1,
+				prev:-1,
+                content: "This is your student profile, here is some basic information about you."
+            },
+            {
+                element: ".studentemail",
+                title: "Email Address",
+				next: 2,
+				prev: 0,
+                content: "Your student email is listed here."
+            },
+			{
+                element: ".preferredlearningstyle",
+                title: "Preferred Learning Style",
+				next: 3,
+				prev: 1,
+                content: "Your preferred learning style is listed here."
+            },
+			{
+                element: ".learningstyles",
+                title: "Learning Styles",
+				next: 4,
+				prev: 2,
+                content: "This section shows how comfortable you are with all learning styles."
+            },
+			{
+                element: ".learningtools",
+                title: "Learning Tools",
+				next: 5,
+				prev: 3,
+                content: "This section lists the tools you are most comfortable with for each learning style."
+            },
+			{
+                element: ".editprofile",
+                title: "Edit Profile",
+				prev: 4,
+                content: "All of the previously mentioned information can be updated by clicking here."
+            },]
+        });
+	  
+		// Initialize the tour
+		studentProfileTutorial.init();
+	  
+		// Start the tour
+		studentProfileTutorial.restart();
+	  
+	};
+</script>

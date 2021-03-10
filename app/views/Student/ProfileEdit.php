@@ -1,7 +1,7 @@
 <?php
 	$this->pageTitle('Edit Profile');
 ?>
-
+<!-- <a class = 'btn btn-secondary float-md-right text-white' onclick = 'editStudProfTut()')>Help</a><br><br>-->
 <form method="POST">
 	<h1>Edit your profile</h1>
     <input type="text" name="major" value="<?php echo $this->escapeHtml($profile->studentMajor) ?>">
@@ -69,4 +69,67 @@
     <br>
 	<button type="submit" class="btn btn-cardinalred" style = >Save Changes</button>
 </form>
-
+<!--
+<script>
+	function editStudProfTut(){
+		// Declare the tour
+		var studentProfileTutorial = new Tour({
+			name: "student tour",
+			container: "body",
+			smartPlacement: true,
+			backdrop: true,
+			backdropPadding: 5,
+			duration: 10000,
+			storage: false,
+            steps: [
+            {
+                element: ".studentprofile",
+                title: "Your Profile",
+				next: 1,
+				prev:-1,
+                content: "This is your student profile, here is some basic information about you."
+            },
+            {
+                element: ".studentemail",
+                title: "Email Address",
+				next: 2,
+				prev: 0,
+                content: "Your student email is listed here."
+            },
+			{
+                element: ".preferredlearningstyle",
+                title: "Preferred Learning Style",
+				next: 3,
+				prev: 1,
+                content: "Your preferred learning style is listed here."
+            },
+			{
+                element: ".learningstyles",
+                title: "Learning Styles",
+				next: 4,
+				prev: 2,
+                content: "This section shows how comfortable you are with all learning styles."
+            },
+			{
+                element: ".learningtools",
+                title: "Learning Tools",
+				next: 5,
+				prev: 3,
+                content: "This section lists the tools you are most comfortable with for each learning style."
+            },
+			{
+                element: ".editprofile",
+                title: "Edit Profile",
+				prev: 4,
+                content: "All of the previously mentioned information can be updated by clicking here."
+            },]
+        });
+	  
+		// Initialize the tour
+		studentProfileTutorial.init();
+	  
+		// Start the tour
+		studentProfileTutorial.restart();
+	  
+	};
+</script> -->
