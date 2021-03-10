@@ -7938,6 +7938,11 @@ form.feedback-response .rating-field-container.is-invalid .invalid-feedback {
   content: '%';
 }
 
+.popover-header[data-progress]:before {
+  content: "(" attr(data-progress) ")";
+  padding-right: 5px;
+}
+
 /* Bootstrap student profile code */
 body.student-c.profile-a {
   color: #1a202c;

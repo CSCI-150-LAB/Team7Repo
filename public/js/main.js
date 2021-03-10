@@ -1,5 +1,10 @@
 $(function() {
 
+	$.fn.popover.Constructor.Default.whiteList['button'] = []
+	for (let i in $.fn.popover.Constructor.Default.whiteList) {
+		$.fn.popover.Constructor.Default.whiteList[i].push(/^data-[\w-]*$/i);
+	}
+
 	$(document).on('submit', '.instructor-search', function(e) {
 		e.preventDefault();
 		location.href = $(this).attr('action') + '/' + $('#search-txt').val();
