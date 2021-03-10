@@ -95,7 +95,7 @@ class TourInstance {
 		TourInstance.instances.push(this);
 
 		options = Object.assign(
-			{name: `tour-${Math.random() * Number.MAX_SAFE_INTEGER}`},
+			{name: `tour-${Math.random() * Number.MAX_SAFE_INTEGER}`, steps: []},
 			TourInstance.defaultOptions,
 			options
 		);
@@ -177,7 +177,6 @@ class TourInstance {
 					<button class="btn btn-sm btn-secondary" data-role="end">End tour</button>
 				</div>
 			</div>
-		`},
-		steps: []
+		`}
 	};
 }
