@@ -2,11 +2,10 @@
 	$this->pageTitle("Dashboard");
 ?>
 
-<h1 class="mb-3 p-5 text-white bg-blue">
-	Instructor Dashboard</h1>
+<h1 class="mb-3 p-5 text-white bg-blue"> Instructor Dashboard</h1>
 
 <div class="border mb-3 p-4 tbl-background d-flex flex-column flex-md-row justify-content-between align-items-center">
-	<h4 class="mb-md-0">Add a new classroom section</h4>
+	<h4 class="mb-md-0">Add a new class section</h4>
 	<a class="btn btn-secondary float-right text-white" href='<?php echo $this->baseUrl('/Instructor/AddClass') ?>'>Create a Section</a>
 </div>
 
@@ -17,7 +16,7 @@
 			<tr>
 				<th scope="col"> Class </th>
 				<th scope="col"> Description </th>
-				<th scope="col"> Days/Times</th>
+				<th scope="col"> Days and Times</th>
 				<th scope="col"> Student Enrollment</th>
 			</tr>
 		</thead>
@@ -32,4 +31,6 @@
 			<?php endforeach; ?>
 		</tbody>
 	</table>
-</div>
+</div> 
+
+<br> <br/>
