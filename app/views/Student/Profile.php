@@ -7,12 +7,12 @@
         <div class="main-body" id="red-paw-background">
         <h1 class="mb-3 p-5 text-white bg-blue">
 	        Student Profile</h1>
+          <button class = 'btn btn-secondary float-md-right text-white' data-start-tour="Student Tour">Help</button><br><br> 
         <?php
           $profile = StudentModel::getByKey($user->id);
           $currentUser = User::getCurrentUser();
 		  if(($user->id == $currentUser->id) || ($currentUser->type == "admin")):  //Allows user to edit profile if current profile is the user's profile ?>
 		  <div class="text-right">
-	          <a class = 'btn btn-secondary float-md-right text-white' onclick = 'studProfTut()')>Help</a><br><br>
 			  <a class = 'btn btn-secondary mb-3 text-white editprofile' href='<?= $this->baseUrl('/Student/ProfileEdit/' . $user->id) ?>'>Edit Profile</a>
 		  </div>
 		  <?php endif; ?>
@@ -92,68 +92,4 @@
               </div>
             </div>
         </div>
-</body>
-
-<script>
-	function studProfTut(){
-		// Declare the tour
-		var studentProfileTutorial = new Tour({
-			name: "student tour",
-			container: "body",
-			smartPlacement: true,
-			backdrop: true,
-			backdropPadding: 5,
-			duration: 10000,
-			storage: false,
-            steps: [
-            {
-                element: ".studentprofile",
-                title: "Your Profile",
-				next: 1,
-				prev:-1,
-                content: "This is your student profile, here is some basic information about you."
-            },
-            {
-                element: ".studentemail",
-                title: "Email Address",
-				next: 2,
-				prev: 0,
-                content: "Your student email is listed here."
-            },
-			{
-                element: ".preferredlearningstyle",
-                title: "Preferred Learning Style",
-				next: 3,
-				prev: 1,
-                content: "Your preferred learning style is listed here."
-            },
-			{
-                element: ".learningstyles",
-                title: "Learning Styles",
-				next: 4,
-				prev: 2,
-                content: "This section shows how comfortable you are with all learning styles."
-            },
-			{
-                element: ".learningtools",
-                title: "Learning Tools",
-				next: 5,
-				prev: 3,
-                content: "This section lists the tools you are most comfortable with for each learning style."
-            },
-			{
-                element: ".editprofile",
-                title: "Edit Profile",
-				prev: 4,
-                content: "All of the previously mentioned information can be updated by clicking here."
-            },]
-        });
-	  
-		// Initialize the tour
-		studentProfileTutorial.init();
-	  
-		// Start the tour
-		studentProfileTutorial.restart();
-	  
-	};
-</script>
+</body>	

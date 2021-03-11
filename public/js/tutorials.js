@@ -6,7 +6,7 @@ $(function() {
 	instructorTour.addStep({
 		element: ".instructorinfo",
 		title: "Instructor Profile",
-		content: "This is an instructor profile, here is basic information about you."
+		content: "This is an instructor profile, here is basic information about them."
 	});
 	instructorTour.addStep({
 		element: ".editprofile",
@@ -117,6 +117,41 @@ $(function() {
 		element: ".savebutton",
 		title: "Submit",
 		content: "When you are done with editting your profile, you can click here to save it and it will redirect you back to your profile to view."
+	});
+	//#endregion
+
+	//#region Student Tour
+	let studentTour = new TourInstance('Student Tour');
+	studentTour.addPageLoadTrigger(/^\/Student\/Profile\/\d+$/);
+	studentTour.addStep({
+		element: ".studentprofile",
+		title: "Student Profile",
+		content: "This is a student profile, here is some basic information."
+	});
+	studentTour.addStep({
+		element: ".studentemail",
+		title: "Email Address",
+		content: "The student's email address is listed here."
+	});
+	studentTour.addStep({
+		element: ".preferredlearningstyle",
+		title: "Preferred Learning Style",
+		content: "Listed here is the learning style the student prefers the most."
+	});
+	studentTour.addStep({
+		element: ".learningstyles",
+		title: "Learning Styles",
+		content: "This section shows a student's comfort level with all four learning styles."
+	});
+	studentTour.addStep({
+		element: ".learningtools",
+		title: "Learning Tools",
+		content: "This section lists the tools the student is most comfortable working with for each learning style."
+	});
+	studentTour.addStep({
+		element: ".editprofile",
+		title: "Edit Profile",
+		content: "All of the previously mentioned information can be updated by clicking here."
 	});
 	//#endregion
 
