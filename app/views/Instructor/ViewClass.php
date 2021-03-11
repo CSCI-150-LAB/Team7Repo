@@ -33,32 +33,18 @@
 	</div>
 </div>
 
-<!-- Instructor Tools-->
-<div>
-<h2> <b> Tools </b></h2>
-	<div class="row"> 
-	<!-- Feedback -->
-	<div class="col-sm-3">
-		<div class="card bg-light">
-			<div class="card-body">
-				<h5 class="card-title"> Get Feedback
-				<a href="#" class="btn btn-secondary float-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-chevron-down"></i></a>
-				<div>
-					<div class="dropdown-menu">
-						<a href="#feedback-app" class="dropdown-item" data-toggle="modal" data-target="#feedback-app">Create a feedback session</a>
-						<a href='<?php echo $this->baseUrl("/Feedback/PublishedFeedback/{$class->classid}") ?>' class="dropdown-item">View Sessions</a>
-					</div>
-				</div>
-				</h5>
-				<?php echo $this->partial('_FeedbackForm', ['class' => $class]) ?>
-			</div>
-		</div>
-	</div>
+<?php echo $this->partial('_FeedbackForm', ['class' => $class]) ?>
 
 
-<br> </br>
-<!-- Student Information -->
-<h2> <b> Student Information </b> </h2>
+
+
+
+
+<!--End of drop down menu-->
+
+
+
+
 <?php $studentids = studentClasses::find("classId =:0:", $class->classid); ?>
 <?php if(isset($_SESSION['add_student_errors'])) {
         if(!empty($_SESSION['add_student_errors'])) {
