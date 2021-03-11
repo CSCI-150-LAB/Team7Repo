@@ -67,7 +67,7 @@
 	<div class="col-sm-3">
 		<div class="card bg-light">
 			<div class="card-body">
-				<h5 class="card-title"> Feedback
+				<h5 class="card-title"> Get Feedback
 				<a href="#" class="btn btn-secondary float-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-chevron-down"></i></a>
 				<div>
 					<div class="dropdown-menu">
@@ -102,7 +102,7 @@
 
 <br> </br>
 <!-- Student Information -->
-<h2> <b> Student Inforamtion </b> </h2>
+<h2> <b> Student Information </b> </h2>
 <?php $studentids = studentClasses::find("classId =:0:", $class->classid); ?>
 <?php if(isset($_SESSION['add_student_errors'])) {
         if(!empty($_SESSION['add_student_errors'])) {
