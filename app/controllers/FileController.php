@@ -10,7 +10,7 @@ class FileController extends Controller {
 
 		$data = $file->getData();
 		header('Content-type: ' . $file->mimeType);
-		header('Content-length: ' . $file->fileSize);
+		header('Content-length: ' . strlen($data));
 		return $this->html($data);
 	}
 
@@ -24,7 +24,7 @@ class FileController extends Controller {
 		$data = $file->getData();
 		header('Content-disposition: attachment; filename=' . $file->name);
 		header('Content-type: ' . $file->mimeType);
-		header('Content-length: ' . $file->fileSize);
+		header('Content-length: ' . strlen($data));
 		return $this->html($data);
 	}
 }

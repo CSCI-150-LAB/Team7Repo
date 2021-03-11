@@ -4,7 +4,6 @@ class GoogleApi_Helper {
 	private $client;
 	private $ready = true;
 	private $errorLevel;
-	private $lastError = '';
 
 	public function __construct($clientId, $clientSecret, $redirectUrl) {
 		$this->errorLevel = error_reporting();
@@ -39,10 +38,6 @@ class GoogleApi_Helper {
 		$this->toggleErrorLevels();
 	}
 
-	public function getLastError() {
-		return $this->lastError;
-	}
-
 	protected function toggleErrorLevels($warningsOff = false) {
 		if ($warningsOff) {
 			error_reporting($this->errorLevel ^ E_WARNING);
@@ -62,8 +57,7 @@ class GoogleApi_Helper {
 
 		// Check to see if there was an error.
 		if (array_key_exists('error', $accessToken)) {
-			$this->lastError = implode(', ', $accessToken);
-			throw new Exception($this->lastError);
+			throw new Exception(join(', ', $accessToken));
 		}
 
 		Options::setOption('googleAccessToken', $accessToken);
@@ -88,10 +82,6 @@ class GoogleApi_Helper {
 
 			return $service->files->get($googleFileId);
 		}
-		catch(Exception $e) {
-			$this->lastError = $e->getMessage();
-			return null;
-		}
 		finally {
 			$this->toggleErrorLevels();
 		}
@@ -115,7 +105,6 @@ class GoogleApi_Helper {
 			return $stream->getBody()->__toString();
 		}
 		catch (Exception $e) {
-			$this->lastError = $e->getMessage();
 			return null;
 		}
 		finally {
@@ -123,14 +112,6 @@ class GoogleApi_Helper {
 		}
 	}
 
-	/**
-	 * Creates a file on Google Drive
-	 *
-	 * @param string $name
-	 * @param string $mimeType
-	 * @param string $data
-	 * @return string
-	 */
 	public function createFile($name, $mimeType, $data) {
 		$this->toggleErrorLevels(true);
 
@@ -150,44 +131,7 @@ class GoogleApi_Helper {
 			return $file->getId();
 		}
 		catch (Exception $e) {
-			$this->lastError = $e->getMessage();
 			return null;
-		}
-		finally {
-			$this->toggleErrorLevels();
-		}
-	}
-
-	/**
-	 * Replaces a remote file on Google Drive
-	 *
-	 * @param string $googleFileId
-	 * @param string $name
-	 * @param string $mimeType
-	 * @param string $data
-	 * @return bool
-	 */
-	public function replaceFile($googleFileId, $name, $mimeType, $data) {
-		$this->toggleErrorLevels(true);
-
-		try {
-			$service = new Google_Service_Drive($this->client);
-
-			$fileMetadata = new Google_Service_Drive_DriveFile([
-				'name' => $name
-			]);
-
-			$file = $service->files->update($googleFileId, $fileMetadata, [
-				'data' => $data,
-				'mimeType' => $mimeType,
-				'fields' => 'id'
-			]);
-
-			return $file->getId() ? true : false;
-		}
-		catch (Exception $e) {
-			$this->lastError = $e->getMessage();
-			return false;
 		}
 		finally {
 			$this->toggleErrorLevels();
@@ -212,63 +156,6 @@ class GoogleApi_Helper {
 
 			$results = $service->files->listFiles($optParams);
 			return $results->getFiles();
-		}
-		catch(Exception $e) {
-			$this->lastError = $e->getMessage();
-			return null;
-		}
-		finally {
-			$this->toggleErrorLevels();
-		}
-	}
-
-	/**
-	 * Deletes a file from Google Drive
-	 *
-	 * @param string $googleFileId
-	 * @return bool
-	 */
-	public function deleteFile($googleFileId) {
-		$this->toggleErrorLevels(true);
-
-		try {
-			$service = new Google_Service_Drive($this->client);
-
-			$service->files->delete($googleFileId);
-
-			return true;
-		}
-		catch (Exception $e) {
-			$this->lastError = $e->getMessage();
-			return false;
-		}
-		finally {
-			$this->toggleErrorLevels();
-		}
-	}
-
-	/**
-	 * Renames a file on Google Drive
-	 *
-	 * @param string $googleFileId
-	 * @param string $newName
-	 * @return bool
-	 */
-	public function renameFile($googleFileId, $newName) {
-		$this->toggleErrorLevels(true);
-
-		try {
-			$service = new Google_Service_Drive($this->client);
-
-			$service->files->update($googleFileId, new Google_Service_Drive_DriveFile([
-				'name' => $newName
-			]));
-
-			return true;
-		}
-		catch (Exception $e) {
-			$this->lastError = $e->getMessage();
-			return false;
 		}
 		finally {
 			$this->toggleErrorLevels();

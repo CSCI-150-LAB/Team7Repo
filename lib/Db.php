@@ -3,7 +3,7 @@
 class Db {
 	private $conn;
 	private $trackingModels = false;
-	private $trackedModelCallbacks = [];
+	private $trackedModelsExistences = [];
 	private $lastQuery = '';
 
     public function __construct($host, $user, $pass, $dbname) {
@@ -100,16 +100,11 @@ class Db {
 	public function abortTransaction() {
 		$this->conn->rollback();
 		$this->conn->autocommit(true);
-		$this->trackingModels = false;
-
-		$type = (string)DbTrackTypeEnum::ABORTED();
-		if (isset($this->trackedModelCallbacks[$type])) {
-			foreach ($this->trackedModelCallbacks[$type] as $cb) {
-				$cb();
-			}
+		foreach ($this->trackedModelsExistences as $existenc) {
+			$existenc[0] = $existenc[1];
 		}
-		
-		$this->trackedModelCallbacks = [];
+		$this->trackedModelsExistences = [];
+		$this->trackingModels = false;
 	}
 
 	/**
@@ -120,16 +115,8 @@ class Db {
 	public function commitTransaction() {
 		$this->conn->commit();
 		$this->conn->autocommit(true);
+		$this->trackedModelsExistences = [];
 		$this->trackingModels = false;
-
-		$type = (string)DbTrackTypeEnum::COMMITTED();
-		if (isset($this->trackedModelCallbacks[$type])) {
-			foreach ($this->trackedModelCallbacks[$type] as $cb) {
-				$cb();
-			}
-		}
-
-		$this->trackedModelCallbacks = [];
 	}
 
 	/**
@@ -142,24 +129,15 @@ class Db {
 	}
 
 	/**
-	 * Allows the database to update a model when a transaction is committed or aborted
+	 * Allows the database to update a model's "exist" flag when a transaction is committed
 	 *
-	 * @param DbTrackTypeEnum $type
-	 * @param callable $cb
+	 * @param boolean $exist
+	 * @param boolean $futureValue
 	 * @return void
 	 */
-	public function trackModel(DbTrackTypeEnum $type, callable $cb) {
-		$type = (string)$type;
-
+	public function trackModel(&$exist, $futureValue) {
 		if ($this->trackingModels) {
-			if (!isset($this->trackedModelCallbacks[$type])) {
-				$this->trackedModelCallbacks[$type] = [];
-			}
-
-			$this->trackedModelCallbacks[$type][] = $cb;
-		}
-		elseif ($type == DbTrackTypeEnum::COMMITTED()) {
-			return $cb();
+			$this->trackedModelsExistences[] = [&$exist, $futureValue];
 		}
 	}
 
