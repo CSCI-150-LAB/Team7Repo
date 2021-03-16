@@ -163,6 +163,41 @@ $(function() {
 		title: "Instructor Dashboard",
 		content: "This is your instructor dashboard, here is where all of the resources are for your classes."
 	});
+	instructorDashboardTour.addStep({
+		element: ".dashboardaddclass",
+		title: "Add a new class",
+		content: "You can click here and it will redirect you to a new page to add a new class."
+	});
+	instructorDashboardTour.addStep({
+		element: ".classes",
+		title: "Table of Classes",
+		content: "Here is a table of all of the classes that you are instructor of."
+	});
+	instructorDashboardTour.addStep({
+		element: ".classtitle",
+		title: "Class Title",
+		content: "Here is where the title of each class is listed."
+	});
+	instructorDashboardTour.addStep({
+		element: ".classpage:first",
+		title: "Class Page Link",
+		content: "You can click here on the class title to take you to the class page."
+	});
+	instructorDashboardTour.addStep({
+		element: ".classdescription",
+		title: "Class Description",
+		content: "Here is a description of each class in the corresponding row."
+	});
+	instructorDashboardTour.addStep({
+		element: ".classmeetings",
+		title: "Class Meeting Times",
+		content: "Here are the days and times that this class is set to meet for."
+	});
+	instructorDashboardTour.addStep({
+		element: ".classstudents",
+		title: "Number of Students",
+		content: "Here is the number of students currently enrolled in the class."
+	});
 	//#endregion
 
 	//#region Add Class Tour
@@ -184,12 +219,12 @@ $(function() {
 		content: "Here is where you can add a more detailed description about the class."
 	});
 	addClassTour.addStep({
-		element: ".times",
+		element: ".classdates",
 		title: "Add Class Meeting Days",
 		content: "Here is where you select the days your class is supposed to meet."
 	});
 	addClassTour.addStep({
-		element: ".times",
+		element: ".classtime",
 		title: "Add Class Meeting Time",
 		content: "This is the section where you add the class meeting times."
 	});
