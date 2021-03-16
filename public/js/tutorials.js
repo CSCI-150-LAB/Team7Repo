@@ -128,7 +128,7 @@ $(function() {
 		title: "Student Profile",
 		content: "This is a student profile, here is some basic information."
 	});
-		studentTour.addStep({
+	studentTour.addStep({
 		element: ".editprofile",
 		title: "Edit Profile",
 		content: "You can update your profile by clicking this button."
@@ -138,20 +138,15 @@ $(function() {
 		title: "Email Address",
 		content: "The student's email address is listed here."
 	});
-	studentTour.addStep({
-		element: ".preferredlearningstyle",
-		title: "Preferred Learning Style",
-		content: "Listed here is the learning style the student prefers the most."
+	studentEditProfileTour.addStep({
+		element: ".studentsmajor",
+		title: "Student Major",
+		content: "You can change your displayed major by entering it in here."
 	});
-	studentTour.addStep({
-		element: ".learningstyles",
-		title: "Learning Styles",
-		content: "This section shows a student's comfort level with all four learning styles."
-	});
-	studentTour.addStep({
-		element: ".learningtools",
-		title: "Learning Tools",
-		content: "This section lists the tools the student is most comfortable working with for each learning style."
+	studentEditProfileTour.addStep({
+		element: ".studentsmajor",
+		title: "Student Major",
+		content: "You can change your displayed major by entering it in here."
 	});
 	//#endregion
 

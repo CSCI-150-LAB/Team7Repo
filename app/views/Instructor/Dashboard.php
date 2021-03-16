@@ -2,9 +2,10 @@
 	$this->pageTitle("Dashboard");
 ?>
 
-<h1 class="mb-3 p-5 text-white bg-blue">
+<h1 class="mb-3 p-5 text-white bg-blue instructordashboard">
 	Instructor Dashboard</h1>
 
+<button class = 'btn btn-secondary float-md-right text-white' data-start-tour="Instructor Dashboard Tour">Help</button><br><br> 
 <div class="border mb-3 p-4 tbl-background d-flex flex-column flex-md-row justify-content-between align-items-center">
 	<h4 class="mb-md-0">Add a new classroom section</h4>
 	<a class="btn btn-secondary float-right text-white" href='<?php echo $this->baseUrl('/Instructor/AddClass') ?>'>Create a Section</a>
