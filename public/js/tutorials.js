@@ -155,4 +155,59 @@ $(function() {
 	});
 	//#endregion
 
+	//#region Instructor Dashboard Tour
+	let instructorDashboardTour = new TourInstance('Instructor Dashboard Tour');
+	instructorDashboardTour.addPageLoadTrigger(/^\/Instructor\/Dashboard\/\d+$/);
+	instructorDashboardTour.addStep({
+		element: ".instructordashboard",
+		title: "Instructor Dashboard",
+		content: "This is your instructor dashboard, here is where all of the resources are for your classes."
+	});
+	//#endregion
+
+	//#region Add Class Tour
+	let addClassTour = new TourInstance('Add Class Tour');
+	addClassTour.addPageLoadTrigger(/^\/Instructor\/AddClass\/\d+$/);
+	addClassTour.addStep({
+		element: ".addclass",
+		title: "Add a new class",
+		content: "This is the page where you can add new classes that you manage.  Here is where you put in all the information from the new class."
+	});
+	addClassTour.addStep({
+		element: ".classtitle",
+		title: "Add Class Title",
+		content: "Here is where you input the title of the new class you are adding.  You can put here the full class title, or the class catalog number, you can title it whatever you want really."
+	});
+	addClassTour.addStep({
+		element: ".description",
+		title: "Add Class Description",
+		content: "Here is where you can add a more detailed description about the class."
+	});
+	addClassTour.addStep({
+		element: ".times",
+		title: "Add Class Meeting Days",
+		content: "Here is where you select the days your class is supposed to meet."
+	});
+	addClassTour.addStep({
+		element: ".times",
+		title: "Add Class Meeting Time",
+		content: "This is the section where you add the class meeting times."
+	});
+	addClassTour.addStep({
+		element: ".timestart",
+		title: "Add Class Starting Time",
+		content: "Here is where you select the time of day that the class starts on the days selected above."
+	});
+	addClassTour.addStep({
+		element: ".timefinish",
+		title: "Add Class End Time",
+		content: "Here is where you select the time of day that the class ends, make sure the end time is after the start time."
+	});
+	addClassTour.addStep({
+		element: ".addclassbutton",
+		title: "Add New Class",
+		content: "This is the submission button for saving the new class.  Make sure all of the details are correct before pressing this button because you can not change the details later."
+	});
+	//#endregion
+
 });
