@@ -128,6 +128,11 @@ $(function() {
 		title: "Student Profile",
 		content: "This is a student profile, here is some basic information."
 	});
+		studentTour.addStep({
+		element: ".editprofile",
+		title: "Edit Profile",
+		content: "You can update your profile by clicking this button."
+	});
 	studentTour.addStep({
 		element: ".studentemail",
 		title: "Email Address",
@@ -148,11 +153,40 @@ $(function() {
 		title: "Learning Tools",
 		content: "This section lists the tools the student is most comfortable working with for each learning style."
 	});
-	studentTour.addStep({
-		element: ".editprofile",
-		title: "Edit Profile",
-		content: "All of the previously mentioned information can be updated by clicking here."
-	});
 	//#endregion
 
+	//#region Student Edit Profile Tour
+	let studentEditProfileTour = new TourInstance('Student Edit Profile Tour');
+	studentEditProfileTour.addPageLoadTrigger(/^\/Student\/ProfileEdit\/\d+$/);
+	studentEditProfileTour.addStep({
+		element: ".studenteditprofile",
+		title: "Edit Profile",
+		content: "This page is where you can update your profile information."
+	});
+	studentEditProfileTour.addStep({
+		element: ".studentsmajor",
+		title: "Student Major",
+		content: "You can change your displayed major by entering it in here."
+	});
+	studentEditProfileTour.addStep({
+		element: ".studentlspref",
+		title: "Your Preferred Learning Style",
+		content: "Here you can enter in your preferred mode of learning: visual, auditory, kinesthetic, read/write."
+	});
+	studentEditProfileTour.addStep({
+		element: ".learningstylecomfort",
+		title: "Comfort With All Learning Styles",
+		content: "In this section, you can adjust your comfort level for working with all four learning styles by moving these sliders."
+	});
+	studentEditProfileTour.addStep({
+		element: ".learningtoolspref",
+		title: "Preferred Learning Tools",
+		content: "This section allows you to select from a dropdown the tools you prefer to work with most for each learning style."
+	});
+	studentEditProfileTour.addStep({
+		element: ".saveedits",
+		title: "Save Edits",
+		content: "To save your profile changes, click this button!"
+	});
+	//#endregion
 });
