@@ -171,7 +171,7 @@ $(function() {
 	studentEditProfileTour.addStep({
 		element: ".learningstylecomfort",
 		title: "Comfort With All Learning Styles",
-		content: "In this section, you can adjust your comfort level for working with all four learning styles by moving these sliders."
+		content: "In this section, you can adjust your comfort level for working with all four learning styles by moving these sliders.",
 	});
 	studentEditProfileTour.addStep({
 		element: ".learningtoolspref",
@@ -184,8 +184,51 @@ $(function() {
 		content: "To save your profile changes, click this button!"
 	});
 	//#endregion
-<<<<<<< HEAD
-=======
+
+	//#region Instructor View Reviews Tour
+	let instructorViewReviewsTour = new TourInstance('Instructor View Reviews Tour');
+	instructorViewReviewsTour.addPageLoadTrigger(/^\/Instructor\/ViewReviews\/\d+$/);
+	instructorViewReviewsTour.addStep({
+		element: ".reviewtitle",
+		title: "Instructor Reviews",
+		content: "This page showcases reviews that have been left by students on this instructor's performance."
+	});	
+	instructorViewReviewsTour.addStep({
+		element: ".addreviewbutton",
+		title: "Add a Review",
+		content: "By clicking this button, you may add a review on this instructor."
+	});	
+	instructorViewReviewsTour.addStep({
+		element: ".instructorreview:first",
+		title: "Review Left by Student",
+		content: "Here is a review a student left about this instructor. The reviews are sorted from most recent to oldest."
+	});	
+	instructorViewReviewsTour.addStep({
+		element: ".studentrating:first",
+		title: "Star Rating",
+		content: "This shows, on a scale of 1-5 stars, how the student felt about the instructor's overall performance."
+	});	
+	instructorViewReviewsTour.addStep({
+		element: ".optionalresponses:first",
+		title: "Additional Information",
+		content: "This additional, optional, information gives insight into how the instructor conducts class and how the student performed."
+	});	
+	instructorViewReviewsTour.addStep({
+		element: ".reviewinfo:first",
+		title: "Textual Review",
+		content: "This section details and expands on the student's experiences in the instructor's class."
+	});	
+	instructorViewReviewsTour.addStep({
+		element: ".author:first",
+		title: "Review Author",
+		content: "This is where the name of the author is located; they may choose to remain anonymous."
+	});	
+	instructorViewReviewsTour.addStep({
+		element: ".admindeletereview:first",
+		title: "Delete Instructor Review",
+		content: "To delete an instructor review, click here."
+	});	
+	//#endregion
 
 	//#region Instructor Dashboard Tour
 	let instructorDashboardTour = new TourInstance('Instructor Dashboard Tour');
@@ -242,5 +285,4 @@ $(function() {
 	});
 	//#endregion
 
->>>>>>> 5df113160584174367a2b3e12e850f2d2cfacc0b
 });

@@ -2,7 +2,7 @@
 	$this->pageTitle("Edit Profile");
 ?>
 
-<h1>Edit Your Profile</h1>
+<h1><b>Edit Your Profile</b></h1>
 <button class = 'btn btn-secondary float-md-right text-white' data-start-tour="Instructor Edit Profile Tour">Help</button><br><br>
 <form class = 'editinstructorprofile' method = 'POST'>
     <!--Once submitted, save to database by sending to controller-->
