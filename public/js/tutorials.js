@@ -184,6 +184,26 @@ $(function() {
 		content: "To save your profile changes, click this button!"
 	});
 	//#endregion
+	
+	//#region Student Dashboard Tour
+	let studentDashboardTour = new TourInstance('Student Dashboard Tour');
+	studentDashboardTour.addPageLoadTrigger(/^\/Student\/Dashboard/);
+	studentDashboardTour.addStep({
+		element: ".dashboardheader",
+		title: "Welcome!",
+		content: "Welcome to your student dashboard! This page allows you to view and access your classes."
+	});
+	studentDashboardTour.addStep({
+		element: ".classesenrolled",
+		title: "Classes You're Enrolled In",
+		content: "This section lists the classes you are enrolled in as a student."
+	});
+	studentDashboardTour.addStep({
+		element: ".taclasses",
+		title: "Classes You TA For",
+		content: "This section shows the classes you are a teaching assistant (TA) for."
+	});
+	//#endregion
 
 	//#region Instructor View Reviews Tour
 	let instructorViewReviewsTour = new TourInstance('Instructor View Reviews Tour');
