@@ -475,7 +475,8 @@ $(function() {
 	feedbackFormTour.addStep({
 		element: '#feedback-form .field-row:last-child .field-meta .btn-delete',
 		title: 'Deleting Questions',
-		content: 'If you decided you no longer want a question, you can delete it by clicking this.'
+		content: 'If you decided you no longer want a question, you can delete it by clicking this.',
+		reflex: 'slow-click'
 	});
 	feedbackFormTour.addStep({
 		element: '#feedback-form .btn-create',
