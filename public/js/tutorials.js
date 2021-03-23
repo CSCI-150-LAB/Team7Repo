@@ -341,7 +341,23 @@ $(function() {
 	//#endregion
 
 	//#region FeedbackForm Tour
-	let feedbackFormTour = new TourInstance('FeedbackForm Tour');
+	let feedbackFormTour = new TourInstance('FeedbackForm Tour', {
+		template: `
+			<div class="popover" role="tooltip">
+				<div class="arrow"></div>
+				<h3 class="popover-header"></h3>
+				<div class="popover-body"></div>
+				<div class="popover-navigation">
+					<div class="btn-group">
+						<button class="btn btn-sm btn-secondary" data-role="prev">&laquo; Prev</button>
+						<button class="btn btn-sm btn-secondary" data-role="next">Next &raquo;</button>
+						<button class="btn btn-sm btn-secondary" data-role="pause-resume" data-pause-text="Pause" data-resume-text="Resume">Pause</button>
+					</div>
+					<button class="btn btn-sm btn-secondary" data-role="end">End tour</button>
+				</div>
+			</div>
+		`
+	});
 	feedbackFormTour.addStep({
 		element: '#feedback-form .form-row:first-child .form-group:first-child',
 		title: 'Form Name',
@@ -370,14 +386,101 @@ $(function() {
 		reflex: 'slow-click'
 	});
 	feedbackFormTour.addStep({
-		element: '#feedback-form .dropdown-menu .dropdown-item:nth-child(2)',
-		title: 'Long Text Field',
-		content: 'A short text field is represented by a simple input box. It is designed to be used with short answer, but not paragraphs, levels of content.'
+		element: '#feedback-form .field-row-short-text .field-name',
+		title: 'Short Text Field - Name',
+		content: 'The name of the question as it will appear to the students.',
+		prev: 3
 	});
 	feedbackFormTour.addStep({
-		element: '#feedback-form',
-		title: 'Test',
-		content: 'blah'
+		element: '#feedback-form .dropdown-menu .dropdown-item:nth-child(2)',
+		title: 'Long Text Field',
+		content: 'A short text field is represented by a simple input box. It is designed to be used with short answer, but not paragraphs, levels of content.',
+		reflex: 'slow-click'
+	});
+	feedbackFormTour.addStep({
+		element: '#feedback-form .field-row-long-text .field-name',
+		title: 'Long Text Field - Name',
+		content: 'The name of the question as it will appear to the students.',
+		prev: 3
+	});
+	feedbackFormTour.addStep({
+		element: '#feedback-form .dropdown-menu .dropdown-item:nth-child(3)',
+		title: 'Radio Field',
+		content: 'A multiple choice field where students may only select one answer.',
+		reflex: 'slow-click'
+	});
+	feedbackFormTour.addStep({
+		element: '#feedback-form .field-row-radio-group .field-name',
+		title: 'Radio Field - Name',
+		content: 'The name of the question as it will appear to the students.',
+		prev: 3
+	});
+	feedbackFormTour.addStep({
+		element: '#feedback-form .field-row-radio-group .field-options .btn-add-option',
+		title: 'Radio Field - Add Option',
+		content: 'New options can be created by clicking this.',
+		reflex: 'slow-click'
+	});
+	feedbackFormTour.addStep({
+		element: '#feedback-form .field-row-radio-group .field-options .input-group:last-child input',
+		title: 'Radio Field - Option Values',
+		content: 'Each option\'s text may be put into these text fields.'
+	});
+	feedbackFormTour.addStep({
+		element: '#feedback-form .field-row-radio-group .field-options .input-group:last-child .btn-delete',
+		title: 'Radio Field - Deleting Options',
+		content: 'If you made a mistake, extra options can be removed by clicking this.',
+		reflex: 'slow-click'
+	});
+	feedbackFormTour.addStep({
+		element: '#feedback-form .dropdown-menu .dropdown-item:nth-child(4)',
+		title: 'Checkbox Field',
+		content: 'A multiple choice field where students may select many or no answers.',
+		reflex: 'slow-click'
+	});
+	feedbackFormTour.addStep({
+		element: '#feedback-form .field-row-checkbox-group .field-name',
+		title: 'Checkbox Field - Name',
+		content: 'The name of the question as it will appear to the students.',
+		prev: 3
+	});
+	feedbackFormTour.addStep({
+		element: '#feedback-form .field-row-checkbox-group .field-options .btn-add-option',
+		title: 'Checkbox Field - Add Option',
+		content: 'New options can be created by clicking this.',
+		reflex: 'slow-click'
+	});
+	feedbackFormTour.addStep({
+		element: '#feedback-form .field-row-checkbox-group .field-options .input-group:last-child input',
+		title: 'Checkbox Field - Option Values',
+		content: 'Each option\'s text may be put into these text fields.'
+	});
+	feedbackFormTour.addStep({
+		element: '#feedback-form .field-row-checkbox-group .field-options .input-group:last-child .btn-delete',
+		title: 'Checkbox Field - Deleting Options',
+		content: 'If you made a mistake, extra options can be removed by clicking this.',
+		reflex: 'slow-click'
+	});
+	feedbackFormTour.addStep({
+		element: '#feedback-form .dropdown-menu .dropdown-item:nth-child(5)',
+		title: 'Rating Field',
+		content: 'A simple 5-star rating field where students can rate an experience or activity.',
+		reflex: 'slow-click'
+	});
+	feedbackFormTour.addStep({
+		element: '#feedback-form .field-row:last-child .field-meta .form-check',
+		title: 'Optional Questions',
+		content: 'Questions can be marked optional here. Optional questions do not need to be completed by the students.'
+	});
+	feedbackFormTour.addStep({
+		element: '#feedback-form .field-row:last-child .field-meta .btn-delete',
+		title: 'Deleting Questions',
+		content: 'If you decided you no longer want a question, you can delete it by clicking this.'
+	});
+	feedbackFormTour.addStep({
+		element: '#feedback-form .btn-create',
+		title: 'Create Form',
+		content: 'When you have everything filled out the way you like, save your changes by click this. This button will only become clickable when all required inputs have values.'
 	});
 	//#endregion
 });
