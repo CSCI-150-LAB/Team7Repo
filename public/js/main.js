@@ -135,6 +135,38 @@ class TourInstance {
 		let onShown = options.onShown;
 		options.onShown = (tour) => {
 			this.running = true;
+			TourInstance.runningInstance = this;
+
+			$('.popover .popover-navigation').on('click', (e) => {
+				switch ($(e.target).data('role')) {
+					case 'prev':
+						this.tour.prev();
+						break;
+					case 'next':
+						this.tour.next();
+						break;
+					case 'pause':
+						this.tour.pause();
+						break;
+					case 'resume':
+						this.tour.resume();
+						break;
+					case 'pause-resume':
+						if (this.tour._paused) {
+							this.tour.resume();
+						}
+						else {
+							this.tour.pause();
+						}
+						break;
+					case 'end':
+						this.tour.end();
+						break;
+				}
+				
+				e.stopPropagation();
+			});
+
 			if (onShown) {
 				onShown(tour);
 			}
@@ -144,6 +176,7 @@ class TourInstance {
 		options.onEnd = (tour) => {
 			this.running = false;
 			this.firstTime = false;
+			TourInstance.runningInstance = null;
 			if (onEnd) {
 				onEnd(tour);
 			}
@@ -184,6 +217,7 @@ class TourInstance {
 		this.tour.restart();
 	}
 
+	static runningInstance = null;
 	static instances = [];
 	static currentPath = '/' + `${location.protocol}//${location.hostname}${location.pathname}`.substr(BASEURL.length);
 	static defaultOptions = {
