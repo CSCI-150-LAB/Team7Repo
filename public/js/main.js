@@ -67,6 +67,10 @@ $(function() {
 		}
 	});
 
+	$(document).on('click', '[data-reset-tour]', function() {
+		TourInstance.resetTour($(this).data('reset-tour'));
+	});
+
 	setTimeout(function() {
 		TourInstance.instances
 			.filter(i => i.trigger)
@@ -255,7 +259,7 @@ class TourInstance {
 				return;
 			}
 		}
-		
+
 		let data = JSON.parse(localStorage.getItem('tour-has-run') || '{}');
 		data[tour.cleanName] = false;
 		localStorage.setItem('tour-has-run', JSON.stringify(data));
