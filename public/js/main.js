@@ -33,11 +33,36 @@ $(function() {
 
 	$('.rating-field').trigger('mouseleave');
 
-	$(document).on('click', '[data-start-tour]', function() {
-		let tourName = $(this).data('start-tour'),
-			inst = TourInstance.instances.find(i => i.name == tourName || i.options.name == tourName);
+	$(document).on('mouseenter', '.dropdown-toggle', function(e) {
+		e.target.__clickOnTrack = false;
+	});
 
-		if (!inst.running) {
+	$(document).on('mousedown', '.dropdown-toggle', function(e) {
+		if (e.button == 0) {
+			e.target.__clickOnTrack = true;
+		}
+	});
+
+	$(document).on('mouseup', '.dropdown-toggle', function(e) {
+		if (e.button == 0 && e.target.__clickOnTrack) {
+			setTimeout(function() {
+				$(e.target).trigger('slow-click');
+			}, 100);
+		}
+	});
+
+	$(document).on('click', function(e) {
+		if (!$(e.target).hasClass('dropdown-toggle')) {
+			setTimeout(function() {
+				$(e.target).trigger('slow-click');
+			}, 100);
+		}
+	});
+
+	$(document).on('click', '[data-start-tour]', function() {
+		let inst = TourInstance.getInstance($(this).data('start-tour'));
+
+		if (inst) {
 			inst.start();
 		}
 	});
@@ -150,6 +175,10 @@ class TourInstance {
 	}
 
 	start() {
+		if (this.running) {
+			return;
+		}
+
 		this.tour = new Tour(this.options);
 		this.tour.init()
 		this.tour.restart();
@@ -179,4 +208,19 @@ class TourInstance {
 			</div>
 		`}
 	};
+
+	static getInstance(name) {
+		return TourInstance.instances.find(i => i.name == name || i.options.name == name);
+	}
+
+	static resetTour(name) {
+		let tour = TourInstance.getInstance(name);
+		if (!tour) {
+			return;
+		}
+
+		let data = JSON.parse(localStorage.getItem('tour-has-run') || '{}');
+		data[tour.cleanName] = false;
+		localStorage.setItem('tour-has-run', JSON.stringify(data));
+	}
 }

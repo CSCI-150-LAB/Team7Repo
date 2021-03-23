@@ -277,7 +277,7 @@ $(function() {
 
 	//#region Instructor Dashboard Tour
 	let instructorDashboardTour = new TourInstance('Instructor Dashboard Tour');
-	instructorDashboardTour.addPageLoadTrigger(/^\/Instructor\/Dashboard\/\d+$/);
+	instructorDashboardTour.addPageLoadTrigger(/^\/Instructor\/Dashboard$/);
 	instructorDashboardTour.addStep({
 		element: ".instructordashboard",
 		title: "Instructor Dashboard",
@@ -365,4 +365,44 @@ $(function() {
 	});
 	//#endregion
 
+	//#region FeedbackForm Tour
+	let feedbackFormTour = new TourInstance('FeedbackForm Tour');
+	feedbackFormTour.addStep({
+		element: '#feedback-form .form-row:first-child .form-group:first-child',
+		title: 'Form Name',
+		content: 'Give a nice simple name for this feedback session. Will be seen by you and students.'
+	});
+	feedbackFormTour.addStep({
+		element: '#feedback-form .form-row:first-child .form-group:nth-child(2)',
+		title: 'Start Time',
+		content: 'The form will not be active until the time given.'
+	});
+	feedbackFormTour.addStep({
+		element: '#feedback-form .form-row:first-child .form-group:last-child',
+		title: 'End Time',
+		content: 'The form will be active until the time given.'
+	});
+	feedbackFormTour.addStep({
+		element: '#feedback-form .dropdown-toggle',
+		title: 'Add Field',
+		content: 'Use this button to add fields to the form. The current fields supported include: Short Text, Long Text, Radio Group, Checkbox Group, and Rating.',
+		reflex: 'slow-click',
+	});
+	feedbackFormTour.addStep({
+		element: '#feedback-form .dropdown-menu .dropdown-item:nth-child(1)',
+		title: 'Short Text Field',
+		content: 'A short text field is represented by a simple input box. It is designed to be used with short answer, but not paragraphs, levels of content.',
+		reflex: 'slow-click'
+	});
+	feedbackFormTour.addStep({
+		element: '#feedback-form .dropdown-menu .dropdown-item:nth-child(2)',
+		title: 'Long Text Field',
+		content: 'A short text field is represented by a simple input box. It is designed to be used with short answer, but not paragraphs, levels of content.'
+	});
+	feedbackFormTour.addStep({
+		element: '#feedback-form',
+		title: 'Test',
+		content: 'blah'
+	});
+	//#endregion
 });
