@@ -16,22 +16,22 @@
 	<table class="table table-bordered tbl-background">																		<!--Lay out the table to hold info on enrolled classes-->
 		<thead>
 			<tr>
-			<th scope="col"> Class </th>
-			<th scope="col"> Description </th>
-			<th scope="col"> Days/Times</th>
-			<th scope="col"> Instructor</th>
+			<th scope="col" class = "classname"> Class </th>
+			<th scope="col" class = "classdescription"> Description </th>
+			<th scope="col" class = "classtime"> Days/Times</th>
+			<th scope="col" class = "classinstructor"> Instructor</th>
 			</tr>
 		</thead>
 		<tbody>
 			<?php foreach ($classes as $classDetails) : ?>
 				<tr>
-					<div class = "classname"><th scope="row"> <a href = '<?php echo $this->baseUrl("/Feedback/PublishedFeedback/{$classDetails->classid}")?>'><?php echo $classDetails->class ?></a> </th></div>
+					<th scope="row"> <a href = '<?php echo $this->baseUrl("/Feedback/PublishedFeedback/{$classDetails->classid}")?>'><?php echo $classDetails->class ?></a> </th>
 					<!--Display the title of the class-->
-					<div class = "classdescription"><td> <?php echo $classDetails->description ?> </td></div>
+					<td> <?php echo $classDetails->description ?> </td>
 					<!--Display the description of the class-->
-					<div class = "classtime"><td> <?php echo $classDetails->getClassTimeString()?> </td></div>
+					<td> <?php echo $classDetails->getClassTimeString()?> </td>
 					<!--Display the time the class runs for-->
-					<div class = "classinstructor"><td> <a href = '<?php echo $this->baseUrl("/Instructor/Profile/{$classDetails->instructorid}") ?>'><?php echo $classDetails->getInstructor()->getFullName(true) ?></a> </td></div>
+					<td> <a href = '<?php echo $this->baseUrl("/Instructor/Profile/{$classDetails->instructorid}") ?>'><?php echo $classDetails->getInstructor()->getFullName(true) ?></a> </td>
 					<!--Display instructor name and link to their profile page-->	
 				</tr>
 			<?php endforeach; ?>

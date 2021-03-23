@@ -196,7 +196,7 @@ $(function() {
 	studentDashboardTour.addStep({
 		element: ".dashboardheader",
 		title: "Welcome!",
-		content: "Welcome to your student dashboard! This page allows you to view and access your classes."
+		content: "Welcome to your student dashboard! This page allows you to view and access your classes."	
 	});
 	studentDashboardTour.addStep({
 		element: ".classesenrolled",
