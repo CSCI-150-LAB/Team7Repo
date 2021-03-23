@@ -1,16 +1,19 @@
 <?php
 	$this->pageTitle('Edit Profile');
 ?>
-<!-- <a class = 'btn btn-secondary float-md-right text-white' onclick = 'editStudProfTut()')>Help</a><br><br>-->
-<form method="POST">
-	<h1>Edit your profile</h1>
-    <input type="text" name="major" value="<?php echo $this->escapeHtml($profile->studentMajor) ?>">
+<button class = 'btn btn-secondary float-md-right text-white' data-start-tour="Student Edit Profile Tour">Help</button><br><br>
+<h1><b>Edit your profile</b></h1>
+<form class = "studenteditprofile" method="POST">
+
+    <input class = "studentsmajor" type="text" name="major" value="<?php echo $this->escapeHtml($profile->studentMajor) ?>">
     <label for="studentMajor">Enter your major</label>
     <br>
-    <input type="text" name="learningStyle" value="<?php echo $this->escapeHtml($profile->learningStyle) ?>">
+
+    <input class = "studentlspref" type="text" name="learningStyle" value="<?php echo $this->escapeHtml($profile->learningStyle) ?>">
     <label for="studentMajor">Enter your preferred learning style</label>
-   
     <br>
+
+    <div class = "learningstylecomfort">
     <input type="range" name="visual" id="visual" min="1" max="10" value="<?php echo $profile->visual ?>">
     <label for="visual">How often do you prefer visual learning tools?</label> 
     
@@ -22,14 +25,13 @@
     <input type="range" name="audio" id="audio" min="1" max="10" value="<?php echo $profile->audio ?>">
     <label for="audio">How often do you prefer audio learning tools?</label> 
     <br>
-
     
     <input type="range" name="readingwriting" id="readingwriting" min="1" max="10" value="<?php echo $profile->reading_writing ?>">
     <label for="readingwriting">How often do you prefer reading/writing learning tools?</label> 
-    <br>
+    <br></div>
 
     
-    
+    <div class = "learningtoolspref">
     <label for="visual-tools">Visual tools</label>
     <select name="visual-tools" id="visual-tools">
         <option value="Charts/Diagrams">Charts/Diagrams</option>
@@ -60,13 +62,13 @@
         <option value="Articles-resources">Reading Articles and Resources</option>
         <option value="Textbook/notes">Reading textbook and Note Taking </option>
     </select>
-    <br>
+    <br></div>
     
 
    
 
     
     <br>
-	<button type="submit" class="btn btn-cardinalred" style = >Save Changes</button>
+	<button type="submit" class="btn btn-cardinalred saveedits" style = >Save Changes</button>
 </form>
 
