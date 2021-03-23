@@ -248,11 +248,14 @@ class TourInstance {
 	}
 
 	static resetTour(name) {
-		let tour = TourInstance.getInstance(name);
-		if (!tour) {
-			return;
+		let tour = name;
+		if (!(name instanceof TourInstance)) {
+			tour = TourInstance.getInstance(name);
+			if (!tour) {
+				return;
+			}
 		}
-
+		
 		let data = JSON.parse(localStorage.getItem('tour-has-run') || '{}');
 		data[tour.cleanName] = false;
 		localStorage.setItem('tour-has-run', JSON.stringify(data));
