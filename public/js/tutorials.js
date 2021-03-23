@@ -138,15 +138,20 @@ $(function() {
 		title: "Email Address",
 		content: "The student's email address is listed here."
 	});
-	studentEditProfileTour.addStep({
-		element: ".studentsmajor",
-		title: "Student Major",
-		content: "You can change your displayed major by entering it in here."
+	studentTour.addStep({
+		element: ".preferredlearningstyle",
+		title: "Preferred Learning Style",
+		content: "Listed here is the learning style the student is most comfortable using."
 	});
-	studentEditProfileTour.addStep({
-		element: ".studentsmajor",
-		title: "Student Major",
-		content: "You can change your displayed major by entering it in here."
+	studentTour.addStep({
+		element: ".learningstyles",
+		title: "All Learning Styles",
+		content: "This section shows how comfortable the student is with each of the four learning styles: visual, kinesthetic, auditory, read/write."
+	});
+	studentTour.addStep({
+		element: ".learningtools",
+		title: "Learning Tools",
+		content: "This section shows which tools the student prefers to use for each respective learning styles."
 	});
 	//#endregion
 
@@ -199,9 +204,29 @@ $(function() {
 		content: "This section lists the classes you are enrolled in as a student."
 	});
 	studentDashboardTour.addStep({
+		element: ".classname:first",
+		title: "Class Name",
+		content: "The name of your class is listed in the leftmost column. By clicking the class name, you will be redirected to your class page."
+	});
+	studentDashboardTour.addStep({
+		element: ".classdescription:first",
+		title: "Class Description",
+		content: "A short description of the class is listed in this column."
+	});
+	studentDashboardTour.addStep({
+		element: ".classtime:first",
+		title: "Class Meeting Times",
+		content: "The meeting days and times for the class will be in this column."
+	});
+	studentDashboardTour.addStep({
+		element: ".classinstructor:first",
+		title: "Class Instructor",
+		content: "The instructor of the class is listed here. By clicking the instructor's name, you will be redirected to their profile page."
+	});
+	studentDashboardTour.addStep({
 		element: ".taclasses",
 		title: "Classes You TA For",
-		content: "This section shows the classes you are a teaching assistant (TA) for."
+		content: "This section shows the classes you are a teaching assistant (TA) for. The columns for this section are organized like the columns in the 'Enrolled Classes' section."
 	});
 	//#endregion
 
