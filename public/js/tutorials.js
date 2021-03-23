@@ -230,6 +230,66 @@ $(function() {
 	});
 	//#endregion
 
+	//#region Student Add Instructor Review Tour
+	let addInstructorReviewTour = new TourInstance('Add Instructor Review Tour');
+	addInstructorReviewTour.addPageLoadTrigger(/^\/Instructor\/AddReview\/\d+$/);
+	addInstructorReviewTour.addStep({
+		element: ".addreviewtitle", 
+		title: "Add a Review!",
+		content: "This page allows you to submit a review on an instructor's performance."
+	});
+	addInstructorReviewTour.addStep({
+		element: ".requiredfields", 
+		title: "Required Fields",
+		content: "You are required to complete these fields to submit a review."
+	});
+	addInstructorReviewTour.addStep({
+		element: ".ratingstars", 
+		title: "Rating Out of Five Stars",
+		content: "You can rate your professor's performance out of five stars in this section. A rating of 1 is the lowest and signifies the professor performed poorly; a rating of 5 is the highest and signifies the professor performed well."
+	});
+	addInstructorReviewTour.addStep({
+		element: ".instructorrecommendation", 
+		title: "Detailed Recommendation",
+		content: "In this section, you have the opportunity to explain with more detail how your instructor performed."
+	});
+	addInstructorReviewTour.addStep({
+		element: ".anonrating", 
+		title: "Keep Your Rating Anonymous",
+		content: "By checking 'Yes,' your review will be shared anonymously."
+	});
+	addInstructorReviewTour.addStep({
+		element: ".additionalrating", 
+		title: "Additional Review Information",
+		content: "The following entries are optional and may provide more depth to your review."
+	});
+	addInstructorReviewTour.addStep({
+		element: ".takeprofagain", 
+		title: "Take Another Class with This Instructor",
+		content: "This entry allows you to indicate whether you would take another class with this instructor."
+	});
+	addInstructorReviewTour.addStep({
+		element: ".hwreq", 
+		title: "Homework",
+		content: "This entry allows you to indicate if the professor assigned homework for the class."
+	});
+	addInstructorReviewTour.addStep({
+		element: ".mandatoryattend", 
+		title: "Attendance",
+		content: "This entry allows you to indicate if the professor made attendance mandatory."
+	});
+	addInstructorReviewTour.addStep({
+		element: ".classgrade", 
+		title: "Grade",
+		content: "This entry allows you to indicate the grade you received in the class."
+	});
+	addInstructorReviewTour.addStep({
+		element: ".submitreview", 
+		title: "Submit",
+		content: "Once you are done, you may submit by pressing this button!"
+	});
+	//#endregion
+
 	//#region Instructor View Reviews Tour
 	let instructorViewReviewsTour = new TourInstance('Instructor View Reviews Tour');
 	instructorViewReviewsTour.addPageLoadTrigger(/^\/Instructor\/ViewReviews\/\d+$/);
