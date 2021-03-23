@@ -59,7 +59,7 @@
 								</div>
 							</transition-group>
 
-							<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								Add Field
 							</button>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -121,6 +121,14 @@
 			let that = this;
 			$('#feedback-app').on('hidden.bs.modal', function() {
 				that.reset();
+			});
+			$('#feedback-app').on('shown.bs.modal', function() {
+				let tour = TourInstance.getInstance('FeedbackForm Tour');
+				if (tour && tour.firstTime) {
+					setTimeout(() => {
+						tour.start();
+					}, 500);
+				}
 			});
 
 			this.reset();
