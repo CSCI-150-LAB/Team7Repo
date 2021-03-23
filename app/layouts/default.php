@@ -45,7 +45,7 @@
 	$this->scriptRegister('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js', ['jquery']);
 	$this->scriptRegister('bootstrap-select', $this->publicUrl('js/bootstrap-select.min.js'), ['jquery', 'bootstrap']);
 	$this->scriptRegister('bootstrap-tour', $this->publicUrl('js/bootstrap-tour.min.js'), ['jquery', 'bootstrap']);
-	$this->scriptEnqueue('main', $this->publicUrl('js/main.js'), ['bootstrap', 'bootstrap-select', 'bootstrap-tour'], false);
+	$this->scriptEnqueue('main', $this->publicUrl('js/main.js?t=' . filemtime(APP_ROOT . '/public/js/main.js')), ['bootstrap', 'bootstrap-select', 'bootstrap-tour'], false);
 	$this->scriptEnqueue('tutorials', $this->publicUrl('js/tutorials.js?t=' . filemtime(APP_ROOT . '/public/js/tutorials.js')), ['main'], false);
 
 	$this->outputStyles();
