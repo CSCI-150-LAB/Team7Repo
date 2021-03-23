@@ -72,6 +72,10 @@
 						Create
 						<i v-if="processing" class="fas fa-cog fa-spin"></i>
 					</button>
+
+					<button type="button" class="btn btn-info btn-help float-right mr-2" data-start-tour="FeedbackForm Tour">
+						Help
+					</button>
 				</form>
 			</div>
 			<div class="collapse" id="successCollapse" ref="successCollapse">
