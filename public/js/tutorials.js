@@ -138,12 +138,12 @@ $(function() {
 		title: "Email Address",
 		content: "The student's email address is listed here."
 	});
-	studentEditProfileTour.addStep({
+	studentTour.addStep({
 		element: ".studentsmajor",
 		title: "Student Major",
 		content: "You can change your displayed major by entering it in here."
 	});
-	studentEditProfileTour.addStep({
+	studentTour.addStep({
 		element: ".studentsmajor",
 		title: "Student Major",
 		content: "You can change your displayed major by entering it in here."
@@ -252,7 +252,7 @@ $(function() {
 
 	//#region Instructor Dashboard Tour
 	let instructorDashboardTour = new TourInstance('Instructor Dashboard Tour');
-	instructorDashboardTour.addPageLoadTrigger(/^\/Instructor\/Dashboard\/\d+$/);
+	instructorDashboardTour.addPageLoadTrigger(/^\/Instructor\/Dashboard$/);
 	instructorDashboardTour.addStep({
 		element: ".instructordashboard",
 		title: "Instructor Dashboard",
