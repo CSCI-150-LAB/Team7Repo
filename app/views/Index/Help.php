@@ -5,6 +5,68 @@
 
 <h1 class="mb-3 p-5 text-white bg-blue">Help Page: view tutorials for FeedbackLoop here</h1><br><br>
 
+<h2>General Tours:</h2>
+
+<div class="row">
+    <div class="col-sm-6 col-lg-3 my-3">
+        <?php if($currentUser->type == "instructor"): ?>
+            <a data-reset-tour='Instructor View Reviews Tour' href = '<?php echo($this->baseUrl("/Instructor/ViewReviews/{$currentUser->id}")) ?>'>
+                <div class="card">
+                    <img class="card-img-top" src="<?php echo $this->publicUrl('images/InstructorReviews-InstructorView.PNG')?>">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">View Instructor Reviews</h5>
+                        <p class="card-text">Learn how to navigate your reviews page.</p>
+                    </div>
+                </div>
+            </a><br><br>
+        <?php else: ?>
+            <a data-reset-tour='Instructor View Reviews Tour' href = '<?php echo($this->baseUrl("/Instructor/ViewReviews/1443")) ?>'>
+                <div class="card">
+                    <img class="card-img-top" src="<?php echo $this->publicUrl('images/InstructorReviews-StudentView.PNG')?>">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">View Instructor Reviews</h5>
+                        <p class="card-text">Learn how to navigate an instructor's review page.</p>
+                    </div>
+                </div>
+            </a>
+        <?php endif; ?>
+    </div>
+</div>
+
+<?php if($currentUser->type == "instructor"): ?>
+    <h2>Instructor Tours:</h2>
+
+    <div class="row">
+        <div class="col-sm-6 col-lg-3 my-3">
+            <a data-reset-tour='Add Class Tour' href = '<?php echo($this->baseUrl("/Instructor/AddClass")) ?>'>
+                <div class="card">
+                    <img class="card-img-top" src="<?php echo $this->publicUrl('images/AddClass.PNG')?>">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Add Class</h5>
+                        <p class="card-text">Learn how to add a new class you are instructor of.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    
+        <?php
+            $class = InstructorClasses::findOne("instructorid =:0:", $currentUser->id);
+            if($class): ?>
+                <div class="col-sm-6 col-lg-3 my-3">
+                    <a data-reset-tour='FeedbackForm Tour' href = '<?php echo($this->baseUrl("/Instructor/ViewClass/{$class->classid}")) ?>'>
+                        <div class="card">
+                            <img class="card-img-top" src="<?php echo $this->publicUrl('images/FeedbackForm.PNG')?>">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">FeedbackForm</h5>
+                                <p class="card-text">Learn how to add a new feedback session for one of your classes.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            <?php endif; ?>
+    </div>
+<?php endif; ?>
+
 <h2>Profile and Dashboard Tours:</h2>
 
 <div class="row">
