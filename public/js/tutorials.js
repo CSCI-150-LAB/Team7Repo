@@ -297,7 +297,7 @@ $(function() {
 
 	//#region Add Class Tour
 	let addClassTour = new TourInstance('Add Class Tour');
-	addClassTour.addPageLoadTrigger(/^\/Instructor\/AddClass\/\d+$/);
+	addClassTour.addPageLoadTrigger(/^\/Instructor\/AddClass/);
 	addClassTour.addStep({
 		element: ".addclass",
 		title: "Add a new class",
