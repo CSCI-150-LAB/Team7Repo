@@ -394,7 +394,7 @@ $(function() {
 	feedbackFormTour.addStep({
 		element: '#feedback-form .dropdown-menu .dropdown-item:nth-child(2)',
 		title: 'Long Text Field',
-		content: 'A short text field is represented by a simple input box. It is designed to be used with short answer, but not paragraphs, levels of content.',
+		content: 'A long text field is represented by a large input for potentially paragraphs of text',
 		reflex: 'slow-click'
 	});
 	feedbackFormTour.addStep({
