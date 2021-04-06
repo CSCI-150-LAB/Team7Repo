@@ -36,4 +36,8 @@ class IndexController extends PermsController {
 	public function MessagingAction() {
 		return $this->view();
 	}
+
+	public function HelpAction() {
+		return $this->view();
+	}
 }

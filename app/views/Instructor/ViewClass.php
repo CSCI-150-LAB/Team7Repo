@@ -28,7 +28,7 @@
 		Feedback
 	</button>
 	<div class="dropdown-menu">
-		<a href="#feedback-app" class="dropdown-item" data-toggle="modal" data-target="#feedback-app">Create a feedback session</a>
+		<a href="#feedback-app" class="dropdown-item" data-toggle="modal" data-target="#feedback-app" id="feedback-form">Create a feedback session</a>
 		<a href='<?php echo $this->baseUrl("/Feedback/PublishedFeedback/{$class->classid}") ?>' class="dropdown-item">View Sessions</a>
 	</div>
 </div>

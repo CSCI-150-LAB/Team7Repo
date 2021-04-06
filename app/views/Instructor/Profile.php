@@ -9,14 +9,18 @@ $this->pageTitle("{$user->preferredTitle} {$user->lastName} - Profile");
 <div class="bg-blue p-5 text-white mb-3">
 	<h1 class="mb-0">Instructor Profile</h1>
 </div>
-<?php if(($profile->instructorid == $currentUser->id) || ($currentUser->type == "admin")) {
-	echo "<a class = 'btn btn-secondary float-md-right text-white' href = '".$this->baseUrl("/Instructor/EditProfile/{$currentUser->id}")."'>Edit Profile</a><br><br>";
+<button class = 'btn btn-secondary float-md-right text-white' data-start-tour="Instructor Tour">Help</button><br><br> 
+<?php
+	if(($profile->instructorid == $currentUser->id) || ($currentUser->type == "admin")) {
+	echo "<a class = 'btn btn-secondary float-md-right text-white editprofile' href = '".$this->baseUrl("/Instructor/EditProfile/{$currentUser->id}")."'>Edit Profile</a><br><br>";
 } //Allows user to edit profile if current profile is the user's profile ?>
-<div class="d-flex flex-column flex-md-row">
+<div class="d-flex flex-column flex-md-row instructorinfo">
 	<img src="<?php echo $user->getProfileImageSrc() ?>" width="250" alt="blank_avatar" class="mr-md-4 mb-3 img-fluid">
 	<div class="w-100">
 		<div class="text-md-right mb-3">
-			<?php echo PrintHelpers::printStarRating($profile->rating) ?>
+			<div class="float-md-right starrating">
+				<?php echo PrintHelpers::printStarRating($profile->rating) ?>
+			</div>
 		</div>
 		<div>
 			<!--Makes heading of professor's profile, with title if chosen-->
@@ -30,11 +34,13 @@ $this->pageTitle("{$user->preferredTitle} {$user->lastName} - Profile");
 	<div class="col-sm-6">
 		<div class="card p-3 mb-3">
 			<div class="card-body">
-				<h4 class="card-title text-center">Teaching Styles</h4>
-				<b>Visual:</b> <?php echo $profile->visual ?> <br>
-				<b>Auditory:</b> <?php echo $profile->auditory ?> <br>
-				<b>Reading/Writing:</b> <?php echo $profile->readwrite ?> <br>
-				<b>Kinesthetic:</b> <?php echo $profile->kines ?> <br><br>
+				<div class="teachingstyles">
+					<h4 class="card-title text-center">Teaching Styles</h4>
+					<b>Visual:</b> <?php echo $profile->visual ?> <br>
+					<b>Auditory:</b> <?php echo $profile->auditory ?> <br>
+					<b>Reading/Writing:</b> <?php echo $profile->readwrite ?> <br>
+					<b>Kinesthetic:</b> <?php echo $profile->kines ?> <br><br>
+				</div>
 				<?php
 				$ratings = InstructorRatings::find("instructor_id = :0:", $user->id);
 				if($ratings) {
@@ -75,45 +81,49 @@ $this->pageTitle("{$user->preferredTitle} {$user->lastName} - Profile");
 					$percentTA = ($numTA/$numTotalTA)*100;
 					$arr = [$A, $B, $C, $D, $F];
 					if($numTotalTA) {?>
-					<h4 class="card-title text-center">Students would take again</h4>
-					<div class="progress">
-						<div class="progress-bar" role="progressbar" aria-valuenow=<?php echo $percentTA ?> aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $percentTA ?>%">
-							<?php echo round($percentTA) ?>%
+					<div class = 'takeagain'>
+						<h4 class="card-title text-center">Students would take again</h4>
+						<div class="progress">
+							<div class="progress-bar" role="progressbar" aria-valuenow=<?php echo $percentTA ?> aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $percentTA ?>%">
+								<?php echo round($percentTA) ?>%
+							</div>
 						</div>
+						<p class="text-center">Out of <?php echo $numTotalTA?> people who answered</p>
 					</div>
-					<p class="text-center">Out of <?php echo $numTotalTA?> people who answered</p>
 					<?php }
 					if($numTotalGrades) { ?>
-					<h4 class="card-title text-center">Student grades</h4>
-					<p class="text-center">Out of <?php echo $numTotalGrades?> people who answered</p>
-					<canvas id="myChart"></canvas>
-					<script>
-						var ctx = document.getElementById('myChart').getContext('2d');
-						var data = [<?php echo join(',',$arr); ?>];
-						var myPieChart = new Chart(ctx, {
-							type: 'pie',
-							data: {
-							datasets: [{
-								backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-								data: <?php echo json_encode($arr, JSON_NUMERIC_CHECK); ?>
-							}],
-							labels: [
-								'A',
-								'B',
-								'C',
-								'D',
-								'F'
-							]
-						}
-						});
-					</script>
+					<div class = 'grades'>
+						<h4 class="card-title text-center">Student grades</h4>
+						<p class="text-center">Out of <?php echo $numTotalGrades?> people who answered</p>
+						<canvas id="myChart"></canvas>
+						<script>
+							var ctx = document.getElementById('myChart').getContext('2d');
+							var data = [<?php echo join(',',$arr); ?>];
+							var myPieChart = new Chart(ctx, {
+								type: 'pie',
+								data: {
+								datasets: [{
+									backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+									data: <?php echo json_encode($arr, JSON_NUMERIC_CHECK); ?>
+								}],
+								labels: [
+									'A',
+									'B',
+									'C',
+									'D',
+									'F'
+								]
+							}
+							});
+						</script>
+					</div>
 				<?php } } ?>
 			</div>
 		</div>
 	</div>
 	<div class="col-sm-6">
 		<div class="card p-3 mb-3">
-			<div class="card-body">
+			<div class="card-body topreview">
 				<h4 class="card-title text-center">Top Review</h4>
 				<?php $reviews = InstructorRatings::find("instructor_id = :0: AND verified = :1:", $user->id, 1);
 				if(!$reviews) {
@@ -142,7 +152,7 @@ $this->pageTitle("{$user->preferredTitle} {$user->lastName} - Profile");
 			</div>
 		</div>
 		<div class="card p-3">
-			<div class="card-body">
+			<div class="card-body recentfeedback">
 				<h4 class="card-title text-center">Recent Feedback</h4>
 				<?php $reviews = InstructorRatings::find("instructor_id = :0:", $user->id);
 				$recent = count($reviews)-1;
@@ -164,7 +174,7 @@ $this->pageTitle("{$user->preferredTitle} {$user->lastName} - Profile");
 					echo '<br><br>';
 				}
 				if($reviews) { ?>
-					<a href = '<?php echo $this->baseUrl("/Instructor/ViewReviews/{$user->id}") ?>' class = 'card-link'>See all reviews <i class="fas fa-angle-double-right"></i></a>
+					<a href = '<?php echo $this->baseUrl("/Instructor/ViewReviews/{$user->id}") ?>' class = 'card-link allreviews'>See all reviews <i class="fas fa-angle-double-right"></i></a>
 				<?php } ?>
 			</div>
 		</div>

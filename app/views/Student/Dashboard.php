@@ -4,11 +4,11 @@
 	$this->pageTitle('Dashboard');
 ?>
 
-<div class="mb-3 bg-blue text-white p-5">
+<div class="mb-3 bg-blue text-white p-5 dashboardheader">
 	<h1 class="mb-0">Student Dashboard</h1>
 </div>
 
-<div class="table-responsive">
+<div class="table-responsive classesenrolled">
 	<h3 class="mb-0"><b>Enrolled Classes</b></h3>
 	<br>
 	<table class="table table-bordered tbl-background">																		<!--Lay out the table to hold info on enrolled classes-->
@@ -42,7 +42,7 @@
 	if ($taClass[0] != NULL) { ?>
 		<div><h3 class="mb-0"><b>TA Classes</b></h3></div>
 		<br>
-		<table class="table table-bordered tbl-background">																		<!--Lay out the table to hold info on enrolled classes-->
+		<table class="table table-bordered tbl-background taclasses">																		<!--Lay out the table to hold info on enrolled classes-->
 			<thead>
 				<tr>
 				<th scope="col"> Class </th>
