@@ -10,74 +10,67 @@
 	</div>
 </div>
 
-<!--Class Menu-->
 <div class="row mb-3">
+<!--Class Menu-->
 	<div class = "col-sm-3">
-		<!--Action List-->
-
-					<!-- Group Attendance-->
-				<ul class="card list-group list-group-flush">
-					<li class="list-group-item"> Track Attendance <a href="#" class="btn btn-danger float-right"> <i class="fas fa-chevron-right"></i></a></li>
-					<!-- Course Materials -->
-					<li class="list-group-item"> Course Materials <a href="#" class="btn btn-danger float-right"> <i class="fas fa-chevron-right"></i></a> </li>
-					<!-- Add Student/TA -->
-					<li class="list-group-item text-left"> 	
-						<!-- Add Student and TA Dropdown -->
-						<div class=""> 
-							<div class="dropdown"> Add Student/TA 
-								<button class="btn btn-danger float-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-chevron-down"></i></button> 
-								<div class="dropdown-menu"> 
-									<a href='<?php echo $this->baseUrl("/Instructor/AddStudent/{$class->classid}") ?>' class="dropdown-item">Add Student</a>
-									<a href='<?php echo $this->baseUrl("/Instructor/AddCSVStudents/{$class->classid}") ?>' class="dropdown-item">Add Students by CSV</a>
-									<?php
-										if ($ta[0]->id == NULL) { ?>
-											<a href='<?php echo $this->baseUrl("/Instructor/AddTA/{$class->classid}") ?>' class="dropdown-item">Add TA</a>
-									<?php 
-										} ?>
-								</div>
-							</div>
+		<div class="accordion" id="accordionExample">
+			<!-- Track Attendance-->
+			<div class="card">
+				<div class="card-header"> Track Attendance <button class="btn btn-danger float-right" type="button"> <a href="#" style="color: #ffffff;"> <i class="fas fa-chevron-right"></i></a> </button> </div>
+			</div>
+			<!-- Course Materials -->
+			<div class = "card">
+				<div class="card-header"> Course Materials <button class="btn btn-danger float-right" type="button"> <a href="#" style="color: #ffffff;"> <i class="fas fa-chevron-right"></i></a> </button> </div>
+			</div>
+			<!-- Add Student/TA -->
+			<div class="card">
+				<div class="card-header" id="headingOne">
+					<div class=""> Add to Class
+						<button class="btn btn-danger float-right" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"> <i class="fas fa-chevron-down"></i></button> 
+					</div>
+					<div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample"> 
+						<div class="card-body">
+							<a href='<?php echo $this->baseUrl("/Instructor/AddStudent/{$class->classid}") ?>' class="">Add Student</a> <br>
+							<a href='<?php echo $this->baseUrl("/Instructor/AddCSVStudents/{$class->classid}") ?>' class="">Add Students by CSV</a> <br>
+							<?php
+								if ($ta[0]->id == NULL) { ?>
+									<a href='<?php echo $this->baseUrl("/Instructor/AddTA/{$class->classid}") ?>' class="">Add TA</a>
+							<?php 
+								} ?>
 						</div>
-					</li>
-				</ul>
-						<li class="list-group-item"> Get Feedback
-							<a href="#" class="btn btn-danger float-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-chevron-down"></i></a>
-							<div>
-								<div class="dropdown-menu">
-									<a href="#feedback-app" class="dropdown-item" data-toggle="modal" data-target="#feedback-app">Create a feedback session</a>
-									<a href='<?php echo $this->baseUrl("/Feedback/PublishedFeedback/{$class->classid}") ?>' class="dropdown-item">View Sessions</a>
-								</div>
-							</div>
+					</div>
+				</div>
+			</div>
+			<!-- Get Feedback -->
+			<div class="card">
+				<div class="card-header" id="headingOne">
+					<div class=""> Get Feedback
+						<button class="btn btn-danger float-right" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseOne"> <i class="fas fa-chevron-down"></i></button> 
+					</div>
+					<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample"> 
+						<div class="card-body">
+							<a href="#feedback-app" class="" data-toggle="modal" data-target="#feedback-app">Create Session</a> <br>
+							<a href='<?php echo $this->baseUrl("/Feedback/PublishedFeedback/{$class->classid}") ?>' class="">View Session</a>
 							<?php echo $this->partial('_FeedbackForm', ['class' => $class]) ?>
-						</li>
-		
-						<!-- Create Quiz -->
-						<li class="list-group-item"> Create Quiz <a href="#" class="btn btn-danger float-right"> <i class="fas fa-chevron-right"></i></a> </li>
-						<!-- Launch Whiteboard-->
-						<li class="list-group-item"> Launch Whiteboard <a href="#" class="btn btn-danger float-right"> <i class="fas fa-chevron-right"></i></a> </li>
-
-						</li>
-					</ul>
-
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Create Quiz -->
+			<div class = "card">
+				<div class="card-header"> Create Quiz <button class="btn btn-danger float-right" type="button"> <a href="#" style="color: #ffffff;"> <i class="fas fa-chevron-right"></i></a> </button> </div>
+			</div>
+			<!-- Launch Whiteboard -->
+			<div class = "card">
+				<div class="card-header"> Launch Whiteboard <button class="btn btn-danger float-right" type="button"> <a href="#" style="color: #ffffff;"> <i class="fas fa-chevron-right"></i></a> </button> </div>
+			</div>
 	</div>
-	<div class ="col"> 
+</div>
+
+<!--Class Information -->
+<div class ="col"> 
 		<!-- TA Information -->
-		<h2> <b> Teaching Assistant: </b>
-		<!-- Table for TA 
-			<table class="table table-bordered tbl-background">
-				<thead>
-					<tr>
-						<th scope="col">Student </th>
-						<th scope="col"> Email </th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td> </td>
-						<td> </td>
-					</tr>
-				</tbody>
-			<table> --> 
-			
+	 <h2> <i class="fas fa-user"></i> <b>TA:</b>
 			<?php 
 				if ($class->TAid == NULL) {
 					echo "None";
