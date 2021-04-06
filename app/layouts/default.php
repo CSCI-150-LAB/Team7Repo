@@ -100,6 +100,9 @@
 			<li class="nav-item">
                 <a class="nav-link" href="<?php echo $this->baseUrl('/Index/Messaging') ?>"> Messages</a>
             </li>
+			<li class="nav-item">
+                <a class="nav-link" href="<?php echo $this->baseUrl('/Index/Help') ?>"> Help Menu</a>
+            </li>
 
         </ul>
         <?php if ($currentUser) : ?>
