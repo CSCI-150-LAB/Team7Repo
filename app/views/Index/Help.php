@@ -53,7 +53,7 @@
             $class = InstructorClasses::findOne("instructorid =:0:", $currentUser->id);
             if($class): ?>
                 <div class="col-sm-6 col-lg-3 my-3">
-                    <a data-reset-tour='FeedbackForm Tour' href = '<?php echo($this->baseUrl("/Instructor/ViewClass/{$class->classid}")) ?>'>
+                    <a data-reset-tour='FeedbackForm Tour' href = '<?php echo($this->baseUrl("/Instructor/ViewClass/{$class->classid}/#feedback-form")) ?>'>
                         <div class="card">
                             <img class="card-img-top" src="<?php echo $this->publicUrl('images/FeedbackForm.PNG')?>">
                             <div class="card-body">
