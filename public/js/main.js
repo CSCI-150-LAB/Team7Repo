@@ -93,6 +93,14 @@ $(function() {
 			});
 	}, 1000);
 
+	if (location.hash) {
+		// Is interactable element?
+		let el = $(location.hash);
+		if (el.is('[data-toggle]')) {
+			el.click();
+		}
+	}
+
 });
 
 class TourInstance {
