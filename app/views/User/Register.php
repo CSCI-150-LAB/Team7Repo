@@ -42,30 +42,6 @@
   </div>		
 
 	<br>
-	Role
-	<span class="text-danger">* <?php echo $roleError; ?> </span>
-	<!--Output the appropriate error message (if there is one)-->:
-	<!--Input for role is a radio option stored as 'role'-->
-	<div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="role" id="inlineRadio1" value="student">
-	<label class="form-check-label" for="inlineRadio1">Student</label>
-	<!--The first option is to set the role value to 'student'-->
-    </div>
-    <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="role" id="inlineRadio2" value="instructor">
-	<label class="form-check-label" for="inlineRadio2">Instructor</label>
-	<!--The second option is to set the role value to 'instructor'-->
-    </div>
-    <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="role" id="inlineRadio3" value="admin">
-	<label class="form-check-label" for="inlineRadio3">Admin</label>
-	<!--The last option is to set the role value to 'admin'-->
-    </div>
-
-
-	<br>
-	<br>
-	<br>
 	<input type="submit" name="submit" value="Submit">
 	<!--Create a submit button to complete the form-->
 </form>

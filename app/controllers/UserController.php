@@ -40,13 +40,13 @@ class UserController extends PermsController {
 				'email' => 'email',
 				'firstName' => 'first',
 				'lastName' => 'last',
-				'password' => 'pass',
-				'type' => 'role'
+				'password' => 'pass'
 			];
 
 			$userData = [];
+			
 			foreach ($fields as $prop => $postField) {
-				if (empty($_POST[$postField])) {
+				if (empty($_POST[$postField]) ) { 
 					$errors[] = "{$postField} is required"; //if user left a input blank
 				}
 				else {
@@ -55,10 +55,12 @@ class UserController extends PermsController {
 			}
 
 			if (!count($errors)) {
+				$userData['type'] = 'student';
 				$userData['createdAt'] = date('Y-m-d H:i:s');
 				$userData['passwordSalt'] = hash('sha256', rand());
 				$userData['password'] = hash('sha256', $userData['password'] . $userData['passwordSalt']);
 				$user = User::fromArray($userData);
+				var_dump($userData);
 
 				if ($user->save()) {
 					User::loginUser($user);
@@ -66,6 +68,7 @@ class UserController extends PermsController {
 				}
 				else {
 					$errors[] = 'Failed to save the profile';
+					$errors[] = DI::getDefault()->get('Db')->getLastError();
 				}
 			}
 		}
