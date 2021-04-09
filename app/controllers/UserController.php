@@ -60,7 +60,6 @@ class UserController extends PermsController {
 				$userData['passwordSalt'] = hash('sha256', rand());
 				$userData['password'] = hash('sha256', $userData['password'] . $userData['passwordSalt']);
 				$user = User::fromArray($userData);
-				var_dump($userData);
 
 				if ($user->save()) {
 					User::loginUser($user);
