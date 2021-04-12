@@ -3,7 +3,7 @@
 ?>
 <div class="col mb-3 p-5 text-white bg-blue"> 
 	<div class = "row">
-		<h1>  <?php echo $class->class . ": " . $class->description; ?> </h1>
+		<h1 class="mb-3 text-white"> <?php echo $class->class . ": " . $class->description; ?> </h1>
 	</div>
 	<div class = "row">
 		<h5> Day and Time: <?php echo  $class->getClassTimeString(); ?></h5>
@@ -77,13 +77,14 @@
 				}
 				else {
 					$ta = User::find("id =:0:", $class->TAid); ?>
-					<a href = '<?php echo $this->baseUrl("/Student/Profile/{$ta[0]->id}") ?>'> <?php echo $ta[0]->firstName . " " . $ta[0]->lastName; ?></a>
-					<!--Allow instructor to remove a TA if they have one-->
-					<?php $currentUser = User::getCurrentUser(); 
-								if ($currentUser->id != $ta[0]->id) { ?>
+					 <a href = '<?php echo $this->baseUrl("/Student/Profile/{$ta[0]->id}") ?>'> <?php echo $ta[0]->firstName . " " . $ta[0]->lastName; ?></a>
+					 <!--Allow instructor to remove a TA if they have one-->
+					 <?php $currentUser = User::getCurrentUser(); 
+								 if ($currentUser->id != $ta[0]->id) { ?>
 									<button type="button" class="btn btn-outline-danger " style ="text-align:right"><a href="<?php echo $this->baseUrl("Instructor/RemoveTA/{$class->classid}") ?>"> Remove </a></button>
-								<?php } 			 
-					}
+								 <?php } 
+								 
+					 }
 			?> </h2>
 		<!-- Student Information -->
 		<h2> <b> Student Information: </b> </h2>
