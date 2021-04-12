@@ -395,6 +395,16 @@ class InstructorController extends PermsController {
 	public function AddFileAction() {
 		$errors = [];
 
+		// Verify file image type 
+		$newFileId = null;
+		if (isset($_FILES['course-file'])) {
+			$filePost = $_FILES['course-file'];
+			$ext = pathinfo($filePost['name'], PATHINFO_EXTENSION);
+			
+			if (!in_array(strtolower($ext), ['gif', 'jpg', 'jpeg', 'png' ,'jpg','jpeg','png','doc','docx','txt','pdf','png','pptx','ppt','mov','wav','mpg','mpeg','mp4','mp3','bmp','pdf'])) {
+				$errors[] = 'File must be: .jpg,.jpeg,.png,.doc,.docx,.txt,.pdf,.png,pptx,.ppt,.mov,.wav,.mpg,.mpeg,.mp4,.mp3,.bmp,.pdf';
+			}
+		}
 
 		return $this->view(['errors' => $errors]);
 	}
