@@ -67,6 +67,10 @@ $(function() {
 		}
 	});
 
+	$(document).on('click', '[data-reset-tour]', function() {
+		TourInstance.resetTour($(this).data('reset-tour'));
+	});
+
 	setTimeout(function() {
 		TourInstance.instances
 			.filter(i => i.trigger)
@@ -88,6 +92,14 @@ $(function() {
 				}
 			});
 	}, 1000);
+
+	if (location.hash) {
+		// Is interactable element?
+		let el = $(location.hash);
+		if (el.is('[data-toggle]')) {
+			el.click();
+		}
+	}
 
 });
 
@@ -248,9 +260,12 @@ class TourInstance {
 	}
 
 	static resetTour(name) {
-		let tour = TourInstance.getInstance(name);
-		if (!tour) {
-			return;
+		let tour = name;
+		if (!(name instanceof TourInstance)) {
+			tour = TourInstance.getInstance(name);
+			if (!tour) {
+				return;
+			}
 		}
 
 		let data = JSON.parse(localStorage.getItem('tour-has-run') || '{}');

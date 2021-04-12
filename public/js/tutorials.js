@@ -382,7 +382,7 @@ $(function() {
 
 	//#region Add Class Tour
 	let addClassTour = new TourInstance('Add Class Tour');
-	addClassTour.addPageLoadTrigger(/^\/Instructor\/AddClass\/\d+$/);
+	addClassTour.addPageLoadTrigger(/^\/Instructor\/AddClass/);
 	addClassTour.addStep({
 		element: ".addclass",
 		title: "Add a new class",
@@ -479,7 +479,7 @@ $(function() {
 	feedbackFormTour.addStep({
 		element: '#feedback-form .dropdown-menu .dropdown-item:nth-child(2)',
 		title: 'Long Text Field',
-		content: 'A short text field is represented by a simple input box. It is designed to be used with short answer, but not paragraphs, levels of content.',
+		content: 'A long text field is represented by a large input for potentially paragraphs of text',
 		reflex: 'slow-click'
 	});
 	feedbackFormTour.addStep({
@@ -560,7 +560,8 @@ $(function() {
 	feedbackFormTour.addStep({
 		element: '#feedback-form .field-row:last-child .field-meta .btn-delete',
 		title: 'Deleting Questions',
-		content: 'If you decided you no longer want a question, you can delete it by clicking this.'
+		content: 'If you decided you no longer want a question, you can delete it by clicking this.',
+		reflex: 'slow-click'
 	});
 	feedbackFormTour.addStep({
 		element: '#feedback-form .btn-create',
