@@ -2,7 +2,7 @@
     $this->papgeTitle("CourseMaterials"); 
 ?>
 <!-- TODO: Update add file link --> 
-<a class="btn btn-secondary float-right text-white" href= "">Add file</a> <br> </br>
+<a class="btn btn-secondary float-right text-white" href= '<?php echo $this->baseUrl('/Instructor/AddFile') ?>'>Add file</a> <br> </br>
 
 <div class="table-responsive">
 	<table class="table table-bordered tbl-background">

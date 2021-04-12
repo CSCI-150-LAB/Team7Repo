@@ -390,4 +390,12 @@ class InstructorController extends PermsController {
 
 		return $this->view(['errors' => $errors]);
 	}
+
+	
+	public function AddFileAction() {
+		$errors = [];
+
+
+		return $this->view(['errors' => $errors]);
+	}
 }
