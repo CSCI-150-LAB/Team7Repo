@@ -9,6 +9,8 @@
 	<h1 class="mb-0"> Feedback Response</h1>
 </div>
 
+<button class = 'btn btn-secondary float-md-right text-white' data-start-tour="Respond to Feedback Session Tour">Help</button><br><br> 
+
 <div class = "card feedsession">
 <div class = "card-body">
 <form method="POST" class="feedback-response">
@@ -20,12 +22,9 @@
 		$formBuilder->getError('_form');
 
 		foreach ($fields as $field) {
-			/** @var FeedbackSessionField $field */ ?>
-			<div class = "responsereq"><?php
+			/** @var FeedbackSessionField $field */ 
 			$label = '<span class="' . ($field->optional ? 'optional' : 'required') . '">' . $field->label . '</span>';
-			?>
-			</div>
-			<?php
+			
 			switch ($field->type) {
 				case FormFieldTypeEnum::SHORT_TEXT():
 					?><div class = "shorttext"><?php

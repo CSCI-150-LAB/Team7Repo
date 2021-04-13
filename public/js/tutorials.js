@@ -236,14 +236,33 @@ $(function() {
 	feedbackResponseTour.addStep({
 		element: ".feedsession",
 		title: "Feedback Session",
-		content: "This is a feedback session started by your instructor! Here you will be able to give your instructor feedback based on questions they have posed."
+		content: "This is a feedback session started by your instructor! Here you will be able to give your instructor feedback based on questions they have posed. Note: Questions with a red asterisk next to them indicate the question is required."
 	});
 	feedbackResponseTour.addStep({
-		element: ".responsereq",
-		title: "Required Response",
-		content: "Questions with a red asterisk next to them indicate the question is required."
+		element: ".shorttext:first",
+		title: "Short Answer",
+		content: "This type of feedback question will ask for a brief, textual response."
 	});
-	
+	feedbackResponseTour.addStep({
+		element: ".longtext:first",
+		title: "Long Answer",
+		content: "This type of feedback question will ask for a longer, explanatory, textual response."
+	});
+	feedbackResponseTour.addStep({
+		element: ".radiogroup:first",
+		title: "Multiple Choice",
+		content: "This type of feedback question will ask you to select an answer choice from the options listed."
+	});
+	feedbackResponseTour.addStep({
+		element: ".checkboxgroup:first",
+		title: "Checkbox",
+		content: "This type of feedback question will allow you to select multiple options as your answer choice."
+	});
+	feedbackResponseTour.addStep({
+		element: ".ratingquestion:first",
+		title: "Rating",
+		content: "This type of feedback question will ask you to rate the question statement from 1 - 5 stars."
+	});
 	feedbackResponseTour.addStep({
 		element: ".submitfeedback",
 		title: "Submit!",
@@ -355,6 +374,42 @@ $(function() {
 		title: "Delete Instructor Review",
 		content: "To delete an instructor review, click here."
 	});	
+	//#endregion
+
+	//#region Direct Messaging Tour
+	let dmTour = new TourInstance('Direct Messaging Tour');
+	dmTour.addPageLoadTrigger(/^\/Index\/Messaging/);
+	dmTour.addStep({
+		element: ".dmgeneral",
+		title: "Direct Messaging",
+		content: "Welcome to the Direct Messaging page! Here you can communicate with classmates, instructors, and university administrators."
+	});
+	dmTour.addStep({
+		element: ".newconvo",
+		title: "Create a Conversation",
+		content: "Here you can create a new conversation. By clicking the dropdown, you may search for users you would like to add to your group."
+	});
+	mTour.addStep({
+		element: ".createconvo",
+		title: "Confirm",
+		content: "Once all members of the conversation are added, click here to create the conversation."
+	});
+	dmTour.addStep({
+		element: ".convolist",
+		title: "Existing Groups",
+		content: "Here you can find conversation groups that you are a part of. To access any one of these conversations, click on the one you would like to open."
+	});
+	dmTour.addStep({
+		element: ".convoarea",
+		title: "Conversation",
+		content: "This area shows the messages sent in your group by you and your group members."
+	});
+	dmTour.addStep({
+		element: ".textbox",
+		title: "Send a Message",
+		content: "Type the message you would like to send to your group in this text box. Once you've completed typing your message, click the blue button to send it!"
+	});
+
 	//#endregion
 
 	//#region Instructor Dashboard Tour
