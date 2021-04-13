@@ -230,6 +230,28 @@ $(function() {
 	});
 	//#endregion
 
+	//#region Student Respond to Feedback Tour
+	let feedbackResponseTour = new TourInstance('Respond to Feedback Session Tour');
+	feedbackResponseTour.addPageLoadTrigger(/^\/Feedback\/Response\/\d+$/);
+	feedbackResponseTour.addStep({
+		element: ".feedsession",
+		title: "Feedback Session",
+		content: "This is a feedback session started by your instructor! Here you will be able to give your instructor feedback based on questions they have posed."
+	});
+	feedbackResponseTour.addStep({
+		element: ".responsereq",
+		title: "Required Response",
+		content: "Questions with a red asterisk next to them indicate the question is required."
+	});
+	
+	feedbackResponseTour.addStep({
+		element: ".submitfeedback",
+		title: "Submit!",
+		content: "Once you are done responding to each required question (and any optional question of your choosing), you may hit submit."
+	});
+
+	//#endregion
+
 	//#region Student Add Instructor Review Tour
 	let addInstructorReviewTour = new TourInstance('Add Instructor Review Tour');
 	addInstructorReviewTour.addPageLoadTrigger(/^\/Instructor\/AddReview\/\d+$/);

@@ -6,11 +6,11 @@
 </style>
 
 <div class="bg-blue text-white mb-3 p-5">
-	<h1 class="mb-0">Response</h1>
+	<h1 class="mb-0"> Feedback Response</h1>
 </div>
 
-<h3 class="text-center">Text feedback Submission</h3>
-
+<div class = "card feedsession">
+<div class = "card-body">
 <form method="POST" class="feedback-response">
 	<div class="preload-area">
 		<i class="fas fa-star"></i>
@@ -20,34 +20,43 @@
 		$formBuilder->getError('_form');
 
 		foreach ($fields as $field) {
-			/** @var FeedbackSessionField $field */
+			/** @var FeedbackSessionField $field */ ?>
+			<div class = "responsereq"><?php
 			$label = '<span class="' . ($field->optional ? 'optional' : 'required') . '">' . $field->label . '</span>';
+			?>
+			</div>
+			<?php
 			switch ($field->type) {
 				case FormFieldTypeEnum::SHORT_TEXT():
+					?><div class = "shorttext"><?php
 					$formBuilder->formGroup(function(FormBuilder $builder) use ($field, $label) {
 						$builder->inputField("field{$field->id}", $label);
-					});
+					}); ?></div><?php
 					break;
 				case FormFieldTypeEnum::LONG_TEXT():
+					?><div class = "longtext"><?php
 					$formBuilder->formGroup(function(FormBuilder $builder) use ($field, $label) {
 						$builder->textareaField("field{$field->id}", $label);
-					});
+					});?></div><?php
 					break;
 				case FormFieldTypeEnum::RADIO_GROUP():
+					?><div class = "radiogroup"><?php
 					$formBuilder->radioGroup($label, function(FormBuilder $builder) use ($field) {
 						foreach ($field->options as $ndx => $option) {
 							$builder->radio("field{$field->id}", $ndx, $option, false);
 						}
-					});
+					});?></div><?php
 					break;
 				case FormFieldTypeEnum::CHECKBOX_GROUP():
+					?><div class = "checkboxgroup"><?php
 					$formBuilder->checkboxGroup($label, function(FormBuilder $builder) use ($field) {
 						foreach ($field->options as $ndx => $option) {
 							$builder->checkbox("field{$field->id}[]", $option, $ndx, false);
 						}
-					});
+					});?></div><?php
 					break;
 				case FormFieldTypeEnum::RATING():
+					?><div class = "ratingquestion"><?php
 					$formBuilder->formGroup(function(FormBuilder $builder) use ($field, $label, $errors) {
 						$fieldName = "field{$field->id}";
 						?>
@@ -66,12 +75,14 @@
 							<?php endif; ?>
 						</div>
 						<?php
-					});
+					});?></div><?php
 					break;
 			}
 		}
 	?>
 
-	<button type="submit" class="btn btn-primary">Submit</button>
+	<button type="submit" class="btn btn-primary submitfeedback">Submit</button>
 
 </form>
+</div>
+</div>
