@@ -24,7 +24,7 @@
                     <div class="card-body">
                       <div class="d-flex flex-column align-items-center text-center">
                       
-                        <img src="<?php echo $this->publicUrl('images/blank_avatar.png')?>" alt="pic" class="rounded-circle" width="150">
+                        <img src="<?php echo $user->getProfileImageSrc() ?>" alt="pic" class="rounded-circle" width="150">
                         <div class="mt-3">
                           <h4><?php echo $user->getFullName()?></h4>
                           <p class="text-secondary mb-1"><?php echo $profile->studentMajor?></p>
