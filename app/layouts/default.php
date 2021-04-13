@@ -143,7 +143,9 @@
 		var _queries = <?= json_encode(DI::getDefault()->get('Db')->getAllQueries()) ?>;
 		_queries.forEach((r, i) => {
 			console.group(`Query ${i + 1}`);
-			console.log(`%c${r.file} %c${r.line}`, 'color: #f5b942', 'color: #b02c2c');
+			r.files.forEach(f => {
+				console.log(`%c${f.file} %c${f.line}`, 'color: #f5b942', 'color: #b02c2c');
+			});
 			console.log(`%c${r.sql}`, 'background-color: #000000; color: #fff; padding: 5px');
 			console.groupEnd();
 		});

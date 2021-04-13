@@ -1,7 +1,7 @@
 <?php
 
 class Db {
-	private static $debugIgnorePath = APP_ROOT . DIRECTORY_SEPARATOR . 'lib';
+	private static $debugIncludePath = APP_ROOT . DIRECTORY_SEPARATOR . 'app';
 
 	private $connInfo = false;
 	private $conn = null;
@@ -117,14 +117,16 @@ class Db {
 
 	public function logQuery($sql) {
 		$record = [
-			'sql' => $sql
+			'sql' => $sql,
+			'files' => []
 		];
 
 		foreach (debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS) as $entry) {
-			if (strpos($entry['file'], Db::$debugIgnorePath) === false) {
-				$record['file'] = $entry['file'];
-				$record['line'] = $entry['line'];
-				break;
+			if (strpos($entry['file'], Db::$debugIncludePath) !== false) {
+				array_unshift($record['files'], [
+					'file' => $entry['file'],
+					'line' => $entry['line']
+				]);
 			}
 		}
 
