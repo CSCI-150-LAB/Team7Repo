@@ -389,7 +389,7 @@ $(function() {
 		title: "Create a Conversation",
 		content: "Here you can create a new conversation. By clicking the dropdown, you may search for users you would like to add to your group."
 	});
-	mTour.addStep({
+	dmTour.addStep({
 		element: ".createconvo",
 		title: "Confirm",
 		content: "Once all members of the conversation are added, click here to create the conversation."
