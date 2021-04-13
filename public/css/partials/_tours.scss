@@ -1,0 +1,4 @@
+.popover-header[data-progress]:before {
+	content: "(" attr(data-progress) ")";
+	padding-right: 5px;
+}
