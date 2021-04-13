@@ -1,25 +1,44 @@
 <?php
 
 class Db {
-	private $conn;
+	private static $debugIgnorePath = APP_ROOT . DIRECTORY_SEPARATOR . 'lib';
+
+	private $connInfo = false;
+	private $conn = null;
 	private $trackingModels = false;
 	private $trackedModelCallbacks = [];
 	private $lastQuery = '';
+	private $logging = false;
 
-    public function __construct($host, $user, $pass, $dbname) {
-        $this->conn = new mysqli($host, $user, $pass, $dbname);
+	public function __construct(...$conInfo) {
+		$this->connInfo = $conInfo;
+	}
 
-        if ($this->conn->connect_errno) {
-            throw new Exception('MySQL connect failed: ' . $this->conn->connect_errno);
+	public function __destruct() {
+		if ($this->conn) {
+			$this->conn->close();
 		}
-		else {
-			$this->conn->autocommit(true);
-		}
-    }
+	}
 
-    public function __destruct() {
-        $this->conn->close();
-    }
+	/**
+	 * Connects to the remote MySQL server
+	 * 
+	 * @return void
+	 * @throws Exception
+	 */
+	private function connect() {
+		if (!$this->conn) {
+			$this->conn = new mysqli(...$this->connInfo);
+			$this->connInfo = false;
+
+			if ($this->conn->connect_errno) {
+				throw new Exception('MySQL connect failed: ' . $this->conn->connect_errno);
+			}
+			else {
+				$this->conn->autocommit(true);
+			}
+		}
+	}
 
 	/**
 	 * Executes a MySQL query returning the result
@@ -28,7 +47,9 @@ class Db {
 	 * @param mixed ...$args
 	 * @return mixed
 	 */
-    public function query($sql, ...$args) {
+	public function query($sql, ...$args) {
+		$this->connect();
+		
 		if (count($args) == 1 && is_array($args[0])) {
 			$args = $args[0];
 		}
@@ -40,37 +61,40 @@ class Db {
 		
 		$sql = trim($sql);
 		$sql = self::insertSqlParams($sql, $args);
-
 		$this->lastQuery = $sql;
+		if ($this->logging) {
+			$this->logQuery($sql);
+		}
+
 		$result = $this->conn->query($sql);
 
-        if ($result === true) {
+		if ($result === true) {
 			if (stripos($sql, 'INSERT INTO') === 0) {
 				return $this->conn->insert_id;
 			}
 
 			return true;
-        }
-        elseif ($result instanceof mysqli_result) {
-            $rows = [];
-            while ($row = $result->fetch_assoc()) {
-                $rows[] = $row;
-            }
+		}
+		elseif ($result instanceof mysqli_result) {
+			$rows = [];
+			while ($row = $result->fetch_assoc()) {
+				$rows[] = $row;
+			}
 
-            return $rows;
-        }
-        else {
-            return false;
-        }
-    }
+			return $rows;
+		}
+		else {
+			return false;
+		}
+	}
 
 	/**
 	 * Gets the last error from the MySQL connection
 	 *
 	 * @return string
 	 */
-    public function getLastError() {
-        return $this->conn->error;
+	public function getLastError() {
+		return $this->conn->error;
 	}
 
 	/**
@@ -80,6 +104,58 @@ class Db {
 	 */
 	public function getLastQuery() {
 		return $this->lastQuery;
+	}
+
+	/**
+	 * Signals the Db to record all run queries
+	 * 
+	 * @return void
+	 */
+	public function startTrackingQueries() {
+		$this->logging = true;
+	}
+
+	public function logQuery($sql) {
+		$record = [
+			'sql' => $sql
+		];
+
+		foreach (debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS) as $entry) {
+			if (strpos($entry['file'], Db::$debugIgnorePath) === false) {
+				$record['file'] = $entry['file'];
+				$record['line'] = $entry['line'];
+				break;
+			}
+		}
+
+		if (!isset($_SESSION['__db_log'])) {
+			$_SESSION['__db_log'] = [];
+		}
+		$_SESSION['__db_log'][] = $record;
+	}
+
+	/**
+	 * Signals the Db to stop recording all run queries
+	 * 
+	 * @return void
+	 */
+	public function stopTrackingQueries() {
+		$this->logging = false;
+	}
+
+	/**
+	 * Gets all the queries that have run in order
+	 * 
+	 * @return string[]|false
+	 */
+	public function getAllQueries() {
+		if (isset($_SESSION['__db_log'])) {
+			$log = $_SESSION['__db_log'];
+			unset($_SESSION['__db_log']);
+			return $log;
+		}
+
+		return [];
 	}
 	
 	/**

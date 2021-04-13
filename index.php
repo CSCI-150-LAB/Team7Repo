@@ -7,6 +7,7 @@
 
 define('APP_ROOT', __DIR__);
 define('IS_LOCAL', in_array($_SERVER['SERVER_NAME'], ['localhost', '127.0.0.1']));
+define('DEBUG', true);
 
 require __DIR__ . '/lib/Autoloader.php';
 
@@ -43,13 +44,21 @@ Autoloader::init([
 		$di->addScoped('googleApiHelper', function() use ($app) {
 			return new GoogleApi_Helper($_ENV['googleClientId'], $_ENV['googleClientSecret'], $app->getBaseUrl() . '/Admin/GenerateGoogleAccessCode');
 		});
+
+		if (DEBUG) {
+			$di->get('Db')->startTrackingQueries();
+		}
 	})
 	->start()
 	->hook(function() {
+		$di = DI::getDefault();
+
+		if (DEBUG) {
+			$di->get('Db')->stopTrackingQueries();
+		}
 		WebSockets_Helpers::closeBrowserConnection();
 
 		if (!WebSockets_Helpers::isServerRunning()) {
-			$di = DI::getDefault();
 			$di->clearAll();
 
 			// TODO: Duplicate of the hook above

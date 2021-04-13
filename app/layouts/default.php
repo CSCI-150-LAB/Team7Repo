@@ -137,6 +137,18 @@
     </div>
 
 	<?php $this->outputScripts(false) ?>
+	<?php if (DEBUG): ?>
+	<script>
+		console.groupCollapsed('Queries ran');
+		var _queries = <?= json_encode(DI::getDefault()->get('Db')->getAllQueries()) ?>;
+		_queries.forEach((r, i) => {
+			console.group(`Query ${i + 1}`);
+			console.log(`%c${r.file} %c${r.line}`, 'color: #f5b942', 'color: #b02c2c');
+			console.log(`%c${r.sql}`, 'background-color: #000000; color: #fff; padding: 5px');
+			console.groupEnd();
+		});
+		console.groupEnd();
+	</script>
+	<?php endif; ?>
 </body>
-
 </html>

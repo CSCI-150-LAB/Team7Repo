@@ -50,10 +50,11 @@ class DI {
 	 * @return void
 	 */
 	public function addScoped($class, $factory) {
-		if (isset($this->scopedInstances[$class])) {
+		if (array_key_exists($class, $this->scopedInstances)) {
 			unset($this->scopedInstances[$class]);
 		}
 
+		$this->scopedInstances[$class] = null;
 		$this->typeDict[$class] = function() use ($class, $factory) {
 			if (is_null($this->scopedInstances[$class])) {
 				if (is_callable($factory)) {
