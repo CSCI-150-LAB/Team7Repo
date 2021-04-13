@@ -33,7 +33,7 @@
     </div>
 </div>
 
-<?php if($currentUser->type == "instructor"): ?>
+<?php if($currentUser->type == "instructor" || $currentUser->type == "admin"): ?>
     <h2>Instructor Tours:</h2>
 
     <div class="row">
@@ -59,6 +59,43 @@
                             <div class="card-body">
                                 <h5 class="card-title text-center">FeedbackForm</h5>
                                 <p class="card-text">Learn how to add a new feedback session for one of your classes.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-sm-6 col-lg-3 my-3">
+                    <a data-reset-tour='Instructor View Class Tour' href = '<?php echo($this->baseUrl("/Instructor/ViewClass/{$class->classid}")) ?>'>
+                        <div class="card">
+                            <img class="card-img-top" src="<?php echo $this->publicUrl('images/ViewClass.PNG')?>">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">View Class</h5>
+                                <p class="card-text">Learn about the view class page and the instructor tools on the page.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            
+            <?php else: ?>
+                <div class="col-sm-6 col-lg-3 my-3">
+                    <a data-reset-tour='FeedbackForm Tour' href = '<?php echo($this->baseUrl("/Instructor/ViewClass/3/#feedback-form")) ?>'>
+                        <div class="card">
+                            <img class="card-img-top" src="<?php echo $this->publicUrl('images/FeedbackForm.PNG')?>">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">FeedbackForm</h5>
+                                <p class="card-text">Learn how to add a new feedback session for one of your classes.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-sm-6 col-lg-3 my-3">
+                    <a data-reset-tour='Instructor View Class Tour' href = '<?php echo($this->baseUrl("/Instructor/ViewClass/3")) ?>'>
+                        <div class="card">
+                            <img class="card-img-top" src="<?php echo $this->publicUrl('images/ViewClass.PNG')?>">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">View Class</h5>
+                                <p class="card-text">Learn about the view class page and the instructor tools on the page.</p>
                             </div>
                         </div>
                     </a>
