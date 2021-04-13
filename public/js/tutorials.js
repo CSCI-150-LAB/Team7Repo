@@ -414,7 +414,7 @@ $(function() {
 
 	//#region Instructor Dashboard Tour
 	let instructorDashboardTour = new TourInstance('Instructor Dashboard Tour');
-	instructorDashboardTour.addPageLoadTrigger(/^\/Instructor\/Dashboard$/);
+	instructorDashboardTour.addPageLoadTrigger(/^\/Instructor\/Dashboard/);
 	instructorDashboardTour.addStep({
 		element: ".instructordashboard",
 		title: "Instructor Dashboard",
@@ -499,6 +499,58 @@ $(function() {
 		element: ".addclassbutton",
 		title: "Add New Class",
 		content: "This is the submission button for saving the new class.  Make sure all of the details are correct before pressing this button because you can not change the details later."
+	});
+	//#endregion
+
+	//#region Instructor View Class Tour
+	let viewClassTour = new TourInstance('Instructor View Class Tour');
+	viewClassTour.addPageLoadTrigger(/^\/Instructor\/ViewClass\/\d+$/);
+	viewClassTour.addStep({
+		element: ".openmenuadd",
+		title: "Add Student/TA to Class",
+		content: "This is the menu for adding a new student, new students, or a TA to this class.  Click on the dropdown to learn more about adding student(s) and a TA.",
+		reflex: 'slow-click'
+	});
+	viewClassTour.addStep({
+		element: ".addstudent",
+		title: "Add Student",
+		content: "This is the link where you can add an individual student by their email that is associated with an account on FeedbackLoop.  If the email is valid, it will let you know and you can try again."
+	});
+	viewClassTour.addStep({
+		element: ".addstudents",
+		title: "Add Students",
+		content: "This is the link where you can add multiple students by their email that is associated with accounts on FeedbackLoop.  You must have a valid CSV of the emails in order to use this way of adding students.  If there are any invalid emails, it will let you know and only those emails will not be added, all of the other emails will be added."
+	});
+	viewClassTour.addStep({
+		element: ".addta",
+		title: "Add TA",
+		content: "This is the link where you can add a TA by their email that is associated with an account on FeedbackLoop.  They will have instructor access to this class."
+	});
+	viewClassTour.addStep({
+		element: ".classta",
+		title: "This Class' TA",
+		content: "This is where the TA for this class is shown.  You can click on their name to view their profile, or you can remove the TA from having instructor access to the class, and allowing you to add a new TA if you would like."
+	});
+	viewClassTour.addStep({
+		element: ".classstudents",
+		title: "This Class' Students",
+		content: "Here is a table where you can find all of your enrolled students and their FeedbackLoop account emails in this class."
+	});
+	viewClassTour.addStep({
+		element: ".openmenufeedback",
+		title: "Feedback Sessions",
+		content: "This is the menu for feedback sessions for the class.  Click on the dropdown if you want to learn more about the feedback sessions.",
+		reflex: 'slow-click'
+	});
+	viewClassTour.addStep({
+		element: ".addfeedbacksession",
+		title: "Add a Feedback Session",
+		content: "This link will bring up a page where you can create a feedback session for this class."
+	});
+	viewClassTour.addStep({
+		element: ".viewfeedbacksession",
+		title: "View Feedback Sessions",
+		content: "This link will bring up a page where you can view all of the feedback sessions and their results for this class."
 	});
 	//#endregion
 
