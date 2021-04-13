@@ -51,10 +51,8 @@
 					</div>
 					<form class="messaging-form mb-0" v-on:submit="submit">
 						<div class="input-group">
-							<div class = "textbox">
-							<input type="text" class="form-control" v-model="messageTxt" placeholder="Message">
+							<input type="text" class="form-control textbox" v-model="messageTxt" placeholder="Message">
 							<button type="submit" class="btn btn-primary" v-bind:disabled="!isSocketConnected"><i class="fas fa-paper-plane"></i></button>
-							</div>
 						</div>
 					</form>
 				</div>
