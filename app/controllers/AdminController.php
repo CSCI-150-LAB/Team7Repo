@@ -91,22 +91,14 @@ class AdminController extends PermsController {
 		
 		return $this->view(['feedback' => $feedback]); **/
 
-
-		$db = $this->get('Db');
-		/** @var array[] */
-		$useraccounts = $db->query( 
+		$useraccounts = InstructorModel::query( 
 			"
-			SELECT * FROM users
+			SELECT * FROM instructorprofile
+			ORDER BY
+				rating DESC
 			
 			"
-		);
-
-		
-		if ($useraccounts === false) {
-			die($db->getLastError());
-		}
-		/** @var User[] */
-		$useraccounts = array_map(['User', 'fromArray'], $useraccounts);
+		);		
 		
 		return $this->view(['useraccounts' => $useraccounts]);
 	
