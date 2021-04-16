@@ -51,6 +51,8 @@ class AdminController extends PermsController {
 		$useraccounts = $db->query( 
 			"
 			SELECT * FROM users
+			ORDER BY
+				type
 			
 			"
 		);
@@ -99,7 +101,7 @@ class AdminController extends PermsController {
 			
 			"
 		);		
-		
+
 		return $this->view(['useraccounts' => $useraccounts]);
 	
 	}
