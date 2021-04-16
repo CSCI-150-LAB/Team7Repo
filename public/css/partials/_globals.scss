@@ -1,3 +1,8 @@
+// Fix bootstrap modals
+.modal-backdrop.fade.show {
+	opacity: 0.5;
+}
+
 .btn-secondary {
 	background-color: #13284c !important;
 	border-color: #13284c !important;

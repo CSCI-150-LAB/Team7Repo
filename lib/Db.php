@@ -3,7 +3,8 @@
 class Db {
 	private $conn;
 	private $trackingModels = false;
-	private $trackedModelsExistences = [];
+	private $trackedModelCallbacks = [];
+	private $lastQuery = '';
 
     public function __construct($host, $user, $pass, $dbname) {
         $this->conn = new mysqli($host, $user, $pass, $dbname);
@@ -28,54 +29,19 @@ class Db {
 	 * @return mixed
 	 */
     public function query($sql, ...$args) {
-		$numericNdx = 0;
-		$args = array_reduce($args, function($carry, $item) use (&$numericNdx) {
-			if (is_array($item)) {
-				foreach ($item as $key => $val) {
-					if (is_numeric($key)) {
-						$carry[$numericNdx++] = $val;
-					}
-					else {
-						$carry[$key] = $val;
-					}
-				}
-			}
-			else {
-				$carry[$numericNdx++] = $item;
-			}
-
-			return $carry;
-		}, []);
+		if (count($args) == 1 && is_array($args[0])) {
+			$args = $args[0];
+		}
 
 		foreach ($args as $key => $val) {
-			switch (gettype($val)) {
-				case 'int':
-				case 'integer':
-				case 'double':
-				case 'NULL':
-					continue 2;	// These are fine as is
-				case 'boolean':
-					$args[$key] = $val ? 1 : 0;
-					break;
-				case 'object':
-					if (method_exists($val, '__toString')) {
-						$val = $val->__toString();
-					}
-					else {
-						throw new Exception('Object cannot be used as a parameter in a query');
-					}
-					// Passthru intended
-				case 'string':
-					$args[$key] = "'" . $this->conn->real_escape_string($val) . "'";
-					break;
-				default:
-					throw new Exception(gettype($val) . ' cannot be used as a parameter in a query');
-			}
+			list($val) = $this->prepareSqlParam($val);
+			$args[$key] = $val;
 		}
 		
 		$sql = trim($sql);
 		$sql = self::insertSqlParams($sql, $args);
 
+		$this->lastQuery = $sql;
 		$result = $this->conn->query($sql);
 
         if ($result === true) {
@@ -106,6 +72,15 @@ class Db {
     public function getLastError() {
         return $this->conn->error;
 	}
+
+	/**
+	 * Gets the last query that was executed
+	 *
+	 * @return string
+	 */
+	public function getLastQuery() {
+		return $this->lastQuery;
+	}
 	
 	/**
 	 * Begins a transaction on the MySQL connection
@@ -125,8 +100,16 @@ class Db {
 	public function abortTransaction() {
 		$this->conn->rollback();
 		$this->conn->autocommit(true);
-		$this->trackedModelsExistences = [];
 		$this->trackingModels = false;
+
+		$type = (string)DbTrackTypeEnum::ABORTED();
+		if (isset($this->trackedModelCallbacks[$type])) {
+			foreach ($this->trackedModelCallbacks[$type] as $cb) {
+				$cb();
+			}
+		}
+		
+		$this->trackedModelCallbacks = [];
 	}
 
 	/**
@@ -137,11 +120,16 @@ class Db {
 	public function commitTransaction() {
 		$this->conn->commit();
 		$this->conn->autocommit(true);
-		foreach ($this->trackedModelsExistences as $existenc) {
-			$existenc[0] = $existenc[1];
-		}
-		$this->trackedModelsExistences = [];
 		$this->trackingModels = false;
+
+		$type = (string)DbTrackTypeEnum::COMMITTED();
+		if (isset($this->trackedModelCallbacks[$type])) {
+			foreach ($this->trackedModelCallbacks[$type] as $cb) {
+				$cb();
+			}
+		}
+
+		$this->trackedModelCallbacks = [];
 	}
 
 	/**
@@ -154,15 +142,83 @@ class Db {
 	}
 
 	/**
-	 * Allows the database to update a model's "exist" flag when a transaction is committed
+	 * Allows the database to update a model when a transaction is committed or aborted
 	 *
-	 * @param boolean $exist
-	 * @param boolean $futureValue
+	 * @param DbTrackTypeEnum $type
+	 * @param callable $cb
 	 * @return void
 	 */
-	public function trackModel(&$exist, $futureValue) {
+	public function trackModel(DbTrackTypeEnum $type, callable $cb) {
+		$type = (string)$type;
+
 		if ($this->trackingModels) {
-			$this->trackedModelsExistences[] = [&$exist, $futureValue];
+			if (!isset($this->trackedModelCallbacks[$type])) {
+				$this->trackedModelCallbacks[$type] = [];
+			}
+
+			$this->trackedModelCallbacks[$type][] = $cb;
+		}
+		elseif ($type == DbTrackTypeEnum::COMMITTED()) {
+			return $cb();
+		}
+	}
+
+	private function prepareSqlParam($val) {
+		if ($val instanceof DbParam_Abstract) {
+			$val = $val->getVariableValue();
+		}
+
+		if ($val instanceof DbParam_Raw) {
+			return [$val->__toString(), 'raw'];
+		}
+
+		switch ($type = gettype($val)) {
+			case 'int':
+			case 'integer':
+			case 'double':
+			case 'NULL':
+				return [$val, $type];	// These are fine as is
+			case 'boolean':
+				return [$val ? 1 : 0, $type];
+			case 'array':
+				$ret = '';
+				$subType = null;
+				foreach ($val as $v) {
+					if ($ret) {
+						$ret .= ',';
+					}
+
+					list($v, $vType) = $this->prepareSqlParam($v);
+					if ($vType == 'NULL') {
+						continue;
+					}
+					elseif ($vType == 'array') {
+						throw new Exception('Array params must not contain other arrays');
+					}
+
+					if (is_null($subType)) {
+						$subType = $vType;
+					}
+					elseif ($subType != $vType) {
+						throw new Exception('Array params must continue like-typed entries');
+					}
+
+					$ret .= $v;
+				}
+
+				return ["({$ret})", $type];
+			case 'object':
+				if (method_exists($val, '__toString')) {
+					$val = $val->__toString();
+				}
+				else {
+					throw new Exception('Object cannot be used as a parameter in a query');
+				}
+				// Passthru intended
+			case 'string':
+				return ["'" . $this->conn->real_escape_string($val) . "'", 'string'];
+			default:
+				throw new Exception(gettype($val) . ' cannot be used as a parameter in a query');
 		}
 	}
 

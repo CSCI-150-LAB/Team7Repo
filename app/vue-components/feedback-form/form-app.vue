@@ -33,12 +33,12 @@
 								v-on:enter="animEnter"
 								v-on:leave="animLeave"
 							>
-								<div v-for="(field, ndx) in fields" class="form-row field-row" v-bind:key="field.id" v-bind:class="ndx % 2 == 1 ? 'odd' : 'even'">
+								<div v-for="(field, ndx) in fields" class="form-row field-row" v-bind:class="'field-row-' + field.type.toLowerCase().replace('_', '-')" v-bind:key="field.id" v-bind:class="ndx % 2 == 1 ? 'odd' : 'even'">
 									<div class="form-group col-lg-5 col-md-6">
 										<label class="question-label" v-bind:for="'title' + ndx">Question {{ ndx + 1 }} Label</label>
-										<input type="text" class="form-control" v-bind:id="'title' + ndx" v-on:placeholder="'Question #' + (ndx + 1) +' Title'" v-model="field.label" required>
+										<input type="text" class="form-control field-name" v-bind:id="'title' + ndx" v-on:placeholder="'Question #' + (ndx + 1) +' Title'" v-model="field.label" required>
 									</div>
-									<div class="form-group col-lg-5 col-md-6">
+									<div class="form-group col-lg-5 col-md-6 field-options">
 										<label>Preview</label>
 										<component
 											v-bind:is="getFieldComponent(field.type)"
@@ -49,17 +49,17 @@
 											v-on:update-option="updateOption(field, $event)">
 										</component>
 									</div>
-									<div class="form-group col-lg-2 col-md-12 border-left p-3">
+									<div class="form-group col-lg-2 col-md-12 border-left p-3 field-meta">
 										<div class="form-check">
 											<input class="form-check-input" type="checkbox" v-bind:id="'optional' + ndx" v-model="field.optional">
 											<label class="form-check-label" v-bind:for="'optional' + ndx">Optional</label>
 										</div>
-										<button type="button" class="btn btn-danger w-100" v-on:click="removeField(ndx)"><i class="fas fa-trash"></i> Field</button>
+										<button type="button" class="btn btn-danger w-100 btn-delete" v-on:click="removeField(ndx)"><i class="fas fa-trash"></i> Field</button>
 									</div>
 								</div>
 							</transition-group>
 
-							<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								Add Field
 							</button>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -68,9 +68,13 @@
 						</div>
 					</div>
 
-					<button type="submit" class="btn btn-primary float-right" v-bind:disabled="!formReady || processing">
+					<button type="submit" class="btn btn-primary btn-create float-right" v-bind:disabled="!formReady || processing">
 						Create
 						<i v-if="processing" class="fas fa-cog fa-spin"></i>
+					</button>
+
+					<button type="button" class="btn btn-info btn-help float-right mr-2" data-start-tour="FeedbackForm Tour">
+						Help
 					</button>
 				</form>
 			</div>
@@ -121,6 +125,14 @@
 			let that = this;
 			$('#feedback-app').on('hidden.bs.modal', function() {
 				that.reset();
+			});
+			$('#feedback-app').on('shown.bs.modal', function() {
+				let tour = TourInstance.getInstance('FeedbackForm Tour');
+				if (tour && tour.firstTime) {
+					setTimeout(() => {
+						tour.start();
+					}, 500);
+				}
 			});
 
 			this.reset();

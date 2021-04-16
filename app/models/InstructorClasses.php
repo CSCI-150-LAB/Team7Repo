@@ -27,6 +27,11 @@ class InstructorClasses extends Model {
 	public $instructorid;
 
 	/**
+	 * @Column('ta_id')
+	 */
+	public $TAid;
+
+	/**
 	 * @Column('class_title')
 	 */
 	public $class;

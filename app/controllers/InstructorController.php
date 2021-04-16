@@ -35,6 +35,38 @@ class InstructorController extends PermsController {
 					$instructorUserData[$prop] = $_POST[$postField];
 				}
 			} //Check that all values are filled
+
+			// Verify profile image type - must be last thing before following if
+			$newFileId = null;
+			if (isset($_FILES['profile-image'])) {
+				$imgPost = $_FILES['profile-image'];
+				$ext = pathinfo($imgPost['name'], PATHINFO_EXTENSION);
+				
+				if (!in_array(strtolower($ext), ['gif', 'jpg', 'jpeg', 'png'])) {
+					$errors[] = 'Profile image must be: .gif, .jpg, .jpeg, .png';
+				}
+
+				if (!count($errors)) {
+					$file = $editUser->getProfileImage();
+
+					if ($file) {
+						if (!$file->replace($imgPost['name'], mime_content_type($imgPost['tmp_name']), file_get_contents($imgPost['tmp_name']))) {
+							$errors[] = 'Failed to upload profile image';
+						}
+					}
+					else {
+						$file = File::create($imgPost['name'], mime_content_type($imgPost['tmp_name']), file_get_contents($imgPost['tmp_name']));
+						if (!$file) {
+							$errors[] = 'Failed to upload profile image';
+						}
+					}
+
+					$newFileId = $file
+						? $file->id
+						: null;
+				}
+			}
+
 			if(!count($errors)) {
 				$editUser->preferredTitle = $instructorUserData['name'];
 				foreach ($instructorUserData as $key => $val) {
@@ -42,6 +74,8 @@ class InstructorController extends PermsController {
 						$profile->$key = $val;
 					}
 				} //Sets profile values for user
+
+				$editUser->profileImageId = $newFileId;
 
 				/** @var Db */
 				$db = $this->get('Db');
@@ -134,7 +168,7 @@ class InstructorController extends PermsController {
 		$class = InstructorClasses::getByKey($classid);
 		$currentUser = User::getCurrentUser();
 
-		if (!$class || ($currentUser->type != 'admin' && $class->instructorid != $currentUser->id)) {
+		if (!$class || ($currentUser->type != 'admin' && $class->instructorid != $currentUser->id && $class->TAid != $currentUser->id)) {
 			return $this->redirect($this->viewHelpers->baseUrl());
 		}
 
@@ -160,6 +194,12 @@ class InstructorController extends PermsController {
 				else {
 					$student = User::find("email =:0:", $_POST['email']);
 					$user = User::getByKey($student[0]->id);
+					
+					//Make sure student being added is not TA
+					$class = InstructorClasses::find("class_id =:0:", $classid);
+					if ($class[0]->TAid != NULL && $class[0]->TAid == $user->id) {
+						$errors[] = "Class TA cannot be student";
+					}
 				}
 			} //Check that all values are filled
 			if(!count($errors)) {
@@ -225,6 +265,86 @@ class InstructorController extends PermsController {
 			
 		}
 		return $this->view(['errors' => $errors, 'classid' => $classid]);
+	}
+
+	public function AddTAAction($classid = 0) {
+		if($classid == 0) {
+			return $this->redirect($this->viewHelpers->baseUrl());
+		}
+
+		if($this->request->isPost()) {
+			//If the page was directed by a POST form
+			$fields = [
+				'email' => 'email'
+			]; //Add ta's email
+
+            $errors = [];
+			foreach($fields as $prop => $postField) {
+				if(empty($_POST[$postField])) {
+					$errors[] = "{$postField} is required";
+				}
+				else {
+					$ta = User::find("email =:0:", $_POST['email']);
+					$user = User::getByKey($ta[0]->id);
+
+					//make sure TA is a student user
+					if ($user->type != "student") {
+						$errors[] = "TA must be a student";
+					}
+
+					//make sure TA is not enrolled as a student in class
+					$enrolledClass = studentClasses::find("class_id =:0:", $classid);
+
+					foreach ($enrolledClass as $enrolled) {
+						if ($enrolled->studentId == $user->id) {
+							$errors[] = "TA must not be enrolled in the class";
+						}
+					}
+				}
+			} //Check that all values are filled
+			if(!count($errors)) {
+				$class = InstructorClasses::find("class_id =:0:", $classid);
+				$class[0]->TAid = $user->id;
+				//Add TA to the class; if another TA is added the original will be replaced
+
+				if($class[0]->save()) {
+					return $this->redirect($this->viewHelpers->baseUrl("/Instructor/ViewClass/{$classid}"));
+				} //Redirects user to main page
+				else {
+					$errors[] = 'Failed to save the profile';
+				} //If errors, save error
+			}
+			
+		}
+		return $this->view(['errors' => $errors, 'classid' => $classid, 'ta' => $class[0]->TAid]);
+	}
+
+	public function RemoveTAAction($classid = 0) {
+		if($classid == 0) {
+			return $this->redirect($this->viewHelpers->baseUrl());
+		}
+
+		if($this->request->isPost()) {
+			$class = InstructorClasses::findOne("class_id =:0:", $classid);
+			$errors = [];
+			if(empty($_POST['remove'])) {
+				$errors[] = "remove is required";
+			}
+			else if ($_POST['remove'] == 'Remove TA') {
+				$class->TAid = NULL;
+			}
+
+			if(!count($errors)) {
+				if($class->save()) {
+					return $this->redirect($this->viewHelpers->baseUrl("/Instructor/ViewClass/{$classid}"));
+				} //Redirects user to main page
+				else {
+					$errors[] = 'Failed to save the profile';
+				} //If errors, save error
+			}
+		}
+
+		return $this->view(['classid' => $classid]);
 	}
 
 	public function DashboardAction() {
