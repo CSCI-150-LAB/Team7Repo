@@ -49,9 +49,8 @@
 					</div>
 					<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample"> 
 						<div class="card-body">
-							<a href="#feedback-app" class="" data-toggle="modal" data-target="#feedback-app">Create Session</a> <br>
+							<a href="#feedback-app" class="" data-toggle="modal" data-target="#feedback-app" id="feedback-form">Create Session</a> <br>
 							<a href='<?php echo $this->baseUrl("/Feedback/PublishedFeedback/{$class->classid}") ?>' class="">View Session</a>
-							<?php echo $this->partial('_FeedbackForm', ['class' => $class]) ?>
 						</div>
 					</div>
 				</div>
@@ -140,3 +139,5 @@
 		</div>
 	</div>
 </div>
+
+<?php echo $this->partial('_FeedbackForm', ['class' => $class]) ?>
