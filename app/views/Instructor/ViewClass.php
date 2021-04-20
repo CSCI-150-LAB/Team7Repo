@@ -19,7 +19,7 @@
 			</div>
 			<!-- Course Materials -->
 			<div class = "card">
-				<div class="card-header"> Course Materials <button class="btn btn-danger float-right" type="button"> <a href="#" style="color: #ffffff;"> <i class="fas fa-chevron-right"></i></a> </button> </div>
+			<div class="card-header"> Course Materials <button class="btn btn-danger float-right" type="button"> <a href='<?php echo $this->baseUrl("/Instructor/CourseMaterials/{$class->classid}") ?>' style="color: #ffffff;"> <i class="fas fa-chevron-right"></i></a> </button> </div>
 			</div>
 			<!-- Add Student/TA -->
 			<div class="card">
@@ -32,7 +32,7 @@
 							<a href='<?php echo $this->baseUrl("/Instructor/AddStudent/{$class->classid}") ?>' class="">Add Student</a> <br>
 							<a href='<?php echo $this->baseUrl("/Instructor/AddCSVStudents/{$class->classid}") ?>' class="">Add Students by CSV</a> <br>
 							<?php
-								if ($ta[0]->id == NULL) { ?>
+								if ($ta[0]->id == NULL) { ?>0
 									<a href='<?php echo $this->baseUrl("/Instructor/AddTA/{$class->classid}") ?>' class="">Add TA</a>
 							<?php 
 								} ?>
@@ -96,26 +96,7 @@
 				unset($_SESSION['add_student_errors']);
 			}
 		?>
-
-<div class="my-3 text-right">
-	<div class="dropdown">
-		<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			Add
-		</button>
-		<div class="dropdown-menu">
-			<a href='<?php echo $this->baseUrl("/Instructor/AddStudent/{$class->classid}") ?>' class="dropdown-item">Add Student</a>
-			<a href='<?php echo $this->baseUrl("/Instructor/AddCSVStudents/{$class->classid}") ?>' class="dropdown-item">Add Students by CSV</a>
-
-			
-			<?php
-				if ($ta[0]->id == NULL) { ?>
-					<a href='<?php echo $this->baseUrl("/Instructor/AddTA/{$class->classid}") ?>' class="dropdown-item">Add TA</a>
-			<?php 
-				} ?>
-		</div>
-	</div>
-</div>
-
+		
 		<?php $studentids = studentClasses::find("classId =:0:", $class->classid);?>
 		<div class="table-responsive">
 			<table class="table table-bordered tbl-background">

@@ -25,6 +25,12 @@ class User extends Model {
 	public $profileImageId;
 
 	/**
+	 * @Column('class_filee_id')
+	 */
+	public $classFileId;
+
+
+	/**
 	 * @Column('first_name')
 	 */
 	public $firstName;
@@ -237,6 +243,18 @@ class User extends Model {
 			? $viewHelpers->publicUrl('images/blank_avatar.png')
 			: $viewHelpers->baseUrl("/File/Load/{$this->profileImageId}");
 	}
+
+		/**
+	 * Fetches the referenced File model
+	 * 
+	 * @return null|File 
+	 */
+	public function getClassFile() {
+		return is_null($this->classFileId)
+			? null
+			: File::getByKey($this->classFileId);
+	}
+
 
 	protected function getProp($prop) {
 		if ($prop == 'authTokenExpirationDate' && !is_string($this->$prop)) {
