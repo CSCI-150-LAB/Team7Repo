@@ -23,7 +23,7 @@
 		<tbody>
 			<?php foreach ($classes as $classDetails) : ?>
 				<tr>
-					<th scope="row"> <a href = '<?php echo $this->baseUrl("/Feedback/PublishedFeedback/{$classDetails->classid}")?>'><?php echo $classDetails->class ?></a> </th>
+					<th scope="row"> <a href = '<?php echo $this->baseUrl("/Student/ClassHomepage/{$classDetails->classid}")?>'><?php echo $classDetails->class ?></a> </th>
 					<!--Display the title of the class-->
 					<td> <?php echo $classDetails->description ?> </td>
 					<!--Display the description of the class-->
