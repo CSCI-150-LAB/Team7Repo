@@ -177,7 +177,7 @@ Admin users have the same functionality as instructor users with some additional
 
 ### 3.2 Functional Requirements
 1. FR1: User Registration
-    - Description: The user will register as an administrator, instructor, or student and create login information to access the site later on.  The user must provide their first name, last name, email, the account type (Student/Instructor/Admin), and a password.
+    - Description: The user will register as a student and create login information to access the site later on.  The user must provide their first name, last name, email, and a password.
     - Reasoning: In order for the user to have an account in the system.
     - Dependencies: None
 2. FR2: Login
@@ -252,6 +252,14 @@ Admin users have the same functionality as instructor users with some additional
     - Description: Administrators have the ability to censor and moderate feedback and profile pages of both instructors and students.
     - Reasoning: So everything on FeedbackLoop fits with the university's values, and any inappropriate information on profiles or feedback can be removed.
     - Dependencies: FR4, FR6, FR12, FR15
+20. FR20: Admin can register instructors and administrators
+    - Description: An administrator has the ability to create user accounts on behalf of instructors and administrators.
+    - Reasoning: So only verified instructors and administrators may be registered as users in the application.
+    - Dependencies: None
+21. FR21: Guided Tours for all Users
+    - Description: Guided Tours are step-by-step tutorials that familiarize the user with how to interact with the application and its features. Each type of user (i.e., student, instructor, administrator) will be able to access tutorials specific to their account type. General tutorials (e.g., viewing an instructor's profile page) will also be available for all users.
+    - Reasoning: So that all users may learn to become familiar with the program and the features available to them.
+    - Dependencies: FR4 - FR12, FR14, FR15, FR17, FR18
 
 ### 3.3 Non-Functional Requirements
 

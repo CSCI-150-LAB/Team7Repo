@@ -13,7 +13,7 @@
       </ul>
       <?php endif; ?>
       <h4 class="card-title text-center">Login</h4>
-      <form method="POST">
+      <form method="POST" action="<?= $this->baseUrl('/User/Login') ?>">
           <label for="email">Email:</label>
           <br>
           <input class="mb-3" type="text" name="email" id="email">
