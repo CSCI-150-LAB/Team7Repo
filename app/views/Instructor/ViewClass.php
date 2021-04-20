@@ -9,7 +9,6 @@
 		<h5> Day and Time: <?php echo  $class->getClassTimeString(); ?></h5>
 	</div>
 </div>
-
 <div class="row mb-3">
 <!--Class Menu-->
 	<div class = "col-sm-3">
@@ -122,4 +121,4 @@
 	</div>
 </div>
 
-<?php echo $this->partial('_FeedbackForm', ['class' => $class]) ?>
+<?php echo $this->partial('_Partials/FeedbackForm', ['class' => $class]) ?>

@@ -57,6 +57,8 @@ class AdminController extends PermsController
 		$useraccounts = $db->query(
 			"
 			SELECT * FROM users
+			ORDER BY
+				type
 			
 			"
 		);
@@ -98,6 +100,24 @@ class AdminController extends PermsController
 		
 		return $this->view(['feedback' => $feedback]); **/
 
+		$useraccounts = InstructorModel::query( 
+			"
+			SELECT * FROM instructorprofile
+			ORDER BY
+				rating DESC
+			
+			"
+		);		
+
+		return $this->view(['useraccounts' => $useraccounts]);
+	
+	}
+	
+	public function DeleteFeedbackAction() {
+		/**$feedback = User::find('type == "instructor"');
+		
+		return $this->view(['feedback' => $feedback]); **/
+
 
 		$db = $this->get('Db');
 		/** @var array[] */
@@ -117,7 +137,6 @@ class AdminController extends PermsController
 
 		return $this->view(['useraccounts' => $useraccounts]);
 	}
-
 	public function AddUserAction()
 	{
 		$errors = [];
