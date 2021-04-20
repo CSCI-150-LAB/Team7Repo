@@ -137,8 +137,6 @@ class AdminController extends PermsController
 
 		return $this->view(['useraccounts' => $useraccounts]);
 	}
-
-
 	public function AddUserAction()
 	{
 		$errors = [];
