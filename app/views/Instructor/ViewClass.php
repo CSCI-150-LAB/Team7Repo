@@ -122,4 +122,4 @@
 	</div>
 </div>
 
-<?php echo $this->partial('_FeedbackForm', ['class' => $class]) ?>
+<?php echo $this->partial('_Partials/FeedbackForm', ['class' => $class]) ?>
