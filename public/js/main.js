@@ -1,3 +1,4 @@
+// @ts-nocheck
 $(function() {
 
 	$.fn.popover.Constructor.Default.whiteList['button'] = []
@@ -32,6 +33,28 @@ $(function() {
 	});
 
 	$('.rating-field').trigger('mouseleave');
+
+	$(document).on('change', '.has-img-preview', function() {
+		let target = $($(this).data('target')),
+			input = this;
+
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			
+			reader.onload = function(e) {
+				target.attr('src', e.target.result);
+			};
+			
+			reader.readAsDataURL(input.files[0]);
+		}
+		else {
+			target.attr('src', target.data('src'));
+		}
+	});
+
+	$(document).on('click', '.btn-reset-file-input', function() {
+		$($(this).data('target')).val(null).trigger('change');
+	});
 
 	$(document).on('mouseenter', '.dropdown-toggle', function(e) {
 		e.target.__clickOnTrack = false;

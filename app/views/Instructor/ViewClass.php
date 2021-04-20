@@ -9,7 +9,6 @@
 		<h5> Day and Time: <?php echo  $class->getClassTimeString(); ?></h5>
 	</div>
 </div>
-
 <div class="row mb-3">
 <!--Class Menu-->
 	<div class = "col-sm-3">
@@ -49,9 +48,8 @@
 					</div>
 					<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample"> 
 						<div class="card-body">
-							<a href="#feedback-app" class="addfeedbacksession" data-toggle="modal" data-target="#feedback-app">Create Session</a> <br>
-							<a href='<?php echo $this->baseUrl("/Feedback/PublishedFeedback/{$class->classid}") ?>' class="viewfeedbacksession">View Session</a>
-							<?php echo $this->partial('_FeedbackForm', ['class' => $class]) ?>
+							<a href="#feedback-app" class="" data-toggle="modal" data-target="#feedback-app" id="feedback-form">Create Session</a> <br>
+							<a href='<?php echo $this->baseUrl("/Feedback/PublishedFeedback/{$class->classid}") ?>' class="">View Session</a>
 						</div>
 					</div>
 				</div>
@@ -125,3 +123,5 @@
 		</div>
 	</div>
 </div>
+
+<?php echo $this->partial('_Partials/FeedbackForm', ['class' => $class]) ?>

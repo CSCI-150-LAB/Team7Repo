@@ -15,7 +15,7 @@ $this->pageTitle("{$user->preferredTitle} {$user->lastName} - Profile");
 	echo "<a class = 'btn btn-secondary float-md-right text-white editprofile' href = '".$this->baseUrl("/Instructor/EditProfile/{$currentUser->id}")."'>Edit Profile</a><br><br>";
 } //Allows user to edit profile if current profile is the user's profile ?>
 <div class="d-flex flex-column flex-md-row instructorinfo">
-	<img src="<?php echo $this->publicUrl('images/blank_avatar.png')?>" width="250" alt="blank_avatar" class="mr-md-4 mb-3 img-fluid">
+	<img src="<?php echo $user->getProfileImageSrc() ?>" width="250" alt="blank_avatar" class="mr-md-4 mb-3 img-fluid">
 	<div class="w-100">
 		<div class="text-md-right mb-3">
 			<div class="float-md-right starrating">
