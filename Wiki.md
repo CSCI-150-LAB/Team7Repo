@@ -260,6 +260,10 @@ Admin users have the same functionality as instructor users with some additional
     - Description: Guided Tours are step-by-step tutorials that familiarize the user with how to interact with the application and its features. Each type of user (i.e., student, instructor, administrator) will be able to access tutorials specific to their account type. General tutorials (e.g., viewing an instructor's profile page) will also be available for all users.
     - Reasoning: So that all users may learn to become familiar with the program and the features available to them.
     - Dependencies: FR4 - FR12, FR14, FR15, FR17, FR18
+22. FR22: Help Menu
+    - Description: The Help Menu will consist of guided tours for the user to follow. For each user type, there will be a different view of the Help Menu (since they will have tutorials specific to their user account type).
+    - Reasoning: So there will be a convenient place for the user to navigate to so they may access all available tutorials. 
+    - Dependencies: FR21
 
 ### 3.3 Non-Functional Requirements
 
