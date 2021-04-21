@@ -728,4 +728,44 @@ $(function() {
 		content: "This card will take you to a page that lists all of the classes.  It lists the class name with links to the class page, the description, days and times, instructor, and a link that will bring up a form to create a new feedback session for that class."
 	});
 	//#endregion
+
+	//#region Admin Start Feedback Tour
+	let adminFeedbackTour = new TourInstance('Admin Start Feedback Tour');
+	adminFeedbackTour.addPageLoadTrigger(/^\/Admin\/StartSession/);
+	adminFeedbackTour.addStep({
+		element: ".adminfeedbacksession",
+		title: "Start Feedback Sessions",
+		content: "This is the page where admins can start a feedback session for any class."
+	});
+	adminFeedbackTour.addStep({
+		element: ".classestable",
+		title: "Table of Classes",
+		content: "Here is a table of all of the classes on FeedbackLoop."
+	});
+	adminFeedbackTour.addStep({
+		element: ".classpage:first",
+		title: "Class Name",
+		content: "This is the class name, you can click on the link to open the class page."
+	});
+	adminFeedbackTour.addStep({
+		element: ".classdescr:first",
+		title: "Class Title",
+		content: "This is the class description."
+	});
+	adminFeedbackTour.addStep({
+		element: ".classdatetime:first",
+		title: "Class Date and Time",
+		content: "These are the dates and times that the class is assigned to meet."
+	});
+	adminFeedbackTour.addStep({
+		element: ".classinstructor:first",
+		title: "Class Instructor",
+		content: "This is the instructor assigned to the class."
+	});
+	adminFeedbackTour.addStep({
+		element: ".classstartfeedback:first",
+		title: "Class Start Feedback Session",
+		content: "You can click on this link to bring up a form to start a feedback session for the given class.  A further tutorial can be found on specifically to make a feedback session."
+	});
+	//#endregion
 });
