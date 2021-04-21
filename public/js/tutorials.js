@@ -698,4 +698,34 @@ $(function() {
 		content: 'When you have everything filled out the way you like, save your changes by click this. This button will only become clickable when all required inputs have values.'
 	});
 	//#endregion
+
+	//#region Admin Panel Tour
+	let adminPanelTour = new TourInstance('Admin Panel Tour');
+	adminPanelTour.addPageLoadTrigger(/^\/Admin\/Panel\/\d+$/);
+	adminPanelTour.addStep({
+		element: ".adminpanel",
+		title: "Admin Panel",
+		content: "This is the main dashboard for admins, it allows you to navigate through most of the admin tools."
+	});
+	adminPanelTour.addStep({
+		element: ".adminusers",
+		title: "User Management",
+		content: "This card will take you to a page where you can manage all non-admin user accounts.  It will display a list of all users with students first, then instructors.  For each user it will show their user type, their name with links to their profiles, and their email addresses.  Finally, you can add a user by clicking the button that says \"Add a user\"."
+	});
+	adminPanelTour.addStep({
+		element: ".adminroles",
+		title: "Admin Management",
+		content: "This card will take you to a page where you can view all the admin accounts.  It will display a list of admin names with links to their profiles, and their emails.  It will also display a button to add a new admin that says \"Add an Admin\"."
+	});
+	adminPanelTour.addStep({
+		element: ".adminfeedback",
+		title: "View Instructor Feedback",
+		content: "This card will take you to a page where you can view all the instructor accounts.  It will list each instructor's name with a link to their overall feedback page, and each of their star ratings.  The instructors are sorted by the highest rating at the top."
+	});
+	adminPanelTour.addStep({
+		element: ".adminstartfeedback",
+		title: "Start Feedback Session",
+		content: "This card will take you to a page that lists all of the classes.  It lists the class name with links to the class page, the description, days and times, instructor, and a link that will bring up a form to create a new feedback session for that class."
+	});
+	//#endregion
 });
