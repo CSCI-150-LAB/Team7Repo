@@ -128,6 +128,27 @@
                     </div>
                 </div>
             </a>
+        <?php elseif($currentUser->type == "admin"): ?>
+            <a data-reset-tour='Admin Panel Tour' href = '<?php echo($this->baseUrl("/Admin/Panel/{$currentUser->id}")) ?>'>
+                <div class="card">
+                    <img class="card-img-top" src="<?php echo $this->publicUrl('images/AdminPanel.PNG')?>">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Admin Panel</h5>
+                        <p class="card-text">Learn how to navigate your admin panel page.</p>
+                    </div>
+                </div>
+            </a>
+            </div>
+            <div class="col-sm-6 col-lg-3 my-3">
+            <a data-reset-tour='Admin Start Feedback Tour' href = '<?php echo($this->baseUrl("/Admin/StartSession")) ?>'>
+                <div class="card">
+                    <img class="card-img-top" src="<?php echo $this->publicUrl('images/AdminFeedbackSessions.PNG')?>">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Admin Feedback Sessions</h5>
+                        <p class="card-text">Learn how to navigate your feedback session tool and start feedback sessions for classes.</p>
+                    </div>
+                </div>
+            </a>
         <?php else: ?>
             <a href = '<?php echo($this->baseUrl("/User/Login")) ?>'>
                 <div class="card">
