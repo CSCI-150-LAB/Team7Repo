@@ -44,6 +44,12 @@ class File extends Model {
 	 */
 	public $classid;
 
+	public function getFileInfo() {
+		return is_null($this->classid)
+			? null
+			: File::getByKey($this->classid);
+	}
+
 	public function save() {
 		if (is_null($this->createdAt)) {
 			$this->createdAt = date('Y-m-d H:i:s');

@@ -1,3 +1,7 @@
+<?php 
+    $this->papgeTitle("CourseMaterials"); 
+?>
+
 <?php
 $statusMsg = 'Nice! We got your file.';
 
@@ -22,22 +26,39 @@ if(isset($_POST["submit"]) && !empty($_FILES["course-file"]["name"])) {
         $statusMsg = 'Oh no. Sorry, only JPG, JPEG, PNG, GIF, & PDF files are allowed to upload.';
     }
 }else{
-    $statusMsg = 'Please select a file to upload, we did not get anything.';
+    $statusMsg = 'Please select a file to upload.';
 }
 
 //display status message
 echo $statusMsg;
 ?>
-<br></br>
-<h1>Your File Uploads</h1>
+
+
+
+<!-- TODO: Update add file link --> 
+<a class="btn btn-secondary float-right text-white" href= '<?php echo $this->baseUrl("/Instructor/AddFile/{$class->classid}")?>'>Add file</a> <br> </br>
+
+<div class="table-responsive">
+	<table class="table table-bordered tbl-background">
+		<thead> 
+			<tr> <!-- TODO: Fixed cell width --> 
+				<th scope="col"> Name <i class="fas fa-sort-down"></th>
+				<th scope="col"> Date Created <i class="fas fa-sort-down"></th>
+				<th scope="col"> Modified By <i class="fas fa-sort-down"></th>
+			</tr>
+		</thead>
+		<tbody>
+				<tr> <!-- TODO: Link actual materials, loop through database --> 
+					<td> <a href = ""> Ch1.pdf </a></td>
+                    <td> 02/08/20</td>
+                    <td> Alex Lui</td>
+				</tr>
+		</tbody>
+	</table>
+</div>
+
+
 
 <!-- This shows the link to the file-->
 <p> <a href="<?php echo $this->baseUrl("Instructor$fileName") ?>" target="_blank"><?php echo "$fileName"?></p>
 
-<form action="<?php echo $this->baseUrl("/Instructor/CourseMaterials") ?>" class ="addingcoursefile" method="POST" enctype="multipart/form-data">
-  
-    <input type="file" name="course-file" id="course-file">
-    <input type="submit" value="Submit Upload Please" name="submit">
-</form>
-
-<a class="btn btn-primary" href="<?php echo $this->baseUrl("/Instructor/AddFile") ?>"" role="button">Link</a>

@@ -19,7 +19,7 @@
 			</div>
 			<!-- Course Materials -->
 			<div class = "card">
-				<div class="card-header"> Course Materials <button class="btn btn-danger float-right" type="button"> <a href="#" style="color: #ffffff;"> <i class="fas fa-chevron-right"></i></a> </button> </div>
+				<div class="card-header"> Course Materials <button class="btn btn-danger float-right" type="button"> <a href='<?php echo $this->baseUrl("/Instructor/CourseMaterials/{$class->classid}") ?>' style="color: #ffffff;"> <i class="fas fa-chevron-right"></i></a> </button> </div>
 			</div>
 			<!-- Add Student/TA -->
 			<div class="card">

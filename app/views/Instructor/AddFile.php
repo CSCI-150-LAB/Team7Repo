@@ -1,3 +1,6 @@
+<?php 
+    $this->papgeTitle("AddFile"); 
+?>
 
 
 <h2> Add a file to course materials</h2>

@@ -418,16 +418,69 @@ class InstructorController extends PermsController {
 	//Go to page of reviews for instructor
 	}
 
-	public function AddFileAction() {
+	public function AddFileAction($classid = 0) {
 		$errors = [];
 
-		return $this->view(['errors' => $errors]);
+		$class = File::getByKey($classid);
+	
+		$currentUser = User::getCurrentUser();
+
+		$newFileId = null;
+			if (isset($_FILES['course-file'])) {
+				$filePost = $_FILES['course-file'];
+				$ext = pathinfo($filePost['name'], PATHINFO_EXTENSION);
+				
+				if (!in_array(strtolower($ext), ['gif', 'jpg', 'jpeg', 'png' ,'jpg','jpeg','png','doc','docx','txt','pdf','png','pptx','ppt','mov','wav','mpg','mpeg','mp4','mp3','bmp','pdf'])) {
+					$errors[] = 'File must be: .jpg,.jpeg,.png,.doc,.docx,.txt,.pdf,.png, .pptx,.ppt,.mov,.wav,.mpg,.mpeg,.mp4,.mp3,.bmp,.pdf';
+				}
+
+				if (!count($errors)) {
+					$file = $class->getFileInfo();
+
+					if ($file) {
+						if (!$file->replace($filePost['name'], mime_content_type($filePost['tmp_name']), file_get_contents($filePost['tmp_name']))) {
+							$errors[] = 'Failed to upload file';
+						}
+					}
+					else {
+						$file = File::create($filePost['name'], mime_content_type($filePost['tmp_name']), file_get_contents($filePost['tmp_name']));
+						if (!$file) {
+							$errors[] = 'Failed to upload file';
+						}
+					}
+
+					$newFileId = $file
+						? $file->id
+						: null;
+				}
+
+				if(!count($errors)) {
+	
+					/** @var Db */
+					$db = $this->get('Db');
+					$db->startTransaction();
+	
+					if($class->save()) {
+						$db->commitTransaction();
+						return $this->redirect($this->viewHelpers->baseUrl("/Instructor/CourseMaterials/{$class}"));
+					} //Redirects user to profile page
+					else {
+						$db->abortTransaction();
+						$errors[] = 'Failed to save the file';
+					} //If errors, save error
+				}
+
+		return $this->view(['class' => $class]);
 	}
 
-	public function uploadfileplzAction() {
+}
+
+	public function CourseMaterialsAction($classid = 0) {
 		$errors = [];
 
-		return $this->view(['errors' => $errors]);
+		$class = InstructorClasses::getByKey($classid);
+		$currentUser = User::getCurrentUser();
+		return $this->view(['class' => $class]);
 	}
 
 	
