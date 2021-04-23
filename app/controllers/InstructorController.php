@@ -417,4 +417,18 @@ class InstructorController extends PermsController {
 		return $this->view(['instructor' => $instructor]);
 	//Go to page of reviews for instructor
 	}
+
+	public function AddFileAction() {
+		$errors = [];
+
+		return $this->view(['errors' => $errors]);
+	}
+
+	public function uploadfileplzAction() {
+		$errors = [];
+
+		return $this->view(['errors' => $errors]);
+	}
+
+	
 }

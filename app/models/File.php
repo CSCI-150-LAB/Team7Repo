@@ -38,6 +38,12 @@ class File extends Model {
 	 */
 	public $createdAt;
 
+		/**
+	 * @Column('class_id')
+	 * @var int
+	 */
+	public $classid;
+
 	public function save() {
 		if (is_null($this->createdAt)) {
 			$this->createdAt = date('Y-m-d H:i:s');
@@ -118,7 +124,7 @@ class File extends Model {
 	 * @param string $data
 	 * @return static
 	 */
-	public static function create($name, $mimeType, $data) {
+	public static function create($name, $mimeType, $data, $class_id = null) {
 		/** @var GoogleApi_Helper */
 		$helper = DI::getDefault()->get('googleApiHelper');
 
@@ -132,6 +138,7 @@ class File extends Model {
 			$record->name = $name;
 			$record->mimeType = $mimeType;
 			$record->fileSize = strlen($data);
+			$record->classid = $class_id;
 			$record->save();
 
 			$ext = pathinfo($name, PATHINFO_EXTENSION);
