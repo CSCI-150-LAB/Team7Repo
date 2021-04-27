@@ -262,8 +262,12 @@ Admin users have the same functionality as instructor users with some additional
     - Dependencies: FR4 - FR12, FR14, FR15, FR17, FR18
 22. FR22: Help Menu
     - Description: The Help Menu will consist of guided tours for the user to follow. For each user type, there will be a different view of the Help Menu (since they will have tutorials specific to their user account type).
-    - Reasoning: So there will be a convenient place for the user to navigate to so they may access all available tutorials. 
+    - Reasoning: So there will be a convenient place for the user to navigate to so they may access all available tutorials.
     - Dependencies: FR21
+23. FR23: Direct Messaging
+    - Description: A registered user will be able to initiate group chats with 1 or more other users (i.e., students, administrators, instructors). Students may only communicate with their classmates, their instructors, and any administrator. Instructors may only communicate with their students and administrators. Administrators may communicate with anyone. A user must be logged in to access direct messaging.
+    - Reasoning: So registered users in the program may contact and communicate with one another (e.g., for group projects, questions on assignments, etc.).
+    - Dependencies: None
 
 ### 3.3 Non-Functional Requirements
 
