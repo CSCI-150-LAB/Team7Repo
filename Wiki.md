@@ -287,6 +287,7 @@ Admin users have the same functionality as instructor users with some additional
 
 ### 4.1 Timeline
 
+#### CSCI 150 Fall 2020
 | **Week**            | **Deliverables**                                                                                                                                                          | **Requirement**                                                        |
 |---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|
 | **1 (9/24/2020)**   | Database Design<br> Registration Page<br> Login Page                                                                                                                      | Unlabeled<br> FR1/UIR2<br> FR2/UIR2                                    |
@@ -299,7 +300,37 @@ Admin users have the same functionality as instructor users with some additional
 | **8 (11/19/2020)**  | Polishing and Perfecting/Documentation                                                                                                                                    | All UI Requirements                                                    |
 | **9 (11/19/2020)**  | Polishing and Perfecting/Documentation                                                                                                                                    | All UI Requirements                                                    |
 | **10 (11/23/2020)** | Polishing and Perfecting/Documentation                                                                                                                                    | All UI Requirements                                                    |
+#### CSCI 152 Spring 2021
+| **Week**           | **Deliverables**                                                                                         | **Requirement**                       |
+|--------------------|----------------------------------------------------------------------------------------------------------|---------------------------------------|
+| **1 (2/11/2021)**  | Use Case Diagram<br> Class Diagram<br> Wireframes                                                        | Unlabeled<br> Unlabeled<br> Unlabeled |
+| **2 (2/18/2021)**  | Direct Messaging<br> Add TAs to classes                                                                  | FR23<br> FR                           |
+| **3 (2/25/2021)**  | Edit Feedback Sessions<br> Track Student Attendance                                                      | FR<br> FR                             |
+| **4 (3/4/2021)**   | Instructors Store Class Materials<br> Upload Profile Photos                                              | FR<br> FR                             |
+| **5 (3/11/2021)**  | Students leave Feedback on Instructor's File Use<br> Auto-generate Feedback on Instructor's File Use     | FR<br> FR                             |
+| **6 (3/18/2021)**  | Instructor Tool: Pop Quizzes                                                                             | FR                                    |
+| **7 (3/25/2021)**  | Reformat Registration Procedure                                                                          | Unlabeled                             |
+| **8 (4/8/2021)**   | Instructor Tool: Whiteboard                                                                              | FR                                    |
+| **9 (4/15/2021)**  | Tutorial for New Users                                                                                   | FR                                    |
+| **10 (4/22/2021)** | Help Menu                                                                                                | FR                                    |
+| **11 (4/29/2021)** | Finalization, Improve UI                                                                                 | Unlabeled                             |
 
+Due to some unforseen complications from file uploads using Google API, difficulties with direct messaging (using WebSockets with PHP), and some issues with BootstrapTour, the schedule was adjusted around week 3 to allow us to stay on schedule better.
+#### Updated CSCI 152 Spring 2021
+| **Week**           | **Deliverables**                                                                                 | **Requirement**               |
+|--------------------|--------------------------------------------------------------------------------------------------|-------------------------------|
+| **1 (2/11/2021)**  | Use Case Diagram Class Diagram Wireframes                                                        | Unlabeled Unlabeled Unlabeled |
+| **2 (2/18/2021)**  | Add TAs to Classes                                                                               | FR                            |
+| **3 (2/25/2021)**  | Work on WebSockets Track Student Attendance                                                      | FR23 FR                       |
+| **4 (3/4/2021)**   | Direct Messaging                                                                                 | FR23                          |
+| **5 (3/11/2021)**  | Reformat Registration Procedure                                                                  | Unlabeled                     |
+| **6 (3/18/2021)**  | Tutorial for New Users                                                                           | FR                            |
+| **7 (3/25/2021)**  | Help Menu                                                                                        | FR                            |
+| **8 (4/8/2021)**   | Work on Google Drive API Work on Admin FRs                                                       | FR FR16/FR19                  |
+| **9 (4/15/2021)**  | Instructors Store Class Materials Upload Profile Photos                                          | FR FR                         |
+| **10 (4/22/2021)** | Instructor Tool: Pop Quizzes                                                                     | FR                            |
+| **11 (4/29/2021)** | Students leave Feedback on Instructor's File Use Auto-generate Feedback on Instructor's File Use | FR FR                         |
+| **Incomplete**     | Edit Feedback Sessions Instructor Tool: Whiteboard                                               | FR FR                         |
 ### 4.2 GANTT
 
 ![GANTT Chart](/documentation/gantt_chart.png)
@@ -365,6 +396,7 @@ Admin users have the same functionality as instructor users with some additional
 
 ### 5.2 Use Case Diagram
 ![Use Case Diagram](/documentation/use_case_diagram.jpeg)
+The highlighted (yellow circles) are the new features added in this semester of the project.
 
 ### 5.3 Class Diagram
 ![Class Diagram](/documentation/FeedbackLoop_Class_Diagram.png)
