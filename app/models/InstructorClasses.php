@@ -109,4 +109,17 @@ class InstructorClasses extends Model {
 	public function getInstructor() {
 		return User::getByKey($this->instructorid);
 	}
+
+	public function getFiles() {
+		return File::query("
+			SELECT
+				*
+			FROM
+				class_files as cf
+			INNER JOIN files as f ON
+				f.id = cf.file_id
+			WHERE
+				cf.class_id = :0:
+		", $this->classid);
+	}
 }
