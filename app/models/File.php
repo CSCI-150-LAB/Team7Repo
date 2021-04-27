@@ -44,6 +44,8 @@ class File extends Model {
 	 */
 	public $classid;
 
+
+
 	public function getFileInfo() {
 		return is_null($this->classid)
 			? null
@@ -130,7 +132,7 @@ class File extends Model {
 	 * @param string $data
 	 * @return static
 	 */
-	public static function create($name, $mimeType, $data, $class_id = null) {
+	public static function create($name, $mimeType, $data, $class_id=NULL) {
 		/** @var GoogleApi_Helper */
 		$helper = DI::getDefault()->get('googleApiHelper');
 

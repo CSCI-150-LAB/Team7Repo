@@ -421,11 +421,15 @@ class InstructorController extends PermsController {
 	public function AddFileAction($classid = 0) {
 		$errors = [];
 
-		$class = File::getByKey($classid);
-	
-		$currentUser = User::getCurrentUser();
+		/**
+		 * @var FileModel
+		 */
 
-		$newFileId = null;
+		
+		$classFile = File::getByKey($classid);
+
+		if($this->request->isPost()) {
+			$newFileId = null;
 			if (isset($_FILES['course-file'])) {
 				$filePost = $_FILES['course-file'];
 				$ext = pathinfo($filePost['name'], PATHINFO_EXTENSION);
@@ -434,53 +438,64 @@ class InstructorController extends PermsController {
 					$errors[] = 'File must be: .jpg,.jpeg,.png,.doc,.docx,.txt,.pdf,.png, .pptx,.ppt,.mov,.wav,.mpg,.mpeg,.mp4,.mp3,.bmp,.pdf';
 				}
 
-				if (!count($errors)) {
-					$file = $class->getFileInfo();
 
-					if ($file) {
-						if (!$file->replace($filePost['name'], mime_content_type($filePost['tmp_name']), file_get_contents($filePost['tmp_name']))) {
-							$errors[] = 'Failed to upload file';
-						}
-					}
-					else {
 						$file = File::create($filePost['name'], mime_content_type($filePost['tmp_name']), file_get_contents($filePost['tmp_name']));
+
 						if (!$file) {
 							$errors[] = 'Failed to upload file';
 						}
-					}
 
 					$newFileId = $file
 						? $file->id
 						: null;
-				}
 
-				if(!count($errors)) {
-	
-					/** @var Db */
+				if(!count($errors)) { 
+					$classFile->getFileInfo = NULL;
+
+					/** @var Db */ 
 					$db = $this->get('Db');
 					$db->startTransaction();
 	
-					if($class->save()) {
+					if($classFile->save()) {
 						$db->commitTransaction();
-						return $this->redirect($this->viewHelpers->baseUrl("/Instructor/CourseMaterials/{$class}"));
+						return $this->redirect($this->viewHelpers->baseUrl("/Instructor/AddFile/{$classFile->classid}"));
 					} //Redirects user to profile page
 					else {
 						$db->abortTransaction();
 						$errors[] = 'Failed to save the file';
 					} //If errors, save error
-				}
 
-		return $this->view(['class' => $class]);
-	}
+					
+				} 
+			}
 
-}
+			}
+			return $this->view(['errors' => $errors, 'classid' => $classid]);
+		}
 
-	public function CourseMaterialsAction($classid = 0) {
-		$errors = [];
+
+
+	public function CourseMaterialsAction($classid) {
 
 		$class = InstructorClasses::getByKey($classid);
-		$currentUser = User::getCurrentUser();
-		return $this->view(['class' => $class]);
+	
+		
+		$db = $this->get('Db');
+		/** @var array[] */
+		$files = $db->query(
+			"
+			SELECT * FROM files
+			
+			"
+		);
+
+		if ($files === false) {
+			die($db->getLastError());
+		}
+		/** @var File[] */
+		$files = array_map(['File', 'fromArray'], $files);
+
+		return $this->view(['files' => $files]);
 	}
 
 	
