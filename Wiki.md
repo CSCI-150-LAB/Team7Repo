@@ -321,20 +321,20 @@ Admin users have the same functionality as instructor users with some additional
 
 Due to some unforseen complications from file uploads using Google API, difficulties with direct messaging (using WebSockets with PHP), and some issues with BootstrapTour, the schedule was adjusted around week 3 to allow us to stay on schedule better.
 #### Updated CSCI 152 Spring 2021
-| **Week**           | **Deliverables**                                                                                 | **Requirement**               |
-|--------------------|--------------------------------------------------------------------------------------------------|-------------------------------|
-| **1 (2/11/2021)**  | Use Case Diagram Class Diagram Wireframes                                                        | Unlabeled Unlabeled Unlabeled |
-| **2 (2/18/2021)**  | Add TAs to Classes                                                                               | FR                            |
-| **3 (2/25/2021)**  | Work on WebSockets Track Student Attendance                                                      | FR23 FR                       |
-| **4 (3/4/2021)**   | Direct Messaging                                                                                 | FR23                          |
-| **5 (3/11/2021)**  | Reformat Registration Procedure                                                                  | Unlabeled                     |
-| **6 (3/18/2021)**  | Tutorial for New Users                                                                           | FR                            |
-| **7 (3/25/2021)**  | Help Menu                                                                                        | FR                            |
-| **8 (4/8/2021)**   | Work on Google Drive API Work on Admin FRs                                                       | FR FR16/FR19                  |
-| **9 (4/15/2021)**  | Instructors Store Class Materials Upload Profile Photos                                          | FR FR                         |
-| **10 (4/22/2021)** | Instructor Tool: Pop Quizzes                                                                     | FR                            |
-| **11 (4/29/2021)** | Students leave Feedback on Instructor's File Use Auto-generate Feedback on Instructor's File Use | FR FR                         |
-| **Incomplete**     | Edit Feedback Sessions Instructor Tool: Whiteboard                                               | FR FR                         |
+| **Week**           | **Deliverables**                                                                                         | **Requirement**                       |
+|--------------------|----------------------------------------------------------------------------------------------------------|---------------------------------------|
+| **1 (2/11/2021)**  | Use Case Diagram<br> Class Diagram<br> Wireframes                                                        | Unlabeled<br> Unlabeled<br> Unlabeled |
+| **2 (2/18/2021)**  | Add TAs to Classes                                                                                       | FR                                    |
+| **3 (2/25/2021)**  | Work on WebSockets<br> Track Student Attendance                                                          | FR23<br> FR                           |
+| **4 (3/4/2021)**   | Direct Messaging                                                                                         | FR23                                  |
+| **5 (3/11/2021)**  | Reformat Registration Procedure                                                                          | Unlabeled                             |
+| **6 (3/18/2021)**  | Tutorial for New Users                                                                                   | FR                                    |
+| **7 (3/25/2021)**  | Help Menu                                                                                                | FR                                    |
+| **8 (4/8/2021)**   | Work on Google Drive API<br> Work on Admin FRs                                                           | FR<br> FR16/FR19                      |
+| **9 (4/15/2021)**  | Instructors Store Class Materials<br> Upload Profile Photos                                              | FR<br> FR                             |
+| **10 (4/22/2021)** | Instructor Tool: Pop Quizzes                                                                             | FR                                    |
+| **11 (4/29/2021)** | Students leave Feedback on Instructor's File Use<br> Auto-generate Feedback on Instructor's File Use     | FR<br> FR                             |
+| **Incomplete**     | Edit Feedback Sessions<br> Instructor Tool: Whiteboard                                                   | FR<br> FR                             |
 ### 4.2 GANTT
 
 ![GANTT Chart](/documentation/gantt_chart.png)
