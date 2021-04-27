@@ -339,6 +339,8 @@ Due to some unforseen complications from file uploads using Google API, difficul
 
 ![GANTT Chart](/documentation/gantt_chart.png)
 
+![GANTT Chart](/documentation/gantt_chart2.png)
+
 
 ## 5. Diagrams
 
