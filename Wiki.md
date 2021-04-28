@@ -268,6 +268,26 @@ Admin users have the same functionality as instructor users with some additional
     - Description: A registered user will be able to initiate group chats with 1 or more other users (i.e., students, administrators, instructors). Students may only communicate with their classmates, their instructors, and any administrator. Instructors may only communicate with their students and administrators. Administrators may communicate with anyone. A user must be logged in to access direct messaging.
     - Reasoning: So registered users in the program may contact and communicate with one another (e.g., for group projects, questions on assignments, etc.).
     - Dependencies: None
+24. FR24: Instructor File Uploads
+    - Description: Instructors may upload class materials (e.g., lecture slides, video recordings, pdfs) to their class pages. These files will be accessible by the students in the class.
+    - Reasoning: So students may look back on class materials and utilize them as resources for studying, assignments, etc.
+    - Dependencies: FR9, FR10
+25. FR25: File Statistics
+    - Description: There will be aggregate data available describing statistics about an instructor's set of class materials. It will classify each file as one of the four learning styles (i.e., read/write, visual, auditory, kinesthetic) and show the percentage of files uploaded that fall into each learning style (e.g., 40% kinesthetic, 20% read/write, 15% auditory, 25% visual). 
+    - Reasoning: So students may select materials as resources that suit their preferred learning style and to understand what types of teaching materials the instructor relies on.
+    - Dependencies: FR24
+26. FR26: File Feedback
+    - Description: Students will be able to provide feedback to the instructor about how effective their use of a specific file was. They may provide suggestions on what types of files they would like to see more of and how each file can be used to better their learning experience.
+    - Reasoning: So students can make the most of the resources available to them and so instructors can enhance the effectiveness of their teaching.
+    - Dependencies: FR24
+27. FR27: Create Quiz
+    - Description: Logged on instructors will be able to administer quizzes to students in their classes on their designated class page. An answer key will be embedded in the quiz when it is being created; the question types may vary (multiple choice, short answer, etc.).
+    - Reasoning: So instructors can test students on how well they understand a topic covered in their class. The students will see where they may need to improve and instructors can see which (if any) subjects they may need to cover in more detail, based on how students perform.
+    - Dependencies: FR9
+28. FR28: Track Attendance
+    - Description: Logged on instructors will be able to track the attendance of students in their classes on their designated class pages.
+    - Reasoning: So instructors may keep track of which students are attending class and award (extra)/credit (if attendance is a part of their class syllabus).
+    - Dependencies: FR9, FR10
 
 ### 3.3 Non-Functional Requirements
 
