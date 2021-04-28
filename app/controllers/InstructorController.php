@@ -419,14 +419,15 @@ class InstructorController extends PermsController {
 	}
 
 	public function AddFileAction($classid = 0) {
+		if($classid == 0) {
+			return $this->redirect($this->viewHelpers->baseUrl());
+		}
+		
 		$errors = [];
 
 		/**
 		 * @var ClassFilesModel
 		 */
-
-		
-		$classFile = ClassFiles::getByKey($fileId);
 
 		if($this->request->isPost()) {
 			
@@ -440,7 +441,6 @@ class InstructorController extends PermsController {
 
 				$file = File::create($filePost['name'], mime_content_type($filePost['tmp_name']), file_get_contents($filePost['tmp_name']));
 				
-
 				if (!$file) {
 					$errors[] = 'Failed to upload file';
 				}
@@ -448,9 +448,8 @@ class InstructorController extends PermsController {
 				if(!count($errors)) { 
 
 					$classFiles= new ClassFiles();
-					$classFiles->class_id = $classid;
-					$classFiles->file_id = $classFile->id;
-					//$classFiles->getFileInfo = NULL;
+					$classFiles->classId = $classid;
+					$classFiles->fileId = $file->id;
 
 					/** @var Db */ 
 					$db = $this->get('Db');
@@ -458,11 +457,7 @@ class InstructorController extends PermsController {
 	
 					if($classFiles->save()) {
 						$db->commitTransaction();
-						return $this->redirect($this->viewHelpers->baseUrl("/Instructor/AddFile/{$classFiles->classid}")); //Redirects to add file page
-
-						$statusMsg = 'Nice! We got your file.';
-						//display status message
-						echo $statusMsg;
+						return $this->redirect($this->viewHelpers->baseUrl("/Instructor/CourseMaterials/{$classFiles->classId}")); //Redirects to add file page
 					} 
 					else {
 						$db->abortTransaction();

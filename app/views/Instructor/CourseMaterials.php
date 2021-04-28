@@ -2,7 +2,14 @@
     $this->pageTitle("CourseMaterials"); 
 ?>
 
-<!--
+<div class="col mb-3 p-5 text-white bg-blue"> 
+	<div class = "row">
+		<h1 class="mb-3 text-white"> <?php echo $class->class?> Course Materials</h1>
+	</div>
+</div>
+
+<!-- CODE TO UPLOAD FILE LOCALLY
+
 $statusMsg = 'Nice! We got your file.';
 
 //file upload path
@@ -37,24 +44,26 @@ echo $statusMsg;
 
 <a class="btn btn-secondary float-right text-white" href= '<?php echo $this->baseUrl("/Instructor/AddFile/{$class->classid}")?>'>Add file</a> <br> </br>
 
+<?php $files = ClassFiles::find("classId =:0:", $class->classid);?>
+<!-- connect to the class_files linked to the files table in the database -->
+
 <div class="table-responsive">
 	<table class="table table-bordered tbl-background">
 		<thead> 
 			<tr>
-				<th scope="col"> Name <i class="fas fa-sort-down"></th>
-				<th scope="col"> Date Created <i class="fas fa-sort-down"></th>
-				<th scope="col"> Modified By <i class="fas fa-sort-down"></th>
+				<th scope="col"> File Name </th>
+				<th scope="col"> Date & Time Created </th>
+				<th scope="col"> Modified By </th>
 			</tr>
 		</thead>
 		<tbody>
-        <?php foreach($files as $file):?> 
-				<tr>
-                <?php if(true) {?>
-					<td> <a href='<?php echo $this->baseUrl("/File/Load/{$file->id}") ?>'><?php echo $file->name?></a></td>
-                    <td> <?php echo $file->updatedAt?></td>
-                    <td><?php echo $file->authorId?></td>
+        <?php foreach($files as $file):
+            $f = File::findOne("id =:0:", $file->fileId); ?>
+                <tr>
+					<td> <a href='<?php echo $this->baseUrl("/File/Load/{$f->id}/{$f->name}") ?>' target='_blank'><?php echo $f->name?></a></td>
+                    <td> <?php echo $f->updatedAt?></td>
+                    <td><?php echo $f->getAuthor()->getFullName()?></td>
 				</tr>
-                <?php } ?>
         <?php endforeach; ?>
 		</tbody>
 	</table>
