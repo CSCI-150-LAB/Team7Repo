@@ -13,5 +13,5 @@ class ClassFiles extends Model {
 	/**
 	 * @Column('file_id')
 	 */
-	public $fildId;
+	public $fileId;
 }

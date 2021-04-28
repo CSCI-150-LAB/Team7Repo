@@ -422,14 +422,14 @@ class InstructorController extends PermsController {
 		$errors = [];
 
 		/**
-		 * @var FileModel
+		 * @var ClassFilesModel
 		 */
 
 		
-		$classFile = File::getByKey($classid);
+		$classFile = ClassFiles::getByKey($fileId);
 
 		if($this->request->isPost()) {
-			$newFileId = null;
+			
 			if (isset($_FILES['course-file'])) {
 				$filePost = $_FILES['course-file'];
 				$ext = pathinfo($filePost['name'], PATHINFO_EXTENSION);
@@ -438,44 +438,47 @@ class InstructorController extends PermsController {
 					$errors[] = 'File must be: .jpg,.jpeg,.png,.doc,.docx,.txt,.pdf,.png, .pptx,.ppt,.mov,.wav,.mpg,.mpeg,.mp4,.mp3,.bmp,.pdf';
 				}
 
+				$file = File::create($filePost['name'], mime_content_type($filePost['tmp_name']), file_get_contents($filePost['tmp_name']));
+				
 
-						$file = File::create($filePost['name'], mime_content_type($filePost['tmp_name']), file_get_contents($filePost['tmp_name']));
-
-						if (!$file) {
-							$errors[] = 'Failed to upload file';
-						}
-
-					$newFileId = $file
-						? $file->id
-						: null;
+				if (!$file) {
+					$errors[] = 'Failed to upload file';
+				}
 
 				if(!count($errors)) { 
-					$classFile->getFileInfo = NULL;
+
+					$classFiles= new ClassFiles();
+					$classFiles->class_id = $classid;
+					$classFiles->file_id = $classFile->id;
+					//$classFiles->getFileInfo = NULL;
 
 					/** @var Db */ 
 					$db = $this->get('Db');
 					$db->startTransaction();
 	
-					if($classFile->save()) {
+					if($classFiles->save()) {
 						$db->commitTransaction();
-						return $this->redirect($this->viewHelpers->baseUrl("/Instructor/AddFile/{$classFile->classid}"));
-					} //Redirects user to profile page
+						return $this->redirect($this->viewHelpers->baseUrl("/Instructor/AddFile/{$classFiles->classid}")); //Redirects to add file page
+
+						$statusMsg = 'Nice! We got your file.';
+						//display status message
+						echo $statusMsg;
+					} 
 					else {
 						$db->abortTransaction();
 						$errors[] = 'Failed to save the file';
 					} //If errors, save error
 
-					
 				} 
 			}
 
 			}
-			return $this->view(['errors' => $errors, 'classid' => $classid]);
+			return $this->view(['errors' => $errors, 'classid' => $classid, 'id' => $classFiles->id]);
 		}
 
 
 
-	public function CourseMaterialsAction($classid) {
+	public function CourseMaterialsAction($classid = 0) {
 
 		$class = InstructorClasses::getByKey($classid);
 	
@@ -495,7 +498,7 @@ class InstructorController extends PermsController {
 		/** @var File[] */
 		$files = array_map(['File', 'fromArray'], $files);
 
-		return $this->view(['files' => $files]);
+		return $this->view(['files' => $files, 'class' => $class]);
 	}
 
 	

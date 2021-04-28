@@ -1,5 +1,5 @@
 <?php 
-    $this->papgeTitle("CourseMaterials"); 
+    $this->pageTitle("CourseMaterials"); 
 ?>
 
 <!--
@@ -49,10 +49,10 @@ echo $statusMsg;
 		<tbody>
         <?php foreach($files as $file):?> 
 				<tr>
-                <?php if(!($file->class_id == "NULL")) {?>
+                <?php if(true) {?>
 					<td> <a href='<?php echo $this->baseUrl("/File/Load/{$file->id}") ?>'><?php echo $file->name?></a></td>
-                    <td> <title>Get the current date</title></td>
-                    <td> Alex Lui</td>
+                    <td> <?php echo $file->updatedAt?></td>
+                    <td><?php echo $file->authorId?></td>
 				</tr>
                 <?php } ?>
         <?php endforeach; ?>
