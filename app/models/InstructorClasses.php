@@ -110,6 +110,11 @@ class InstructorClasses extends Model {
 		return User::getByKey($this->instructorid);
 	}
 
+	/**
+	 * Fetches any associated files as an array
+	 * 
+	 * @return File[] 
+	 */
 	public function getFiles() {
 		return File::query("
 			SELECT
@@ -147,6 +152,13 @@ class InstructorClasses extends Model {
 		return true;
 	}
 
+	/**
+	 * De-associates a file with a class
+	 * 
+	 * @param File $file 
+	 * @return bool 
+	 * @throws Exception 
+	 */
 	public function removeFile(File $file) {
 		if (is_null($file->id)) {
 			throw new Exception('File must be saved before it can be added');
