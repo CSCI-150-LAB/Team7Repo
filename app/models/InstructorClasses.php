@@ -122,4 +122,41 @@ class InstructorClasses extends Model {
 				cf.class_id = :0:
 		", $this->classid);
 	}
+
+	/**
+	 * Adds a file to a class
+	 * 
+	 * @param File $file 
+	 * @return true
+	 * @throws Exception 
+	 */
+	public function addFile(File $file) {
+		if (is_null($file->id)) {
+			throw new Exception('File must be saved before it can be added');
+		}
+
+		$classFile = ClassFiles::findOne('classId = :0: AND fileId = :1:', $this->id, $file->id);
+		if (!$classFile) {
+			$classFile = new ClassFiles();
+			$classFile->classId = $this->id;
+			$classFile->fileId = $file->id;
+			
+			return $classFile->save();
+		}
+
+		return true;
+	}
+
+	public function removeFile(File $file) {
+		if (is_null($file->id)) {
+			throw new Exception('File must be saved before it can be added');
+		}
+
+		$classFile = ClassFiles::findOne('classId = :0: AND fileId = :1:', $this->id, $file->id);
+		if ($classFile) {
+			return $classFile->delete();
+		}
+
+		return true;
+	}
 }

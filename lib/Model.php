@@ -144,7 +144,7 @@ class Model extends AnnotatedClass {
 	/**
 	 * Saves the current model properties to the database
 	 *
-	 * @return void
+	 * @return boolean
 	 */
 	public function save() {
 		$tableMeta = static::getTableMeta();
@@ -213,7 +213,7 @@ class Model extends AnnotatedClass {
 	/**
 	 * Deletes the model from the database
 	 *
-	 * @return void
+	 * @return boolean
 	 */
 	public function delete() {
 		if ($this->_exists) {
