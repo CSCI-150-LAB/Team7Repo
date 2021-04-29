@@ -260,6 +260,34 @@ Admin users have the same functionality as instructor users with some additional
     - Description: Guided Tours are step-by-step tutorials that familiarize the user with how to interact with the application and its features. Each type of user (i.e., student, instructor, administrator) will be able to access tutorials specific to their account type. General tutorials (e.g., viewing an instructor's profile page) will also be available for all users.
     - Reasoning: So that all users may learn to become familiar with the program and the features available to them.
     - Dependencies: FR4 - FR12, FR14, FR15, FR17, FR18
+22. FR22: Help Menu
+    - Description: The Help Menu will consist of guided tours for the user to follow. For each user type, there will be a different view of the Help Menu (since they will have tutorials specific to their user account type).
+    - Reasoning: So there will be a convenient place for the user to navigate to so they may access all available tutorials.
+    - Dependencies: FR21
+23. FR23: Direct Messaging
+    - Description: A registered user will be able to initiate group chats with 1 or more other users (i.e., students, administrators, instructors). Students may only communicate with their classmates, their instructors, and any administrator. Instructors may only communicate with their students and administrators. Administrators may communicate with anyone. A user must be logged in to access direct messaging.
+    - Reasoning: So registered users in the program may contact and communicate with one another (e.g., for group projects, questions on assignments, etc.).
+    - Dependencies: None
+24. FR24: Instructor File Uploads
+    - Description: Instructors may upload class materials (e.g., lecture slides, video recordings, pdfs) to their class pages. These files will be accessible by the students in the class.
+    - Reasoning: So students may look back on class materials and utilize them as resources for studying, assignments, etc.
+    - Dependencies: FR9, FR10
+25. FR25: File Statistics
+    - Description: There will be aggregate data available describing statistics about an instructor's set of class materials. It will classify each file as one of the four learning styles (i.e., read/write, visual, auditory, kinesthetic) and show the percentage of files uploaded that fall into each learning style (e.g., 40% kinesthetic, 20% read/write, 15% auditory, 25% visual). 
+    - Reasoning: So students may select materials as resources that suit their preferred learning style and to understand what types of teaching materials the instructor relies on.
+    - Dependencies: FR24
+26. FR26: File Feedback
+    - Description: Students will be able to provide feedback to the instructor about how effective their use of a specific file was. They may provide suggestions on what types of files they would like to see more of and how each file can be used to better their learning experience.
+    - Reasoning: So students can make the most of the resources available to them and so instructors can enhance the effectiveness of their teaching.
+    - Dependencies: FR24
+27. FR27: Create Quiz
+    - Description: Logged on instructors will be able to administer quizzes to students in their classes on their designated class page. An answer key will be embedded in the quiz when it is being created; the question types may vary (multiple choice, short answer, etc.).
+    - Reasoning: So instructors can test students on how well they understand a topic covered in their class. The students will see where they may need to improve and instructors can see which (if any) subjects they may need to cover in more detail, based on how students perform.
+    - Dependencies: FR9
+28. FR28: Track Attendance
+    - Description: Logged on instructors will be able to track the attendance of students in their classes on their designated class pages.
+    - Reasoning: So instructors may keep track of which students are attending class and award (extra)/credit (if attendance is a part of their class syllabus).
+    - Dependencies: FR9, FR10
 
 ### 3.3 Non-Functional Requirements
 
@@ -283,6 +311,7 @@ Admin users have the same functionality as instructor users with some additional
 
 ### 4.1 Timeline
 
+#### CSCI 150 Fall 2020
 | **Week**            | **Deliverables**                                                                                                                                                          | **Requirement**                                                        |
 |---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|
 | **1 (9/24/2020)**   | Database Design<br> Registration Page<br> Login Page                                                                                                                      | Unlabeled<br> FR1/UIR2<br> FR2/UIR2                                    |
@@ -295,10 +324,42 @@ Admin users have the same functionality as instructor users with some additional
 | **8 (11/19/2020)**  | Polishing and Perfecting/Documentation                                                                                                                                    | All UI Requirements                                                    |
 | **9 (11/19/2020)**  | Polishing and Perfecting/Documentation                                                                                                                                    | All UI Requirements                                                    |
 | **10 (11/23/2020)** | Polishing and Perfecting/Documentation                                                                                                                                    | All UI Requirements                                                    |
+#### CSCI 152 Spring 2021
+| **Week**           | **Deliverables**                                                                                         | **Requirement**                       |
+|--------------------|----------------------------------------------------------------------------------------------------------|---------------------------------------|
+| **1 (2/11/2021)**  | Use Case Diagram<br> Class Diagram<br> Wireframes                                                        | Unlabeled<br> Unlabeled<br> Unlabeled |
+| **2 (2/18/2021)**  | Direct Messaging<br> Add TAs to classes                                                                  | FR23<br> FR                           |
+| **3 (2/25/2021)**  | Edit Feedback Sessions<br> Track Student Attendance                                                      | FR<br> FR                             |
+| **4 (3/4/2021)**   | Instructors Store Class Materials<br> Upload Profile Photos                                              | FR<br> FR                             |
+| **5 (3/11/2021)**  | Students leave Feedback on Instructor's File Use<br> Auto-generate Feedback on Instructor's File Use     | FR<br> FR                             |
+| **6 (3/18/2021)**  | Instructor Tool: Pop Quizzes                                                                             | FR                                    |
+| **7 (3/25/2021)**  | Reformat Registration Procedure                                                                          | Unlabeled                             |
+| **8 (4/8/2021)**   | Instructor Tool: Whiteboard                                                                              | FR                                    |
+| **9 (4/15/2021)**  | Tutorial for New Users                                                                                   | FR                                    |
+| **10 (4/22/2021)** | Help Menu                                                                                                | FR                                    |
+| **11 (4/29/2021)** | Finalization, Improve UI                                                                                 | Unlabeled                             |
 
+Due to some unforseen complications from file uploads using Google API, difficulties with direct messaging (using WebSockets with PHP), and some issues with BootstrapTour, the schedule was adjusted around week 3 to allow us to stay on schedule better.
+#### Updated CSCI 152 Spring 2021
+| **Week**           | **Deliverables**                                                                                         | **Requirement**                       |
+|--------------------|----------------------------------------------------------------------------------------------------------|---------------------------------------|
+| **1 (2/11/2021)**  | Use Case Diagram<br> Class Diagram<br> Wireframes                                                        | Unlabeled<br> Unlabeled<br> Unlabeled |
+| **2 (2/18/2021)**  | Add TAs to Classes                                                                                       | FR                                    |
+| **3 (2/25/2021)**  | Work on WebSockets<br> Track Student Attendance                                                          | FR23<br> FR                           |
+| **4 (3/4/2021)**   | Direct Messaging                                                                                         | FR23                                  |
+| **5 (3/11/2021)**  | Reformat Registration Procedure                                                                          | Unlabeled                             |
+| **6 (3/18/2021)**  | Tutorial for New Users                                                                                   | FR                                    |
+| **7 (3/25/2021)**  | Help Menu                                                                                                | FR                                    |
+| **8 (4/8/2021)**   | Work on Google Drive API<br> Work on Admin FRs                                                           | FR<br> FR16/FR19                      |
+| **9 (4/15/2021)**  | Instructors Store Class Materials<br> Upload Profile Photos                                              | FR<br> FR                             |
+| **10 (4/22/2021)** | Instructor Tool: Pop Quizzes                                                                             | FR                                    |
+| **11 (4/29/2021)** | Students leave Feedback on Instructor's File Use<br> Auto-generate Feedback on Instructor's File Use     | FR<br> FR                             |
+| **Incomplete**     | Edit Feedback Sessions<br> Instructor Tool: Whiteboard                                                   | FR<br> FR                             |
 ### 4.2 GANTT
 
 ![GANTT Chart](/documentation/gantt_chart.png)
+
+![GANTT Chart](/documentation/gantt_chart2.png)
 
 
 ## 5. Diagrams
@@ -361,6 +422,7 @@ Admin users have the same functionality as instructor users with some additional
 
 ### 5.2 Use Case Diagram
 ![Use Case Diagram](/documentation/use_case_diagram.jpeg)
+The highlighted (yellow circles) are the new features added in this semester of the project.
 
 ### 5.3 Class Diagram
 ![Class Diagram](/documentation/FeedbackLoop_Class_Diagram.png)

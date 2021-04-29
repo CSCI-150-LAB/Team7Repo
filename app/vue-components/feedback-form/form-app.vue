@@ -39,7 +39,7 @@
 										<input type="text" class="form-control field-name" v-bind:id="'title' + ndx" v-on:placeholder="'Question #' + (ndx + 1) +' Title'" v-model="field.label" required>
 									</div>
 									<div class="form-group col-lg-5 col-md-6 field-options">
-										<label>Preview</label>
+										<label>Response Section Preview</label>
 										<component
 											v-bind:is="getFieldComponent(field.type)"
 											v-bind:type="field.type"
