@@ -121,6 +121,19 @@ Example Class Files Table:
 
 An options table is also included to preserve certain data for use in the application.  Currently the only thing it is used for is to store the connection information between the FeedbackLoop application and Google Drive API.
 
+#### 2.1.4 Third Party Tools
+
+This program utilizes some third party tools for some of the features.
+
+1. phpMyAdmin
+    - This is the hosting tool that is used for all of the mySQL tables and the database for storing and accessing information for the application.
+2. Google Drive API
+    - This API is used to manage file uploads and access for instructor materials and profile photos.  Google Drive stores the files and the application accesses the files using a token.  Intermediary tables, as shown above, are used to store information about the files that are used for their access on the application.
+3. WebSocket API
+    - This API is used for managing the direct messaging system of the application.  WebSocket establishes a connection for communication between users and automatic update when messages are sent and/or received.  Intermediary tables, as shown above, are again used to store information about previous messages set and received, and communications to have open for each user.
+4. Bootstrap Tour
+    - This is an API that utilizes Bootstrap to make implementing tours or tutorials easier in the application.  Javascript is used to code the specific steps of the tours and some other customizable portions of Bootstrap Tours, but manages the progression of the tutorials.
+
 
 ### 2.2 Users
 This application has three types of users: student, instructor, and administrator.  If a user is not logged in, they still have the ability to search for instructors using a search bar (as do any of the users that are logged in).  They also have the ability to click the login/register link and either login or register. 
