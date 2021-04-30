@@ -53,7 +53,7 @@ echo $statusMsg;
 			<tr>
 				<th scope="col"> File Name </th>
 				<th scope="col"> Date & Time Created </th>
-				<th scope="col"> Modified By </th>
+				<th scope="col"> Uploaded By </th>
 			</tr>
 		</thead>
 		<tbody>
