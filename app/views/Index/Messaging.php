@@ -104,7 +104,9 @@ VueLoader::render([
 	var contactList = <?= json_encode($contacts) ?>;
 	var conversationList = <?= json_encode($conversations) ?>;
 </script>
-
+<button class = 'btn btn-secondary float-md-right text-white' data-start-tour="Direct Messaging Tour">Help</button><br><br> 
+<div class = "dmgeneral">
 <div id="messaging-app">
 	<chat-form></chat-form>
+</div>
 </div>
