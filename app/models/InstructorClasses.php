@@ -109,4 +109,66 @@ class InstructorClasses extends Model {
 	public function getInstructor() {
 		return User::getByKey($this->instructorid);
 	}
+
+	/**
+	 * Fetches any associated files as an array
+	 * 
+	 * @return File[] 
+	 */
+	public function getFiles() {
+		return File::query("
+			SELECT
+				*
+			FROM
+				class_files as cf
+			INNER JOIN files as f ON
+				f.id = cf.file_id
+			WHERE
+				cf.class_id = :0:
+		", $this->classid);
+	}
+
+	/**
+	 * Adds a file to a class
+	 * 
+	 * @param File $file 
+	 * @return true
+	 * @throws Exception 
+	 */
+	public function addFile(File $file) {
+		if (is_null($file->id)) {
+			throw new Exception('File must be saved before it can be added');
+		}
+
+		$classFile = ClassFiles::findOne('classId = :0: AND fileId = :1:', $this->id, $file->id);
+		if (!$classFile) {
+			$classFile = new ClassFiles();
+			$classFile->classId = $this->id;
+			$classFile->fileId = $file->id;
+			
+			return $classFile->save();
+		}
+
+		return true;
+	}
+
+	/**
+	 * De-associates a file with a class
+	 * 
+	 * @param File $file 
+	 * @return bool 
+	 * @throws Exception 
+	 */
+	public function removeFile(File $file) {
+		if (is_null($file->id)) {
+			throw new Exception('File must be saved before it can be added');
+		}
+
+		$classFile = ClassFiles::findOne('classId = :0: AND fileId = :1:', $this->id, $file->id);
+		if ($classFile) {
+			return $classFile->delete();
+		}
+
+		return true;
+	}
 }

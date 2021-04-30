@@ -25,7 +25,7 @@
 		<tbody>
 			<?php foreach($classes as $class):?>
 				<tr>
-					<td class="classpage"><a href = '<?php echo $this->baseUrl("/Instructor/ViewClass/{$class->classid}") ?>'><?php echo $class->class ?></a></td>
+					<td class="classpage"><a href = '<?php echo $this->baseUrl("/Instructor/ViewClass/{$class->classid}") ?>'> <b><?php echo $class->class ?></b></a></td>
 					<td><?php echo $class->description ?></td>
 					<td><?php echo $class->getClassTimeString() ?></td>
 					<td><?php $students = studentClasses::find("classId =:0:", $class->classid); echo count($students) ?></td>
