@@ -8,16 +8,18 @@
 	<h1 class="mb-0">Student Dashboard</h1>
 </div>
 
+<button class = 'btn btn-secondary float-md-right text-white' data-start-tour="Student Dashboard Tour">Help</button><br><br> 
+
 <div class="table-responsive classesenrolled">
 	<h3 class="mb-0"><b>Enrolled Classes</b></h3>
 	<br>
 	<table class="table table-bordered tbl-background">																		<!--Lay out the table to hold info on enrolled classes-->
 		<thead>
 			<tr>
-			<th scope="col"> Class </th>
-			<th scope="col"> Description </th>
-			<th scope="col"> Days/Times</th>
-			<th scope="col"> Instructor</th>
+			<th scope="col" class = "classname"> Class </th>
+			<th scope="col" class = "classdescription"> Description </th>
+			<th scope="col" class = "classtime"> Days/Times</th>
+			<th scope="col" class = "classinstructor"> Instructor</th>
 			</tr>
 		</thead>
 		<tbody>
