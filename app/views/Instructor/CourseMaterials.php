@@ -44,7 +44,7 @@ echo $statusMsg;
 
 <a class="btn btn-secondary float-right text-white" href= '<?php echo $this->baseUrl("/Instructor/AddFile/{$class->classid}")?>'>Add file</a> <br> </br>
 
-<?php $files = ClassFiles::find("classId =:0:", $class->classid);?>
+<?php $files = $class->getFiles() ?>
 <!-- connect to the class_files linked to the files table in the database -->
 
 <div class="table-responsive">
@@ -54,15 +54,16 @@ echo $statusMsg;
 				<th scope="col"> File Name </th>
 				<th scope="col"> Date & Time Created </th>
 				<th scope="col"> Uploaded By </th>
+				<th scope="col"> File Size </th>
 			</tr>
 		</thead>
 		<tbody>
-        <?php foreach($files as $file):
-            $f = File::findOne("id =:0:", $file->fileId); ?>
+        <?php foreach($files as $f): ?>
                 <tr>
-					<td> <a href='<?php echo $this->baseUrl("/File/Load/{$f->id}/{$f->name}") ?>' target='_blank'><?php echo $f->name?></a></td>
-                    <td> <?php echo $f->updatedAt?></td>
+					<td><a href='<?php echo $this->baseUrl("/File/Load/{$f->id}/{$f->name}") ?>' target='_blank'><?php echo $f->name?></a></td>
+                    <td><?php echo $f->updatedAt?></td>
                     <td><?php echo $f->getAuthor()->getFullName()?></td>
+					<td><?= $f->getFileSizeString() ?></td>
 				</tr>
         <?php endforeach; ?>
 		</tbody>

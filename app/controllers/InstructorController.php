@@ -474,26 +474,9 @@ class InstructorController extends PermsController {
 
 
 	public function CourseMaterialsAction($classid = 0) {
-
 		$class = InstructorClasses::getByKey($classid);
-	
-		
-		$db = $this->get('Db');
-		/** @var array[] */
-		$files = $db->query(
-			"
-			SELECT * FROM files
-			
-			"
-		);
 
-		if ($files === false) {
-			die($db->getLastError());
-		}
-		/** @var File[] */
-		$files = array_map(['File', 'fromArray'], $files);
-
-		return $this->view(['files' => $files, 'class' => $class]);
+		return $this->view(['class' => $class]);
 	}
 
 	
