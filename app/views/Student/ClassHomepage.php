@@ -37,16 +37,36 @@
         <div class="card">
             <div class="card-body">
 
-        <?php 
-            if(true) { ?>
+				<div class="course-info">
+					<span class="loading">Loading <i class="fas fa-spinner fa-spin"></i></span>
+					<a href="https://www.fresnostate.edu/catalog/search/index.html?search=<?= str_replace([' '], ['+'], $class->class) ?>" target="_blank" class="btn btn-danger">Go to Course Catalog</a>
+				</div>
 
-                <h4 class="card-title"> <b> CSCI 150. Introduction to Software Engineering </b></h4>
-                <p class="card-text">Prerequisite: CSCI 41. History, goals, and motivation of software engineering. Study and use of software engineering methods. Requirements, specification, design, implementation, testing, verification, and maintenance of large software systems. Team programming. (2 lecture, 3 lab hours)</p>
-                <p><b>Units:</b> 3 | <b>Course Typically Offered:</b> Fall</p>
-                
-                <a href="http://www.fresnostate.edu/catalog/courses-by-department/computer-science/index.html" class="btn btn-danger">Go to Course Catalog</a>
-                <?php }?>
+				<script>
+					docReady(function() {
+						let classTitle = <?= json_encode($class->class) ?>,
+							classId = classTitle.toLowerCase().replace(/\s/g, '');
 
+						$.get(`${BASEURL}Class/CourseCatalog/${classTitle}`, function(html) {
+							let node = $(html).find(`#${classId}`);
+							let contentNodes = $();
+							if (node.length) {
+								contentNodes = contentNodes.add(node);
+							}
+
+							for (node = node.next(); node.length && !node.is('h6'); node = node.next()) {
+								contentNodes = contentNodes.add(node);
+							}
+
+							if (contentNodes.length) {
+								$('.course-info').prepend(contentNodes);
+								let title = $('.course-info h6');
+								title.replaceWith(`<h4 class="card-title">${title.text()}</h4>`);
+								$('.course-info .loading').remove();
+							}
+						});
+					});
+				</script>
             </div>
         </div>
     </div>
