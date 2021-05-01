@@ -47,6 +47,14 @@ Example Instructor Profile Table:
 | 6789   | CSCI           | not at all       | primarily          | primarily            | somewhat              | 4.2        |
 | 1011   | CM             | primarily        | somewhat           | somewhat             | not at all            | 2.5        |
 
+Example Admin Profile Table: 
+
+| **id**  |  **type**  |
+|---------|------------|
+| 7231    | admin      |
+| 4512    | admin      |
+| 5411    | admin      |
+
 Example Instructor Classes Table:
 
 | **class_id** | **instructor_id** | **class_title** | **class_description**  | **start_time** | **end_time** | **monday** | **tuesday** | **wednesday** | **thursday** | **friday** | **saturday** | **sunday** |
@@ -62,6 +70,14 @@ Example Classes Table:
 | 1            | 1234           |
 | 1            | 2345           |
 | 2            | 1234           |
+
+Example Instructor TA Classes Table:
+
+| **class_id** | **instructor_id** | **ta_id** |
+|--------------|-------------------|-----------|
+| 3            | 1434              | NULL      |
+| 5            | 2348              | 2572      |
+| 2            | 1237              | 3910      |
 
 Example Instructor Ratings Table:
 
@@ -118,6 +134,22 @@ Example Class Files Table:
 | 3            | 6           |
 | 15           | 2           |
 | 15           | 3           |
+
+Example Conversations Table:
+
+| **id** |  **users**  |
+|--------|-------------|
+| 1      | 1232, 1764  |
+| 2      | 2160        |
+| 4      | 1253, 4270  |
+
+Example Conversation Messages Table: 
+
+| **id** | **conversation_id** | **author_id**   | **message**                  | **read** | **created_at**      |
+|--------|---------------------|-----------------|------------------------------|----------|---------------------|
+| 2      | 3                   | 1232            | Hey guys!                    |          | 2021-04-30 17:24:38 |
+| 4      | 7                   | 1764            | Hey! When should we meet up? |          | 2021-05-01 00:06:27 |
+| 3      | 9                   | 2160            | No, it's due tomorrow.       | 0        | 2021-04-28 02:15:13 |
 
 An options table is also included to preserve certain data for use in the application.  Currently the only thing it is used for is to store the connection information between the FeedbackLoop application and Google Drive API.
 
