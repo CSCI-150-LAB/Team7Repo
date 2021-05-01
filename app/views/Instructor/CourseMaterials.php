@@ -3,7 +3,7 @@
 /** @var User $user */
 
 $currentUser = User::getCurrentUser();
-$profile = InstructorModel::getByKey($user->id);
+
 ?>
 
 <div class="col mb-3 p-5 text-white bg-blue"> 
@@ -44,8 +44,10 @@ if(isset($_POST["submit"]) && !empty($_FILES["course-file"]["name"])) {
 echo $statusMsg;
 ?> -->
 
-
-	<a class='btn btn-secondary float-right text-white' href= '<?php echo $this->baseUrl("/Instructor/AddFile/{$class->classid}")?>'>Add file</a> <br> </br>
+<?php
+if( ($currentUser->type == "admin")|| ($currentUser->type == "instructor")) {
+    echo "<a class = 'btn btn-secondary float-md-right text-white editprofile' href = '".$this->baseUrl("/Instructor/AddFile/{$class->classid}")."'>Add file</a><br><br>";
+} //Allows only instructor and admin to add files?>
 
 
 <?php $files = $class->getFiles() ?>
