@@ -15,7 +15,7 @@
 		<div class="accordion" id="accordionExample">
 			<!-- Track Attendance-->
 			<div class="card">
-				<div class="card-header"> Track Attendance <button class="btn btn-danger float-right" type="button"> <a href="#" style="color: #ffffff;"> <i class="fas fa-chevron-right"></i></a> </button> </div>
+				<div class="card-header"> Track Attendance <button class="btn btn-danger float-right" type="button"> <a href="<?php echo $this->baseUrl("/Instructor/ClassAttendance/{$class->classid}") ?>" style="color: #ffffff;"> <i class="fas fa-chevron-right"></i></a> </button> </div>
 			</div>
 			<!-- Course Materials -->
 			<div class = "card">

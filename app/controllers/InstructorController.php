@@ -418,9 +418,11 @@ class InstructorController extends PermsController {
 	//Go to page of reviews for instructor
 	}
 
-	public function ClassAttendanceAction() {
+	public function ClassAttendanceAction($classid =0) {
 		$user = User::getCurrentUser();
-		return $this->view(['user' => $user]);
+		$class = InstructorClasses::getByKey($classid);
+
+		return $this->view(['user' => $user, 'class' => $class]);
 	}
 
 	public function AddFileAction($classid = 0) {
