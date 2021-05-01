@@ -1,7 +1,7 @@
 <template>
 	<div class="modal-content">
 		<div class="modal-header">
-			<h5 class="modal-title">{{classTitle}}: Create a feedback session</h5>
+			<h5 class="modal-title">{{classTitle}}: Create a {{isQuiz ? 'quiz' : 'feedback session'}}</h5>
 			<button class="close" data-dismiss="modal">&times;</button>
 		</div>
 		<div class="modal-body">
@@ -21,7 +21,7 @@
 							<input type="time" class="form-control" v-bind:class="errors.end ? 'is-invalid' : ''" id="feedbackend" name="feedbackend" v-bind:min="start" v-model="end" required>
 						</div>
 					</div>
-					<div class="form-row">
+					<!-- <div class="form-row">
 						<div class="form-group col-sm-12">
 							<label for="is-quiz">Form Type</label>
 							<div class="form-check">
@@ -29,7 +29,7 @@
 								<label class="form-check-label" for="is-quiz">Is Quiz</label>
 							</div>
 						</div>
-					</div>
+					</div> -->
 
 					<div class="card mb-3">
 						<div class="card-header">
@@ -333,6 +333,10 @@
 			setClass: function(classId, classTitle) {
 				this.classId = classId;
 				this.classTitle = classTitle;
+			},
+
+			setIsQuiz: function(isQuiz) {
+				this.isQuiz = !!isQuiz;
 			}
 		},
 

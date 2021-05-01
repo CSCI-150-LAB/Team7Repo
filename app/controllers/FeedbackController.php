@@ -168,7 +168,8 @@ class FeedbackController extends PermsController {
 			INNER JOIN instructorclasses as ic ON
 				fs.class_id = ic.class_id
 			WHERE
-				fs.class_id = :0:
+				fs.class_id = :0: AND
+				fs.is_quiz = 0
 		";
 
 		if (!$viewAll) {
@@ -185,6 +186,33 @@ class FeedbackController extends PermsController {
 			'feedbackSessions' => $feedBackSessions,
 			'class' => $class,
 			'viewAll' => $viewAll
+		]);
+	}
+
+	public function PublishedQuizzesAction($classid) {
+		$class = InstructorClasses::getByKey($classid);
+
+		if (!$class) {
+			return $this->redirect($this->viewHelpers->baseUrl());
+		}
+
+		$query = "
+			SELECT
+				fs.*
+			FROM
+				feedback_sessions as fs
+			INNER JOIN instructorclasses as ic ON
+				fs.class_id = ic.class_id
+			WHERE
+				fs.class_id = :0: AND
+				fs.is_quiz = 1
+		";
+		
+		$feedBackSessions = FeedbackSession::query($query, $classid);
+		
+		return $this->view([
+			'feedbackSessions' => $feedBackSessions,
+			'class' => $class
 		]);
 	}
 	

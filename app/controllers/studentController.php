@@ -231,10 +231,24 @@ class studentController extends PermsController {
 	/**
 	 * @CurrentUserMustBeType('student')
 	 */
-	public function AllResponsesAction() {
+	public function AllResponsesAction($quiz = '') {
 		$currentUser = User::getCurrentUser();
+
 		//TODO: Add paging... this could get big over time
-		$myResponses = FeedbackResponse::find('student_id = :0:', $currentUser->id) ?? [];
+		$quiz = $quiz
+			? 1
+			: 0;
+		$myResponses = FeedbackResponse::query('
+			SELECT
+				fr.*
+			FROM
+				feedback_responses as fr
+			INNER JOIN feedback_sessions as fs ON
+				fs.id = fr.feedback_session_id
+			WHERE
+				fr.student_id = :0: AND
+				fs.is_quiz = :1:
+		', $currentUser->id, $quiz);
 
 		return $this->view(compact('myResponses'));
 	}
