@@ -7,6 +7,7 @@ class Options extends Model {
 	private static $cache = null;
 
 	/**
+	 * @DataType('string')
 	 * @Key
 	 */
 	public $name;

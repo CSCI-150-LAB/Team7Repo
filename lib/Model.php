@@ -424,6 +424,7 @@ abstract class Model extends AnnotatedClass {
 				$type = 'bool';
 			case 'int':
 			case 'float':
+			case 'string':
 				$columnMeta['dataType'] = $type;
 				break;
 
@@ -456,8 +457,7 @@ abstract class Model extends AnnotatedClass {
 				'columns' => [],
 				'props' => [],
 				'keys' => [],
-				'autoIncrement' => false,
-				'dataType' => 'string'
+				'autoIncrement' => false
 			];
 
 			$annotations = static::getAnnotations();
@@ -478,6 +478,10 @@ abstract class Model extends AnnotatedClass {
 
 				if (isset($propMeta['key']) && isset($propMeta['autoIncrement'])) {
 					$meta['autoIncrement'] = $prop;
+				}
+
+				if (!isset($propMeta['dataType'])) {
+					$propMeta['dataType'] = 'string';
 				}
 
 				$meta['columns'][$prop] = $propMeta;
