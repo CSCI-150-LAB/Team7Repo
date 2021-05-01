@@ -33,14 +33,44 @@ class File extends Model {
 	public $fileSize;
 
 	/**
+	 * @Column('author_id')
+	 * @var int
+	 */
+	public $authorId;
+
+	/**
+	 * @Column('updated_at')
+	 * @var string
+	 */
+	public $updatedAt;
+
+	/**
 	 * @Column('created_at')
 	 * @var string
 	 */
 	public $createdAt;
 
+	public function getFileType() {
+		//TODO: Implement me
+		$ext = pathinfo($this->name, PATHINFO_EXTENSION);
+
+		switch ($ext) {
+			default:
+				return 'Unknown';
+		}
+	}
+
+	public function getAuthor() {
+		return is_null($this->authorId)
+			? null
+			: User::getByKey($this->authorId);
+	}
+
 	public function save() {
+		$this->updatedAt = date('Y-m-d H:i:s');
+
 		if (is_null($this->createdAt)) {
-			$this->createdAt = date('Y-m-d H:i:s');
+			$this->createdAt = $this->updatedAt;
 		}
 
 		return parent::save();
@@ -116,9 +146,19 @@ class File extends Model {
 	 *
 	 * @param string $name
 	 * @param string $data
+	 * @param int|null $authorId
 	 * @return static
 	 */
-	public static function create($name, $mimeType, $data) {
+	public static function create($name, $mimeType, $data, $authorId = false) {
+		if ($authorId === false) {
+			if (User::getCurrentUser()) {
+				$authorId = User::getCurrentUser()->id;
+			}
+			else {
+				$authorId = null;
+			}
+		}
+
 		/** @var GoogleApi_Helper */
 		$helper = DI::getDefault()->get('googleApiHelper');
 
@@ -132,6 +172,7 @@ class File extends Model {
 			$record->name = $name;
 			$record->mimeType = $mimeType;
 			$record->fileSize = strlen($data);
+			$record->authorId = $authorId;
 			$record->save();
 
 			$ext = pathinfo($name, PATHINFO_EXTENSION);

@@ -247,5 +247,5 @@
 			</div>
 		</div>
 	</div>
-	<input type = 'submit' class = 'btn btn-primary savebutton' name = 'save changes' value = 'Save Changes'>
+	<input type = 'submit' class = 'btn btn-primary savebutton' name = 'save changes' value = 'Save Changes' maxlength="0">
 </form> <!--Submit button-->
