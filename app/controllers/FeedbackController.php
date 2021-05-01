@@ -116,12 +116,18 @@ class FeedbackController extends PermsController {
 				$model->startTime = date('Y-m-d ') . $_POST['start'] . ':00';
 				$model->endTime = date('Y-m-d ') . $_POST['end'] . ':00';
 				$model->createdDate = date('Y-m-d H:m:i');
+				$model->isQuiz = isset($_POST['isQuiz'])
+					? !!$_POST['isQuiz']
+					: false;
 
 				if ($model->save()) {
 					// Save fields
 					foreach ($fields as $field) {
 						$fieldModel = new FeedbackSessionField($field);
 						$fieldModel->feedbackSessionId = $model->id;
+						if ($model->isQuiz) {
+							$fieldModel->answer = $field['answer'];
+						}
 
 						if (!$fieldModel->save()) {
 							$errors['_form'] = 'Unable to save the form';
