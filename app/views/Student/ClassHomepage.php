@@ -39,7 +39,7 @@
 
 				<div class="course-info">
 					<span class="loading">Loading <i class="fas fa-spinner fa-spin"></i></span>
-					<a href="https://www.fresnostate.edu/catalog/search/index.html?search=<?= str_replace([' '], ['+'], $class->class) ?>" target="_blank" class="btn btn-danger">Go to Course Catalog</a>
+					<a href="https://www.fresnostate.edu/catalog/search/index.html?search=<?= urlencode($class->class) ?>" target="_blank" class="btn btn-danger">Go to Course Catalog</a>
 				</div>
 
 				<script>
