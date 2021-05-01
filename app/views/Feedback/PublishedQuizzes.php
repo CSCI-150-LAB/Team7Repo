@@ -5,7 +5,7 @@ $user = User::getCurrentUser();
 ?>
 
 <div class="mb-3 bg-blue p-5 text-white">
-	<h1 class="mb-0">Feedback Sessions <?php echo $class->class ?></h1>
+	<h1 class="mb-0">Quizzes: <?php echo $class->class ?></h1>
 </div>
 
 <?php if($user->type == "student"): ?>
