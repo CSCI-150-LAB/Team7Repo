@@ -24,7 +24,7 @@ class PermsController extends Controller implements IControllerHooks {
 
 	public function afterActionHook(IResponse $response) {
 		// Not used
-	}
+	} 
 
 	protected function MustBeLoggedIn($route = '/Index/NotAuthenticated') {
 		if (!User::getCurrentUser()) {

@@ -39,6 +39,10 @@ Autoloader::init([
 		$di->addScoped('Db', function() {
 			return new Db($_ENV['dbhost'], $_ENV['dbuser'], $_ENV['dbpass'], $_ENV['dbname']);
 		});
+
+		$di->addScoped('googleApiHelper', function() use ($app) {
+			return new GoogleApi_Helper($_ENV['googleClientId'], $_ENV['googleClientSecret'], $app->getBaseUrl() . '/Admin/GenerateGoogleAccessCode');
+		});
 	})
 	->start()
 	->hook(function() {
@@ -49,7 +53,7 @@ Autoloader::init([
 			$di->clearAll();
 
 			// TODO: Duplicate of the hook above
-			$di->addTransient('Db', function() {
+			$di->addScoped('Db', function() {
 				return new Db($_ENV['dbhost'], $_ENV['dbuser'], $_ENV['dbpass'], $_ENV['dbname']);
 			});
 

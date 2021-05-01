@@ -4,19 +4,22 @@
 	$this->pageTitle('Dashboard');
 ?>
 
-<div class="mb-3 bg-blue text-white p-5">
+<div class="mb-3 bg-blue text-white p-5 dashboardheader">
 	<h1 class="mb-0">Student Dashboard</h1>
 </div>
 
-<div class="table-responsive">
-	<h3 class="mb-0">Enrolled Classes</h3>
+<button class = 'btn btn-secondary float-md-right text-white' data-start-tour="Student Dashboard Tour">Help</button><br><br> 
+
+<div class="table-responsive classesenrolled">
+	<h3 class="mb-0"><b>Enrolled Classes</b></h3>
+	<br>
 	<table class="table table-bordered tbl-background">																		<!--Lay out the table to hold info on enrolled classes-->
 		<thead>
 			<tr>
-			<th scope="col"> Class </th>
-			<th scope="col"> Description </th>
-			<th scope="col"> Days/Times</th>
-			<th scope="col"> Instructor</th>
+			<th scope="col" class = "classname"> Class </th>
+			<th scope="col" class = "classdescription"> Description </th>
+			<th scope="col" class = "classtime"> Days/Times</th>
+			<th scope="col" class = "classinstructor"> Instructor</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -39,8 +42,9 @@
 <?php 
 	$taClass = InstructorClasses::find("ta_id =:0:", $user->id);
 	if ($taClass[0] != NULL) { ?>
-		<div><h3 class="mb-0">TA Classes</h3></div>
-		<table class="table table-bordered tbl-background">																		<!--Lay out the table to hold info on enrolled classes-->
+		<div><h3 class="mb-0"><b>TA Classes</b></h3></div>
+		<br>
+		<table class="table table-bordered tbl-background taclasses">																		<!--Lay out the table to hold info on enrolled classes-->
 			<thead>
 				<tr>
 				<th scope="col"> Class </th>
