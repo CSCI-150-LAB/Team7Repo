@@ -4,7 +4,6 @@
 
 <h1 class="mb-3 p-5 text-white bg-blue"> <?php echo $class->class?> Attendance </h1>
 
-                <label for="week-start">Choose Date:</label>
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item">
     <a class="nav-link active" id="track-tab" data-toggle="tab" href="#track" role="tab" aria-controls="tack" aria-selected="true">Track Attendance</a>
