@@ -11,9 +11,9 @@
 									<option v-for="user in sortedContactList" v-bind:key="user.id" v-bind:data-content="getUserOption(user)" v-bind:value="user.id"></option>
 								</select>
 								<div class="createconvo">
-								<div class="input-group-append">
-									<button type="button" class="btn btn-primary" v-on:click="createChatRoom()" v-bind:disabled="selectedUsers.length == 0"><i class="fas fa-edit"></i></button>
-								</div>
+									<div class="input-group-append">
+										<button type="button" class="btn btn-primary" v-on:click="createChatRoom()" v-bind:disabled="selectedUsers.length == 0"><i class="fas fa-edit"></i></button>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -21,22 +21,22 @@
 					</div>
 					<div class="row">Recent Messages</div>
 					<div class = "convolist">
-					<div class="row">
-						<div class="col user-list">
-							<div v-for="(convoUsers, convoId) in conversationList"
-								class="row user-row"
-								v-bind:class="currentConversationId == convoId ? 'selected' : ''"
-								v-bind:key="convoId"
-								v-on:click="joinChatRoom(convoUsers, convoId)"
-							>
-								<div class="col">
-									<div v-for="userId in convoUsers" v-bind:key="userId" class="user-item" v-bind:class="userId != currentUserId ? 'd-inline-block' : 'd-none'">
-										<i class="fas fa-circle" v-bind:class="isUserOnline(userId) ? 'online' : ''"></i> {{getUserName(userId, 'fullName')}}
+						<div class="row">
+							<div class="col user-list">
+								<div v-for="(convoUsers, convoId) in conversationList"
+									class="row user-row"
+									v-bind:class="currentConversationId == convoId ? 'selected' : ''"
+									v-bind:key="convoId"
+									v-on:click="joinChatRoom(convoUsers, convoId)"
+								>
+									<div class="col">
+										<div v-for="userId in convoUsers" v-bind:key="userId" class="user-item" v-bind:class="userId != currentUserId ? 'd-inline-block' : 'd-none'">
+											<i class="fas fa-circle" v-bind:class="isUserOnline(userId) ? 'online' : ''"></i> {{getUserName(userId, 'fullName')}}
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
 					</div>
 				</div>
 			</div>
@@ -174,6 +174,10 @@
 			},
 
 			isUserOnline(userId) {
+				if (typeof userId == 'string') {
+					userId = parseInt(userId);
+				}
+				
 				return this.connectedUsers.includes(userId);
 			},
 
