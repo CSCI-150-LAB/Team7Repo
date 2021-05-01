@@ -241,10 +241,7 @@ class studentController extends PermsController {
 
 	public function ClassHomepageAction($classid=0) {
 		$class = InstructorClasses::getByKey($classid);
-		$currentUser = User::getCurrentUser();
 
-
-		$errors = [];
 		return $this->view(['class' => $class]);
 	}
 
