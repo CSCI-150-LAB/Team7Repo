@@ -4,7 +4,6 @@
  * @Table('feedback_response_field')
  */
 class FeedbackResponseField extends Model {
-
 	/**
 	 * @Key
 	 */
