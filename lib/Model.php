@@ -22,7 +22,7 @@
 /**
  * A base class to be used for modeling database tables
  */
-class Model extends AnnotatedClass {
+abstract class Model extends AnnotatedClass {
 	protected static $tableMeta = [];
 	protected $_exists;
 
@@ -59,9 +59,13 @@ class Model extends AnnotatedClass {
 	 */
 	public static function find($query = '', ...$args) {
 		$query = self::transformStringQuery($query);
+		$query = trim($query);
+		if (!$query) {
+			$query = '1=1';
+		}
 
 		$tableMeta = static::getTableMeta();
-		return static::query("SELECT * FROM {$tableMeta['name']} WHERE 1=1" . ($query ? " AND {$query}" : ''), ...$args);
+		return static::query("SELECT * FROM {$tableMeta['name']} WHERE {$query}", ...$args);
 	}
 
 	/**
@@ -72,6 +76,11 @@ class Model extends AnnotatedClass {
 	 * @return static
 	 */
 	public static function findOne($query = '', ...$args) {
+		$query = trim($query);
+		if (!$query) {
+			$query = '1=1';
+		}
+
 		$result = static::find("{$query} LIMIT 1", ...$args);
 
 		if ($result === false) {
@@ -238,12 +247,42 @@ class Model extends AnnotatedClass {
 	}
 
 	/**
-	 * Returns the value as-is from the model
+	 * Returns the database ready value
 	 *
 	 * @param string $prop
 	 * @return mixed
 	 */
 	protected function getProp($prop) {
+		$meta = static::getTableMeta();
+
+		if (is_null($this->$prop) && isset($meta['columns'][$prop]['nullable'])) {
+			return $this->$prop;
+		}
+
+		if (isset($meta['columns'][$prop]['serialization'])) {
+			switch($meta['columns'][$prop]['serialization']) {
+				case 'serialize':
+					return serialize($this->$prop);
+				case 'json':
+					return json_encode($this->$prop);
+			}
+		}
+
+		if (isset($meta['columns'][$prop]['dataType'])) {
+			switch ($meta['columns'][$prop]['dataType']) {
+				case 'bool':
+					return $this->$prop
+						? 1
+						: 0;
+
+				case 'int':
+					if (isset($meta['columns'][$prop]['dateFormat'])) {
+						$dt = DateTime::createFromFormat($meta['columns'][$prop]['dateFormat'], $this->$prop);
+						return $dt->getTimestamp();
+					}
+			}
+		}
+
 		return $this->$prop;
 	}
 
@@ -251,10 +290,46 @@ class Model extends AnnotatedClass {
 	 * Sets the prop after loading from the db
 	 *
 	 * @param string $prop
-	 * @param mixed $value
+	 * @param string $value
 	 * @return void
 	 */
 	protected function setProp($prop, $value) {
+		$meta = static::getTableMeta();
+
+		if (isset($meta['columns'][$prop]['serialization'])) {
+			try {
+				switch($meta['columns'][$prop]['serialization']) {
+					case 'serialize':
+						$this->$prop = unserialize($value);
+						return;
+					case 'json':
+						$this->$prop = json_decode($value, true);
+						return;
+				}
+			}
+			catch (Exception $e) {
+				$this->$prop = $value;
+			}
+		}
+
+		if (isset($meta['columns'][$prop]['dataType'])) {
+			switch ($meta['columns'][$prop]['dataType']) {
+				case 'bool':
+					$this->$prop = !!$value;
+					return;
+				case 'int':
+					$this->$prop = intval($value);
+					if (isset($meta['columns'][$prop]['dateFormat'])) {
+						$this->$prop = date($meta['columns'][$prop]['dateFormat'], $this->$prop);
+					}
+					return;
+				case 'float':
+					$fn = "{$meta['columns'][$prop]['dataType']}val";
+					$this->$prop = $fn($value);
+					return;
+			}
+		}
+		
 		$this->$prop = $value;
 	}
 
@@ -267,12 +342,47 @@ class Model extends AnnotatedClass {
 		return $this->_exists;
 	}
 
+	/**
+	 * Returns all the data used to create this model instance
+	 * 
+	 * @return array
+	 * @throws Exception 
+	 */
+	public function getFieldArray() {
+		$tableMeta = static::getTableMeta();
+		$result = [];
+
+		foreach ($tableMeta['columns'] as $prop => $columnMeta) {
+			$result[$prop] = $this->getProp($prop);
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Generates an array of keys for this model instance
+	 * 
+	 * @return array
+	 */
+	public function getKeys() {
+		$tableMeta = static::getTableMeta();
+		return array_map([$this, 'getProp'], $tableMeta['keys']);
+	}
+
 	protected static function Table(&$tableMeta, $tableName) {
 		$tableMeta['name'] = $tableName;
 	}
 
 	protected static function Key(&$columnMeta, $order = 0) {
+		if (!isset($columnMeta['dataType'])) {
+			$columnMeta['dataType'] = 'int';
+		}
+
 		$columnMeta['key'] = $order;
+	}
+
+	protected static function Nullable(&$columnMeta) {
+		$columnMeta['nullable'] = true;
 	}
 
 	protected static function AutoIncrement(&$columnMeta) {
@@ -300,7 +410,34 @@ class Model extends AnnotatedClass {
 	}
 
 	protected static function Serialized(&$columnMeta) {
-		$columnMeta['serialized'] = true;
+		$columnMeta['serialization'] = 'serialize';
+	}
+
+	protected static function JSON(&$columnMeta) {
+		$columnMeta['serialization'] = 'json';
+	}
+
+	protected static function DataType(&$columnMeta, $type) {
+		$type = strtolower($type);
+		switch ($type) {
+			case 'boolean':
+				$type = 'bool';
+			case 'int':
+			case 'float':
+				$columnMeta['dataType'] = $type;
+				break;
+
+			default:
+				break;
+		}
+	}
+
+	protected static function DateFormat(&$columnMeta, $format = 'Y-m-d H:i:s') {
+		if (!isset($columnMeta['dataType'])) {
+			$columnMeta['dataType'] = 'int';
+		}
+
+		$columnMeta['dateFormat'] = $format;
 	}
 
 	protected static function DatabaseGenerated(&$columnMeta) {
@@ -319,7 +456,8 @@ class Model extends AnnotatedClass {
 				'columns' => [],
 				'props' => [],
 				'keys' => [],
-				'autoIncrement' => false
+				'autoIncrement' => false,
+				'dataType' => 'string'
 			];
 
 			$annotations = static::getAnnotations();

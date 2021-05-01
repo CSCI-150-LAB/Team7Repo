@@ -1,7 +1,7 @@
 <template>
 	<div class="modal-content">
 		<div class="modal-header">
-			<h5 class="modal-title">{{classTitle}}: Create a feedback session</h5>
+			<h5 class="modal-title">{{classTitle}}: Create a {{isQuiz ? 'quiz' : 'feedback session'}}</h5>
 			<button class="close" data-dismiss="modal">&times;</button>
 		</div>
 		<div class="modal-body">
@@ -21,6 +21,15 @@
 							<input type="time" class="form-control" v-bind:class="errors.end ? 'is-invalid' : ''" id="feedbackend" name="feedbackend" v-bind:min="start" v-model="end" required>
 						</div>
 					</div>
+					<!-- <div class="form-row">
+						<div class="form-group col-sm-12">
+							<label for="is-quiz">Form Type</label>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" id="is-quiz" v-model="isQuiz">
+								<label class="form-check-label" for="is-quiz">Is Quiz</label>
+							</div>
+						</div>
+					</div> -->
 
 					<div class="card mb-3">
 						<div class="card-header">
@@ -33,20 +42,24 @@
 								v-on:enter="animEnter"
 								v-on:leave="animLeave"
 							>
-								<div v-for="(field, ndx) in fields" class="form-row field-row" v-bind:class="'field-row-' + field.type.toLowerCase().replace('_', '-')" v-bind:key="field.id" v-bind:class="ndx % 2 == 1 ? 'odd' : 'even'">
+								<div v-for="(field, ndx) in fields" class="form-row field-row" v-bind:class="'field-row-' + field.type.toLowerCase().replace('_', '-') + (ndx % 2 == 1 ? ' odd' : ' even')" v-bind:key="field.id">
 									<div class="form-group col-lg-5 col-md-6">
 										<label class="question-label" v-bind:for="'title' + ndx">Question {{ ndx + 1 }} Label</label>
 										<input type="text" class="form-control field-name" v-bind:id="'title' + ndx" v-on:placeholder="'Question #' + (ndx + 1) +' Title'" v-model="field.label" required>
 									</div>
 									<div class="form-group col-lg-5 col-md-6 field-options">
-										<label>Response Section Preview</label>
+										<label>Response Section</label>
 										<component
 											v-bind:is="getFieldComponent(field.type)"
+											v-bind:id="field.id"
 											v-bind:type="field.type"
 											v-bind:options="field.options"
+											v-bind:is-quiz="isQuiz"
+											v-bind:answer="field.answer"
 											v-on:add-option="addOption(field)"
 											v-on:remove-option="removeOption(field, $event)"
-											v-on:update-option="updateOption(field, $event)">
+											v-on:update-option="updateOption(field, $event)"
+											v-on:update-answer="updateAnswer(field, $event)">
 										</component>
 									</div>
 									<div class="form-group col-lg-2 col-md-12 border-left p-3 field-meta">
@@ -68,14 +81,20 @@
 						</div>
 					</div>
 
-					<button type="submit" class="btn btn-primary btn-create float-right" v-bind:disabled="!formReady || processing">
-						Create
-						<i v-if="processing" class="fas fa-cog fa-spin"></i>
-					</button>
+					<div class="buttons">
+						<button type="submit" class="btn btn-primary btn-create float-right" v-bind:disabled="!formReady || processing">
+							Create
+							<i v-if="processing" class="fas fa-cog fa-spin"></i>
+						</button>
 
-					<button type="button" class="btn btn-info btn-help float-right mr-2" data-start-tour="FeedbackForm Tour">
-						Help
-					</button>
+						<button type="button" class="btn btn-info btn-help float-right mr-2" data-start-tour="FeedbackForm Tour">
+							Help
+						</button>
+					</div>
+
+					<div v-if="errors._form" class="text-danger">
+						{{errors._form}}
+					</div>
 				</form>
 			</div>
 			<div class="collapse" id="successCollapse" ref="successCollapse">
@@ -98,6 +117,7 @@
 				end: '00:00',
 				classTitle: window.feedbackFormDefaults.classTitle,
 				classId: window.feedbackFormDefaults.classId,
+				isQuiz: false,
 				
 				fieldTypes: {
 					SHORT_TEXT: 'Short Text',
@@ -173,11 +193,19 @@
 					type: type,
 					label: '',
 					options: undefined,
-					optional: false
+					optional: false,
+					answer: ['']
 				};
 
 				if (type == 'RADIO_GROUP' || type == 'CHECKBOX_GROUP') {
 					field.options = ['', ''];
+
+					if (type == 'RADIO_GROUP') {
+						field.answer = [0];
+					}
+					else {
+						field.answer = [1, 0];
+					}
 				}
 
 				this.fields.push(field);
@@ -203,14 +231,26 @@
 				}
 
 				field.options.push('');
+				
+				if (field.type == 'CHECKBOX_GROUP') {
+					field.answer.push(0);
+				}
 			},
 
 			removeOption: function(field, ndx) {
 				field.options.splice(ndx, 1);
+
+				if (field.type == 'CHECKBOX_GROUP') {
+					field.answer.splice(ndx, 1);
+				}
 			},
 
 			updateOption: function(field, {ndx, val}) {
 				this.$set(field.options, ndx, val);
+			},
+
+			updateAnswer(field, {ndx, val}) {
+				this.$set(field.answer, ndx, val);
 			},
 
 			reset: function() {
@@ -231,12 +271,23 @@
 					title: this.title,
 					start: this.start,
 					end: this.end,
-					fields: JSON.stringify(this.fields.map(f => ({
-						type: f.type,
-						label: f.label,
-						options: f.options,
-						optional: f.optional
-					})))
+					isQuiz: this.isQuiz
+						? 1
+						: 0,
+					fields: JSON.stringify(this.fields.map(f => {
+						let field = {
+							type: f.type,
+							label: f.label,
+							options: f.options,
+							optional: f.optional
+						};
+
+						if (this.isQuiz) {
+							field.answer = f.answer;
+						}
+						
+						return field;
+					}))
 				};
 				
 				var that = this;
@@ -282,6 +333,10 @@
 			setClass: function(classId, classTitle) {
 				this.classId = classId;
 				this.classTitle = classTitle;
+			},
+
+			setIsQuiz: function(isQuiz) {
+				this.isQuiz = !!isQuiz;
 			}
 		},
 

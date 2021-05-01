@@ -42,21 +42,31 @@
 			</div>
 			<!-- Get Feedback -->
 			<div class="card">
-				<div class="card-header" id="headingOne">
+				<div class="card-header" id="headingTwo">
 					<div class=""> Get Feedback
 						<button class="btn btn-danger float-right openmenufeedback" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseOne"> <i class="fas fa-chevron-down"></i></button> 
 					</div>
 					<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample"> 
 						<div class="card-body">
-							<a href="#feedback-app" class="" data-toggle="modal" data-target="#feedback-app" id="feedback-form">Create Session</a> <br>
+							<a href="#feedback-app" class="feedback-form-btn" data-type="feedback" data-toggle="modal" data-target="#feedback-app" id="feedback-form">Create Session</a> <br>
 							<a href='<?php echo $this->baseUrl("/Feedback/PublishedFeedback/{$class->classid}") ?>' class="">View Session</a>
 						</div>
 					</div>
 				</div>
 			</div>
 			<!-- Create Quiz -->
-			<div class = "card">
-				<div class="card-header"> Create Quiz <button class="btn btn-danger float-right" type="button"> <a href="#" style="color: #ffffff;"> <i class="fas fa-chevron-right"></i></a> </button> </div>
+			<div class="card">
+				<div class="card-header" id="headingThree">
+					<div class=""> Create Quiz
+						<button class="btn btn-danger float-right" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"> <i class="fas fa-chevron-down"></i></button> 
+					</div>
+					<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample"> 
+						<div class="card-body">
+							<a href="#feedback-app" class="feedback-form-btn" data-type="quiz" data-toggle="modal" data-target="#feedback-app" id="quiz-form">Create Quiz</a> <br>
+							<a href='<?php echo $this->baseUrl("/Feedback/PublishedQuizzes/{$class->classid}") ?>' class="">View Quizzes</a>
+						</div>
+					</div>
+				</div>
 			</div>
 			<!-- Launch Whiteboard
 			<div class = "card">

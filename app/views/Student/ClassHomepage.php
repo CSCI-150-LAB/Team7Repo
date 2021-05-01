@@ -17,19 +17,19 @@
         <div class="accordion">
             <div class="card">
             <!-- View Feedback Sessions -->
-                <div class="card-header"> Feedback Sessions <button class="btn btn-secondary float-right" type="button"> <a href="<?php echo $this->baseUrl("/Feedback/PublishedFeedback/{$class->classid}") ?>" style="color: #ffffff;"> <i class="fas fa-chevron-right"></i></a> </button> </div>
+                <div class="card-header"> Feedback Sessions <button class="btn btn-secondary float-right" type="button"> <a href="<?php echo $this->baseUrl("/Feedback/PublishedFeedback/{$class->classid}") ?>" class="text-light"> <i class="fas fa-chevron-right"></i></a> </button> </div>
             </div>
             <!-- Course Materials -->
             <div class = "card">
-                <div class="card-header"> Course Materials <button class="btn btn-secondary float-right" type="button"> <a href="<?php echo $this->baseUrl("/Instructor/CourseMaterials/{$class->classid}") ?>" style="color: #ffffff;"> <i class="fas fa-chevron-right"></i></a> </button> </div>
+                <div class="card-header"> Course Materials <button class="btn btn-secondary float-right" type="button"> <a href="<?php echo $this->baseUrl("/Instructor/CourseMaterials/{$class->classid}") ?>" class="text-light"> <i class="fas fa-chevron-right"></i></a> </button> </div>
             </div>
             <!-- Class Quizzes -->
             <div class="card">
-                <div class="card-header"> Quizzes <button class="btn btn-secondary float-right" type="button"> <a href="#>" style="color: #ffffff;"> <i class="fas fa-chevron-right"></i></a> </button> </div>
+                <div class="card-header"> Quizzes <button class="btn btn-secondary float-right" type="button"> <a href="<?= $this->baseUrl("/Feedback/PublishedQuizzes/{$class->classid}") ?>" class="text-light"> <i class="fas fa-chevron-right"></i></a> </button> </div>
             </div>
             <!-- Class  Whiteboard
             <div class = "card">
-                <div class="card-header"> View Whitebaord <button class="btn btn-secondary float-right" type="button"> <a href="#" style="color: #ffffff;"> <i class="fas fa-chevron-right"></i></a> </button> </div>
+                <div class="card-header"> View Whitebaord <button class="btn btn-secondary float-right" type="button"> <a href="#" class="text-light"> <i class="fas fa-chevron-right"></i></a> </button> </div>
             </div> -->
     </div>
     </div>
