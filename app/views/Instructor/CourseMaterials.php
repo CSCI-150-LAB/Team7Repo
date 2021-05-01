@@ -1,5 +1,9 @@
 <?php 
-    $this->pageTitle("CourseMaterials"); 
+    $this->pageTitle("CourseMaterials");
+/** @var User $user */
+
+$currentUser = User::getCurrentUser();
+$profile = InstructorModel::getByKey($user->id);
 ?>
 
 <div class="col mb-3 p-5 text-white bg-blue"> 
@@ -41,8 +45,8 @@ echo $statusMsg;
 ?> -->
 
 
+	<a class='btn btn-secondary float-right text-white' href= '<?php echo $this->baseUrl("/Instructor/AddFile/{$class->classid}")?>'>Add file</a> <br> </br>
 
-<a class="btn btn-secondary float-right text-white" href= '<?php echo $this->baseUrl("/Instructor/AddFile/{$class->classid}")?>'>Add file</a> <br> </br>
 
 <?php $files = $class->getFiles() ?>
 <!-- connect to the class_files linked to the files table in the database -->
