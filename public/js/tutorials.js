@@ -139,14 +139,19 @@ $(function() {
 		content: "The student's email address is listed here."
 	});
 	studentTour.addStep({
-		element: ".studentsmajor",
-		title: "Student Major",
-		content: "You can change your displayed major by entering it in here."
+		element: ".preferredlearningstyle",
+		title: "Preferred Learning Style",
+		content: "Listed here is the learning style the student is most comfortable using."
 	});
 	studentTour.addStep({
-		element: ".studentsmajor",
-		title: "Student Major",
-		content: "You can change your displayed major by entering it in here."
+		element: ".learningstyles",
+		title: "All Learning Styles",
+		content: "This section shows how comfortable the student is with each of the four learning styles: visual, kinesthetic, auditory, read/write."
+	});
+	studentTour.addStep({
+		element: ".learningtools",
+		title: "Learning Tools",
+		content: "This section shows which tools the student prefers to use for each respective learning styles."
 	});
 	//#endregion
 
@@ -191,7 +196,7 @@ $(function() {
 	studentDashboardTour.addStep({
 		element: ".dashboardheader",
 		title: "Welcome!",
-		content: "Welcome to your student dashboard! This page allows you to view and access your classes."
+		content: "Welcome to your student dashboard! This page allows you to view and access your classes."	
 	});
 	studentDashboardTour.addStep({
 		element: ".classesenrolled",
@@ -199,9 +204,130 @@ $(function() {
 		content: "This section lists the classes you are enrolled in as a student."
 	});
 	studentDashboardTour.addStep({
+		element: ".classname:first",
+		title: "Class Name",
+		content: "The name of your class is listed in the leftmost column. By clicking the class name, you will be redirected to your class page."
+	});
+	studentDashboardTour.addStep({
+		element: ".classdescription:first",
+		title: "Class Description",
+		content: "A short description of the class is listed in this column."
+	});
+	studentDashboardTour.addStep({
+		element: ".classtime:first",
+		title: "Class Meeting Times",
+		content: "The meeting days and times for the class will be in this column."
+	});
+	studentDashboardTour.addStep({
+		element: ".classinstructor:first",
+		title: "Class Instructor",
+		content: "The instructor of the class is listed here. By clicking the instructor's name, you will be redirected to their profile page."
+	});
+	studentDashboardTour.addStep({
 		element: ".taclasses",
 		title: "Classes You TA For",
-		content: "This section shows the classes you are a teaching assistant (TA) for."
+		content: "This section shows the classes you are a teaching assistant (TA) for. The columns for this section are organized like the columns in the 'Enrolled Classes' section."
+	});
+	//#endregion
+
+	//#region Student Respond to Feedback Tour
+	let feedbackResponseTour = new TourInstance('Respond to Feedback Session Tour');
+	feedbackResponseTour.addPageLoadTrigger(/^\/Feedback\/Response\/\d+$/);
+	feedbackResponseTour.addStep({
+		element: ".feedsession",
+		title: "Feedback Session",
+		content: "This is a feedback session started by your instructor! Here you will be able to give your instructor feedback based on questions they have posed. Note: Questions with a red asterisk next to them indicate the question is required."
+	});
+	feedbackResponseTour.addStep({
+		element: ".shorttext:first",
+		title: "Short Answer",
+		content: "This type of feedback question will ask for a brief, textual response."
+	});
+	feedbackResponseTour.addStep({
+		element: ".longtext:first",
+		title: "Long Answer",
+		content: "This type of feedback question will ask for a longer, explanatory, textual response."
+	});
+	feedbackResponseTour.addStep({
+		element: ".radiogroup:first",
+		title: "Multiple Choice",
+		content: "This type of feedback question will ask you to select an answer choice from the options listed."
+	});
+	feedbackResponseTour.addStep({
+		element: ".checkboxgroup:first",
+		title: "Checkbox",
+		content: "This type of feedback question will allow you to select multiple options as your answer choice."
+	});
+	feedbackResponseTour.addStep({
+		element: ".ratingquestion:first",
+		title: "Rating",
+		content: "This type of feedback question will ask you to rate the question statement from 1 - 5 stars."
+	});
+	feedbackResponseTour.addStep({
+		element: ".submitfeedback",
+		title: "Submit!",
+		content: "Once you are done responding to each required question (and any optional question of your choosing), you may hit submit."
+	});
+
+	//#endregion
+
+	//#region Student Add Instructor Review Tour
+	let addInstructorReviewTour = new TourInstance('Add Instructor Review Tour');
+	addInstructorReviewTour.addPageLoadTrigger(/^\/Instructor\/AddReview\/\d+$/);
+	addInstructorReviewTour.addStep({
+		element: ".addreviewtitle", 
+		title: "Add a Review!",
+		content: "This page allows you to submit a review on an instructor's performance."
+	});
+	addInstructorReviewTour.addStep({
+		element: ".requiredfields", 
+		title: "Required Fields",
+		content: "You are required to complete these fields to submit a review."
+	});
+	addInstructorReviewTour.addStep({
+		element: ".ratingstars", 
+		title: "Rating Out of Five Stars",
+		content: "You can rate your professor's performance out of five stars in this section. A rating of 1 is the lowest and signifies the professor performed poorly; a rating of 5 is the highest and signifies the professor performed well."
+	});
+	addInstructorReviewTour.addStep({
+		element: ".instructorrecommendation", 
+		title: "Detailed Recommendation",
+		content: "In this section, you have the opportunity to explain with more detail how your instructor performed."
+	});
+	addInstructorReviewTour.addStep({
+		element: ".anonrating", 
+		title: "Keep Your Rating Anonymous",
+		content: "By checking 'Yes,' your review will be shared anonymously."
+	});
+	addInstructorReviewTour.addStep({
+		element: ".additionalrating", 
+		title: "Additional Review Information",
+		content: "The following entries are optional and may provide more depth to your review."
+	});
+	addInstructorReviewTour.addStep({
+		element: ".takeprofagain", 
+		title: "Take Another Class with This Instructor",
+		content: "This entry allows you to indicate whether you would take another class with this instructor."
+	});
+	addInstructorReviewTour.addStep({
+		element: ".hwreq", 
+		title: "Homework",
+		content: "This entry allows you to indicate if the professor assigned homework for the class."
+	});
+	addInstructorReviewTour.addStep({
+		element: ".mandatoryattend", 
+		title: "Attendance",
+		content: "This entry allows you to indicate if the professor made attendance mandatory."
+	});
+	addInstructorReviewTour.addStep({
+		element: ".classgrade", 
+		title: "Grade",
+		content: "This entry allows you to indicate the grade you received in the class."
+	});
+	addInstructorReviewTour.addStep({
+		element: ".submitreview", 
+		title: "Submit",
+		content: "Once you are done, you may submit by pressing this button!"
 	});
 	//#endregion
 
@@ -250,9 +376,45 @@ $(function() {
 	});	
 	//#endregion
 
+	//#region Direct Messaging Tour
+	let dmTour = new TourInstance('Direct Messaging Tour');
+	dmTour.addPageLoadTrigger(/^\/Index\/Messaging/);
+	dmTour.addStep({
+		element: ".dmgeneral",
+		title: "Direct Messaging",
+		content: "Welcome to the Direct Messaging page! Here you can communicate with classmates, instructors, and university administrators."
+	});
+	dmTour.addStep({
+		element: ".newconvo",
+		title: "Create a Conversation",
+		content: "Here you can create a new conversation. By clicking the dropdown, you may search for users you would like to add to your group."
+	});
+	dmTour.addStep({
+		element: ".createconvo",
+		title: "Confirm",
+		content: "Once all members of the conversation are added, click here to create the conversation."
+	});
+	dmTour.addStep({
+		element: ".convolist",
+		title: "Existing Groups",
+		content: "Here you can find conversation groups that you are a part of. To access any one of these conversations, click on the one you would like to open."
+	});
+	dmTour.addStep({
+		element: ".convoarea",
+		title: "Conversation",
+		content: "This area shows the messages sent in your group by you and your group members."
+	});
+	dmTour.addStep({
+		element: ".textbox",
+		title: "Send a Message",
+		content: "Type the message you would like to send to your group in this text box. Once you've completed typing your message, click the blue button to send it!"
+	});
+
+	//#endregion
+
 	//#region Instructor Dashboard Tour
 	let instructorDashboardTour = new TourInstance('Instructor Dashboard Tour');
-	instructorDashboardTour.addPageLoadTrigger(/^\/Instructor\/Dashboard$/);
+	instructorDashboardTour.addPageLoadTrigger(/^\/Instructor\/Dashboard/);
 	instructorDashboardTour.addStep({
 		element: ".instructordashboard",
 		title: "Instructor Dashboard",
@@ -337,6 +499,58 @@ $(function() {
 		element: ".addclassbutton",
 		title: "Add New Class",
 		content: "This is the submission button for saving the new class.  Make sure all of the details are correct before pressing this button because you can not change the details later."
+	});
+	//#endregion
+
+	//#region Instructor View Class Tour
+	let viewClassTour = new TourInstance('Instructor View Class Tour');
+	viewClassTour.addPageLoadTrigger(/^\/Instructor\/ViewClass\/\d+$/);
+	viewClassTour.addStep({
+		element: ".openmenuadd",
+		title: "Add Student/TA to Class",
+		content: "This is the menu for adding a new student, new students, or a TA to this class.  Click on the dropdown to learn more about adding student(s) and a TA.",
+		reflex: 'slow-click'
+	});
+	viewClassTour.addStep({
+		element: ".addstudent",
+		title: "Add Student",
+		content: "This is the link where you can add an individual student by their email that is associated with an account on FeedbackLoop.  If the email is valid, it will let you know and you can try again."
+	});
+	viewClassTour.addStep({
+		element: ".addstudents",
+		title: "Add Students",
+		content: "This is the link where you can add multiple students by their email that is associated with accounts on FeedbackLoop.  You must have a valid CSV of the emails in order to use this way of adding students.  If there are any invalid emails, it will let you know and only those emails will not be added, all of the other emails will be added."
+	});
+	viewClassTour.addStep({
+		element: ".addta",
+		title: "Add TA",
+		content: "This is the link where you can add a TA by their email that is associated with an account on FeedbackLoop.  They will have instructor access to this class."
+	});
+	viewClassTour.addStep({
+		element: ".classta",
+		title: "This Class' TA",
+		content: "This is where the TA for this class is shown.  You can click on their name to view their profile, or you can remove the TA from having instructor access to the class, and allowing you to add a new TA if you would like."
+	});
+	viewClassTour.addStep({
+		element: ".classstudents",
+		title: "This Class' Students",
+		content: "Here is a table where you can find all of your enrolled students and their FeedbackLoop account emails in this class."
+	});
+	viewClassTour.addStep({
+		element: ".openmenufeedback",
+		title: "Feedback Sessions",
+		content: "This is the menu for feedback sessions for the class.  Click on the dropdown if you want to learn more about the feedback sessions.",
+		reflex: 'slow-click'
+	});
+	viewClassTour.addStep({
+		element: ".addfeedbacksession",
+		title: "Add a Feedback Session",
+		content: "This link will bring up a page where you can create a feedback session for this class."
+	});
+	viewClassTour.addStep({
+		element: ".viewfeedbacksession",
+		title: "View Feedback Sessions",
+		content: "This link will bring up a page where you can view all of the feedback sessions and their results for this class."
 	});
 	//#endregion
 
@@ -482,6 +696,76 @@ $(function() {
 		element: '#feedback-form .btn-create',
 		title: 'Create Form',
 		content: 'When you have everything filled out the way you like, save your changes by click this. This button will only become clickable when all required inputs have values.'
+	});
+	//#endregion
+
+	//#region Admin Panel Tour
+	let adminPanelTour = new TourInstance('Admin Panel Tour');
+	adminPanelTour.addPageLoadTrigger(/^\/Admin\/Panel\/\d+$/);
+	adminPanelTour.addStep({
+		element: ".adminpanel",
+		title: "Admin Panel",
+		content: "This is the main dashboard for admins, it allows you to navigate through most of the admin tools."
+	});
+	adminPanelTour.addStep({
+		element: ".adminusers",
+		title: "User Management",
+		content: "This card will take you to a page where you can manage all non-admin user accounts.  It will display a list of all users with students first, then instructors.  For each user it will show their user type, their name with links to their profiles, and their email addresses.  Finally, you can add a user by clicking the button that says \"Add a user\"."
+	});
+	adminPanelTour.addStep({
+		element: ".adminroles",
+		title: "Admin Management",
+		content: "This card will take you to a page where you can view all the admin accounts.  It will display a list of admin names with links to their profiles, and their emails.  It will also display a button to add a new admin that says \"Add an Admin\"."
+	});
+	adminPanelTour.addStep({
+		element: ".adminfeedback",
+		title: "View Instructor Feedback",
+		content: "This card will take you to a page where you can view all the instructor accounts.  It will list each instructor's name with a link to their overall feedback page, and each of their star ratings.  The instructors are sorted by the highest rating at the top."
+	});
+	adminPanelTour.addStep({
+		element: ".adminstartfeedback",
+		title: "Start Feedback Session",
+		content: "This card will take you to a page that lists all of the classes.  It lists the class name with links to the class page, the description, days and times, instructor, and a link that will bring up a form to create a new feedback session for that class."
+	});
+	//#endregion
+
+	//#region Admin Start Feedback Tour
+	let adminFeedbackTour = new TourInstance('Admin Start Feedback Tour');
+	adminFeedbackTour.addPageLoadTrigger(/^\/Admin\/StartSession/);
+	adminFeedbackTour.addStep({
+		element: ".adminfeedbacksession",
+		title: "Start Feedback Sessions",
+		content: "This is the page where admins can start a feedback session for any class."
+	});
+	adminFeedbackTour.addStep({
+		element: ".classestable",
+		title: "Table of Classes",
+		content: "Here is a table of all of the classes on FeedbackLoop."
+	});
+	adminFeedbackTour.addStep({
+		element: ".classpage:first",
+		title: "Class Name",
+		content: "This is the class name, you can click on the link to open the class page."
+	});
+	adminFeedbackTour.addStep({
+		element: ".classdescr:first",
+		title: "Class Title",
+		content: "This is the class description."
+	});
+	adminFeedbackTour.addStep({
+		element: ".classdatetime:first",
+		title: "Class Date and Time",
+		content: "These are the dates and times that the class is assigned to meet."
+	});
+	adminFeedbackTour.addStep({
+		element: ".classinstructor:first",
+		title: "Class Instructor",
+		content: "This is the instructor assigned to the class."
+	});
+	adminFeedbackTour.addStep({
+		element: ".classstartfeedback:first",
+		title: "Class Start Feedback Session",
+		content: "You can click on this link to bring up a form to start a feedback session for the given class.  A further tutorial can be found on specifically to make a feedback session."
 	});
 	//#endregion
 });

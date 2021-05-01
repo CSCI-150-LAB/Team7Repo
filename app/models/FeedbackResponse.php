@@ -54,11 +54,17 @@ class FeedbackResponse extends Model {
 					<tr>
 						<th>Question</th>
 						<th>Response</th>
+						<?php if ($feedbackSession->isQuiz) : ?>
+							<th>Correct Answer</th>
+						<?php endif; ?>
 					</tr>
 				</thead>
 				<tbody>
 					<?php foreach ($feedbackSessionFields as $field) : ?>
-						<?php $classedType = strtolower(str_replace('_', '-', $field->type)); ?>
+						<?php
+							$classedType = strtolower(str_replace('_', '-', $field->type));
+							$isAnswer = $feedbackSession->isQuiz && in_array($responseFields[$field->id]->response, $field->answer);
+						?>
 						<tr>
 							<td>
 								<?php echo $field->label ?>
@@ -72,22 +78,91 @@ class FeedbackResponse extends Model {
 										?>
 										<?php if ($countChecked) : ?>
 											<?php foreach ($field->options as $ndx => $option) : ?>
+												<?php
+													$isAnswer = $feedbackSession->isQuiz && $field->answer[$ndx];
+												?>
 												<?php if ($checkedIndexes[$ndx]) : ?>
 													<div class="checked-option">
+														<?php if ($feedbackSession->isQuiz && !$isAnswer) : ?>
+															<del class="wrong-answer">
+														<?php endif; ?>
 														<?php echo $option ?>
+														<?php if ($feedbackSession->isQuiz) : ?>
+															<?php if ($isAnswer) : ?>
+																<span class="fa fa-check text-success"></span>
+															<?php else : ?>
+																<span class="badge badge-danger">wrong</span>
+															<?php endif; ?>
+														<?php endif; ?>
+														<?php if ($feedbackSession->isQuiz && !$isAnswer) : ?>
+															</del>
+														<?php endif; ?>
 													</div>
+												<?php elseif ($isAnswer) : ?>
+													<?php echo $option ?> <span class="badge badge-success">correct</span>
 												<?php endif; ?>
 											<?php endforeach; ?>
 										<?php endif; ?>
 									<?php elseif ($field->type == FormFieldTypeEnum::RADIO_GROUP()) : ?>
+										<?php if ($feedbackSession->isQuiz && !$isAnswer) : ?>
+											<del class="wrong-answer">
+										<?php endif; ?>
 										<?php echo $field->options[$responseFields[$field->id]->response] ?>
+										<?php if ($feedbackSession->isQuiz) : ?>
+											<?php if ($isAnswer) : ?>
+												<span class="fa fa-check text-success"></span>
+											<?php else : ?>
+												<span class="badge badge-danger">wrong</span>
+											<?php endif; ?>
+										<?php endif; ?>
+										<?php if ($feedbackSession->isQuiz && !$isAnswer) : ?>
+											</del>
+										<?php endif; ?>
 									<?php elseif ($field->type == FormFieldTypeEnum::RATING()) : ?>
 										<?php echo PrintHelpers::printStarRating($responseFields[$field->id]->response); ?>
 									<?php else : ?>
+										<?php if ($feedbackSession->isQuiz && !$isAnswer) : ?>
+											<del class="wrong-answer">
+										<?php endif; ?>
 										<?php echo $responseFields[$field->id]->response ?>
+										<?php if ($feedbackSession->isQuiz) : ?>
+											<?php if ($isAnswer) : ?>
+												<span class="fa fa-check text-success"></span>
+											<?php else : ?>
+												<span class="badge badge-danger">wrong</span>
+											<?php endif; ?>
+										<?php endif; ?>
+										<?php if ($feedbackSession->isQuiz && !$isAnswer) : ?>
+											</del>
+										<?php endif; ?>
 									<?php endif; ?>
 								<?php endif; ?>
 							</td>
+							<?php if ($feedbackSession->isQuiz) : ?>
+							<td>
+								<?php if ($field->type == FormFieldTypeEnum::CHECKBOX_GROUP()) : ?>
+									<?php
+									$first = true;
+									foreach ($field->answer as $ndx => $isAns) {
+										if (!$isAns) {
+											continue;
+										}
+
+										if (!$first) {
+											echo '<br>';
+										}
+
+										echo $field->options[$ndx];
+										$first = false;
+									}
+									?>
+								<?php elseif ($field->type == FormFieldTypeEnum::RADIO_GROUP()) : ?>
+									<?= $field->options[$field->answer[0]] ?>
+								<?php else : ?>
+									<?= $field->answer[0] ?>
+								<?php endif; ?>
+							</td>
+							<?php endif; ?>
 						</trait>
 					<?php endforeach; ?>
 				</tbody>

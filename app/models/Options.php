@@ -10,24 +10,12 @@ class Options extends Model {
 	 * @Key
 	 */
 	public $name;
+
+	/**
+	 * @Serialized
+	 * @var mixed
+	 */
 	public $value;
-
-	protected function getProp($prop) {
-		if ($prop == 'value') {
-			return serialize($this->$prop);
-		}
-
-		return parent::getProp($prop);
-	}
-
-	protected function setProp($prop, $value) {
-		if ($prop == 'value') {
-			$this->$prop = unserialize($value);
-		}
-		else {
-			parent::setProp($prop, $value);
-		}
-	}
 
 	private static function loadOptions() {
 		if (is_null(self::$cache)) {

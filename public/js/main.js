@@ -94,6 +94,10 @@ $(function() {
 		TourInstance.resetTour($(this).data('reset-tour'));
 	});
 
+	$(document).on('click', '.feedback-form-btn', function() {
+		feedbackFormApp.setIsQuiz($(this).data('type') == 'quiz');
+	});
+
 	setTimeout(function() {
 		TourInstance.instances
 			.filter(i => i.trigger)

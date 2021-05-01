@@ -9,32 +9,31 @@
 		<h5> Day and Time: <?php echo  $class->getClassTimeString(); ?></h5>
 	</div>
 </div>
-
 <div class="row mb-3">
 <!--Class Menu-->
 	<div class = "col-sm-3">
 		<div class="accordion" id="accordionExample">
-			<!-- Track Attendance-->
+			<!-- Track Attendance
 			<div class="card">
 				<div class="card-header"> Track Attendance <button class="btn btn-danger float-right" type="button"> <a href="#" style="color: #ffffff;"> <i class="fas fa-chevron-right"></i></a> </button> </div>
-			</div>
+			</div> -->
 			<!-- Course Materials -->
 			<div class = "card">
-				<div class="card-header"> Course Materials <button class="btn btn-danger float-right" type="button"> <a href="#" style="color: #ffffff;"> <i class="fas fa-chevron-right"></i></a> </button> </div>
+				<div class="card-header"> Course Materials <button class="btn btn-danger float-right" type="button"> <a href='<?php echo $this->baseUrl("/Instructor/CourseMaterials/{$class->classid}") ?>' style="color: #ffffff;"> <i class="fas fa-chevron-right"></i></a> </button> </div>
 			</div>
 			<!-- Add Student/TA -->
 			<div class="card">
 				<div class="card-header" id="headingOne">
 					<div class=""> Add to Class
-						<button class="btn btn-danger float-right" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"> <i class="fas fa-chevron-down"></i></button> 
+						<button class="btn btn-danger float-right openmenuadd" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"> <i class="fas fa-chevron-down"></i></button> 
 					</div>
 					<div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample"> 
 						<div class="card-body">
-							<a href='<?php echo $this->baseUrl("/Instructor/AddStudent/{$class->classid}") ?>' class="">Add Student</a> <br>
-							<a href='<?php echo $this->baseUrl("/Instructor/AddCSVStudents/{$class->classid}") ?>' class="">Add Students by CSV</a> <br>
+							<a href='<?php echo $this->baseUrl("/Instructor/AddStudent/{$class->classid}") ?>' class="addstudent">Add Student</a> <br>
+							<a href='<?php echo $this->baseUrl("/Instructor/AddCSVStudents/{$class->classid}") ?>' class="addstudents">Add Students by CSV</a> <br>
 							<?php
 								if ($ta[0]->id == NULL) { ?>
-									<a href='<?php echo $this->baseUrl("/Instructor/AddTA/{$class->classid}") ?>' class="">Add TA</a>
+									<a href='<?php echo $this->baseUrl("/Instructor/AddTA/{$class->classid}") ?>' class="addta">Add TA</a>
 							<?php 
 								} ?>
 						</div>
@@ -43,26 +42,39 @@
 			</div>
 			<!-- Get Feedback -->
 			<div class="card">
-				<div class="card-header" id="headingOne">
+				<div class="card-header" id="headingTwo">
 					<div class=""> Get Feedback
-						<button class="btn btn-danger float-right" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseOne"> <i class="fas fa-chevron-down"></i></button> 
+						<button class="btn btn-danger float-right openmenufeedback" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseOne"> <i class="fas fa-chevron-down"></i></button> 
 					</div>
 					<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample"> 
 						<div class="card-body">
-							<a href="#feedback-app" class="" data-toggle="modal" data-target="#feedback-app">Create Session</a> <br>
+							<a href="#feedback-app" class="feedback-form-btn" data-type="feedback" data-toggle="modal" data-target="#feedback-app" id="feedback-form">Create Session</a> <br>
 							<a href='<?php echo $this->baseUrl("/Feedback/PublishedFeedback/{$class->classid}") ?>' class="">View Session</a>
-							<?php echo $this->partial('_FeedbackForm', ['class' => $class]) ?>
 						</div>
 					</div>
 				</div>
 			</div>
 			<!-- Create Quiz -->
-			<div class = "card">
-				<div class="card-header"> Create Quiz <button class="btn btn-danger float-right" type="button"> <a href="#" style="color: #ffffff;"> <i class="fas fa-chevron-right"></i></a> </button> </div>
+			<div class="card">
+				<div class="card-header" id="headingThree">
+					<div class=""> Create Quiz
+						<button class="btn btn-danger float-right" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"> <i class="fas fa-chevron-down"></i></button> 
+					</div>
+					<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample"> 
+						<div class="card-body">
+							<a href="#feedback-app" class="feedback-form-btn" data-type="quiz" data-toggle="modal" data-target="#feedback-app" id="quiz-form">Create Quiz</a> <br>
+							<a href='<?php echo $this->baseUrl("/Feedback/PublishedQuizzes/{$class->classid}") ?>' class="">View Quizzes</a>
+						</div>
+					</div>
+				</div>
 			</div>
-			<!-- Launch Whiteboard -->
+			<!-- Launch Whiteboard
 			<div class = "card">
 				<div class="card-header"> Launch Whiteboard <button class="btn btn-danger float-right" type="button"> <a href="#" style="color: #ffffff;"> <i class="fas fa-chevron-right"></i></a> </button> </div>
+			</div>-->
+			<!-- Help for Tutorial -->
+			<div class = "card">
+			<div class="card-header"> Help <button class="btn btn-danger float-right" type="button" data-start-tour="Instructor View Class Tour" style="color: #ffffff;"> <i class="fas fa-chevron-right"></i> </button> </div>
 			</div>
 	</div>
 </div>
@@ -70,7 +82,7 @@
 <!--Class Information -->
 <div class ="col"> 
 		<!-- TA Information -->
-	 <h2> <i class="fas fa-user"></i> <b>TA:</b>
+	 <h2 class="classta"> <i class="fas fa-user"></i> <b>TA:</b>
 			<?php 
 				if ($class->TAid == NULL) {
 					echo "None";
@@ -101,7 +113,7 @@
 
 
 		<?php $studentids = studentClasses::find("classId =:0:", $class->classid);?>
-		<div class="table-responsive">
+		<div class="table-responsive classstudents">
 			<table class="table table-bordered tbl-background">
 				<thead>
 					<tr>
@@ -122,3 +134,5 @@
 		</div>
 	</div>
 </div>
+
+<?php echo $this->partial('_Partials/FeedbackForm', ['class' => $class]) ?>

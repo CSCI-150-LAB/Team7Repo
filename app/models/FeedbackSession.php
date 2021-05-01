@@ -28,6 +28,13 @@ class FeedbackSession extends Model {
 	public $endTime;
 
 	/**
+	 * @Column('is_quiz')
+	 * @DataType('bool')
+	 * @var boolean
+	 */
+	public $isQuiz;
+
+	/**
 	 * @Column('created_on')
 	 */
 	public $createdDate;

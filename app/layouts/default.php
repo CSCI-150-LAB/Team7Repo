@@ -86,9 +86,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo $this->baseUrl("/Admin/Panel/{$currentUser->id}") ?>"> My Panel </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="javascript:void(0)"> Search Students </a>
-            </li>
+            </li> -->
 			<?php endif; ?>
             <!-- <li class="nav-item">
                 <a class="nav-link" href="javascript:void(0)"> Resources </a>
