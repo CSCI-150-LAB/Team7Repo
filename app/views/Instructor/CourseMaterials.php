@@ -1,5 +1,9 @@
 <?php 
-    $this->pageTitle("CourseMaterials"); 
+    $this->pageTitle("CourseMaterials");
+/** @var User $user */
+
+$currentUser = User::getCurrentUser();
+
 ?>
 
 <div class="col mb-3 p-5 text-white bg-blue"> 
@@ -40,9 +44,11 @@ if(isset($_POST["submit"]) && !empty($_FILES["course-file"]["name"])) {
 echo $statusMsg;
 ?> -->
 
+<?php
+if( ($currentUser->type == "admin")|| ($currentUser->type == "instructor")) {
+    echo "<a class = 'btn btn-secondary float-md-right text-white editprofile' href = '".$this->baseUrl("/Instructor/AddFile/{$class->classid}")."'>Add file</a><br><br>";
+} //Allows only instructor and admin to add files?>
 
-
-<a class="btn btn-secondary float-right text-white" href= '<?php echo $this->baseUrl("/Instructor/AddFile/{$class->classid}")?>'>Add file</a> <br> </br>
 
 <?php $files = $class->getFiles() ?>
 <!-- connect to the class_files linked to the files table in the database -->

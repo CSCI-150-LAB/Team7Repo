@@ -473,10 +473,11 @@ class InstructorController extends PermsController {
 
 
 
-	public function CourseMaterialsAction($classid = 0) {
+	public function CourseMaterialsAction($classid = 0, $userId = 0) {
 		$class = InstructorClasses::getByKey($classid);
+		$user = User::getByKey($userId);
 
-		return $this->view(['class' => $class]);
+		return $this->view(['class' => $class, 'user' => $user]);
 	}
 
 	

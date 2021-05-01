@@ -239,4 +239,10 @@ class studentController extends PermsController {
 		return $this->view(compact('myResponses'));
 	}
 
+	public function ClassHomepageAction($classid=0) {
+		$class = InstructorClasses::getByKey($classid);
+
+		return $this->view(['class' => $class]);
+	}
+
 }

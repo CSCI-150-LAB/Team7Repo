@@ -13,10 +13,10 @@
 <!--Class Menu-->
 	<div class = "col-sm-3">
 		<div class="accordion" id="accordionExample">
-			<!-- Track Attendance-->
+			<!-- Track Attendance
 			<div class="card">
 				<div class="card-header"> Track Attendance <button class="btn btn-danger float-right" type="button"> <a href="#" style="color: #ffffff;"> <i class="fas fa-chevron-right"></i></a> </button> </div>
-			</div>
+			</div> -->
 			<!-- Course Materials -->
 			<div class = "card">
 				<div class="card-header"> Course Materials <button class="btn btn-danger float-right" type="button"> <a href='<?php echo $this->baseUrl("/Instructor/CourseMaterials/{$class->classid}") ?>' style="color: #ffffff;"> <i class="fas fa-chevron-right"></i></a> </button> </div>
@@ -58,10 +58,11 @@
 			<div class = "card">
 				<div class="card-header"> Create Quiz <button class="btn btn-danger float-right" type="button"> <a href="#" style="color: #ffffff;"> <i class="fas fa-chevron-right"></i></a> </button> </div>
 			</div>
-			<!-- Launch Whiteboard -->
+			<!-- Launch Whiteboard
 			<div class = "card">
 				<div class="card-header"> Launch Whiteboard <button class="btn btn-danger float-right" type="button"> <a href="#" style="color: #ffffff;"> <i class="fas fa-chevron-right"></i></a> </button> </div>
-			</div>
+			</div>-->
+			<!-- Help for Tutorial -->
 			<div class = "card">
 			<div class="card-header"> Help <button class="btn btn-danger float-right" type="button" data-start-tour="Instructor View Class Tour" style="color: #ffffff;"> <i class="fas fa-chevron-right"></i> </button> </div>
 			</div>
