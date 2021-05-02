@@ -52,7 +52,7 @@
 					<form class="messaging-form mb-0" v-on:submit="submit">
 						<div class="input-group">
 							<input type="text" class="form-control textbox" v-model="messageTxt" placeholder="Message">
-							<button type="submit" class="btn btn-primary" v-bind:disabled="!isSocketConnected"><i class="fas fa-paper-plane"></i></button>
+							<button type="submit" class="btn btn-primary" v-bind:disabled="!isSocketConnected || messageTxt == ''"><i class="fas fa-paper-plane"></i></button>
 						</div>
 					</form>
 				</div>
