@@ -305,8 +305,15 @@ class FeedbackController extends PermsController {
 
 					if (!count($errors)) {
 						$db->commitTransaction();
-						SimpleAlert::success('<i class="far fa-grin-beam"></i> Feedback recorded successfully', true);
-						return $this->redirect($this->viewHelpers->baseUrl("/Feedback/PublishedFeedback/{$feedbackSession->classid}"));
+						
+						if ($feedbackSession->isQuiz) {
+							SimpleAlert::success('<i class="far fa-grin-beam"></i> Quiz response recorded successfully', true);
+							return $this->redirect($this->viewHelpers->baseUrl("/Feedback/PublishedQuizzes/{$feedbackSession->classid}"));
+						}
+						else {
+							SimpleAlert::success('<i class="far fa-grin-beam"></i> Feedback recorded successfully', true);
+							return $this->redirect($this->viewHelpers->baseUrl("/Feedback/PublishedFeedback/{$feedbackSession->classid}"));
+						}
 					}
 					else {
 						$db->abortTransaction();
