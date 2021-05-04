@@ -168,13 +168,13 @@ This program utilizes some third party tools for some of the features.
 
 
 ### 2.2 Users
-This application has three types of users: student, instructor, and administrator.  If a user is not logged in, they still have the ability to search for instructors using a search bar (as do any of the users that are logged in).  They also have the ability to click the login/register link and either login or register. 
+This application has three types of users: student, instructor, and administrator.  If a user is not logged in, they still have the ability to search for instructors using a search bar (as do any of the users that are logged in).  They also have the ability to click the login/register link and either login or register. Users that are logged in may communicate with one another through direct messaging.
 
 #### 2.2.1 Student
 Students have a user profile which they are able to edit and a user dashboard that displays their schedule and includes links to the professor’s profile for each class.  Students have the ability to leave feedback for a professor for in a feedback session, or a general feedback on the instructor’s profile.
 
 #### 2.2.2 Instructor
-Instructors also have a user profile which they are able to edit and a user dashboard.  The instructor user dashboard displays their schedule of classes, as well as a button that allows them to add a new class or section.  The classes on the instructor’s dashboard all have links to a summary page for that specific class as well as all of the students enrolled in the class.  Each student’s name is also a link to that student’s profile for the instructor to view.  On the class view page, instructors also have the option to initiate a feedback session, or add a student to the class.
+Instructors also have a user profile which they are able to edit and a user dashboard.  The instructor user dashboard displays their schedule of classes, as well as a button that allows them to add a new class or section.  The classes on the instructor’s dashboard all have links to a summary page for that specific class as well as all of the students enrolled in the class.  Each student’s name is also a link to that student’s profile for the instructor to view.  On the class view page, instructors also have the option to initiate a feedback session, or add a student or TA to the class. Instructors may also initiate quizzes and upload course materials.
 
 #### 2.2.3 Admin
 Admin users have the same functionality as instructor users with some additional functionalities. Admins have the ability to moderate any other user’s profile and may search for instructors and sort them based on their overall rating from students. Admin users on a school campus include, but are not limited to: the Dean, university president, HR.
