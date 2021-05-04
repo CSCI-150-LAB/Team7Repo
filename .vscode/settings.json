@@ -6,6 +6,5 @@
 		"**/node_modules/**/*",
 		"**/app/lib/vendor/**/*"
 	],
-	"phpunit.files": "tests/**/*Test.php",
-	"phpunit.phpunit": "D:/Dev/Source/php/htdocs/FeedbackLoop/app/lib/vendor/bin/phpunit.bat"
+	"phpunit.files": "tests/**/*Test.php"
 }
