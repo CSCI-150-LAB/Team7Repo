@@ -2,11 +2,14 @@
 
 use PHPUnit\Framework\TestCase;
 
+require_once(__DIR__ . '/helpers/Config.php');
+
 final class AnonymousTest extends TestCase
 {
     public function testHomepage(): void
     {
-		$html = file_get_contents('http://localhost/FeedbackLoop');
+		$url = getConfig('siteUrl');
+		$html = file_get_contents("{$url}");
 		$this->assertStringContainsString('<h2>Welcome to FeedbackLoop!</h2>', $html, 'Welcome message exists');
     }
 }
