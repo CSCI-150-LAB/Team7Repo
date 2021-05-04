@@ -3,7 +3,7 @@
 class Db {
 	private $conn;
 	private $trackingModels = false;
-	private $trackedModelsExistences = [];
+	private $trackedModelCallbacks = [];
 	private $lastQuery = '';
 
     public function __construct($host, $user, $pass, $dbname) {
@@ -100,8 +100,16 @@ class Db {
 	public function abortTransaction() {
 		$this->conn->rollback();
 		$this->conn->autocommit(true);
-		$this->trackedModelsExistences = [];
 		$this->trackingModels = false;
+
+		$type = (string)DbTrackTypeEnum::ABORTED();
+		if (isset($this->trackedModelCallbacks[$type])) {
+			foreach ($this->trackedModelCallbacks[$type] as $cb) {
+				$cb();
+			}
+		}
+		
+		$this->trackedModelCallbacks = [];
 	}
 
 	/**
@@ -112,11 +120,16 @@ class Db {
 	public function commitTransaction() {
 		$this->conn->commit();
 		$this->conn->autocommit(true);
-		foreach ($this->trackedModelsExistences as $existenc) {
-			$existenc[0] = $existenc[1];
-		}
-		$this->trackedModelsExistences = [];
 		$this->trackingModels = false;
+
+		$type = (string)DbTrackTypeEnum::COMMITTED();
+		if (isset($this->trackedModelCallbacks[$type])) {
+			foreach ($this->trackedModelCallbacks[$type] as $cb) {
+				$cb();
+			}
+		}
+
+		$this->trackedModelCallbacks = [];
 	}
 
 	/**
@@ -129,15 +142,24 @@ class Db {
 	}
 
 	/**
-	 * Allows the database to update a model's "exist" flag when a transaction is committed
+	 * Allows the database to update a model when a transaction is committed or aborted
 	 *
-	 * @param boolean $exist
-	 * @param boolean $futureValue
+	 * @param DbTrackTypeEnum $type
+	 * @param callable $cb
 	 * @return void
 	 */
-	public function trackModel(&$exist, $futureValue) {
+	public function trackModel(DbTrackTypeEnum $type, callable $cb) {
+		$type = (string)$type;
+
 		if ($this->trackingModels) {
-			$this->trackedModelsExistences[] = [&$exist, $futureValue];
+			if (!isset($this->trackedModelCallbacks[$type])) {
+				$this->trackedModelCallbacks[$type] = [];
+			}
+
+			$this->trackedModelCallbacks[$type][] = $cb;
+		}
+		elseif ($type == DbTrackTypeEnum::COMMITTED()) {
+			return $cb();
 		}
 	}
 

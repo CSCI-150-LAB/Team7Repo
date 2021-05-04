@@ -5,6 +5,7 @@ FeedbackLoop is a progressive web application that enables feedback communicatio
 FeedbackLoop will include specified features for each of the 3 different types of users : Admin, Instructor, and Student
 
 **Development Requirements**
+All local resources can be installed by running `npm run setup` from the project directory.
 Install gulp and node_modules by running these commands from the git repo root directory:
 ```
 npm i -g gulp-cli

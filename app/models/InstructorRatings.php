@@ -62,11 +62,11 @@ class InstructorRatings extends Model {
     public $verified;
 
     public function printRating() {
-		$ratingString = PrintHelpers::printStarRating($this->rating);
+		$ratingString = '<div class="float-md-left studentrating">'.PrintHelpers::printStarRating($this->rating).'</div><br>';
 		
-		$ratingString .= '<div class="d-flex my-3">';
+		$ratingString .= '<div class="d-flex my-3 optionalresponses">';
         if ($this->takeAgain != 'N/A') {
-            $ratingString .= '<div class="mr-3"><strong>Would take again:</strong>'.$this->takeAgain.'</div>';
+            $ratingString .= '<div class="mr-3"><strong>Would take again:</strong> '.$this->takeAgain.'</div>';
         }
         if ($this->homework != 'N/A') {
             $ratingString .= '<div class="mr-3"><strong>Homework:</strong> '.$this->homework.'</div>';
@@ -79,7 +79,7 @@ class InstructorRatings extends Model {
 		}
 		$ratingString .= "</div>";
 
-        $ratingString .= $this->recommendation.'<br>';
+        $ratingString .= '<div class="reviewinfo">'.$this->recommendation.'</div><br><div class="author">';
         if ($this->authorId == 0) {
             $ratingString .= "&ndash;Anonymous";
         }
@@ -90,6 +90,7 @@ class InstructorRatings extends Model {
         if($this->verified) {
             $ratingString .= '<i class="fas fa-check ml-1 text-success"></i>';
         }
+        $ratingString .= '</div>';
         return $ratingString;
 	}
 }

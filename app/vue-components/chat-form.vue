@@ -4,29 +4,35 @@
 			<div class="col-md-6">
 				<div class="card p-4 mb-3 mb-md-0">
 					<div class="row mb-3">
+					<div class="newconvo">
 						<div class="col">
 							<div class="input-group">
 								<select ref="bsSelect" v-model="selectedUsers" class="selectpicker form-control" data-none-selected-text="Pick people to chat with" multiple data-icon-base="">
 									<option v-for="user in sortedContactList" v-bind:key="user.id" v-bind:data-content="getUserOption(user)" v-bind:value="user.id"></option>
 								</select>
-								<div class="input-group-append">
-									<button type="button" class="btn btn-primary" v-on:click="createChatRoom()" v-bind:disabled="selectedUsers.length == 0"><i class="fas fa-edit"></i></button>
+								<div class="createconvo">
+									<div class="input-group-append">
+										<button type="button" class="btn btn-primary" v-on:click="createChatRoom()" v-bind:disabled="selectedUsers.length == 0"><i class="fas fa-edit"></i></button>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+					</div>
 					<div class="row">Recent Messages</div>
-					<div class="row">
-						<div class="col user-list">
-							<div v-for="(convoUsers, convoId) in conversationList"
-								class="row user-row"
-								v-bind:class="currentConversationId == convoId ? 'selected' : ''"
-								v-bind:key="convoId"
-								v-on:click="joinChatRoom(convoUsers, convoId)"
-							>
-								<div class="col">
-									<div v-for="userId in convoUsers" v-bind:key="userId" class="user-item" v-bind:class="userId != currentUserId ? 'd-inline-block' : 'd-none'">
-										<i class="fas fa-circle" v-bind:class="isUserOnline(userId) ? 'online' : ''"></i> {{getUserName(userId, 'fullName')}}
+					<div class = "convolist">
+						<div class="row">
+							<div class="col user-list">
+								<div v-for="(convoUsers, convoId) in conversationList"
+									class="row user-row"
+									v-bind:class="currentConversationId == convoId ? 'selected' : ''"
+									v-bind:key="convoId"
+									v-on:click="joinChatRoom(convoUsers, convoId)"
+								>
+									<div class="col">
+										<div v-for="userId in convoUsers" v-bind:key="userId" class="user-item" v-bind:class="userId != currentUserId ? 'd-inline-block' : 'd-none'">
+											<i class="fas fa-circle" v-bind:class="isUserOnline(userId) ? 'online' : ''"></i> {{getUserName(userId, 'fullName')}}
+										</div>
 									</div>
 								</div>
 							</div>
@@ -39,15 +45,17 @@
 
 			<div class="col-md-6">
 				<div class="card h-100 p-4 d-flex flex-column">
+				<div class = "convoarea">
 					<div ref="log" class="message-log flex-grow-1">
 						<chat-bubble v-for="(chat, ndx) in chatLog" v-bind:key="chat.createdAt" v-bind:chat="chat" v-bind:previous-chat="ndx > 0 ? chatLog[ndx - 1] : null"></chat-bubble>
 					</div>
 					<form class="messaging-form mb-0" v-on:submit="submit">
 						<div class="input-group">
-							<input type="text" class="form-control" v-model="messageTxt" placeholder="Message">
-							<button type="submit" class="btn btn-primary" v-bind:disabled="!isSocketConnected"><i class="fas fa-paper-plane"></i></button>
+							<input type="text" class="form-control textbox" v-model="messageTxt" placeholder="Message">
+							<button type="submit" class="btn btn-primary" v-bind:disabled="!isSocketConnected || messageTxt == ''"><i class="fas fa-paper-plane"></i></button>
 						</div>
 					</form>
+				</div>
 				</div>
 			</div>
 		</div>
@@ -166,6 +174,10 @@
 			},
 
 			isUserOnline(userId) {
+				if (typeof userId == 'string') {
+					userId = parseInt(userId);
+				}
+				
 				return this.connectedUsers.includes(userId);
 			},
 

@@ -116,12 +116,18 @@ class FeedbackController extends PermsController {
 				$model->startTime = date('Y-m-d ') . $_POST['start'] . ':00';
 				$model->endTime = date('Y-m-d ') . $_POST['end'] . ':00';
 				$model->createdDate = date('Y-m-d H:m:i');
+				$model->isQuiz = isset($_POST['isQuiz'])
+					? !!$_POST['isQuiz']
+					: false;
 
 				if ($model->save()) {
 					// Save fields
 					foreach ($fields as $field) {
 						$fieldModel = new FeedbackSessionField($field);
 						$fieldModel->feedbackSessionId = $model->id;
+						if ($model->isQuiz) {
+							$fieldModel->answer = $field['answer'];
+						}
 
 						if (!$fieldModel->save()) {
 							$errors['_form'] = 'Unable to save the form';
@@ -162,7 +168,8 @@ class FeedbackController extends PermsController {
 			INNER JOIN instructorclasses as ic ON
 				fs.class_id = ic.class_id
 			WHERE
-				fs.class_id = :0:
+				fs.class_id = :0: AND
+				fs.is_quiz = 0
 		";
 
 		if (!$viewAll) {
@@ -179,6 +186,33 @@ class FeedbackController extends PermsController {
 			'feedbackSessions' => $feedBackSessions,
 			'class' => $class,
 			'viewAll' => $viewAll
+		]);
+	}
+
+	public function PublishedQuizzesAction($classid) {
+		$class = InstructorClasses::getByKey($classid);
+
+		if (!$class) {
+			return $this->redirect($this->viewHelpers->baseUrl());
+		}
+
+		$query = "
+			SELECT
+				fs.*
+			FROM
+				feedback_sessions as fs
+			INNER JOIN instructorclasses as ic ON
+				fs.class_id = ic.class_id
+			WHERE
+				fs.class_id = :0: AND
+				fs.is_quiz = 1
+		";
+		
+		$feedBackSessions = FeedbackSession::query($query, $classid);
+		
+		return $this->view([
+			'feedbackSessions' => $feedBackSessions,
+			'class' => $class
 		]);
 	}
 	
@@ -271,8 +305,15 @@ class FeedbackController extends PermsController {
 
 					if (!count($errors)) {
 						$db->commitTransaction();
-						SimpleAlert::success('<i class="far fa-grin-beam"></i> Feedback recorded successfully', true);
-						return $this->redirect($this->viewHelpers->baseUrl("/Feedback/PublishedFeedback/{$feedbackSession->classid}"));
+						
+						if ($feedbackSession->isQuiz) {
+							SimpleAlert::success('<i class="far fa-grin-beam"></i> Quiz response recorded successfully', true);
+							return $this->redirect($this->viewHelpers->baseUrl("/Feedback/PublishedQuizzes/{$feedbackSession->classid}"));
+						}
+						else {
+							SimpleAlert::success('<i class="far fa-grin-beam"></i> Feedback recorded successfully', true);
+							return $this->redirect($this->viewHelpers->baseUrl("/Feedback/PublishedFeedback/{$feedbackSession->classid}"));
+						}
 					}
 					else {
 						$db->abortTransaction();

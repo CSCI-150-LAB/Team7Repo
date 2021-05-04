@@ -35,6 +35,38 @@ class InstructorController extends PermsController {
 					$instructorUserData[$prop] = $_POST[$postField];
 				}
 			} //Check that all values are filled
+
+			// Verify profile image type - must be last thing before following if
+			$newFileId = null;
+			if (isset($_FILES['profile-image'])) {
+				$imgPost = $_FILES['profile-image'];
+				$ext = pathinfo($imgPost['name'], PATHINFO_EXTENSION);
+				
+				if (!in_array(strtolower($ext), ['gif', 'jpg', 'jpeg', 'png'])) {
+					$errors[] = 'Profile image must be: .gif, .jpg, .jpeg, .png';
+				}
+
+				if (!count($errors)) {
+					$file = $editUser->getProfileImage();
+
+					if ($file) {
+						if (!$file->replace($imgPost['name'], mime_content_type($imgPost['tmp_name']), file_get_contents($imgPost['tmp_name']))) {
+							$errors[] = 'Failed to upload profile image';
+						}
+					}
+					else {
+						$file = File::create($imgPost['name'], mime_content_type($imgPost['tmp_name']), file_get_contents($imgPost['tmp_name']));
+						if (!$file) {
+							$errors[] = 'Failed to upload profile image';
+						}
+					}
+
+					$newFileId = $file
+						? $file->id
+						: null;
+				}
+			}
+
 			if(!count($errors)) {
 				$editUser->preferredTitle = $instructorUserData['name'];
 				foreach ($instructorUserData as $key => $val) {
@@ -42,6 +74,8 @@ class InstructorController extends PermsController {
 						$profile->$key = $val;
 					}
 				} //Sets profile values for user
+
+				$editUser->profileImageId = $newFileId;
 
 				/** @var Db */
 				$db = $this->get('Db');
@@ -383,4 +417,68 @@ class InstructorController extends PermsController {
 		return $this->view(['instructor' => $instructor]);
 	//Go to page of reviews for instructor
 	}
+
+	public function AddFileAction($classid = 0) {
+		if($classid == 0) {
+			return $this->redirect($this->viewHelpers->baseUrl());
+		}
+		
+		$errors = [];
+
+		/**
+		 * @var ClassFilesModel
+		 */
+
+		if($this->request->isPost()) {
+			
+			if (isset($_FILES['course-file'])) {
+				$filePost = $_FILES['course-file'];
+				$ext = pathinfo($filePost['name'], PATHINFO_EXTENSION);
+				
+				if (!in_array(strtolower($ext), ['gif', 'jpg', 'jpeg', 'png' ,'jpg','jpeg','png','doc','docx','txt','pdf','png','pptx','ppt','mov','wav','mpg','mpeg','mp4','mp3','bmp','pdf'])) {
+					$errors[] = 'File must be: .jpg,.jpeg,.png,.doc,.docx,.txt,.pdf,.png, .pptx,.ppt,.mov,.wav,.mpg,.mpeg,.mp4,.mp3,.bmp,.pdf';
+				}
+
+				$file = File::create($filePost['name'], mime_content_type($filePost['tmp_name']), file_get_contents($filePost['tmp_name']));
+				
+				if (!$file) {
+					$errors[] = 'Failed to upload file';
+				}
+
+				if(!count($errors)) { 
+
+					$classFiles= new ClassFiles();
+					$classFiles->classId = $classid;
+					$classFiles->fileId = $file->id;
+
+					/** @var Db */ 
+					$db = $this->get('Db');
+					$db->startTransaction();
+	
+					if($classFiles->save()) {
+						$db->commitTransaction();
+						return $this->redirect($this->viewHelpers->baseUrl("/Instructor/CourseMaterials/{$classFiles->classId}")); //Redirects to add file page
+					} 
+					else {
+						$db->abortTransaction();
+						$errors[] = 'Failed to save the file';
+					} //If errors, save error
+
+				} 
+			}
+
+			}
+			return $this->view(['errors' => $errors, 'classid' => $classid, 'id' => $classFiles->id]);
+		}
+
+
+
+	public function CourseMaterialsAction($classid = 0, $userId = 0) {
+		$class = InstructorClasses::getByKey($classid);
+		$user = User::getByKey($userId);
+
+		return $this->view(['class' => $class, 'user' => $user]);
+	}
+
+	
 }
