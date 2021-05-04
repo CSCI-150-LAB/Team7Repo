@@ -3,9 +3,6 @@
 use PHPUnit\Framework\TestCase;
 use \Curl\Curl;
 
-require_once __DIR__ . '/../app/lib/vendor/autoload.php';
-require_once __DIR__ . '/helpers/Config.php';
-
 final class SearchTest extends TestCase {
 
 	public function testSearchByNamePresent(): void
