@@ -6,5 +6,8 @@
 		"**/node_modules/**/*",
 		"**/app/lib/vendor/**/*"
 	],
-	"phpunit.files": "tests/**/*Test.php"
+	"phpunit.files": "tests/**/*Test.php",
+	"phpunit.args": [
+		"./tests"
+	]
 }
