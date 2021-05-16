@@ -5,5 +5,11 @@
 	"todo-tree.filtering.excludeGlobs": [
 		"**/node_modules/**/*",
 		"**/app/lib/vendor/**/*"
+	],
+	"phpunit.files": "tests/**/*Test.php",
+	"phpunit.args": [
+		"--bootstrap",
+		"./tests/helpers/Bootstrap.php",
+		"./tests"
 	]
 }

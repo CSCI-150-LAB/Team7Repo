@@ -55,7 +55,7 @@ class DI {
 		}
 
 		$this->typeDict[$class] = function() use ($class, $factory) {
-			if (is_null($this->scopedInstances[$class])) {
+			if (!isset($this->scopedInstances[$class]) || is_null($this->scopedInstances[$class])) {
 				if (is_callable($factory)) {
 					$this->scopedInstances[$class] = $factory($this);
 				}
